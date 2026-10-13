@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "repository_before": "5a861b8911058bdcfe4fb7c5ed61993567ea3a2e",
+  "scope": "Original input/view/movement CPU state and math, geometry comparisons with explicit semantic GTE, and a supplied single-chunk movement prototype. Full world scheduling, link/NPC dispatch, original camera setup, hardware/GTE timing and end-to-end parity remain open.",
+  "control_sequences": 30,
+  "control_steps": 960,
+  "rotation_cases": 70,
+  "square_root_cases": 16,
+  "synthetic_face_queries": 540,
+  "synthetic_cloud_queries": 480,
+  "original_static_object_probes": 13037,
+  "original_static_primitive_variants": 20,
+  "original_static_primitive_packets_reached": 111177,
+  "original_decoded_geometry_test_passed": true,
+  "controller_boundary_contracts": {
+    "supplied_PadRead_input": 960,
+    "captured_motion_boundary": 480
+  },
+  "geometry_function_result_stubs": 0,
+  "gte_scope": "Software transfer/OP/SQR/LZ semantics, no hardware timing or complete GTE flag/register acceptance.",
+  "gte_reference": "https://psx-spx.consoledev.net/geometrytransformationenginegte/",
+  "function_ranges": [
+    {
+      "name": "pad_poll",
+      "address": "0x80025cc4",
+      "bytes": 76,
+      "sha256": "22c69c07be3b773b7c1e6c0951c93ceec57e22d93fdda9179d6f2cd1e08aca49"
+    },
+    {
+      "name": "pad_emit",
+      "address": "0x80025d10",
+      "bytes": 260,
+      "sha256": "493678c81760ffdf9e82c487910dd28b2d269e92dc49d92f630dd85777c77161"
+    },
+    {
+      "name": "base_notify",
+      "address": "0x800182cc",
+      "bytes": 132,
+      "sha256": "93c69c638a65d12953fb79d42cf86d92b2017cafc03ed424e791a0ad697eab44"
+    },
+    {
+      "name": "base_iter_parents",
+      "address": "0x8001816c",
+      "bytes": 64,
+      "sha256": "7c8368c95eafd17fd2c0d7fd895140013aaca8b66e02d27bb68d1dfa1c4662be"
+    },
+    {
+      "name": "list_next",
+      "address": "0x800183a0",
+      "bytes": 52,
+      "sha256": "342943f75a8148540b607ae196d364cc966f54d8daf8078a29c9a48bc18ec61a"
+    },
+    {
+      "name": "base_get_vtable",
+      "address": "0x80018390",
+      "bytes": 16,
+      "sha256": "6f3e96c03b803dbf1321407c23ea13c5f2b782f40d0be26b977088b8a0b51196"
+    },
+    {
+      "name": "base_on_notify",
+      "address": "0x80018358",
+      "bytes": 8,
+      "sha256": "2e462c148ac918a55b55f9da986e41667e29340fd63a0631bc69dd7bc93a1aed"
+    },
+    {
+      "name": "transform_on_notify",
+      "address": "0x8001cd60",
+      "bytes": 208,
+      "sha256": "7645c1426bb416583494ee0b64a4409e90121ad9d0827cb58086f6342de08a62"
+    },
+    {
+      "name": "set_move_from_pad",
+      "address": "0x80058c58",
+      "bytes": 292,
+      "sha256": "55d6559fd01cefa0009fb4ffbb428ca0ac70997c2348e68fa83e7ad930afb684"
+    },
+    {
+      "name": "set_move_direction",
+      "address": "0x8005a184",
+      "bytes": 32,
+      "sha256": "f8e948e05e730100e498c75a3b3bfd20ac3b26c1c1703d31067a5b59380d58d3"
+    },
+    {
+      "name": "restore_move_direction",
+      "address": "0x8005a1a4",
+      "bytes": 12,
+      "sha256": "e678baaedc3b64faa69b5122ef71e85813b8ceb405ef8476f93923d4b3c74d8a"
+    },
+    {
+      "name": "look",
+      "address": "0x80059814",
+      "bytes": 212,
+      "sha256": "0efda23300ce02eb9a6e97d2dc854b954d6d94ff987a592bb720ac324580f7ea"
+    },
+    {
+      "name": "turn",
+      "address": "0x800598e8",
+      "bytes": 308,
+      "sha256": "c1c3144123ecbe7c1543954587a9cfbd34d92f7179880b0f8c31cea105238912"
+    },
+    {
+      "name": "decay_turn",
+      "address": "0x80059a1c",
+      "bytes": 44,
+      "sha256": "fb65a55f2b705d5133ed94403dcf6465d34ab9b8a37e61baa3519bb6eeab2c0b"
+    },
+    {
+      "name": "update_movement",
+      "address": "0x80059a58",
+      "bytes": 148,
+      "sha256": "51f9632297cb1ad303da3f0a1d509007d2aa108c82f1dea31ed3ac3ad6f789ff"
+    },
+    {
+      "name": "move_step",
+      "address": "0x80059aec",
+      "bytes": 100,
+      "sha256": "2bfae54e1ed05386fa334a36b0bab18bcc6e4b6fefae8ee3647f26dc19cc06cb"
+    },
+    {
+      "name": "move_forward",
+      "address": "0x80059b50",
+      "bytes": 136,
+      "sha256": "e79290d8765ce0200f3fc2757179e755fc805ada2856669a79a153ae6c4f83df"
+    },
+    {
+      "name": "set_move_forward",
+      "address": "0x80059bd8",
+      "bytes": 8,
+      "sha256": "d3cfaf30c560d323c38775cb714232fcc25214ede81a8b0bd700ef3e7d628bbc"
+    },
+    {
+      "name": "process_move",
+      "address": "0x80059be0",
+      "bytes": 316,
+      "sha256": "0ef3b8c8985d71921b0359e439242a98d5da62f710bd7b2208b468db37a8e71e"
+    },
+    {
+      "name": "apply_floor",
+      "address": "0x80059d1c",
+      "bytes": 288,
+      "sha256": "5d8158c4a132dae12b34bf8e8bea717b5b7a072edb5d58cc5aca3c41ae53de76"
+    },
+    {
+      "name": "release_floor",
+      "address": "0x80059e3c",
+      "bytes": 92,
+      "sha256": "afb3c5f02a40fc0a2346e17a521453eeeb3d63dc717a2b07740286cfc9fa90e4"
+    },
+    {
+      "name": "turn_delta",
+      "address": "0x8005a050",
+      "bytes": 64,
+      "sha256": "042741a95ac9e10669c95239d1696a3658bff7924232ec07d2abc13c34527c78"
+    },
+    {
+      "name": "rotate_setter",
+      "address": "0x8001ceb4",
+      "bytes": 340,
+      "sha256": "722d79cf1f8c109300d4a56aa1d421442a2b5c424a7f3f1e16ad27d281432217"
+    },
+    {
+      "name": "transform_number",
+      "address": "0x8001ec84",
+      "bytes": 120,
+      "sha256": "7c14d23868ee93933886ecd2477e4e60c6200bef1982963f671e2d76e6d7caaf"
+    },
+    {
+      "name": "rotation",
+      "address": "0x800160b0",
+      "bytes": 652,
+      "sha256": "cab8838ded03b3b2a50a32cc279811d7fb6a1ee23cfe640c1ac4d7c1d9eee443"
+    },
+    {
+      "name": "sqrt",
+      "address": "0x800205c0",
+      "bytes": 132,
+      "sha256": "97c082d2d41751f9fccfc5cf37e8dd0b369fbc97fddd6d85c81c2fa2ca3feff7"
+    },
+    {
+      "name": "intersect",
+      "address": "0x8001f8b8",
+      "bytes": 1944,
+      "sha256": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513"
+    },
+    {
+      "name": "decode_face",
+      "address": "0x80020050",
+      "bytes": 1152,
+      "sha256": "d58160f9ae8a3adcc81dfda474988896476e823a614afd7f686896ec64677469"
+    },
+    {
+      "name": "cross",
+      "address": "0x800179ac",
+      "bytes": 88,
+      "sha256": "b0df3db5528e30315b774c82d909799911f21a661fc9d23bf7ce2dbb33ef3f53"
+    },
+    {
+      "name": "square",
+      "address": "0x800178e8",
+      "bytes": 40,
+      "sha256": "99cb1c8d0c79529e8c6f1a56f640ebd7400c2eb0f57312cdc2e252c1e34f201b"
+    }
+  ],
+  "cloud_function_ranges": [
+    {
+      "name": "aggregate",
+      "address": "0x8001ddf4",
+      "bytes": 796,
+      "sha256": "e61be058229e5ecc97387ea9e246d7b578594f5d77495b56fc3f2900f2a6b193"
+    },
+    {
+      "name": "segment_box",
+      "address": "0x8001e110",
+      "bytes": 472,
+      "sha256": "c6bb20cf05899b90950c8aa14708812e200a46e305aa34d53489d0df78128530"
+    },
+    {
+      "name": "outcode",
+      "address": "0x8001ecfc",
+      "bytes": 176,
+      "sha256": "5070c8f9b60f3e51ea87f2d35887a3a097bc932f9f00a2c3e3449f10c66d8eda"
+    },
+    {
+      "name": "intersect",
+      "address": "0x8001f8b8",
+      "bytes": 1944,
+      "sha256": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513"
+    },
+    {
+      "name": "decode_face",
+      "address": "0x80020050",
+      "bytes": 1152,
+      "sha256": "d58160f9ae8a3adcc81dfda474988896476e823a614afd7f686896ec64677469"
+    },
+    {
+      "name": "sqrt",
+      "address": "0x800205c0",
+      "bytes": 132,
+      "sha256": "97c082d2d41751f9fccfc5cf37e8dd0b369fbc97fddd6d85c81c2fa2ca3feff7"
+    },
+    {
+      "name": "cross",
+      "address": "0x800179ac",
+      "bytes": 88,
+      "sha256": "b0df3db5528e30315b774c82d909799911f21a661fc9d23bf7ce2dbb33ef3f53"
+    },
+    {
+      "name": "square",
+      "address": "0x800178e8",
+      "bytes": 40,
+      "sha256": "99cb1c8d0c79529e8c6f1a56f640ebd7400c2eb0f57312cdc2e252c1e34f201b"
+    },
+    {
+      "name": "active",
+      "address": "0x8001f3a4",
+      "bytes": 16,
+      "sha256": "3dbb4a6349c8b86c1fe379a9779d36ace6b209faaea3c215e01f3df98454888e"
+    },
+    {
+      "name": "get_bounds",
+      "address": "0x8001f50c",
+      "bytes": 16,
+      "sha256": "3960bf714c3d63c777cb90c0336714cf7599f0e575ed62e305a53527258c9ea5"
+    }
+  ],
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/player-collision.json": "639c3390c19a44c26bf731d1debc43957f66fa2c5365b01346e0641ef0642f44",
+    "crates/lsd-core/tests/fixtures/collision-cloud.json": "ee2b99949f9bb7301f1c5d12617a13950d21aaeb483704808cc1c6f5b6ef3a3e"
+  },
+  "private_original_geometry_observations_sha256": "a6878aba1336a13bc7a11012fd55b2c767aa347d6b03e6afacc866dd69411d0b",
+  "private_proof_sha256": {
+    "native-controls-collision-proof-fourth.json": "c3797e1d4c7e59bf53be048b54d0033c9923d55f05cd36b637cee33a8ed5a445",
+    "native-cloud-proof-fourth.json": "63ffaa9c653f602b02bffa2c89734135d071f5919062d346d26337648c5ba111",
+    "native-geometry-proof-fourth.json": "f96b58bd38ab7adaba9390f850257a1f2b0705bc6e8d6a7305b6f23246aeada2",
+    "walk-render-proof-fourth.json": "47817302777f4de170a1ae1ff64c5d8d2cb30ad0000893b15057d8934284d59f"
+  },
+  "local_validation": {
+    "workspace_tests_passed": 52,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "local_original_geometry_corpus_test_passed": true,
+    "private_original_tests_ignored_in_default_ci": 3
+  },
+  "movement_render": {
+    "stage": 0,
+    "map": 0,
+    "texture": "A",
+    "width": 320,
+    "height": 240,
+    "captures": [
+      {
+        "ticks": 0,
+        "sha256": "2cc976e6ddba70a484659bc630c1dfb7a3e0c07fc7b8e76cf6ad04bb23b580c5",
+        "log_sha256": "cdfd6ad0196434acfaab1cc70fa0f5e6fefa1de6e79cb8a92a9fb55c67adcd1f"
+      },
+      {
+        "ticks": 32,
+        "sha256": "da87054aa9becb60f5fbd7d996af2cbbd0e7437b88ac7bf3b9c9fc3130fffd48",
+        "log_sha256": "ff307d9911bfd3b84e2795a6db16ee8b964e11b814cd888733775c78395bd14e"
+      }
+    ],
+    "binary_sha256": "a7d110bc72f50540ba960b16d24374e4bdaf33ec83fc8dddc633b9516d23b001",
+    "scope": "Automatically selected local floor spawn and supplied camera rest points; float Bevy rendering, scene callbacks pending."
+  },
+  "static_viewer_capture_unchanged": true,
+  "c_checkout_preserved_and_paused": true,
+  "working_source_sha256": {
+    "crates/lsd-core/src/pad.rs": "4642043946cb3f125d5377b0ecbc5d77dad8d6b98117e331d0bb1d886d3ea11b",
+    "crates/lsd-core/src/player_controls.rs": "d75f500e006c3089182f71e162c136e7f26a949db9cea641736e69b32e7c9029",
+    "crates/lsd-core/src/fixed_math.rs": "8828fe0cfbaa8607da664c53bf7e3f4c53d65746f40d150cd89ea6f31a9d80fa",
+    "crates/lsd-core/src/collision.rs": "173670c86e07eed3e919b2a26018b37b34f60335e80908d64dfd9838be505962",
+    "crates/lsd-core/src/collision_cloud.rs": "ece0b5849d6116f8d9d8a7677312c171a4c3dc6bb112c1f58a918d673a6f73ca",
+    "crates/lsd-core/src/chunk_collision.rs": "2a120fa2c585a5acfadf0d76e871626812c802bf9a380276b5552ee9e73cb4bf",
+    "crates/lsd-core/src/chunk_player.rs": "b9735c0a5cfad3e8153510080dad157d1fd1602799b0c1d4caa05a7df82613a2",
+    "crates/lsd-core/src/lib.rs": "e99862f0bb84fee34c912fd6de8ad59520766f6274d17c75a7b94079070761af",
+    "crates/lsd-core/tests/chunk_player.rs": "18ef66be47ca8fbb7c07be2693245558d949131fe8f29d7154312cdc48de4c09",
+    "crates/lsd-core/tests/native_player_collision.rs": "9a7158aee7daed96f7a76b50f1c2cbb17d308ab2bed3a767cb7d495430425581",
+    "crates/lsd-core/tests/native_collision_cloud.rs": "4796ce1957256a3b628597cc050114e09f99eaa69fc479381ce0b2edbe099d7e",
+    "crates/lsd-assets/src/math_tables.rs": "0406c311a2404378cce525513928b4abbda53caef24d5c736ba0590470d9ea7d",
+    "crates/lsd-assets/src/lib.rs": "b6446abba1c9104dc10aec643561c1e20d11dd2e29bdd51f466ab1870a7b0e92",
+    "crates/lsd-assets/src/formats/tmd.rs": "dff13d86accacfd23c686a9acccaa48acdd6860fba34f59a40bac33cc5ed21f7",
+    "crates/lsd-assets/src/formats/lbd.rs": "25e0f8fd3590495ba7637df1f91a6b2c4771da6b433d75de37cc0caf9fa1cf93",
+    "crates/lsd-assets/tests/native_geometry_corpus.rs": "c5f834cd4e400dbf04e5e8db4c963bd3b550cf47b9108fb47447026dcd94f1fa",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "6f334449600552e4183b019e3fa1e4fb6474f1f8078bb6aaa12bda427cc04bdd"
+  },
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

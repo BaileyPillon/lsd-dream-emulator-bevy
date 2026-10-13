@@ -1,5 +1,7 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 pub mod formats;
+mod math_tables;
+pub use math_tables::load_math_tables;
 use sha2::{Digest, Sha256};
 use std::fmt;
 

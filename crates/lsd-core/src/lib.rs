@@ -2,11 +2,27 @@
 
 mod animation;
 mod animation_player;
+mod chunk_collision;
+mod chunk_player;
+mod collision;
+mod collision_cloud;
+mod fixed_math;
+mod pad;
+mod player_controls;
 mod rng;
 mod streaming;
 
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
 pub use animation_player::{AnimationError, AnimationParent, AnimationPart, AnimationPlayer};
+pub use chunk_collision::{CollisionChunk, CollisionModel, CollisionTile, WorldContact};
+pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
+pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
+pub use collision_cloud::{CollisionBounds, CollisionCloud};
+pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
+pub use pad::{PAD_MASKS, PadState};
+pub use player_controls::{
+    FloorEffectStep, MotionAxis, MotionRequest, MovementStep, PlayerControls,
+};
 pub use rng::PsxRng;
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};
 

@@ -378,6 +378,19 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "movement_collision_20261013": {
+      "scope": "Original input/view/movement CPU state and math, geometry comparisons with explicit semantic GTE, and a supplied single-chunk movement prototype. Full world scheduling, link/NPC dispatch, original camera setup, hardware/GTE timing and end-to-end parity remain open.",
+      "evidence": {
+        "path": "docs/movement-collision-checks.json",
+        "sha256": "7c9708ca3a04cacfc45cf0a005dcb81022f19973ecb34397521000f04877cba0"
+      },
+      "control_steps_checked": 960,
+      "static_model_semantic_geometry_probes": 13037,
+      "single_chunk_movement_prototype_rendered": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

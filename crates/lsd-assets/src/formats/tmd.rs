@@ -155,6 +155,26 @@ pub struct TmdObject {
     pub scale: i32,
 }
 
+impl TmdObject {
+    pub fn collision_faces(&self) -> Vec<lsd_core::CollisionFace> {
+        self.polygons
+            .iter()
+            .map(|polygon| {
+                let points: Vec<_> = polygon
+                    .vertices
+                    .iter()
+                    .map(|&index| self.vertices[usize::from(index)].xyz)
+                    .collect();
+                match points.len() {
+                    3 => lsd_core::CollisionFace::Triangle(points.try_into().unwrap()),
+                    4 => lsd_core::CollisionFace::Quad(points.try_into().unwrap()),
+                    _ => unreachable!("decoder only accepts triangle and quad packets"),
+                }
+            })
+            .collect()
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct Tmd {
     pub objects: Vec<TmdObject>,

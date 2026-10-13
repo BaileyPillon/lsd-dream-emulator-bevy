@@ -12,6 +12,9 @@ primitives, a deterministic Bevy probe, original map/texture/animation decoding,
 integer animation playback, and original-stage/model asset viewers. Full
 gameplay remains on the [roadmap](docs/ROADMAP.md).
 
+An original control/movement and collision prototype now runs in a loaded map;
+see [movement recovery](docs/MOVEMENT_COLLISION.md) for its scope and checks.
+
 ## Start here
 
 The workspace pins Rust **1.97.1**, Bevy **0.20.0** and its Cargo lockfile.
@@ -47,6 +50,9 @@ This viewer uses original map geometry, textures and tile placement. See the
 [asset pipeline](docs/ASSET_PIPELINE.md) for corpus evidence, captures and
 remaining rendering/gameplay requirements.
 
+Append `--walk` for the single-chunk movement prototype. Full streaming,
+linking and original scene scheduling remain separate requirements.
+
 To inspect original model animation from a stage's streamed library:
 
 ```sh
@@ -75,6 +81,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Animation frames decoded | 4,260 |
 | Original animation entries compared in supplied actor graphs | 122 |
 | Matching native animation state observations | 10,228 |
+| Reference control steps compared in supplied graphs | 960 |
+| Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

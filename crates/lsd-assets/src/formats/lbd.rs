@@ -43,6 +43,39 @@ pub struct Lbd {
 }
 
 impl Lbd {
+    pub fn collision_chunk(&self) -> lsd_core::CollisionChunk {
+        lsd_core::CollisionChunk {
+            models: self
+                .tmd
+                .objects
+                .iter()
+                .map(|model| lsd_core::CollisionModel {
+                    bounds: lsd_core::CollisionBounds::from_points(
+                        &model
+                            .vertices
+                            .iter()
+                            .map(|point| point.xyz)
+                            .collect::<Vec<_>>(),
+                    ),
+                    faces: model.collision_faces(),
+                })
+                .collect(),
+            cells: (0..400)
+                .map(|cell| {
+                    self.cell_chain(cell)
+                        .expect("validated map chain")
+                        .into_iter()
+                        .filter(|tile| tile.present())
+                        .map(|tile| lsd_core::CollisionTile {
+                            model: usize::from(tile.model),
+                            translation: tile.native_position(cell),
+                            heading: tile.native_heading(),
+                        })
+                        .collect()
+                })
+                .collect(),
+        }
+    }
     pub fn parse(data: &[u8]) -> Result<Self, DecodeError> {
         let reader = Reader(data);
         reader.bytes(0, 24)?;
