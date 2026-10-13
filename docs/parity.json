@@ -402,6 +402,21 @@
       "integration_stages_checked": 14,
       "whole_original_feature_groups_accepted": 0,
       "ai_model_calls": 0
+    },
+    "scene_lookup_20261013": {
+      "scope": "Original CPU lookup/selection/placement comparisons and Rust layered scene integration; supplied preload graph, current-owner body prototype, development camera/schedule and float Bevy rendering. Full stream lifecycle, actor callbacks and game parity remain open.",
+      "evidence": {
+        "path": "docs/scene-recovery-checks.json",
+        "sha256": "7734e3a6d41d90477ae3f4673f3f20cabc550528621b034b88f471b46c4cd0c3"
+      },
+      "original_cpu_location_checks": 1108,
+      "original_cpu_query_selections": 3690,
+      "original_cpu_placements": 144,
+      "original_map_paths_resolved": 418,
+      "layered_scene_maps_imported": 11,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

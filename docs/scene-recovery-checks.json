@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-13T23:13:46.174045+00:00",
+  "base_commit": "1d40accf9b0f72d715d556117b17af0d439636c4",
+  "scope": "Original CPU lookup/selection/placement comparisons and Rust layered scene integration; supplied preload graph, current-owner body prototype, development camera/schedule and float Bevy rendering. Full stream lifecycle, actor callbacks and game parity remain open.",
+  "original_cpu_location_checks": 1108,
+  "successful_original_locations": 742,
+  "original_cpu_query_selections": 3690,
+  "original_cpu_placements": 144,
+  "original_function_entries": {
+    "locate": 1108,
+    "owner": 1108,
+    "find_slot": 6912,
+    "grid_index": 742,
+    "query_selection": 3690,
+    "placement": 144
+  },
+  "function_ranges": [
+    {
+      "name": "placement",
+      "address": "0x8004b44c",
+      "bytes": 292,
+      "sha256": "e4cd1302002bf780ae4ab51e78be2cf9bd6230995537f81617aee313102a4551"
+    },
+    {
+      "name": "locate",
+      "address": "0x8004c1c0",
+      "bytes": 424,
+      "sha256": "d82d26562f1a91a9ae77988cfedcf3e0e41b69c558344850c56a6a1d8712933c"
+    },
+    {
+      "name": "grid_index",
+      "address": "0x8004c368",
+      "bytes": 136,
+      "sha256": "fde21abc879fe53caac48f67490e480a5b4f00661f006583abfdd99a5b9bf25a"
+    },
+    {
+      "name": "current_slot",
+      "address": "0x8004c3f0",
+      "bytes": 68,
+      "sha256": "3accc75c4f01a237291eaf896fb2ad93f7ef6d26e3bbe3fb55dee01c5d177e73"
+    },
+    {
+      "name": "find_slot",
+      "address": "0x8004c434",
+      "bytes": 60,
+      "sha256": "20dc014764c03db33c736936d39697ca0578fea09351941f97b1eaf2cce96596"
+    },
+    {
+      "name": "owner",
+      "address": "0x8004c470",
+      "bytes": 280,
+      "sha256": "1e8050abf24ead47a7e6009565ee0db7086026203b62b555771812c7343a368a"
+    },
+    {
+      "name": "query_selection",
+      "address": "0x80057784",
+      "bytes": 464,
+      "sha256": "ad3921a883baed60d4e8d09a62ef5695024af1bf79235c5b7dcfba1b8d6c1be5"
+    }
+  ],
+  "function_result_stubs": 0,
+  "gte_operations": {},
+  "original_cpu_scope": "Original CPU lookup, placement and query selection with supplied allocated seven-slot graphs and unchanged native virtual methods. Complete stage construction, I/O, streamed residency, geometry traversal and full-game acceptance remain open.",
+  "public_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/scene-lookup.json",
+    "sha256": "450452593dd70bf165ea584719c3460ea521855b99bb7450a5345f6147c6e046"
+  },
+  "local_validation": {
+    "workspace_tests_passed": 57,
+    "private_original_tests_ignored": 4,
+    "original_scene_content_test_passed": true,
+    "original_scene_descriptors": 14,
+    "original_map_paths_resolved": 418,
+    "layered_maps_imported": 11,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "desktop_binaries_built": true,
+    "old_single_chunk_capture_identical": true,
+    "nested_map_255_inspected": true
+  },
+  "captures": [
+    {
+      "stage": 0,
+      "ticks": 0,
+      "image_sha256": "8d75fe694192e492f0eb8a3bc51ed4aca05286f4cac17dfada76b52507a2ed56",
+      "log_sha256": "e425e3db48ba88f3146a471b5872c48a41718f52a73f1a0349657325ceebea8a"
+    },
+    {
+      "stage": 0,
+      "ticks": 32,
+      "image_sha256": "65be73b8f5c37a28f74f09c4ebca21f56ea73efaaab4152db7df3c9bf7173553",
+      "log_sha256": "bb275c600d5006da117a82dd8530e58751f8a2c45ad2cea7a0dbeb47be3a6f20"
+    },
+    {
+      "stage": 6,
+      "ticks": 0,
+      "image_sha256": "bdd76bc159df89fdea5aec645c394d5c748dd03ee3d54dda11bef047f708561b",
+      "log_sha256": "c313815f5d868cdb28945c07f451502c38fa68da068a24a6a00a1bd96f59a284"
+    }
+  ],
+  "binary_sha256": "5c2390d80c63087ccc90fd11c013276c703b01017b5a8fc5f28ef3f41de5aabb",
+  "local_table_sha256": {
+    "0x800861d4": "4c040161e8b67c0a19c46dc9f8166aeddc165c8d64f5fc53ecf50215a46a9e51",
+    "0x800819e8": "8518454650fe8d06c3960165d1bd2d3914b7e2805b56e9d5c11c7a05f0a1b8de"
+  },
+  "private_proof_sha256": {
+    "native-scene-lookup-proof-fifth.json": "7607025040ad7fc632f2d819ee17649bbbcc0b706fffbfd4df7b36460e96578b",
+    "scene-validation-proof-fifth.json": "75c6fd51d8ac080e6a0045eef93d0fb27e20bca083cf1f0a1cff5e235bb30871"
+  },
+  "working_source_sha256": {
+    "crates/lsd-core/src/scene_grid.rs": "f91550b19311071ab94c3bf2ec5796e956294c6a14dd4d460058ded917c525d0",
+    "crates/lsd-core/src/scene_collision.rs": "91e64ea4b6ee673c47888083a49605de70db1e40303c4be08c67366baabe551b",
+    "crates/lsd-core/src/chunk_collision.rs": "744b9327e833579a96636de2f039f16b4acb35557730a59ccf263f4fca4184a8",
+    "crates/lsd-core/src/chunk_player.rs": "e2954a33fdc6eaa168390d60d7f64f0d188fa3b6da5a9a6762304535256d1dc7",
+    "crates/lsd-core/src/lib.rs": "b448f48675fa774169e2698cc8b05770f243d529fe03bb058470420b323b8158",
+    "crates/lsd-core/tests/native_scene_grid.rs": "c404a369a05797f6998ba9399cbea249af7c9a409ba20c29f7a88374ef496cfe",
+    "crates/lsd-core/tests/scene_collision.rs": "88f090a05686a08e11aa529f0804623ba9d474afc0944d4ae693d8de04533f27",
+    "crates/lsd-assets/src/scene_config.rs": "89aaf819b86765fbf64f8e94ad27b29bd3f0bb0198d1ba2dc75ac434d77954cd",
+    "crates/lsd-assets/src/lib.rs": "5b97418f32aa2e28f8b3a6051af6344bcab1ccbf1fb40757d2af33e584270b09",
+    "crates/lsd-assets/tests/native_scene_content.rs": "f095ddb4ef1c91f1ef43b5ff04b843945745a3331b82077d2c16e07e285e41dc",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "f3738b3f63d2ed2ca74493ded4f0356e8405811ec6e3fda2938a357cb6c83ca0",
+    "crates/lsd-bevy/src/bin/lsd-model.rs": "f7615ba27039338ae72c200c6bbef1ec92612ce87570397fc02693f432e8ba39"
+  },
+  "c_decompilation_paused_and_preserved": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

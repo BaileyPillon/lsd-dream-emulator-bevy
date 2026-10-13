@@ -10,6 +10,8 @@ mod fixed_math;
 mod pad;
 mod player_controls;
 mod rng;
+mod scene_collision;
+mod scene_grid;
 mod streaming;
 
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
@@ -26,6 +28,11 @@ pub use player_controls::{
     FloorEffectStep, MotionAxis, MotionRequest, MovementStep, PlayerControls,
 };
 pub use rng::PsxRng;
+pub use scene_collision::{SceneCollision, SceneCollisionError, SceneContact};
+pub use scene_grid::{
+    CellRectangle, SceneGrid, SceneGridError, SceneLocation, ScenePlacement, SceneQuery, SceneSlot,
+    SceneSlots,
+};
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};
 
 /// A deterministic development probe, not the game's dream clock or RNG call history.

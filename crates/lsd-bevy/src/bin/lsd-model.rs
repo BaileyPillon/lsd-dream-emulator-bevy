@@ -13,7 +13,7 @@ use bevy::{
 };
 use lsd_assets::{
     formats::{Lbd, Mom, Tix, Vram},
-    is_canonical_reference, sha256_hex,
+    is_canonical_reference, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::{AssetSceneBuilder, MeshBinding};
 use lsd_core::{AnimationParent, AnimationPart, AnimationPlayer};
@@ -133,7 +133,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Err("Extraction has a different reference executable".into());
     }
     let folder = root.join(format!("CDI/STG{stage:02}"));
-    let map_bytes = std::fs::read(folder.join(format!("M{map:03}.LBD")))?;
+    let map_bytes = std::fs::read(root.join(stage_map_path(
+        &std::fs::read(root.join("SLPS_015.56"))?,
+        stage,
+        map,
+    )?))?;
     let parsed = Lbd::parse(&map_bytes)?;
     let model = parsed
         .model_library

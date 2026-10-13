@@ -2,6 +2,8 @@
 pub mod formats;
 mod math_tables;
 pub use math_tables::load_math_tables;
+mod scene_config;
+pub use scene_config::{LayeredStage, load_layered_stage, load_scene_grid, stage_map_path};
 use sha2::{Digest, Sha256};
 use std::fmt;
 

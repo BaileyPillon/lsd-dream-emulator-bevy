@@ -22,6 +22,8 @@ does not imply every provisional feature group is accepted.
    authoring workflows and clearly selectable gameplay changes. These have a
    separate scorecard and do not increase original-feature acceptance.
 
-Current original scalar observations support three small Rust primitives.
-All 40 provisional whole-game feature groups still require acceptance in this
-port. Use [parity.json](parity.json) for the explicit initial baseline.
+Current checks cover original scalar primitives, asset decoding, integer
+animation, controls and collision, plus scene lookup and query selection.
+The layered movement prototype still needs original streaming and actor
+callbacks. All 40 provisional whole-game groups require acceptance; use
+[parity.json](parity.json) for the frozen initial baseline and dated progress.

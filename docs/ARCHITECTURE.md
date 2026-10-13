@@ -15,7 +15,7 @@ flowchart LR
 
 `lsd-core` currently implements the PsyQ RNG, animation-word decoding and integer playback,
 inclusive mixed-width cell bounds and valid stream-layer ordering. Future
-movement, linking, dream generation and NPC scripts belong here. Recovered
+world traversal, linking, dream generation and NPC scripts belong here. Recovered
 fixed-point widths and overflow rules take precedence over floating-point
 convenience.
 
@@ -24,6 +24,12 @@ and collision-cloud preparation now also live in `lsd-core`. `ChunkPlayer`
 connects them for a supplied loaded map. The full world/actor callback graph,
 streaming and linking remain requirements; the chunk prototype is scoped in
 [movement recovery](MOVEMENT_COLLISION.md).
+
+`SceneSlots` adds original world/cell lookup and query selection. `SceneCollision`
+connects ready slots to imported floor geometry and retains scene contact identity.
+Layered inspection shares the player's integer control/motion path. Original
+asynchronous loading and surrounding-body notification order remain requirements;
+see [scene recovery](SCENE_RECOVERY.md).
 
 `lsd-assets` validates PS-X EXE headers and the canonical executable hash, and
 decodes TIM/TIX, TMD polygon objects, LBD maps and MOM/MOS/MML model libraries.

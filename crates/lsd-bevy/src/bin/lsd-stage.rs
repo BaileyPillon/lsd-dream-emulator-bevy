@@ -13,12 +13,12 @@ use bevy::{
 };
 use lsd_assets::{
     formats::{Lbd, Tix, Tmd, Vram},
-    is_canonical_reference, load_math_tables, sha256_hex,
+    is_canonical_reference, load_layered_stage, load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
     ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, PadState, PlayerControls,
-    PsxMathTables,
+    PsxMathTables, SceneCollision,
 };
 use std::path::PathBuf;
 
@@ -42,6 +42,13 @@ struct WalkingScene {
     player: ChunkPlayer,
     collision: CollisionChunk,
     tables: PsxMathTables,
+    layered_collision: Option<SceneCollision>,
+}
+
+#[derive(Resource)]
+struct LayeredAssets {
+    maps: Vec<Lbd>,
+    origin: [i32; 3],
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -56,6 +63,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or_else(|| "A".into())
         .to_ascii_uppercase();
     let mut walk = false;
+    let mut walk_layers = false;
     let mut walk_steps = None;
     let (inspect, capture) = match args.next() {
         None => (false, None),
@@ -64,8 +72,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             walk = true;
             (false, None)
         }
-        Some(value) if value == "--walk-capture" => {
+        Some(value) if value == "--walk-layers" => {
             walk = true;
+            walk_layers = true;
+            (false, None)
+        }
+        Some(value) if value == "--walk-capture" || value == "--walk-layers-capture" => {
+            walk = true;
+            walk_layers = value == "--walk-layers-capture";
             let path = PathBuf::from(args.next().ok_or("--walk-capture needs a new PNG path")?);
             walk_steps = Some(
                 args.next()
@@ -82,7 +96,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ),
         _ => {
             return Err(
-                "Use --inspect, --capture, --walk or --walk-capture after the texture variant"
+                "Use --inspect, --capture, --walk, --walk-layers or a walking capture after the texture variant"
                     .into(),
             );
         }
@@ -90,11 +104,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if stage > 13 || !matches!(texture.as_str(), "A" | "B" | "C" | "D") || args.next().is_some() {
         return Err("Stage must be 0..13 and texture variant A..D".into());
     }
-    if !is_canonical_reference(&std::fs::read(root.join("SLPS_015.56"))?) {
+    let executable = std::fs::read(root.join("SLPS_015.56"))?;
+    if !is_canonical_reference(&executable) {
         return Err("Extraction has a different reference executable".into());
     }
     let folder = root.join(format!("CDI/STG{stage:02}"));
-    let map_bytes = std::fs::read(folder.join(format!("M{map_number:03}.LBD")))?;
+    let map_bytes = std::fs::read(root.join(stage_map_path(&executable, stage, map_number)?))?;
     let texture_bytes = std::fs::read(folder.join(format!("TEX{texture}.TIX")))?;
     let map = Lbd::parse(&map_bytes)?;
     if map.tmd.objects.iter().any(|object| object.scale != 0) {
@@ -139,9 +154,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if inspect {
         return Ok(());
     }
+    let mut layered_assets = None;
     let walking = if walk {
-        let tables = load_math_tables(&std::fs::read(root.join("SLPS_015.56"))?)?;
+        let tables = load_math_tables(&executable)?;
         let collision = map.collision_chunk(CollisionPolicy::for_stage(stage));
+        let layered = if walk_layers {
+            Some(load_layered_stage(
+                &root,
+                &std::fs::read(root.join("SLPS_015.56"))?,
+                stage,
+                [0, 0, 0],
+            )?)
+        } else {
+            None
+        };
         let body = Tmd::parse(&std::fs::read(root.join("CDI/ETC/DREAME5.TMD"))?)?;
         let bounds = CollisionBounds::from_points(
             &body.objects[0]
@@ -175,24 +201,61 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             position: spawn.ok_or("No floor found for the movement prototype")?,
             bounds,
         };
+        if let Some(layered) = &layered {
+            for (position, offset) in player.position.iter_mut().zip(layered.origin) {
+                *position = position.wrapping_add(offset);
+            }
+        }
         if let Some(steps) = walk_steps {
             for _ in 0..steps {
-                player.step(0x1000, &collision, &tables)?;
+                if let Some(layered) = &layered {
+                    player.step_in_scene(0x1000, &layered.collision, &tables)?;
+                } else {
+                    player.step(0x1000, &collision, &tables)?;
+                }
             }
         }
         println!(
-            "profile=single_chunk_movement_prototype position={:?} heading={} original_link_npc_callbacks_pending=true",
-            player.position, player.controls.angles[1]
+            "profile={} position={:?} heading={} original_link_npc_callbacks_pending=true",
+            if walk_layers {
+                "layered_scene_movement_prototype"
+            } else {
+                "single_chunk_movement_prototype"
+            },
+            player.position,
+            player.controls.angles[1]
         );
+        if let Some(layered) = &layered {
+            println!(
+                "loaded_maps={} slot={:?} original_stream_lifecycle_pending=true",
+                layered.maps.len(),
+                layered
+                    .collision
+                    .slots
+                    .locate(player.position)?
+                    .map(|location| location.slot)
+            );
+        }
+        let layered_collision = layered.map(|layered| {
+            layered_assets = Some(LayeredAssets {
+                maps: layered.maps,
+                origin: layered.origin,
+            });
+            layered.collision
+        });
         Some(WalkingScene {
             player,
             collision,
             tables,
+            layered_collision,
         })
     } else {
         None
     };
     let mut app = App::new();
+    if let Some(layered) = layered_assets {
+        app.insert_resource(layered);
+    }
     if let Some(walking) = walking {
         app.insert_resource(walking)
             .insert_resource(Time::<Fixed>::from_hz(15.0))
@@ -277,10 +340,17 @@ fn walking_controls(
         player,
         collision,
         tables,
+        layered_collision,
     } = &mut *scene;
-    player
-        .step(buttons, collision, tables)
-        .expect("decoded chunk movement query");
+    if let Some(layered) = layered_collision {
+        player
+            .step_in_scene(buttons, layered, tables)
+            .expect("decoded scene movement query");
+    } else {
+        player
+            .step(buttons, collision, tables)
+            .expect("decoded chunk movement query");
+    }
 }
 
 fn walking_camera(scene: Res<WalkingScene>, mut cameras: Query<&mut Transform, With<Camera3d>>) {
@@ -305,6 +375,7 @@ fn walking_camera(scene: Res<WalkingScene>, mut cameras: Query<&mut Transform, W
 fn setup(
     mut commands: Commands,
     source: Res<StageAssets>,
+    layered: Option<Res<LayeredAssets>>,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut images: ResMut<Assets<Image>>,
@@ -312,35 +383,53 @@ fn setup(
 ) {
     let mut builder =
         AssetSceneBuilder::new(&source.vram, &mut meshes, &mut materials, &mut images);
-    let models: Vec<_> = source
-        .map
-        .tmd
-        .objects
-        .iter()
-        .map(|object| {
-            (0..4)
-                .map(|quarter| builder.build_object(object, quarter))
-                .collect::<Vec<_>>()
-        })
-        .collect();
-    for cell in 0..400 {
-        for tile in source.map.cell_chain(cell).expect("validated cell chain") {
-            if !tile.present() {
-                continue;
-            }
-            let [x, y, z] = tile.native_position(cell);
-            for (mesh, material) in
-                &models[usize::from(tile.model)][usize::from(tile.quarter_turn & 3)]
-            {
-                commands.spawn((
-                    Mesh3d(mesh.clone()),
-                    MeshMaterial3d(material.clone()),
-                    Name::new(format!(
-                        "STG{:02}/M{:03}/cell{cell}",
-                        source.stage, source.map_number
-                    )),
-                    Transform::from_xyz(x as f32 / 2048.0, -y as f32 / 2048.0, -z as f32 / 2048.0),
-                ));
+    let maps = if let Some(layered) = &layered {
+        layered
+            .maps
+            .iter()
+            .enumerate()
+            .map(|(index, map)| (index as u16, map))
+            .collect::<Vec<_>>()
+    } else {
+        vec![(source.map_number, &source.map)]
+    };
+    let origin = layered.as_ref().map_or([0; 3], |layered| layered.origin);
+    for (map_number, map) in maps {
+        let models: Vec<_> = map
+            .tmd
+            .objects
+            .iter()
+            .map(|object| {
+                (0..4)
+                    .map(|quarter| builder.build_object(object, quarter))
+                    .collect::<Vec<_>>()
+            })
+            .collect();
+        for cell in 0..400 {
+            for tile in map.cell_chain(cell).expect("validated cell chain") {
+                if !tile.present() {
+                    continue;
+                }
+                let [x, y, z] = std::array::from_fn(|axis| {
+                    tile.native_position(cell)[axis].wrapping_add(origin[axis])
+                });
+                for (mesh, material) in
+                    &models[usize::from(tile.model)][usize::from(tile.quarter_turn & 3)]
+                {
+                    commands.spawn((
+                        Mesh3d(mesh.clone()),
+                        MeshMaterial3d(material.clone()),
+                        Name::new(format!(
+                            "STG{:02}/M{:03}/cell{cell}",
+                            source.stage, map_number
+                        )),
+                        Transform::from_xyz(
+                            x as f32 / 2048.0,
+                            -y as f32 / 2048.0,
+                            -z as f32 / 2048.0,
+                        ),
+                    ));
+                }
             }
         }
     }

@@ -15,6 +15,11 @@ gameplay remains on the [roadmap](docs/ROADMAP.md).
 An original control/movement and collision prototype now runs in a loaded map;
 see [movement recovery](docs/MOVEMENT_COLLISION.md) for its scope and checks.
 
+Original scene lookup and floor query order also run in a supplied slot graph.
+The layered prototype can load all five cottage maps or six tower maps; see
+[scene recovery](docs/SCENE_RECOVERY.md). Spatial streaming and original actor
+callbacks still need implementation.
+
 ## Start here
 
 The workspace pins Rust **1.97.1**, Bevy **0.20.0** and its Cargo lockfile.

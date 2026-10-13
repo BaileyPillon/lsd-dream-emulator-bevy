@@ -58,7 +58,20 @@ impl CollisionChunk {
             return Ok(None);
         }
         let cell = z as usize * 20 + x as usize;
-        for (index, tile) in self.cells[cell].iter().enumerate() {
+        self.floor_in_cell(cell, position, tables)
+    }
+
+    /// Streamed floor traversal retains the owner's cell index in neighboring layers.
+    pub fn floor_in_cell(
+        &self,
+        cell: usize,
+        position: [i32; 3],
+        tables: &PsxMathTables,
+    ) -> Result<Option<WorldContact>, CollisionFault> {
+        let Some(tiles) = self.cells.get(cell) else {
+            return Ok(None);
+        };
+        for (index, tile) in tiles.iter().enumerate() {
             let model = &self.models[tile.model];
             let delta: [i16; 3] = std::array::from_fn(|axis| {
                 position[axis].wrapping_sub(tile.translation[axis]) as i16
