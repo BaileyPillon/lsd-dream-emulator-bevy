@@ -68,9 +68,11 @@ bounded. Texture samples retain the original 16-bit color and STP flag.
 
 ## Remaining gates
 
-MOM/MOS/MML streams are decoded; their integer transform updates, primitive
-attachments, parent changes and tick order still require Rust execution and
-native comparisons. Audio, movies and save data are also open.
+MOM/MOS/MML streams are decoded and their integer transform updates, primitive
+attachments, parenting and tick order have bounded Rust/native comparisons.
+See [animation playback](ANIMATION_RUNTIME.md). Natural construction, lifetimes,
+original NPC actions and complete animation/rendering acceptance remain open.
+Audio, movies and save data are also open.
 The viewer currently uses Bevy's standard material pipeline. Native lighting,
 semi-transparency modes, palette gradients/fog, affine texture interpolation,
 draw sorting and PS1 projection/timing remain rendering work. A successful

@@ -1,10 +1,12 @@
 //! Original-behavior primitives. This crate never accesses a renderer or AI service.
 
 mod animation;
+mod animation_player;
 mod rng;
 mod streaming;
 
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
+pub use animation_player::{AnimationError, AnimationParent, AnimationPart, AnimationPlayer};
 pub use rng::PsxRng;
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};
 

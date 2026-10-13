@@ -8,9 +8,9 @@ scripts, rendering and audio, with optional mods and AI development tools kept
 separate from the original experience.
 
 **Early development.** The repository currently provides compatibility
-primitives, a deterministic Bevy probe, original map/texture/animation decoding
-and an original-stage asset viewer. Animation playback and full gameplay remain
-on the [roadmap](docs/ROADMAP.md).
+primitives, a deterministic Bevy probe, original map/texture/animation decoding,
+integer animation playback, and original-stage/model asset viewers. Full
+gameplay remains on the [roadmap](docs/ROADMAP.md).
 
 ## Start here
 
@@ -47,6 +47,16 @@ This viewer uses original map geometry, textures and tile placement. See the
 [asset pipeline](docs/ASSET_PIPELINE.md) for corpus evidence, captures and
 remaining rendering/gameplay requirements.
 
+To inspect original model animation from a stage's streamed library:
+
+```sh
+cargo run -p lsd-bevy --bin lsd-model --features desktop --locked -- /path/to/extracted/files 0 0 0 0 A
+```
+
+Use **Space** to pause and **N** to step. This inspector runs the recovered
+animation rules; original NPC actions, game cadence and PS1 rendering remain
+separate requirements. See [animation playback](docs/ANIMATION_RUNTIME.md).
+
 To validate your own reference executable, without copying or modifying it:
 
 ```sh
@@ -63,6 +73,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Original LBD maps decoded by the asset pipeline | 418 |
 | Streamed model libraries decoded | 98 |
 | Animation frames decoded | 4,260 |
+| Original animation entries compared in supplied actor graphs | 122 |
+| Matching native animation state observations | 10,228 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 
@@ -70,6 +82,11 @@ The native checks cover RNG results/state, animation lead-word fields and signed
 cell bounds. Slot ordering also has focused Rust tests. Whole gameplay parity
 requires separate original/port comparisons. The 40-group taxonomy is
 provisional; an exhaustive official feature total is unknown.
+
+Animation comparisons cover integer motion, primitive/parent attachment,
+selection, frame order, pause/resume and loop/timer wrapping. These supplied
+graphs have original NPC action callbacks disabled. They do not accept whole
+NPC encounters, natural construction/lifetimes or hardware timing.
 
 The companion [matching C decompilation](https://github.com/BaileyPillon/lsd-dream-emulator-decompilation)
 is paused at **194,212 / 199,912 game-function bytes in C (97.15%)**. Its code

@@ -2,6 +2,9 @@
 use bevy::{ecs::schedule::ScheduleLabel, prelude::*};
 use lsd_core::CompatibilityProbe;
 
+#[cfg(feature = "desktop")]
+pub mod asset_scene;
+
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ProbeStep;
 

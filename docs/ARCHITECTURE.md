@@ -13,7 +13,7 @@ flowchart LR
     tools[Optional AI analysis tools] -. reviewed artifacts .-> assets
 ```
 
-`lsd-core` currently implements the PsyQ RNG, animation-word decoding,
+`lsd-core` currently implements the PsyQ RNG, animation-word decoding and integer playback,
 inclusive mixed-width cell bounds and valid stream-layer ordering. Future
 movement, linking, dream generation and NPC scripts belong here. Recovered
 fixed-point widths and overflow rules take precedence over floating-point
@@ -22,11 +22,11 @@ convenience.
 `lsd-assets` validates PS-X EXE headers and the canonical executable hash, and
 decodes TIM/TIX, TMD polygon objects, LBD maps and MOM/MOS/MML model libraries.
 Typed owned geometry and ordered animation records, plus bounded borrowed
-texture blocks, replace PS1 file pointers. Animation execution, audio, movies
-and save-data decoding remain open.
+texture blocks, replace PS1 file pointers. Audio, movies and save-data decoding
+remain open.
 
 `lsd-bevy` exposes an explicitly stepped probe schedule and an optional desktop
-preview and an original-stage asset viewer. Original simulation cadence,
+preview and original-stage/model asset viewers. Original simulation cadence,
 interpolation and rendering quirks need
 reference evidence before their implementation. Bevy presentation defaults
 do not automatically establish PlayStation visual parity.

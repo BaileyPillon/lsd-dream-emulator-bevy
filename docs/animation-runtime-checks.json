@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-13T21:25:56.747527+00:00",
+  "repository_before": "3bbff09c82a743c97845aed718ec3945e531533f",
+  "scope": "Original native operations with persistent supplied actor/child/model graphs, native allocation, parent lists and SDK mapping/linking. Original action callbacks disabled. Natural construction/lifetimes, allocation failures, rendering, hardware timing and whole NPC/game behavior remain open.",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "native_function_ranges": [
+    {
+      "function": "func_80066340",
+      "address": "0x80066340",
+      "bytes": 1032,
+      "sha256": "25c43f5f4a4d1fb5a5a67967c3353c6aec85fadea8b9c0250c91db6d89533742"
+    },
+    {
+      "function": "func_800449B8",
+      "address": "0x800449b8",
+      "bytes": 68,
+      "sha256": "ddfca67fbff65ab961c5bb82a49b5713f22e49b3226333de8b3d276454d67e94"
+    },
+    {
+      "function": "func_8004416C",
+      "address": "0x8004416c",
+      "bytes": 56,
+      "sha256": "48eb43f08ad38f0030c293a703e6421aa3906f38f68a70c143ca4c413271b67c"
+    },
+    {
+      "function": "func_80065D64",
+      "address": "0x80065d64",
+      "bytes": 88,
+      "sha256": "c8c122340e97762853a9ed0a19a5745b7a4b9007af16d58a7aac2eaa24420dee"
+    },
+    {
+      "function": "func_800662BC",
+      "address": "0x800662bc",
+      "bytes": 132,
+      "sha256": "ea7984ab42b23eb25b1bab2f045f11d9cce8e59aa881fd05c9a32bf6f7c450ca"
+    },
+    {
+      "function": "func_8001D0EC",
+      "address": "0x8001d0ec",
+      "bytes": 184,
+      "sha256": "4b990f15427dd61e15b48537e78e15d6614669ee87a1d00b497c8240818a9844"
+    },
+    {
+      "function": "func_800570B4",
+      "address": "0x800570b4",
+      "bytes": 124,
+      "sha256": "8c24b5fc897123b6e7a81154c1fef565baa7f51735de2f8172d4e346efb74543"
+    },
+    {
+      "function": "func_8001CC48",
+      "address": "0x8001cc48",
+      "bytes": 108,
+      "sha256": "cb0cb2d5311555bd9a7964b5e71cd7c95e2d73f55ff5607fd1c24b8444bf2fa6"
+    },
+    {
+      "function": "base_class_get_vtable",
+      "address": "0x80018390",
+      "bytes": 16,
+      "sha256": "6f3e96c03b803dbf1321407c23ea13c5f2b782f40d0be26b977088b8a0b51196"
+    },
+    {
+      "function": "func_8001E57C",
+      "address": "0x8001e57c",
+      "bytes": 16,
+      "sha256": "6b444c29202af0f323b5dfd638e1c9677848593458bdf1a70a8fc235380de21c"
+    },
+    {
+      "function": "base_class_attach",
+      "address": "0x80017f98",
+      "bytes": 88,
+      "sha256": "9d7d8917f3ea126b15d78a9593aa1fbab39aef267d052e2b941bf8b3b6c61c29"
+    },
+    {
+      "function": "base_class_add_parent",
+      "address": "0x800180fc",
+      "bytes": 32,
+      "sha256": "474a4064dc384c934727263ea6b18e5281ae447367c6cad264f0caf76d99716f"
+    },
+    {
+      "function": "linked_list_prepend",
+      "address": "0x800181ac",
+      "bytes": 92,
+      "sha256": "45e27fd763628db43f06a3b52e66fc38e3ee733b40e79b2b45827c4b81cadf7c"
+    },
+    {
+      "function": "memory_set_manager",
+      "address": "0x80017a9c",
+      "bytes": 12,
+      "sha256": "31e1fb7ee27c6d0a7e8bce6222ebe7d15d003b63a0bcdffc60e62cb98dc28ade"
+    },
+    {
+      "function": "memory_setup_manager",
+      "address": "0x80017ac8",
+      "bytes": 108,
+      "sha256": "22d9cb67eacb97f1f65887bec8fd406a6d25dd69511540ee811296e9445987ba"
+    },
+    {
+      "function": "memory_allocate_mem",
+      "address": "0x80017b34",
+      "bytes": 456,
+      "sha256": "a55ec79ff9c1252fd41968bf5abca2a74f3658b6c400df80289d51d943fc5ef9"
+    },
+    {
+      "function": "memory_set_lock",
+      "address": "0x8001844c",
+      "bytes": 12,
+      "sha256": "d8fd53b2b7699e2b6135872ecc381394dea73cd963daff560ff6aa8342f3e80e"
+    },
+    {
+      "function": "func_80043B58",
+      "address": "0x80043b58",
+      "bytes": 24,
+      "sha256": "100e086c36068f4177ffa6c57f8f6365a8d901e67f15092c8db78c0ce4251a78"
+    },
+    {
+      "function": "func_8001E770",
+      "address": "0x8001e770",
+      "bytes": 64,
+      "sha256": "889caf3d94bfc48dbc5cb57dd93677e7bbb9724756d84e4821e44e224b409235"
+    },
+    {
+      "function": "GsMapModelingData",
+      "address": "0x80020548",
+      "bytes": 120,
+      "sha256": "f2ebf166974181360c8d2ef9e5c2188a85a0c01d99a9be4959145a57a4809e41"
+    },
+    {
+      "function": "GsLinkObject4",
+      "address": "0x8001ef70",
+      "bytes": 344,
+      "sha256": "6fdd4c9c7f41b05ce3cb2afe03cce52971b77d7020b923a8dba730dc056fbb02"
+    },
+    {
+      "function": "func_80066214",
+      "address": "0x80066214",
+      "bytes": 148,
+      "sha256": "cb038063db52b5edfe9953c294e6e98e858accd493fe820da7427af6c2fbdfcf"
+    },
+    {
+      "function": "func_80065FD8",
+      "address": "0x80065fd8",
+      "bytes": 228,
+      "sha256": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c"
+    },
+    {
+      "function": "func_800662A8",
+      "address": "0x800662a8",
+      "bytes": 12,
+      "sha256": "6c0fd7bd7af3e46186f01ef889ddcf38378eac84bdf2a34797ff4cc5eb546d8d"
+    },
+    {
+      "function": "func_800662B4",
+      "address": "0x800662b4",
+      "bytes": 8,
+      "sha256": "9551f2e22426c0ef38657b0ae7289d100e7d495c6f17cd81cbc78cddb68f81ee"
+    }
+  ],
+  "aggregate_original_and_synthetic_native_entry_counts": {
+    "memory_set_manager": 131,
+    "memory_setup_manager": 131,
+    "GsMapModelingData": 131,
+    "func_80066214": 131,
+    "func_800662BC": 9163,
+    "func_80066340": 66343,
+    "func_800449B8": 66343,
+    "func_8004416C": 66343,
+    "func_80065D64": 71567,
+    "func_80043B58": 672,
+    "func_8001E770": 672,
+    "GsLinkObject4": 672,
+    "func_8001D0EC": 5673,
+    "func_800570B4": 1455,
+    "func_8001E57C": 1455,
+    "func_8001CC48": 1455,
+    "base_class_get_vtable": 1455,
+    "base_class_attach": 1455,
+    "linked_list_prepend": 2910,
+    "memory_allocate_mem": 2910,
+    "memory_set_lock": 5820,
+    "base_class_add_parent": 1455,
+    "func_80065FD8": 9944,
+    "func_800662A8": 262,
+    "func_800662B4": 131
+  },
+  "explicit_dependency_output_stubs": 0,
+  "public_synthetic_sequences": 9,
+  "private_original_animation_sequences": 122,
+  "matching_animation_state_observations": 10228,
+  "original_asset_frames": 4260,
+  "original_asset_records": 26797,
+  "actual_mom_decoder_to_runtime_comparisons_passed": true,
+  "public_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/animation-player.json",
+    "sha256": "624977e3c87312985f49f60d9069364b9897b0c6ffbbcf9a5b597b9a4deb5e6d"
+  },
+  "private_native_observations_sha256": "d82e8932a0c09f02b2091dc4fb2a19fde3238bdb9c51c37962f59c007c91321f",
+  "associated_decoder_input_observations_sha256": "fed73f4d0d6de7e1d8a4d14eb7abee74ea7c9bb77f3f378cf52423b800660e0e",
+  "native_proof_sha256": "f6c0987063c86d0ba881cd06832a17e888ea84d5d82e7d5ece5a4bfc08a2d4f9",
+  "local_proof_sha256": "0f07d71e999f64c6b85e039f942ea8f48a89fcd9e05707a447f5b23571e0e492",
+  "local_checks": [
+    {
+      "stage": "format",
+      "returncode": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "stage": "tests",
+      "returncode": 0,
+      "log_sha256": "ae690c8b7dc76c7ecfb86add60180690ac42d0889dcd82340669d7977d5d043e"
+    },
+    {
+      "stage": "parsed-native",
+      "returncode": 0,
+      "log_sha256": "c544998c360da21668da584afd09fa602f13066dd779a8586f3d682ce461b40c"
+    },
+    {
+      "stage": "build",
+      "returncode": 0,
+      "log_sha256": "f85e8e8997506c1891d58940b1a7aa5d56c4791f9d0d68c567bdcce81f9927f4"
+    },
+    {
+      "stage": "inspect",
+      "returncode": 0,
+      "log_sha256": "006775afd8b7e49fedf0104400a13cf216b75ed6f19e3326a123c6e4365f520e"
+    },
+    {
+      "stage": "capture-0",
+      "returncode": 0,
+      "log_sha256": "765e93395b88514d39491ac8fdb2f627b422c9bfc3af2d5caf5009a679dd9a75"
+    },
+    {
+      "stage": "capture-15",
+      "returncode": 0,
+      "log_sha256": "48adb8a3aec2537eb5539fa5052407ad400cf30a679d51bd733e096cf359b67d"
+    },
+    {
+      "stage": "stage-regression",
+      "returncode": 0,
+      "log_sha256": "cdf540eb948d099397f6e5e8773a9a9383f04ac6cd141b8928c3e81f9472f87a"
+    },
+    {
+      "stage": "framed-build",
+      "returncode": 0,
+      "log_sha256": "5b06390ed6ab3d0ec960dfc879809b2bf5e04efe21ed1f6c7d10770710d8b96f"
+    },
+    {
+      "stage": "framed-capture-0",
+      "returncode": 0,
+      "log_sha256": "1e6dc0c08d790265c7295539c6467b547bcfde0855fb258af13b11e5ad5bdfcb"
+    },
+    {
+      "stage": "framed-capture-15",
+      "returncode": 0,
+      "log_sha256": "cb74e15624140438023d808fadec7d563c2a7420c22a4161919c1fe0f3a7e32b"
+    }
+  ],
+  "workspace_tests_passed": 47,
+  "private_original_input_tests_ignored_in_default_ci": 2,
+  "clippy_all_targets_all_features_locked_passed": true,
+  "original_model_render": {
+    "stage": 0,
+    "map": 0,
+    "model": 0,
+    "clip": 0,
+    "texture": "A",
+    "width": 320,
+    "height": 240,
+    "captures": [
+      {
+        "ticks": 0,
+        "sha256": "63be21a1d2c8f305008c4956d970262938681764adb6933b2fbf86e5d938e2cf"
+      },
+      {
+        "ticks": 15,
+        "sha256": "1846c5f698ebcacb42a3e07f5a036c88e2eb1d86ef443efba0c0a1d9dae07e7a"
+      }
+    ],
+    "changed_pixels_between_captures": 3731,
+    "binary_sha256": "e6a548802bc62aa2292cb6147b1c2e64730ac80316a47e54c37093544a61e9c7",
+    "scope": "Float transform/material asset inspector; native renderer and original game cadence remain open."
+  },
+  "stage_viewer_regression": {
+    "rebuilt_prior_source_capture_matches_exactly": true,
+    "image_sha256": "8c1cdfca86ca5e63a735ee904abb12983dbefb86d5528fc9369fe78460eb9136",
+    "earlier_saved_capture_changed_pixels": 2,
+    "scope": "Same local rendering environment and original inputs; does not accept hardware visual fidelity."
+  },
+  "working_source_sha256": {
+    "Cargo.lock": "96bf8c564e5a4daa38330c4f6e71c5dc15579e431a56bc2670c0abbfc77adcbd",
+    "crates/lsd-core/Cargo.toml": "f57c3e50bab9cfc91795924d1a89dab7e13e695353806d3f6e4bb8c7ea3ea91b",
+    "crates/lsd-core/src/animation_player.rs": "c889f3ca8083505c43b83c337b5f1bd67c3bdcb572823ddfcf73a69ed6d4275d",
+    "crates/lsd-core/src/lib.rs": "fb308531a5883ece5fb60006c2d7097fd09e016dfac7376fb150cd99d0727b5c",
+    "crates/lsd-core/tests/animation_player.rs": "bdd33ded8bbf9fe40783de24fd13a3f49de7e5ede1fce86723602e1a37db0ccc",
+    "crates/lsd-core/tests/native_animation_player.rs": "05be7cf722fc5f3df519b13f17648df2310f253b792f60cc05b99b234af08519",
+    "crates/lsd-core/tests/support/animation_observations.rs": "4a71285048cb71453a7dcb51de8142872ea388510d878f0f96966c58205818c8",
+    "crates/lsd-assets/tests/native_animation_runtime.rs": "7c3c4f6cfb8b79cb0ad1cc1b071d69f21092170d515d5a5caf0e7218250fd01e",
+    "crates/lsd-bevy/Cargo.toml": "0856504ab0416591f6d966a845713148dfe0f05c2764e5b9b2489d67778ad495",
+    "crates/lsd-bevy/src/lib.rs": "9aaee9f984eaff0e24760ef7a4ec507debe141e0fc9c907b51d5da0dba332728",
+    "crates/lsd-bevy/src/asset_scene.rs": "db882032e6e5d16fb20dae44c7c67dfef8ba507cd4f8ceb7565d266d88e32e19",
+    "crates/lsd-bevy/src/bin/lsd-model.rs": "65cd9d78dec735dd3d3fe92179cb5bce2eb14c3eda141d0824da865659a7063e",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "bf82944f4d6af72ef36b2617987b20da96c35ac132445145c90be41b2ead0235"
+  },
+  "c_checkout_preserved_and_paused": true,
+  "whole_original_game_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

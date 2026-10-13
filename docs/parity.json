@@ -364,6 +364,20 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "animation_runtime_20261013": {
+      "scope": "Original native operations with persistent supplied actor/child/model graphs, native allocation, parent lists and SDK mapping/linking. Original action callbacks disabled. Natural construction/lifetimes, allocation failures, rendering, hardware timing and whole NPC/game behavior remain open.",
+      "evidence": {
+        "path": "docs/animation-runtime-checks.json",
+        "sha256": "f85656d61b9c3e2e78fce02069c26615b6a9381432e0be2d3b94396d04c4cfef"
+      },
+      "original_animation_entries_compared": 122,
+      "matching_native_state_observations": 10228,
+      "rust_mom_decoder_to_runtime_checked": true,
+      "bevy_original_model_animation_rendered": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }
