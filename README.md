@@ -8,9 +8,8 @@ scripts, rendering and audio, with optional mods and AI development tools kept
 separate from the original experience.
 
 **Early development.** The repository currently provides compatibility
-primitives, a deterministic Bevy probe, local reference validation and a
-procedural 3D development preview. Original levels and complete gameplay are
-on the [roadmap](docs/ROADMAP.md).
+primitives, a deterministic Bevy probe, original map/texture decoding and an
+original-stage asset viewer. Full gameplay remains on the [roadmap](docs/ROADMAP.md).
 
 ## Start here
 
@@ -35,7 +34,17 @@ cargo run -p lsd-bevy --bin lsd-preview --features desktop --locked
 
 Use **WASD** to move and the **left/right arrows** to turn. Green tiles show the
 original stage-zero next-stream exclusion bounds. The geometry is generated
-for development; original map and collision import is still required.
+for development. Original collision and gameplay remain open.
+
+To inspect an original stage from a local disc extraction:
+
+```sh
+cargo run -p lsd-bevy --bin lsd-stage --features desktop --locked -- /path/to/extracted/files 0 0 A
+```
+
+This viewer uses original map geometry, textures and tile placement. See the
+[asset pipeline](docs/ASSET_PIPELINE.md) for corpus evidence, captures and
+remaining rendering/gameplay requirements.
 
 To validate your own reference executable, without copying or modifying it:
 
@@ -45,12 +54,12 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 
 ## Progress
 
-| Measure | Initial port |
+| Measure | Current port |
 | --- | ---: |
 | Rust primitives with original native golden observations | 3 |
 | Numeric native reference observations | 2,580 |
 | Provisional whole-game feature groups accepted in the port | 0 / 40 |
-| Original levels imported | 0 |
+| Original LBD maps decoded by the asset pipeline | 418 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 
@@ -71,7 +80,7 @@ See [parity.json](docs/parity.json), [architecture](docs/ARCHITECTURE.md),
 
 - `lsd-core`: deterministic compatibility logic and original NPC scripts as
   they are ported. No engine, network or AI dependencies.
-- `lsd-assets`: read-only validation and future decoding of locally supplied inputs.
+- `lsd-assets`: validation and bounded decoding of locally supplied original assets.
 - `lsd-bevy`: runtime integration, presentation and development previews.
 - `tools/ai-assist`: the planned, separate analysis/modding workflow.
 

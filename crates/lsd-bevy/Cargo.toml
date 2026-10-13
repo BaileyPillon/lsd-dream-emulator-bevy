@@ -15,10 +15,16 @@ desktop = ["bevy/default_app", "bevy/3d_bevy_render", "bevy/bevy_winit", "bevy/x
 [dependencies]
 bevy.workspace = true
 lsd-core.workspace = true
+lsd-assets.workspace = true
 
 [[bin]]
 name = "lsd-preview"
 path = "src/bin/lsd-preview.rs"
+required-features = ["desktop"]
+
+[[bin]]
+name = "lsd-stage"
+path = "src/bin/lsd-stage.rs"
 required-features = ["desktop"]
 
 [lints]

@@ -19,12 +19,14 @@ movement, linking, dream generation and NPC scripts belong here. Recovered
 fixed-point widths and overflow rules take precedence over floating-point
 convenience.
 
-`lsd-assets` currently validates PS-X EXE headers and the canonical executable
-hash. TIM/TMD, MOM/MOS, LBD/MML, audio, movies and save-data decoding remain
-planned. Decoders will return bounded owned data rather than PS1 pointers.
+`lsd-assets` validates PS-X EXE headers and the canonical executable hash, and
+decodes TIM/TIX, TMD polygon objects and LBD maps. Typed owned geometry and
+bounded borrowed texture blocks replace PS1 file pointers. MOM/MOS and MML
+animation, audio, movies and save-data decoding remain open.
 
 `lsd-bevy` exposes an explicitly stepped probe schedule and an optional desktop
-preview. Original simulation cadence, interpolation and rendering quirks need
+preview and an original-stage asset viewer. Original simulation cadence,
+interpolation and rendering quirks need
 reference evidence before their implementation. Bevy presentation defaults
 do not automatically establish PlayStation visual parity.
 

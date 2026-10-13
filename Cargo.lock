@@ -3070,6 +3070,8 @@ dependencies = [
 name = "lsd-assets"
 version = "0.1.0"
 dependencies = [
+ "serde",
+ "serde_json",
  "sha2",
 ]
 
@@ -3078,6 +3080,7 @@ name = "lsd-bevy"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "lsd-assets",
  "lsd-core",
 ]
 

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-13T20:27:08.346981+00:00",
+  "repository_before": "4c289b852b5965d9f254b5b844971f98fb94c10f",
+  "scope": "Original asset decoding and an offscreen Bevy asset-inspection scene; no whole gameplay or visual parity acceptance.",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "edition": "Local Japanese-labelled extraction; same preserved inputs as the companion edition audit.",
+  "counts": {
+    "files": 551,
+    "standalone_tim_files": 75,
+    "tmd_objects": 13037,
+    "vertices": 181561,
+    "normals": 125304,
+    "polygons": 111177,
+    "lbd_files": 418,
+    "present_tiles": 95842,
+    "chained_tiles": 270,
+    "model_libraries_pending": 98,
+    "tix_files": 56,
+    "tix_tim_images": 445,
+    "tix_banks": 149
+  },
+  "polygon_variants": {
+    "20:00:3:4": 75,
+    "21:01:3:4": 479,
+    "23:01:3:4": 8,
+    "24:00:5:7": 407,
+    "25:01:6:7": 10194,
+    "27:01:6:7": 489,
+    "28:00:4:5": 227,
+    "29:01:3:5": 21176,
+    "2b:01:3:5": 148,
+    "2c:00:7:9": 4440,
+    "2d:01:7:9": 57517,
+    "2f:01:7:9": 5727,
+    "30:00:4:6": 2,
+    "31:01:5:6": 4437,
+    "35:01:8:9": 2,
+    "38:00:5:8": 33,
+    "39:01:6:8": 5802,
+    "3b:01:6:8": 2,
+    "3c:00:8:12": 8,
+    "3d:01:10:12": 4
+  },
+  "all_56_raw_vram_hashes_independently_match": true,
+  "corpus_report": {
+    "path": ".private/asset-corpus-first.json",
+    "sha256": "52f52ab68da9685df9d161caae19b5cdfa4c40d9277e7ae3318de593aa07be58"
+  },
+  "independent_audit": {
+    "path": ".private/asset-corpus-independent-first.json",
+    "sha256": "3e3828979a11d04dbc3ad44caeb0a1a6c159257295cafce97bcf3ffc27066903"
+  },
+  "original_stage_render": {
+    "stage": 0,
+    "map": 0,
+    "texture": "A",
+    "width": 320,
+    "height": 240,
+    "image_sha256": "e41b9a414700d0b6d0a13b98725292b0735ddfd802999283b176c1526ae1afd5",
+    "binary_sha256": "b9734fa6af1b33a289b4848a2d833ecec1ac048127b7c801a0e7396e4eb1462c",
+    "renderer": "Vulkan llvmpipe; Bevy standard material asset inspection"
+  },
+  "local_checks": [
+    {
+      "stage": "format",
+      "returncode": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests": null
+    },
+    {
+      "stage": "clippy",
+      "returncode": 0,
+      "log_sha256": "6090ff21137cc1fb7991c2352ecd552ae6fbc34e39d6af8efbaa6a6b696a790c",
+      "tests": null
+    },
+    {
+      "stage": "tests",
+      "returncode": 0,
+      "log_sha256": "3b3503cd775153bea43b2c2dd34ae833092abbb199d5882bd876af427de62535",
+      "tests": 30
+    }
+  ],
+  "working_source_sha256": {
+    "crates/lsd-assets/src/bin/lsd-asset-inventory.rs": "d2b531164c9347ae20db18be3335d054ff7861434a2c0e0cad52518d54d01a99",
+    "crates/lsd-assets/src/formats/lbd.rs": "26b316ea139fb8fa8f2970520d8f443b18bcfc0dba857d8616b9f044a06a172b",
+    "crates/lsd-assets/src/formats/mod.rs": "04741b27a8a4cc8688afa7b36ba1cf55780ce66879228cc83192a06a867fce1f",
+    "crates/lsd-assets/src/formats/reader.rs": "82b5e8b75b8a0708e8d90baf3e032bf5a65bc79ed56344e8bbe41320291cc846",
+    "crates/lsd-assets/src/formats/tim.rs": "c38527759238510d9cfb1d0e0220ca19ba7c062516e8e063ad159d6e860a5989",
+    "crates/lsd-assets/src/formats/tmd.rs": "ec17cc360335ecb6d11eb39992ba9442afaecbb30177f6deaad09fce1fa56deb",
+    "crates/lsd-assets/tests/formats.rs": "15f3f5edf00eda3c217d04376215e7ef8b9330d47113d734aa26dd7bd3164b3e",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "39c720a6e40c3fc82305a29adec102ff8e966798b1e2eb6afe3d698a1272e548"
+  },
+  "original_game_groups_accepted": 0,
+  "ai_model_calls": 0,
+  "c_checkout_preserved_and_paused": true,
+  "remaining": [
+    "MML/MOM/MOS animation",
+    "original movement/collision",
+    "NPCs and game systems",
+    "native renderer fidelity",
+    "audio/movies/persistence",
+    "whole-game comparisons",
+    "optional AI tools/mods"
+  ]
+}

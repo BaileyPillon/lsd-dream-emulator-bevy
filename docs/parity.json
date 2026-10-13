@@ -336,5 +336,20 @@
     "status": "planned",
     "counts_toward_original_parity": false
   },
-  "scope": "Three original scalar behaviors plus development infrastructure; complete gameplay and presentation require independent comparisons."
+  "scope": "Three original scalar behaviors plus development infrastructure; complete gameplay and presentation require independent comparisons.",
+  "progress": {
+    "asset_pipeline_20261013": {
+      "recorded_utc": "2026-10-13T20:27:08.346981+00:00",
+      "metadata": "docs/asset-pipeline-checks.json",
+      "metadata_sha256": "da871163239ac95329607b8ea96df81e68600fb01a3fdff07f36875c59eab4e1",
+      "source_files_decoded": 551,
+      "original_lbd_maps_decoded": 418,
+      "original_tix_packs_decoded": 56,
+      "original_stage_assets_rendered": 1,
+      "workspace_tests": 30,
+      "model_libraries_still_pending": 98,
+      "whole_original_feature_groups_accepted": 0,
+      "scope": "Original asset decoding and an offscreen Bevy asset-inspection scene; no whole gameplay or visual parity acceptance."
+    }
+  }
 }

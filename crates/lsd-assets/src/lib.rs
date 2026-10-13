@@ -1,4 +1,5 @@
-//! Input validation only. Asset decoding and import remain on the roadmap.
+//! Bounded decoding of original disc assets and read-only reference validation.
+pub mod formats;
 use sha2::{Digest, Sha256};
 use std::fmt;
 
