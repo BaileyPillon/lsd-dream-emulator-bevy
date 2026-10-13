@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "project": "LSD: Dream Emulator \u2014 Bevy Port",
+  "recorded_date": "2026-10-13",
+  "stage": "initial_foundation",
+  "reference_taxonomy": {
+    "repository": "https://github.com/BaileyPillon/lsd-dream-emulator-decompilation",
+    "published_commit": "6ea437373d2fca48fe4d55bead34c820d73f9206",
+    "feature_inventory_sha256": "a47a64b2ee716dfe09fc3f7657cdaf6140b92a5c94095679a7f7122950c3b0e3",
+    "scope": "Provisional taxonomy and evidence reference; C coverage is not Rust port completion."
+  },
+  "paused_c_checkpoint": {
+    "c_bytes": 194212,
+    "game_text_bytes": 199912,
+    "coverage_percent": 97.14874544799711,
+    "remaining_game_asm_functions": 9,
+    "unused_storage_explanations": 24,
+    "local_source_corrections_preserved": 6
+  },
+  "before": {
+    "original_native_checked_primitives": 0,
+    "native_numeric_observations": 0,
+    "provisional_feature_groups": 40,
+    "whole_original_feature_groups_accepted": 0,
+    "original_levels_imported": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "native_unique_input_cases": 0
+  },
+  "after": {
+    "original_native_checked_primitives": 3,
+    "native_numeric_observations": 2580,
+    "provisional_feature_groups": 40,
+    "whole_original_feature_groups_accepted": 0,
+    "original_levels_imported": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "native_unique_input_cases": 2568
+  },
+  "native_primitive_checks": {
+    "path": "docs/native-golden.json",
+    "sha256": "7ac0253716f251f1e03fac00e6e691fde77219902ebd1ea72ae73445cf653c6e"
+  },
+  "features": [
+    {
+      "id": "F001",
+      "title": "Startup logos and randomized opening",
+      "requirement": "Show logos and select opening media according to original seed and configuration flags.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F002",
+      "title": "Title menu, day display and mode selection",
+      "requirement": "Offer original normal-dream, flashback, save/load and chart routes with correct enabled states and day label.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F003",
+      "title": "365-day progression and year ending",
+      "requirement": "Advance normal dreams through 365 days, wrap the year and play the ending at the original boundary.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F004",
+      "title": "New-game state and reset",
+      "requirement": "Reset original day, mood, unlock, recall and option data with the same marker and reserved fields.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F005",
+      "title": "Dream-session and map lifecycle",
+      "requirement": "Start days, create maps, attach graphics/audio/actor state, handle transitions and release resources with original results.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F006",
+      "title": "Walking, running, strafing and looking",
+      "requirement": "Preserve controller held/edge/release mapping, movement, turn/look states and temporary speed/direction changes.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F007",
+      "title": "Input suspension and scripted camera/movement takeover",
+      "requirement": "Suspend or replace controls for original link/encounter sequences and restore them at the original point.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F008",
+      "title": "Transforms, collision and floor-surface response",
+      "requirement": "Apply original position/orientation math, collision notifications and floor-specific movement/effect state.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F009",
+      "title": "Stage grids, chunk traversal and placed objects",
+      "requirement": "Traverse 14 stage grids, choose chunk models and instantiate day/color-conditioned objects.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F010",
+      "title": "Touch-wall dynamic and fixed links",
+      "requirement": "Use original permanent links or random destinations when wall contact and eligibility permit.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F011",
+      "title": "Facing-sensitive tunnel links",
+      "requirement": "Traverse tunnels only with original facing/forward tests and source/target transforms.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F012",
+      "title": "Instant teleporters and time bonus",
+      "requirement": "Enable, locate and execute teleporters with original bonus and target adjustment.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F013",
+      "title": "Staircase links",
+      "requirement": "Traverse staircase nodes with original direction checks, transforms and spawn index.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F014",
+      "title": "Link-transition choreography",
+      "requirement": "Preserve link event states, pauses, effects, forced motion and map handoff.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F015",
+      "title": "Dream timeouts and ending/reset encounters",
+      "requirement": "Use original durations/tick conversion and distinguish normal, special, flashback and reset endings.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F016",
+      "title": "Dream mood accumulation, wrap and color classification",
+      "requirement": "Accumulate chunk/encounter moods, average/wrap them and derive chart color.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F017",
+      "title": "Dream-chart history display",
+      "requirement": "Display original graph coordinates, current-day emphasis and recent history across year wrap.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F018",
+      "title": "Mood-dependent initial stage and spawn",
+      "requirement": "Choose starting map/chunk from prior mood or original random fallback with spawn/time adjustments.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F019",
+      "title": "Navigation and encounter unlock score",
+      "requirement": "Preserve navigation flags, random-link penalty, encounter clamp and score-gated menu state.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F020",
+      "title": "Flashback recording, recall and loss",
+      "requirement": "Record/replace recall slots, replay map/pose/day and clear memories on Gray Man triggers.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F021",
+      "title": "Special-day films and still screens",
+      "requirement": "Use original special-day schedule/random variant and video or still-screen routing.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F022",
+      "title": "Chart-triggered bonus video reel",
+      "requirement": "Recognize the four-cell history pattern once, highlight it and play the concatenated special reel.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F023",
+      "title": "Day-dependent stage texture variants",
+      "requirement": "Select/load original stage textures as days progress with correct palette/uploads.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F024",
+      "title": "Procedural dream structures and palette seeding",
+      "requirement": "Preserve day/location modes, structure placement, colors, updates and cleanup.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F025",
+      "title": "Distance-driven generated ambient encounters/effects",
+      "requirement": "Activate ambient entries near players, run effect/sound commands, reuse two slots and stop out-of-range entries.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F026",
+      "title": "NPC perception, triggers and behavior lifecycle",
+      "requirement": "Use original proximity/facing/height/random/time tests to start/stop interactions/scripts and emit events.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F027",
+      "title": "Original scripted NPC and moving-object behavior catalog",
+      "requirement": "Preserve 107 distinct callbacks selected by 130 records, including timed poses, movements, random states and interaction consequences.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F028",
+      "title": "Encounter effects on mood, score, links and cinematics",
+      "requirement": "Apply encounter notifications to mood/score, forced destinations, recall capture and cinematic/ending descriptors.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F029",
+      "title": "Actor model assembly and animation scripts",
+      "requirement": "Build multipart actors, select sequences and apply original keyframe commands/timers.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F030",
+      "title": "Randomized stage music and soundtrack bank",
+      "requirement": "Preserve bank/track selection, volume/crescendo and pause/resume behavior.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F031",
+      "title": "Encounter sound effects and command scheduler",
+      "requirement": "Load instruments/map programs, play/stop/mute notes and synchronize three command slots with callbacks.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F032",
+      "title": "Streaming video playback",
+      "requirement": "Read STR/XA streams, decode MDEC frames, synchronize playback and honor length/skip/cleanup.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F033",
+      "title": "Original 3D rendering and model geometry",
+      "requirement": "Preserve transforms, primitive sorting/clipping, texturing, lighting and PS1 display output.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F034",
+      "title": "Color overlays, flashes, borders and shake",
+      "requirement": "Run original attachment/lifetime, channel color steps, border presets and shake option.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F035",
+      "title": "Menu transitions, selection and sprites",
+      "requirement": "Render original panels, highlights, timers, selection and child attach/detach transitions.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F036",
+      "title": "Text, glyphs, labels and decimal formatting",
+      "requirement": "Preserve glyphs, string color/spacing, day-number formatting and updates.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F037",
+      "title": "Memory-card save and load of dream state",
+      "requirement": "Store/restore the original 0x700-byte state with card path, label/icon and event outcomes.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F038",
+      "title": "Memory-card file management and error flow",
+      "requirement": "Preserve selection, formatting/deletion, capacity, failure/cancel and card event handling.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F039",
+      "title": "Save comment/name entry",
+      "requirement": "Edit the save label/comment with original glyphs, cursor, bounds and confirm/cancel behavior.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    },
+    {
+      "id": "F040",
+      "title": "Disc reads and resource decoding",
+      "requirement": "Preserve lookup/queues, asynchronous states, aligned buffers and TIM/resource lifetimes.",
+      "port_status": "planned",
+      "whole_feature_accepted": false
+    }
+  ],
+  "original_npc_ai": {
+    "status": "planned",
+    "runtime": "deterministic original scripts in lsd-core"
+  },
+  "ai_assisted_tools": {
+    "status": "planned",
+    "directory": "tools/ai-assist",
+    "model_api_calls": 0
+  },
+  "optional_ai_gameplay_mods": {
+    "status": "planned",
+    "counts_toward_original_parity": false
+  },
+  "scope": "Three original scalar behaviors plus development infrastructure; complete gameplay and presentation require independent comparisons."
+}

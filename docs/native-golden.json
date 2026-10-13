@@ -1,0 +1,69 @@
+{
+  "status": "generated_original_native_numeric_golden_vectors",
+  "canonical_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "original_ranges": [
+    {
+      "function": "rand",
+      "address": "0x80049480",
+      "bytes": 40,
+      "sha256": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+    },
+    {
+      "function": "srand",
+      "address": "0x800494a8",
+      "bytes": 12,
+      "sha256": "41e2537527158d69ebbd13e2205b03816cf27c981266d1f3683a978930beb94a"
+    },
+    {
+      "function": "decode",
+      "address": "0x8004416c",
+      "bytes": 56,
+      "sha256": "48eb43f08ad38f0030c293a703e6421aa3906f38f68a70c143ca4c413271b67c"
+    },
+    {
+      "function": "outside",
+      "address": "0x8004cd38",
+      "bytes": 108,
+      "sha256": "73713a1bd9a992c92c7a7fb6c5c88684a9224107fbc2b0d4d2f83b606e71d03a"
+    }
+  ],
+  "native_entries": {
+    "srand": 8,
+    "rand": 128,
+    "decode": 16,
+    "outside": 2436
+  },
+  "dependency_output_stubs": 0,
+  "rng_observations": 128,
+  "animation_observations": 16,
+  "bounds_observations": 2436,
+  "whole_game_groups_accepted": 0,
+  "fixtures": {
+    "crates/lsd-core/tests/fixtures/animation.csv": "1d08a982995ca31accb95dd14a75fef49d7794413ae39fb557bf54fc9d4f4ced",
+    "crates/lsd-core/tests/fixtures/bounds.csv": "345b42ac3ba0fa541de15e4acb4eb22ddde2ff6463a407c66c166d4ad3a905e0",
+    "crates/lsd-core/tests/fixtures/rng.csv": "501488bda7cfe2780be4ef97b170599d826c27e223d8f331e4f895b11c8212e6"
+  },
+  "scope": "Scalar routines in a Unicorn MIPS sandbox, not PS1 timing, scene construction, full streaming, NPC, visual, audio or whole-game acceptance.",
+  "private_producer_sha256": "800f9d8e032069ec9c574be0cc3cace594b1e89e76e6b1da3b535a9bc94214eb",
+  "rust_comparison": "crates/lsd-core/tests/native_golden.rs",
+  "independently_counted_fixture_groups": {
+    "rng": {
+      "observations": 128,
+      "unique_inputs": 128,
+      "repeated_inputs": 0
+    },
+    "animation": {
+      "observations": 16,
+      "unique_inputs": 16,
+      "repeated_inputs": 0
+    },
+    "bounds": {
+      "observations": 2436,
+      "unique_inputs": 2424,
+      "repeated_inputs": 12
+    }
+  },
+  "numeric_observations": 2580,
+  "unique_input_cases": 2568,
+  "repeated_edge_witnesses": 12
+}

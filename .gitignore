@@ -1,0 +1,13 @@
+/target/
+/.private/
+/assets/imported/
+*.bin
+*.cue
+*.chd
+*.iso
+*.exe
+*.bios
+*.sav
+*.state
+.DS_Store
+Thumbs.db

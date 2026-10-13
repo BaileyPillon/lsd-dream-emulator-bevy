@@ -1,0 +1,25 @@
+[package]
+name = "lsd-bevy"
+description = "Bevy integration and development preview for the LSD Rust port"
+default-run = "lsd-bevy"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[features]
+default = []
+desktop = ["bevy/default_app", "bevy/3d_bevy_render", "bevy/bevy_winit", "bevy/x11", "bevy/png"]
+
+[dependencies]
+bevy.workspace = true
+lsd-core.workspace = true
+
+[[bin]]
+name = "lsd-preview"
+path = "src/bin/lsd-preview.rs"
+required-features = ["desktop"]
+
+[lints]
+workspace = true

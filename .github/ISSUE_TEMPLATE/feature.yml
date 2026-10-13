@@ -1,0 +1,23 @@
+name: Original behavior or port feature
+description: Track a bounded implementation with reference evidence.
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Original behavior and expected result
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reference evidence, inputs and scope
+      description: Link observations or function/format anchors without uploading game assets.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks
+      description: Describe original/port comparison, deterministic inputs and known exclusions.
+    validations:
+      required: true
