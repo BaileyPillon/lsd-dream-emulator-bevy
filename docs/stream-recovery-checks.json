@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-13T23:47:54.922543+00:00",
+  "base_commit": "e9e303b9f8a9de7cff494bd0fa7222f4211c96ca",
+  "scope": "Recovered stream geometry/protocol with host-file completion and Bevy resident-map rendering; native virtual boundaries are scoped separately. Original CD timing, complete bind/notify/actor callbacks and end-to-end game parity remain open.",
+  "original_boundary_masks": 309,
+  "original_neighbor_path_queries": 2163,
+  "original_slot_rebindings": 308,
+  "original_protocol_sequences": 32,
+  "original_protocol_operations": 128,
+  "grid_original_function_entries": {
+    "mask": 617,
+    "neighbor": 3263,
+    "model_path": 2609,
+    "model_paths": 2609,
+    "stage_paths": 2609,
+    "get_path_table": 2609,
+    "place_slots": 308,
+    "find_slot": 2156
+  },
+  "protocol_original_function_entries": {
+    "request": 32,
+    "find_slot": 122,
+    "count": 32,
+    "completion": 96
+  },
+  "grid_function_ranges": [
+    {
+      "name": "place_slots",
+      "address": "0x8004b700",
+      "bytes": 560,
+      "sha256": "fbb42cdebe4445f5b75707356f213065143cb07fa045c5b419628c0afb15213f"
+    },
+    {
+      "name": "mask",
+      "address": "0x8004b930",
+      "bytes": 272,
+      "sha256": "33baece45e1f9ae6ad7e8405074d99ff6c6e8187a424eac72c622ed96c887348"
+    },
+    {
+      "name": "neighbor",
+      "address": "0x8004ba40",
+      "bytes": 252,
+      "sha256": "53c8b41f841ed6b1d900d8af411a0e56783612d38f1652185fcbce3a5c93ad96"
+    },
+    {
+      "name": "find_slot",
+      "address": "0x8004c434",
+      "bytes": 60,
+      "sha256": "20dc014764c03db33c736936d39697ca0578fea09351941f97b1eaf2cce96596"
+    },
+    {
+      "name": "get_path_table",
+      "address": "0x80048d48",
+      "bytes": 28,
+      "sha256": "daf17bc0c637610f5ecc894afa83dbaba43df82e2f000c003c1d70c0fdfb777d"
+    },
+    {
+      "name": "stage_paths",
+      "address": "0x80048e2c",
+      "bytes": 84,
+      "sha256": "cc4419b61861d3f1f93e046c615c172b007ea01e2f9e7e9851ef72aa81a8d10e"
+    },
+    {
+      "name": "model_paths",
+      "address": "0x8004903c",
+      "bytes": 36,
+      "sha256": "3b9334e4cd50599af01767a304b3097969872306b781ae63834670a0f7dedbc8"
+    },
+    {
+      "name": "model_path",
+      "address": "0x80049060",
+      "bytes": 56,
+      "sha256": "0de74a108172ecf72351bfd28ec84502a9608c9e30f5a992bedbd1ae196ce052"
+    }
+  ],
+  "protocol_function_ranges": [
+    {
+      "name": "request",
+      "address": "0x8004bb3c",
+      "bytes": 420,
+      "sha256": "f961733a1259d0046470e5261b4649680ca8acd2143f2c7fe085e559201ba60c"
+    },
+    {
+      "name": "count",
+      "address": "0x8004bce0",
+      "bytes": 52,
+      "sha256": "3234810cdca9f230deb27a1ce3f662cac5c88438b9c47902de04b8af09e2f4f0"
+    },
+    {
+      "name": "completion",
+      "address": "0x8004bd14",
+      "bytes": 320,
+      "sha256": "b40eab09999585683902e4d41ef34c70fed6947de6665ae48427065e8913c248"
+    },
+    {
+      "name": "find_slot",
+      "address": "0x8004c434",
+      "bytes": 60,
+      "sha256": "20dc014764c03db33c736936d39697ca0578fea09351941f97b1eaf2cce96596"
+    }
+  ],
+  "rebind_captured_boundary": {
+    "name": "map_request_submission",
+    "original_virtual_target": "0x8004bb3c",
+    "supplied_target": "0x170000",
+    "calls": 308
+  },
+  "protocol_captured_boundaries": [
+    "notify",
+    "release",
+    "bind",
+    "cancel",
+    "load"
+  ],
+  "grid_native_scope": "Original CPU masks, native path/neighbor lookup and slot placement with a captured map-request submission boundary; no original CD driver, binding lifecycle, actor or whole-game acceptance.",
+  "protocol_native_scope": "Original request/count/completion CPU routines in supplied slot graphs. Scene notifications, CD load/cancel and geometry bind/release callbacks are captured without side effects. I/O state changes are supplied stimuli; complete original callback and CD-driver behavior is not accepted.",
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/stream-masks.json": "14deb1e2c341c6b5f065f15ba6f503978b581e34b6aa315419494115f6b8630a",
+    "crates/lsd-core/tests/fixtures/stream-protocol.json": "9b6367c444233a5c79bd8f3ad625a337770af7038b019aaaf4211bea9619e7bb"
+  },
+  "private_grid_observations_sha256": "d0aac0724e6933c0a3ec8a3125d581f352a19f86de0bf2b116546d40e6094eeb",
+  "local_validation": {
+    "workspace_tests_passed": 59,
+    "private_original_tests_ignored": 6,
+    "original_stream_table_comparison_passed": true,
+    "original_four_spatial_handoffs_test_passed": true,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "old_walk_capture_identical": true,
+    "old_layer_capture_identical": true
+  },
+  "original_stage_descriptors_initialized": 14,
+  "captures": [
+    {
+      "stage": 3,
+      "map": 136,
+      "ticks": 0,
+      "image_sha256": "e48381cfc1cf21467c6e7a3afed8e8d5c66290798231b2e2848fe280d4a94a8e",
+      "log_sha256": "0fd83cce419f126a471a5df1eb3454bdf76c160fd93a93f5f098809189875816"
+    },
+    {
+      "stage": 3,
+      "map": 136,
+      "ticks": 1800,
+      "image_sha256": "1716acfe47a32e18306ff828af4c04271114902530bdaef2d6f1249ec516e298",
+      "log_sha256": "68366620227b6fe56025c9d89f2663a9c62882dcf016b4390a9cb33dfaf256a8"
+    },
+    {
+      "stage": 0,
+      "map": 0,
+      "ticks": 32,
+      "image_sha256": "65be73b8f5c37a28f74f09c4ebca21f56ea73efaaab4152db7df3c9bf7173553",
+      "log_sha256": "db9592438e41e7227e3c146b2a66ad45dac0a9bd066971b8195071bdaa39ce28"
+    }
+  ],
+  "binary_sha256": "47f8e834390cee42fdec408b6e6123ef5fc5959d74322fab67006ccb4bb17550",
+  "working_source_sha256": {
+    "crates/lsd-core/src/lib.rs": "b51cf8f162f18dc5ab8633bda77bd3a50b92983f150436a754d5cdaeee2652c2",
+    "crates/lsd-core/src/stream_grid.rs": "16bc01a66a3d3c9af159f72c2b81e8874b4b5b3e359db6550ef382de4694bef3",
+    "crates/lsd-core/src/stream_protocol.rs": "6c7850bf03567bb4c3d355b1556e8ed889a40559e5f1be174af77efa2aebc565",
+    "crates/lsd-core/tests/native_stream_protocol.rs": "0cab40ba7f1d5da6bc16bc414060b5fd3806d0c6a4476057d6acfe007c68de62",
+    "crates/lsd-assets/src/lib.rs": "8b0f54175a73b4c7dce32532254495d723d17380bd3421268c2f24ee3eb99470",
+    "crates/lsd-assets/src/scene_config.rs": "ac801bbba1178600b7efb38605b2ebb1dfecd5460059871166578521dbe64927",
+    "crates/lsd-assets/src/streamed_stage.rs": "a28a5ab684c63757eacbcf545f1b7f638b413de73933ce657f186d8e66ef0183",
+    "crates/lsd-assets/tests/native_stream_grid.rs": "1ef5fb6e1c2e4197399796f6d206003225b3691185cae92da933264d7e50d67e",
+    "crates/lsd-assets/tests/native_streamed_stage.rs": "fbff09215ce06176547121bf36479d023dfe818d6c863b668bdee0ee19dcb6a9",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "6211b7424cc3698094ab3febd07245101c3d962794eaac6cf18e3db159fe447c"
+  },
+  "private_proof_sha256": {
+    "native-stream-grid-proof-sixth.json": "b0c16fd00085d3e706522dde13e70c8e350f06bb051a1118c671ef0b3484078d",
+    "native-stream-protocol-proof-sixth.json": "be488ca2ee78bd96b7d25f3ee169b880f96325e80820c09689688dc1697f4444",
+    "stream-validation-proof-sixth.json": "75388593c500ede4111c206ad4e07ad717df3d5f3507bf37e7183e8630895a33"
+  },
+  "c_decompilation_paused_and_preserved": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

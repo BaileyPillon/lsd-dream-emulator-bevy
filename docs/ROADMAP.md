@@ -24,6 +24,7 @@ does not imply every provisional feature group is accepted.
 
 Current checks cover original scalar primitives, asset decoding, integer
 animation, controls and collision, plus scene lookup and query selection.
-The layered movement prototype still needs original streaming and actor
-callbacks. All 40 provisional whole-game groups require acceptance; use
+The streamed viewer now uses recovered neighbor, slot-reuse and completion
+rules. Original CD timing, complete binding/actor callbacks and session
+scheduling remain open. All 40 provisional whole-game groups require acceptance; use
 [parity.json](parity.json) for the frozen initial baseline and dated progress.

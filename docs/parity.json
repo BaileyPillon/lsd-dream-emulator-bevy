@@ -417,6 +417,21 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "stream_protocol_20261013": {
+      "scope": "Recovered stream geometry/protocol with host-file completion and Bevy resident-map rendering; native virtual boundaries are scoped separately. Original CD timing, complete bind/notify/actor callbacks and end-to-end game parity remain open.",
+      "evidence": {
+        "path": "docs/stream-recovery-checks.json",
+        "sha256": "df689d67d1c882af5b23340d6ad969fa667648666d1ca23fc53c8564020cc153"
+      },
+      "original_slot_rebindings_checked": 308,
+      "original_protocol_operations_checked": 128,
+      "stage_descriptors_initialized": 14,
+      "spatial_map_handoffs_in_original_input_test": 4,
+      "streamed_scene_rendered": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

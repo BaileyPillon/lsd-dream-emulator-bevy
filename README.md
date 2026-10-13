@@ -17,7 +17,9 @@ see [movement recovery](docs/MOVEMENT_COLLISION.md) for its scope and checks.
 
 Original scene lookup and floor query order also run in a supplied slot graph.
 The layered prototype can load all five cottage maps or six tower maps; see
-[scene recovery](docs/SCENE_RECOVERY.md). Spatial streaming and original actor
+[scene recovery](docs/SCENE_RECOVERY.md). A streamed viewer now handles spatial
+neighbor selection and slot reuse through the recovered protocol; see
+[stream recovery](docs/STREAMING_RECOVERY.md). Original CD timing and actor
 callbacks still need implementation.
 
 ## Start here

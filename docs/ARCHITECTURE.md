@@ -31,6 +31,12 @@ Layered inspection shares the player's integer control/motion path. Original
 asynchronous loading and surrounding-body notification order remain requirements;
 see [scene recovery](SCENE_RECOVERY.md).
 
+`StreamGridTables` and `StreamProtocol` retain the original neighbor, slot-reuse
+and request/completion rules. The asset crate's `StreamedStage` supplies host-file
+completion and imported geometry; the viewer maintains resident meshes. Original
+CD/actor callback behavior and scheduling remain open, with the captured native
+boundaries documented in [stream recovery](STREAMING_RECOVERY.md).
+
 `lsd-assets` validates PS-X EXE headers and the canonical executable hash, and
 decodes TIM/TIX, TMD polygon objects, LBD maps and MOM/MOS/MML model libraries.
 Typed owned geometry and ordered animation records, plus bounded borrowed

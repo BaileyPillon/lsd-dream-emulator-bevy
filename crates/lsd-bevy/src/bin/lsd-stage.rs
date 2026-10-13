@@ -12,6 +12,7 @@ use bevy::{
     winit::WinitPlugin,
 };
 use lsd_assets::{
+    StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
     is_canonical_reference, load_layered_stage, load_math_tables, sha256_hex, stage_map_path,
 };
@@ -43,6 +44,15 @@ struct WalkingScene {
     collision: CollisionChunk,
     tables: PsxMathTables,
     layered_collision: Option<SceneCollision>,
+    streamed: Option<StreamedStage>,
+}
+
+type ModelMeshes = Vec<Vec<Vec<(Handle<Mesh>, Handle<StandardMaterial>)>>>;
+#[derive(Resource)]
+struct StreamVisuals {
+    revision: u64,
+    entities: Vec<Entity>,
+    models: std::collections::BTreeMap<u16, ModelMeshes>,
 }
 
 #[derive(Resource)]
@@ -64,6 +74,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .to_ascii_uppercase();
     let mut walk = false;
     let mut walk_layers = false;
+    let mut walk_stream = false;
     let mut walk_steps = None;
     let (inspect, capture) = match args.next() {
         None => (false, None),
@@ -77,9 +88,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             walk_layers = true;
             (false, None)
         }
-        Some(value) if value == "--walk-capture" || value == "--walk-layers-capture" => {
+        Some(value) if value == "--walk-stream" => {
+            walk = true;
+            walk_stream = true;
+            (false, None)
+        }
+        Some(value)
+            if matches!(
+                value.as_str(),
+                "--walk-capture" | "--walk-layers-capture" | "--walk-stream-capture"
+            ) =>
+        {
             walk = true;
             walk_layers = value == "--walk-layers-capture";
+            walk_stream = value == "--walk-stream-capture";
             let path = PathBuf::from(args.next().ok_or("--walk-capture needs a new PNG path")?);
             walk_steps = Some(
                 args.next()
@@ -96,7 +118,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ),
         _ => {
             return Err(
-                "Use --inspect, --capture, --walk, --walk-layers or a walking capture after the texture variant"
+                "Use --inspect, --capture, --walk, --walk-layers, --walk-stream or a walking capture after the texture variant"
                     .into(),
             );
         }
@@ -158,6 +180,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let walking = if walk {
         let tables = load_math_tables(&executable)?;
         let collision = map.collision_chunk(CollisionPolicy::for_stage(stage));
+        let mut streamed = if walk_stream {
+            Some(StreamedStage::load(
+                &root,
+                &executable,
+                stage,
+                map_number,
+                [0; 3],
+            )?)
+        } else {
+            None
+        };
         let layered = if walk_layers {
             Some(load_layered_stage(
                 &root,
@@ -206,18 +239,38 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 *position = position.wrapping_add(offset);
             }
         }
+        if let Some(streamed) = &streamed {
+            let origin = streamed
+                .collision
+                .slots
+                .slots
+                .iter()
+                .find(|slot| slot.ready && slot.map_index == map_number as i16)
+                .ok_or("Requested map is not resident")?
+                .origin;
+            for (position, offset) in player.position.iter_mut().zip(origin) {
+                *position = position.wrapping_add(offset);
+            }
+        }
         if let Some(steps) = walk_steps {
             for _ in 0..steps {
-                if let Some(layered) = &layered {
+                if let Some(streamed) = &mut streamed {
+                    streamed_step(&mut player, streamed, &tables, 0x1000)?;
+                } else if let Some(layered) = &layered {
                     player.step_in_scene(0x1000, &layered.collision, &tables)?;
                 } else {
                     player.step(0x1000, &collision, &tables)?;
                 }
             }
         }
+        if let Some(streamed) = &mut streamed {
+            streamed.complete_frame()?;
+        }
         println!(
             "profile={} position={:?} heading={} original_link_npc_callbacks_pending=true",
-            if walk_layers {
+            if walk_stream {
+                "streamed_scene_movement_prototype"
+            } else if walk_layers {
                 "layered_scene_movement_prototype"
             } else {
                 "single_chunk_movement_prototype"
@@ -225,6 +278,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             player.position,
             player.controls.angles[1]
         );
+        if let Some(streamed) = &streamed {
+            println!(
+                "resident_maps={:?} revision={} pending={} original_cd_timing_actor_callbacks_pending=true",
+                streamed
+                    .collision
+                    .slots
+                    .slots
+                    .iter()
+                    .filter(|slot| slot.ready)
+                    .map(|slot| slot.map_index)
+                    .collect::<Vec<_>>(),
+                streamed.revision,
+                streamed.protocol.pending
+            );
+        }
         if let Some(layered) = &layered {
             println!(
                 "loaded_maps={} slot={:?} original_stream_lifecycle_pending=true",
@@ -248,11 +316,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             collision,
             tables,
             layered_collision,
+            streamed,
         })
     } else {
         None
     };
     let mut app = App::new();
+    if walk_stream {
+        app.insert_resource(StreamVisuals {
+            revision: u64::MAX,
+            entities: Vec::new(),
+            models: Default::default(),
+        })
+        .add_systems(Update, stream_meshes);
+    }
     if let Some(layered) = layered_assets {
         app.insert_resource(layered);
     }
@@ -341,8 +418,11 @@ fn walking_controls(
         collision,
         tables,
         layered_collision,
+        streamed,
     } = &mut *scene;
-    if let Some(layered) = layered_collision {
+    if let Some(streamed) = streamed {
+        streamed_step(player, streamed, tables, buttons).expect("decoded streamed movement query");
+    } else if let Some(layered) = layered_collision {
         player
             .step_in_scene(buttons, layered, tables)
             .expect("decoded scene movement query");
@@ -351,6 +431,102 @@ fn walking_controls(
             .step(buttons, collision, tables)
             .expect("decoded chunk movement query");
     }
+}
+
+fn streamed_step(
+    player: &mut ChunkPlayer,
+    stage: &mut StreamedStage,
+    tables: &PsxMathTables,
+    buttons: u32,
+) -> Result<(), Box<dyn std::error::Error>> {
+    stage.complete_frame()?;
+    player.step_in_scene(buttons, &stage.collision, tables)?;
+    stage.update_for_position(player.position)?;
+    Ok(())
+}
+
+fn stream_meshes(
+    mut commands: Commands,
+    source: Res<StageAssets>,
+    scene: Res<WalkingScene>,
+    mut visuals: ResMut<StreamVisuals>,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    mut images: ResMut<Assets<Image>>,
+) {
+    let Some(stage) = &scene.streamed else {
+        return;
+    };
+    if visuals.revision == stage.revision {
+        return;
+    }
+    for entity in visuals.entities.drain(..) {
+        commands.entity(entity).despawn();
+    }
+    let resident: std::collections::BTreeSet<_> = stage
+        .collision
+        .slots
+        .slots
+        .iter()
+        .filter(|slot| slot.ready)
+        .map(|slot| slot.map_index as u16)
+        .collect();
+    visuals.models.retain(|map, _| resident.contains(map));
+    let mut builder =
+        AssetSceneBuilder::new(&source.vram, &mut meshes, &mut materials, &mut images);
+    for (physical, map) in stage.maps.iter().enumerate() {
+        let Some(map) = map else {
+            continue;
+        };
+        let slot = stage.collision.slots.slots[physical];
+        let map_number = slot.map_index as u16;
+        let models = visuals
+            .models
+            .entry(map_number)
+            .or_insert_with(|| {
+                map.tmd
+                    .objects
+                    .iter()
+                    .map(|object| {
+                        (0..4)
+                            .map(|quarter| builder.build_object(object, quarter))
+                            .collect()
+                    })
+                    .collect()
+            })
+            .clone();
+        for cell in 0..400 {
+            for tile in map.cell_chain(cell).expect("validated cell chain") {
+                if !tile.present() {
+                    continue;
+                }
+                let local = tile.native_position(cell);
+                let [x, y, z] =
+                    std::array::from_fn(|axis| local[axis].wrapping_add(slot.origin[axis]));
+                for (mesh, material) in
+                    &models[usize::from(tile.model)][usize::from(tile.quarter_turn & 3)]
+                {
+                    let entity = commands
+                        .spawn((
+                            Mesh3d(mesh.clone()),
+                            MeshMaterial3d(material.clone()),
+                            Name::new(format!(
+                                "STG{:02}/M{map_number:03}/slot{physical}/cell{cell}",
+                                source.stage
+                            )),
+                            Transform::from_xyz(
+                                x as f32 / 2048.0,
+                                -y as f32 / 2048.0,
+                                -z as f32 / 2048.0,
+                            ),
+                        ))
+                        .id();
+                    visuals.entities.push(entity);
+                }
+            }
+        }
+    }
+    visuals.revision = stage.revision;
 }
 
 fn walking_camera(scene: Res<WalkingScene>, mut cameras: Query<&mut Transform, With<Camera3d>>) {
@@ -375,15 +551,21 @@ fn walking_camera(scene: Res<WalkingScene>, mut cameras: Query<&mut Transform, W
 fn setup(
     mut commands: Commands,
     source: Res<StageAssets>,
-    layered: Option<Res<LayeredAssets>>,
+    scene: (Option<Res<LayeredAssets>>, Option<Res<WalkingScene>>),
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     mut images: ResMut<Assets<Image>>,
     capture: Option<ResMut<Capture>>,
 ) {
+    let (layered, walking) = scene;
     let mut builder =
         AssetSceneBuilder::new(&source.vram, &mut meshes, &mut materials, &mut images);
-    let maps = if let Some(layered) = &layered {
+    let maps = if walking
+        .as_ref()
+        .is_some_and(|scene| scene.streamed.is_some())
+    {
+        Vec::new()
+    } else if let Some(layered) = &layered {
         layered
             .maps
             .iter()

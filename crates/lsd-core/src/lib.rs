@@ -12,6 +12,8 @@ mod player_controls;
 mod rng;
 mod scene_collision;
 mod scene_grid;
+mod stream_grid;
+mod stream_protocol;
 mod streaming;
 
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
@@ -33,6 +35,8 @@ pub use scene_grid::{
     CellRectangle, SceneGrid, SceneGridError, SceneLocation, ScenePlacement, SceneQuery, SceneSlot,
     SceneSlots,
 };
+pub use stream_grid::{MapRequest, SlotChoice, SlotSelection, StreamGridTables, StreamRebind};
+pub use stream_protocol::{StreamEvent, StreamProtocol, StreamSlotState};
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};
 
 /// A deterministic development probe, not the game's dream clock or RNG call history.

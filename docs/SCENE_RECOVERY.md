@@ -31,7 +31,9 @@ camera rest points and host timing remain development settings. The loader
 currently marks imported maps ready synchronously; it does not implement the
 original asynchronous stream lifecycle. Body collision still queries the current
 owner's chunk; surrounding-body traversal and original hit notifications remain
-open. Spatial scene streaming is the next requirement.
+open. [Streamed inspection](STREAMING_RECOVERY.md) now adds spatial neighbor
+selection and slot reuse with host-file completion; original CD timing and
+complete stream/actor lifetime callbacks remain requirements.
 
 ## Evidence
 

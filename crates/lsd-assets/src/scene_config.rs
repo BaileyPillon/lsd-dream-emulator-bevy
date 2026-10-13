@@ -2,6 +2,7 @@ use crate::formats::Lbd;
 use crate::{PsxExeHeader, is_canonical_reference};
 use lsd_core::SceneGrid;
 use lsd_core::{CollisionPolicy, SceneCollision, SceneSlot, SceneSlots};
+use lsd_core::{SlotChoice, StreamGridTables};
 use std::path::{Path, PathBuf};
 
 /// Resolve the original catalogue entry, including maps in N1/N2/... subdirectories.
@@ -29,6 +30,46 @@ pub struct LayeredStage {
     pub collision: SceneCollision,
     pub maps: Vec<Lbd>,
     pub origin: [i32; 3],
+}
+
+pub fn load_stream_grid_tables(executable: &[u8]) -> Result<StreamGridTables, &'static str> {
+    if !is_canonical_reference(executable) {
+        return Err("Stream tables require canonical SLPS_015.56");
+    }
+    let header = PsxExeHeader::parse(executable).map_err(|_| "Invalid executable extent")?;
+    let offset = |address: u32| (address - header.load_address) as usize + 0x800;
+    let word = |address: u32| {
+        u32::from_le_bytes(
+            executable[offset(address)..offset(address) + 4]
+                .try_into()
+                .unwrap(),
+        )
+    };
+    let choices = |address: u32| {
+        std::array::from_fn(|index| SlotChoice {
+            direction: executable[offset(address) + index * 2],
+            move_slot: executable[offset(address) + index * 2 + 1] != 0,
+        })
+    };
+    Ok(StreamGridTables {
+        origin_deltas: std::array::from_fn(|index| {
+            std::array::from_fn(|axis| word(0x8008_6838 + (index * 12 + axis * 4) as u32) as i32)
+        }),
+        direction_masks: std::array::from_fn(|index| word(0x8008_688C + index as u32 * 4)),
+        index_steps: std::array::from_fn(|index| {
+            std::array::from_fn(|axis| word(0x8008_68A8 + (index * 12 + axis * 4) as u32) as i32)
+        }),
+        label_kinds: std::array::from_fn(|index| executable[offset(0x8008_68FC) + index]),
+        initial: choices(0x8008_6904),
+        reuse: std::array::from_fn(|kind| {
+            let pointer = word(0x8008_6974 + kind as u32 * 4);
+            if pointer == 0 {
+                None
+            } else {
+                Some(choices(pointer))
+            }
+        }),
+    })
 }
 
 /// Load a layered stage for inspection. Original asynchronous stream lifecycle is separate.
