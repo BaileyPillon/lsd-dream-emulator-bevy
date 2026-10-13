@@ -35,6 +35,16 @@ expanded face bounds. The original uses those bounds instead of a barycentric
 triangle test. Collision-cloud queries use the midpoint and two corner paths,
 including the original contact overwrite behavior.
 
+The chunk's collision policy now carries the original stage setting: stages
+0, 3, 5 and 6 reject midpoint contacts within 512 units of a face's minimum Y.
+Other stages allow these midpoint contacts. Corner contacts retain their
+original height gate. This fixes the prototype's earlier unconditional setting.
+Stream-slot readiness gates remain part of the pending streamed scene layer;
+the floor traversal's slot flag is not an LBD tile-category filter.
+The source branch and two additional original cloud observations are recorded
+in [stage-collision-policy-checks.json](stage-collision-policy-checks.json).
+The earlier movement snapshot remains unchanged.
+
 ## Evidence and scope
 
 The public reference fixtures contain 30 control sequences covering 960 steps,

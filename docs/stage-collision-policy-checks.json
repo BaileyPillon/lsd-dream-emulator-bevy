@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "base_commit": "5767ee7635a9df01ee7b3d4ec32ed7656449c8c8",
+  "stage_policy_source": {
+    "path": "src/scene/map_scene.c",
+    "function": "func_80052F10",
+    "reference_repo": "https://github.com/BaileyPillon/lsd-dream-emulator-decompilation",
+    "reference_commit": "6ea437373d2fca48fe4d55bead34c820d73f9206",
+    "kind": "static matching-C reference branch, complete stage startup not executed",
+    "ignore_low_midpoint_stages": [
+      0,
+      3,
+      5,
+      6
+    ]
+  },
+  "scope": "Stage filter wiring in the single-chunk prototype; original cloud queries use explicit software COP2 semantics. Complete stream ordering and stage initialization remain open.",
+  "additional_original_cloud_observations": 2,
+  "original_function_entries": {
+    "aggregate": 2,
+    "active": 2,
+    "get_bounds": 3,
+    "segment_box": 40,
+    "outcode": 80,
+    "intersect": 4,
+    "decode_face": 8,
+    "cross": 4,
+    "square": 8,
+    "sqrt": 8
+  },
+  "software_gte_operations": {
+    "cfc2": 12,
+    "ctc2": 24,
+    "load": 36,
+    "OP": 4,
+    "store": 36,
+    "SQR": 8,
+    "mtc2": 8,
+    "mfc2": 8
+  },
+  "function_ranges": [
+    {
+      "name": "aggregate",
+      "address": "0x8001ddf4",
+      "bytes": 796,
+      "sha256": "e61be058229e5ecc97387ea9e246d7b578594f5d77495b56fc3f2900f2a6b193"
+    },
+    {
+      "name": "segment_box",
+      "address": "0x8001e110",
+      "bytes": 472,
+      "sha256": "c6bb20cf05899b90950c8aa14708812e200a46e305aa34d53489d0df78128530"
+    },
+    {
+      "name": "outcode",
+      "address": "0x8001ecfc",
+      "bytes": 176,
+      "sha256": "5070c8f9b60f3e51ea87f2d35887a3a097bc932f9f00a2c3e3449f10c66d8eda"
+    },
+    {
+      "name": "intersect",
+      "address": "0x8001f8b8",
+      "bytes": 1944,
+      "sha256": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513"
+    },
+    {
+      "name": "decode_face",
+      "address": "0x80020050",
+      "bytes": 1152,
+      "sha256": "d58160f9ae8a3adcc81dfda474988896476e823a614afd7f686896ec64677469"
+    },
+    {
+      "name": "sqrt",
+      "address": "0x800205c0",
+      "bytes": 132,
+      "sha256": "97c082d2d41751f9fccfc5cf37e8dd0b369fbc97fddd6d85c81c2fa2ca3feff7"
+    },
+    {
+      "name": "cross",
+      "address": "0x800179ac",
+      "bytes": 88,
+      "sha256": "b0df3db5528e30315b774c82d909799911f21a661fc9d23bf7ce2dbb33ef3f53"
+    },
+    {
+      "name": "square",
+      "address": "0x800178e8",
+      "bytes": 40,
+      "sha256": "99cb1c8d0c79529e8c6f1a56f640ebd7400c2eb0f57312cdc2e252c1e34f201b"
+    },
+    {
+      "name": "active",
+      "address": "0x8001f3a4",
+      "bytes": 16,
+      "sha256": "3dbb4a6349c8b86c1fe379a9779d36ace6b209faaea3c215e01f3df98454888e"
+    },
+    {
+      "name": "get_bounds",
+      "address": "0x8001f50c",
+      "bytes": 16,
+      "sha256": "3960bf714c3d63c777cb90c0336714cf7599f0e575ed62e305a53527258c9ea5"
+    }
+  ],
+  "fixture": {
+    "path": "crates/lsd-core/tests/fixtures/stage-policy.json",
+    "sha256": "ed82af8cc03ee41da029a66644933f0dbe163b52d2ff6778a84bc296f106433a"
+  },
+  "integration_stages_checked": 14,
+  "whole_original_feature_groups_accepted": 0,
+  "tile_category_floor_filter_added": false,
+  "floor_flag_source": {
+    "path": "src/scene/render_context.c",
+    "function": "func_8004A534",
+    "interpretation": "slot +4 is cd_stream_t, and +0x2c is its readiness field"
+  },
+  "original_function_result_stubs": 0,
+  "ai_model_calls": 0,
+  "recorded_utc": "2026-10-13T22:37:30.633488+00:00",
+  "working_source_sha256": {
+    "crates/lsd-core/src/chunk_collision.rs": "c287fee2918a386c4746add42ad4afc696f0dcb53f6e3ab214c04beeaee0a6a4",
+    "crates/lsd-core/src/lib.rs": "2865e3a032706486de0ae7483d7221cc1540fee8d1f61a7a886d2bd07105781e",
+    "crates/lsd-assets/src/formats/lbd.rs": "d1fa23d4f040b0027136703ad550b6d08d35fce58c2d3d269f3c22497b2c71f3",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "85af8b2acb6baa6129f85191626ba6b732378bf6a4aee3023971ddaef5881347",
+    "crates/lsd-core/tests/chunk_player.rs": "fc446f0c3f0fb416e5dd306f57b901024dc057b8c667ed25fbf160270d16c884"
+  },
+  "local_validation": {
+    "workspace_tests_passed": 53,
+    "private_original_tests_ignored": 3,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "desktop_binary_built": true
+  },
+  "walking_capture": {
+    "stage": 0,
+    "map": 0,
+    "texture": "A",
+    "ticks": 32,
+    "image_sha256": "da87054aa9becb60f5fbd7d996af2cbbd0e7437b88ac7bf3b9c9fc3130fffd48",
+    "log_sha256": "b31bd2790dbab5c617978f041323a6b12d6369c4a89dff75712e26eaeaa744e9",
+    "unchanged_from_previous_owned_capture": true,
+    "scope": "Bevy single-chunk prototype capture, not an original PlayStation frame comparison"
+  },
+  "c_decompilation_paused_and_preserved": true
+}

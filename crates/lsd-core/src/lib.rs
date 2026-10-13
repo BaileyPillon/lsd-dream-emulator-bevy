@@ -14,7 +14,9 @@ mod streaming;
 
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
 pub use animation_player::{AnimationError, AnimationParent, AnimationPart, AnimationPlayer};
-pub use chunk_collision::{CollisionChunk, CollisionModel, CollisionTile, WorldContact};
+pub use chunk_collision::{
+    CollisionChunk, CollisionModel, CollisionPolicy, CollisionTile, WorldContact,
+};
 pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
 pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
 pub use collision_cloud::{CollisionBounds, CollisionCloud};

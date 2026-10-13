@@ -16,8 +16,23 @@ pub struct CollisionTile {
     pub heading: i16,
 }
 
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct CollisionPolicy {
+    pub ignore_low_midpoint: bool,
+}
+
+impl CollisionPolicy {
+    /// map_scene startup sets the original global collision filter by location.
+    pub const fn for_stage(stage: u8) -> Self {
+        Self {
+            ignore_low_midpoint: matches!(stage, 0 | 3 | 5 | 6),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct CollisionChunk {
+    pub policy: CollisionPolicy,
     pub models: Vec<CollisionModel>,
     pub cells: Vec<Vec<CollisionTile>>,
 }
@@ -104,7 +119,12 @@ impl CollisionChunk {
                 if !model_bounds.overlaps(CollisionBounds::from_points(&local.0).unwrap()) {
                     continue;
                 }
-                if let Some(hit) = local.intersection(model_bounds, &model.faces, false, tables)? {
+                if let Some(hit) = local.intersection(
+                    model_bounds,
+                    &model.faces,
+                    self.policy.ignore_low_midpoint,
+                    tables,
+                )? {
                     let rotated = tables
                         .rotation([0, tile.heading, 0])
                         .apply_saturated(hit.position);

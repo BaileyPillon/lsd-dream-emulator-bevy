@@ -17,7 +17,8 @@ use lsd_assets::{
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
-    ChunkPlayer, CollisionBounds, CollisionChunk, PadState, PlayerControls, PsxMathTables,
+    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, PadState, PlayerControls,
+    PsxMathTables,
 };
 use std::path::PathBuf;
 
@@ -140,7 +141,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let walking = if walk {
         let tables = load_math_tables(&std::fs::read(root.join("SLPS_015.56"))?)?;
-        let collision = map.collision_chunk();
+        let collision = map.collision_chunk(CollisionPolicy::for_stage(stage));
         let body = Tmd::parse(&std::fs::read(root.join("CDI/ETC/DREAME5.TMD"))?)?;
         let bounds = CollisionBounds::from_points(
             &body.objects[0]

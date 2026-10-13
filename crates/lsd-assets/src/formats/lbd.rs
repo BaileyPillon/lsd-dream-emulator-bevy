@@ -43,8 +43,9 @@ pub struct Lbd {
 }
 
 impl Lbd {
-    pub fn collision_chunk(&self) -> lsd_core::CollisionChunk {
+    pub fn collision_chunk(&self, policy: lsd_core::CollisionPolicy) -> lsd_core::CollisionChunk {
         lsd_core::CollisionChunk {
+            policy,
             models: self
                 .tmd
                 .objects

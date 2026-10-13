@@ -391,6 +391,17 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "stage_collision_policy_20261013": {
+      "scope": "Stage filter wiring in the single-chunk prototype; original cloud queries use explicit software COP2 semantics. Complete stream ordering and stage initialization remain open.",
+      "evidence": {
+        "path": "docs/stage-collision-policy-checks.json",
+        "sha256": "842bcbae1a94fa6838c1800ae20b67b070eda7fd1d5856fec0f18051459e7a78"
+      },
+      "original_cloud_queries_checked": 2,
+      "integration_stages_checked": 14,
+      "whole_original_feature_groups_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }
