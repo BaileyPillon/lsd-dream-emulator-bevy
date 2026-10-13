@@ -4,7 +4,7 @@ mod animation;
 mod rng;
 mod streaming;
 
-pub use animation::AnimationWord;
+pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
 pub use rng::PsxRng;
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};
 

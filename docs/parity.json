@@ -350,6 +350,20 @@
       "model_libraries_still_pending": 98,
       "whole_original_feature_groups_accepted": 0,
       "scope": "Original asset decoding and an offscreen Bevy asset-inspection scene; no whole gameplay or visual parity acceptance."
+    },
+    "animation_import_20261013": {
+      "scope": "Bounded original animation-library decoding and independent static corpus counts. Runtime animation, NPC scripts and whole-game parity remain open.",
+      "evidence": {
+        "path": "docs/animation-import-checks.json",
+        "sha256": "d54aeb2b411d2a7339aa1e6166bdeee6eaf4f2fd7981c59eaa4774e63e55c6fe"
+      },
+      "model_libraries_decoded": 98,
+      "animated_model_entries_decoded": 111,
+      "animation_frames_decoded": 4260,
+      "animation_commands_decoded": 26797,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

@@ -20,9 +20,10 @@ fixed-point widths and overflow rules take precedence over floating-point
 convenience.
 
 `lsd-assets` validates PS-X EXE headers and the canonical executable hash, and
-decodes TIM/TIX, TMD polygon objects and LBD maps. Typed owned geometry and
-bounded borrowed texture blocks replace PS1 file pointers. MOM/MOS and MML
-animation, audio, movies and save-data decoding remain open.
+decodes TIM/TIX, TMD polygon objects, LBD maps and MOM/MOS/MML model libraries.
+Typed owned geometry and ordered animation records, plus bounded borrowed
+texture blocks, replace PS1 file pointers. Animation execution, audio, movies
+and save-data decoding remain open.
 
 `lsd-bevy` exposes an explicitly stepped probe schedule and an optional desktop
 preview and an original-stage asset viewer. Original simulation cadence,

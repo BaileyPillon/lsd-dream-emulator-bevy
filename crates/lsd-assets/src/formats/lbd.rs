@@ -1,5 +1,5 @@
 use super::{
-    Tmd,
+    Mml, Tmd,
     reader::{DecodeError, Reader},
 };
 use std::ops::Range;
@@ -38,7 +38,8 @@ pub struct Lbd {
     pub dimensions: [u16; 2],
     pub tiles: Vec<Tile>,
     pub tmd: Tmd,
-    pub model_library: Option<Range<usize>>,
+    pub model_library_extent: Option<Range<usize>>,
+    pub model_library: Option<Mml>,
 }
 
 impl Lbd {
@@ -56,21 +57,29 @@ impl Lbd {
         }
         reader.bytes(grid_offset, relative_tmd)?;
         let tmd_offset = grid_offset + relative_tmd;
-        let model_library = if reader.u16(2)? != 0 {
+        let model_library_extent = if reader.u16(2)? != 0 {
             let at = reader.u32(16)? as usize;
             let size = reader.u32(20)? as usize;
             let bytes = reader.bytes(at, size)?;
-            if at < tmd_offset + 12 || bytes.len() < 8 || &bytes[..4] != b"MML " {
+            if !at.is_multiple_of(4)
+                || at < tmd_offset + 12
+                || bytes.len() < 8
+                || &bytes[..4] != b"MML "
+            {
                 return Err(DecodeError::new(at, "invalid LBD MML extent"));
             }
             Some(at..at + size)
         } else {
             None
         };
-        let tmd_limit = model_library
+        let tmd_limit = model_library_extent
             .as_ref()
             .map_or(data.len(), |extent| extent.start);
         let tmd = Tmd::parse(reader.bytes(tmd_offset, tmd_limit - tmd_offset)?)?;
+        let model_library = model_library_extent
+            .as_ref()
+            .map(|extent| Mml::parse(&data[extent.clone()]))
+            .transpose()?;
         let count = (relative_tmd - 8) / 12;
         let mut tiles = Vec::with_capacity(count);
         for i in 0..count {
@@ -129,6 +138,7 @@ impl Lbd {
             dimensions: [reader.u16(grid_offset + 4)?, reader.u16(grid_offset + 6)?],
             tiles,
             tmd,
+            model_library_extent,
             model_library,
         })
     }

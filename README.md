@@ -8,8 +8,9 @@ scripts, rendering and audio, with optional mods and AI development tools kept
 separate from the original experience.
 
 **Early development.** The repository currently provides compatibility
-primitives, a deterministic Bevy probe, original map/texture decoding and an
-original-stage asset viewer. Full gameplay remains on the [roadmap](docs/ROADMAP.md).
+primitives, a deterministic Bevy probe, original map/texture/animation decoding
+and an original-stage asset viewer. Animation playback and full gameplay remain
+on the [roadmap](docs/ROADMAP.md).
 
 ## Start here
 
@@ -60,6 +61,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Numeric native reference observations | 2,580 |
 | Provisional whole-game feature groups accepted in the port | 0 / 40 |
 | Original LBD maps decoded by the asset pipeline | 418 |
+| Streamed model libraries decoded | 98 |
+| Animation frames decoded | 4,260 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

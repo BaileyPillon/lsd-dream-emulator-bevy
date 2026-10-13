@@ -3070,6 +3070,7 @@ dependencies = [
 name = "lsd-assets"
 version = "0.1.0"
 dependencies = [
+ "lsd-core",
  "serde",
  "serde_json",
  "sha2",
