@@ -1,9 +1,10 @@
 use crate::{PsxExeHeader, is_canonical_reference};
-use lsd_core::{LinkCatalog, LinkMotionRules, LinkSet, LinkTrigger, SpawnEntry};
+use lsd_core::{AutoMoveTables, LinkCatalog, LinkMotionRules, LinkSet, LinkTrigger, SpawnEntry};
 
 pub struct OriginalLinkTables {
     pub catalog: LinkCatalog,
     pub motion: LinkMotionRules,
+    pub auto_move: AutoMoveTables,
 }
 
 /// Load reference link content locally. None of these original tables are bundled.
@@ -164,8 +165,27 @@ pub fn load_link_tables(executable: &[u8]) -> Result<OriginalLinkTables, &'stati
         .collect::<Vec<_>>()
         .try_into()
         .unwrap();
+    for (index, expected) in [0x8005_ab2c, 0x8005_ac24, 0x8005_ad68, 0x8005_ae40]
+        .into_iter()
+        .enumerate()
+    {
+        if word(0x8008_7eec + index as u32 * 4)? != expected {
+            return Err("Unsupported original stair action table");
+        }
+    }
     Ok(OriginalLinkTables {
         catalog,
         motion: LinkMotionRules { distances, signs },
+        auto_move: AutoMoveTables {
+            targets: std::array::from_fn(|index| {
+                let data = bytes(0x8008_abc0 + index as u32 * 8, 6)
+                    .expect("Identified auto-move data extent");
+                std::array::from_fn(|axis| {
+                    i16::from_le_bytes(data[axis * 2..axis * 2 + 2].try_into().unwrap())
+                })
+            }),
+            clockwise: [word(0x8008_7efc)?, word(0x8008_7f00)?, word(0x8008_7f04)?],
+            counterclockwise: [word(0x8008_7f08)?, word(0x8008_7f0c)?, word(0x8008_7f10)?],
+        },
     })
 }

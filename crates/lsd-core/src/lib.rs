@@ -9,12 +9,14 @@ mod chunk_player;
 mod collision;
 mod collision_cloud;
 mod fixed_math;
+mod link_runtime;
 mod links;
 mod pad;
 mod player_controls;
 mod rng;
 mod scene_collision;
 mod scene_grid;
+mod scene_keys;
 mod stream_grid;
 mod stream_protocol;
 mod streaming;
@@ -30,6 +32,7 @@ pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
 pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
 pub use collision_cloud::{CollisionBounds, CollisionCloud};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
+pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
 pub use links::{
     LinkActionHost, LinkCatalog, LinkContext, LinkError, LinkExecution, LinkKind, LinkMotionRules,
     LinkSet, LinkTransforms, LinkTrigger, SpawnEntry, SpawnLocation, is_facing_link_angle,
@@ -45,6 +48,7 @@ pub use scene_grid::{
     CellRectangle, SceneGrid, SceneGridError, SceneLocation, ScenePlacement, SceneQuery, SceneSlot,
     SceneSlots,
 };
+pub use scene_keys::SceneActorKeys;
 pub use stream_grid::{MapRequest, SlotChoice, SlotSelection, StreamGridTables, StreamRebind};
 pub use stream_protocol::{StreamEvent, StreamProtocol, StreamSlotState};
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};

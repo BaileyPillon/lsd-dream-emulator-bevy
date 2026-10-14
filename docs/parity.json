@@ -480,6 +480,25 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "link_runtime_20261013": {
+      "scope": "Original dream tunnel/teleport/stair/dynamic handlers and four stair scripts, typed cached actor keys and spawn placement compared with original CPU routines in supplied graphs. Transition notification and body tile notification use explicit supplied boundaries. Natural scene construction, all contact callbacks, game-flow transitions, timing, Bevy session wiring and whole-game acceptance remain open.",
+      "evidence": {
+        "path": "docs/link-runtime-checks.json",
+        "sha256": "d15b56f30099e49201ff6bf071d9f7c0b807fbcd9b562be5db93fdd1c77ac074"
+      },
+      "original_dream_link_handlers_implemented": 4,
+      "original_stair_scripts_implemented": 4,
+      "native_handler_cases": 512,
+      "native_stair_boundary_cases": 400,
+      "native_stair_sequence_states": 582,
+      "native_current_key_cases": 172,
+      "native_spawn_world_cases": 144,
+      "native_body_stamp_observations": 16,
+      "visible_dream_transition_integration_completed": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

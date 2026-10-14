@@ -31,6 +31,10 @@ Original link tables and destination rules now have a local loader and native
 CPU comparisons. Transition policy preserves notification cancellation and
 callback order; see [link recovery](docs/LINKS.md). Wiring these rules into
 natural actors and visible dream transitions remains open.
+Dream tunnel, teleport, dynamic-link and stair handlers now also run in Rust,
+including all four stair scripts and cached actor keys. Their checks execute
+original angle/position setters in supplied graphs; see
+[link runtime recovery](docs/LINK_RUNTIME.md).
 
 ## Start here
 

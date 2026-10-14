@@ -32,3 +32,6 @@ scheduling remain open. Link lookup, random destinations, facing gates and
 transition policy now have original CPU checks; natural link callbacks and
 visible transitions still need integration. All 40 provisional whole-game groups require acceptance; use
 [parity.json](parity.json) for the frozen initial baseline and dated progress.
+Dream link handlers, cached actor keys and all four stair scripts now have
+original CPU comparisons. Their scene/notification interfaces still need
+connection to the running Bevy session and its full transition lifecycle.

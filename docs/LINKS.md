@@ -50,8 +50,10 @@ catalogues or movement indices return Rust errors; the comparison covers valid
 reference inputs, not original out-of-bounds memory access.
 
 Natural actor keys, contact-to-link callbacks, transform save/restore lifetimes,
-complete stair motion, teleport movement/time bonuses, tunnel traversal and
-visible map transitions still need integration. Runtime timing, RNG calls from
+visible map transitions and complete encounters still need integration.
+[Link runtime recovery](LINK_RUNTIME.md) adds cached-key access, complete stair
+scripts and the dream teleport/tunnel/dynamic handlers with supplied-graph checks.
+Runtime timing, RNG calls from
 the rest of the game and full session comparisons remain open. This work does
 not accept a whole feature group; original acceptance remains **0/40 provisional
 groups**. The matching C project remains paused.

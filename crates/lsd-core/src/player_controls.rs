@@ -76,6 +76,25 @@ impl Default for PlayerControls {
 }
 
 impl PlayerControls {
+    pub fn apply_rotation_packet(
+        &mut self,
+        absolute: bool,
+        packet: [u32; 3],
+    ) -> Result<(), crate::LinkError> {
+        let mut values = [0; 3];
+        for (value, word) in values.iter_mut().zip(packet) {
+            *value = transform_number(word).ok_or(crate::LinkError::InvalidMovement)? / 360;
+        }
+        for (angle, value) in self.angles.iter_mut().zip(values) {
+            *angle = if absolute {
+                value as i16
+            } else {
+                (i32::from(*angle).wrapping_add(value) % 4096) as i16
+            };
+        }
+        Ok(())
+    }
+
     pub fn notify_pad(&mut self, code: i32) {
         if self.paused != 0 || self.input_locked || self.auto_move_locked {
             return;
