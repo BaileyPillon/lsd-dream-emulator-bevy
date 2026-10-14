@@ -8,6 +8,22 @@ pub struct CollisionModel {
     pub bounds: Option<CollisionBounds>,
     pub faces: Vec<CollisionFace>,
 }
+impl CollisionModel {
+    /// Original model cuboid, optional movement extension, then cached world rotation.
+    pub fn prepared_cloud(
+        &self,
+        world: crate::FixedMatrix,
+        extension: Option<(bool, i16)>,
+    ) -> Option<crate::CollisionCloud> {
+        let mut cloud = self.bounds?.cloud();
+        if let Some((strafe, amount)) = extension {
+            cloud.extend(strafe, amount);
+        }
+        Some(crate::CollisionCloud(
+            cloud.0.map(|point| world.apply_saturated(point)),
+        ))
+    }
+}
 
 #[derive(Debug, Clone, Copy)]
 pub struct CollisionTile {

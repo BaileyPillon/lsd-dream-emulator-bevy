@@ -15,6 +15,25 @@ pub struct Mom {
 }
 
 impl Mom {
+    pub fn collision_model(
+        &self,
+        actor: &lsd_core::ModelActor,
+    ) -> Result<Option<lsd_core::CollisionModel>, lsd_core::AnimationError> {
+        let Some(index) = actor.collision_primitive else {
+            return Ok(None);
+        };
+        let object = self
+            .tmd
+            .objects
+            .get(index)
+            .ok_or(lsd_core::AnimationError::MissingPrimitive)?;
+        Ok(Some(lsd_core::CollisionModel {
+            bounds: lsd_core::CollisionBounds::from_points(
+                &object.vertices.iter().map(|v| v.xyz).collect::<Vec<_>>(),
+            ),
+            faces: object.collision_faces(),
+        }))
+    }
     pub fn construct_actor(&self) -> Result<lsd_core::ModelActor, lsd_core::AnimationError> {
         lsd_core::ModelActor::construct(
             &self.animations,

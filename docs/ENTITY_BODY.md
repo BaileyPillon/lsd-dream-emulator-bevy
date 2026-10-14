@@ -69,7 +69,10 @@ remains 0/40 provisional groups; original whole NPC encounters remain unaccepted
 ## Remaining requirements
 
 Execute real inherited body queries with imported model/root geometry, prepared
-collision clouds, transform ancestry and live contact feedback. Implement original
+collision clouds, transform ancestry and live contact feedback.
+The copied root geometry import and prepared-cloud operations now have native
+comparisons; see [actor collision geometry](ACTOR_GEOMETRY.md). Live query delivery
+and collision response remain unfinished. Implement original
 movement correction, ground reconciliation, aim and natural scene ownership/
 lifetime/cadence. The Yokai development capture now exposes 48 pending inherited
 query requests over its 63 active ticks; its rendered motion is unchanged from

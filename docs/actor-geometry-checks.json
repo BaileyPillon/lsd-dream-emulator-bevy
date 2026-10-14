@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "prepared_cloud_scope": "Original primitive bounds, cuboid expansion, signed halfword movement extension and in-place SDK matrix application using owned vertices and supplied cached world matrices. Hardware flags/timing, cache refresh, original geometry hits and complete scene scheduling remain unaccepted.",
+  "canonical_scope": "Real canonical MOM/SDK/model actor construction, copied root collision primitive binding, original bounds and eight animation steps. In-memory file data is isolated from SDK BSS/heap; initialized unit matrix and CD are supplied. Cache/world refresh, live queries/collision response and complete resource lifetimes remain unaccepted.",
+  "owned_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/prepared-cloud.json",
+    "sha256": "051f77b73978b5936851478c721fb27c1bb6568e977518927924aa4685e01ceb",
+    "cases": 504
+  },
+  "canonical_model_constructors": 100,
+  "canonical_geometry_observations": 900,
+  "native_copied_geometry_binding_changes": 0,
+  "native_cloud_function_entries": {
+    "func_8001F51C": 504,
+    "func_8001F3B0": 504,
+    "func_8001F66C": 432,
+    "func_8001EE04": 504,
+    "ApplyMatrixSV": 4032
+  },
+  "native_cloud_function_sha256": {
+    "func_8001F51C": "2861d23ad37f4c8004c221d7b93f98285c4e2e792bb81ae8883f31e8a5a8f3fe",
+    "func_8001F3B0": "6ac1cdbb58c9d23f95f664b3213f167f0cb397435688b4ce9e248be8d861c291",
+    "func_8001F66C": "f0b0ff1121df8193c06a986047242bf5ed7068954634060b3f9e7557c01d56f5",
+    "func_8001EE04": "74b9652a0ae0931dd6eb06c82c842861520d03f232c48aa1467ffdd2336867e0",
+    "ApplyMatrixSV": "5eff75f8ee6fc6b6ac7eeddc06c53876383fb018ca6e5376e057d09dd3ec7716"
+  },
+  "native_constructor_function_sha256": {
+    "actor_create": "715b59cbaa700575ea68c0075b47f05532542399ffdbf522f666ce458e7df6ac",
+    "actor_construct": "dffb402f8e253b28df065d1acd12dff49dfee5f5fbfc28fb89ca2204ab254c77",
+    "func_80065830": "3c5186568537d77256139b379d097049656db1b9e67bb243535355af60e421bb",
+    "func_8001E770": "889caf3d94bfc48dbc5cb57dd93677e7bbb9724756d84e4821e44e224b409235",
+    "func_8001F3B0": "6ac1cdbb58c9d23f95f664b3213f167f0cb397435688b4ce9e248be8d861c291",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c"
+  },
+  "private_proof_sha256": {
+    "prepared_cloud": "1406d8407d2353a8b2976755b1d1ddba9c9d947b97d42bb291b789590f6f695b",
+    "canonical_geometry": "752287d8d57d0824dafb678753c195bf835331dee16dd24c323b2b1354a02891",
+    "validation": "83005af99d1e211f75a88ce3ed53ff4635a7e64857b3d28aac362e04b1fb669e",
+    "cloud_producer": "20dd0b7e5a2721dfdd0388bc610de0a63c030d3b0bf9004bdb3b187542ea6642",
+    "canonical_producer": "9daee96806a0d30ea5879c2302d75d18bcf20d686e3dd2792af128a83a8d7541"
+  },
+  "validation": {
+    "owned_prepared_cloud_cases": 504,
+    "canonical_geometry_constructors": 100,
+    "canonical_geometry_observations": 900,
+    "workspace_counts": [
+      117,
+      0,
+      22
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_body_notification_scenarios": 2016,
+    "real_owned_entities_constructed": 4032,
+    "inherited_geometry_query_entries_compared": 288,
+    "coupled_owned_actor_journal_scenarios": 336,
+    "inherited_journal_contact_before_filter_and_state_guards_verified": true,
+    "actor_contact_and_recursive_link_video_end_consequences_compared": true,
+    "bound_actor_acknowledgement_dispatch_connected": true,
+    "actor_link_map_fade_and_cancellation_regression_passed": true,
+    "captures_unchanged": true,
+    "day_expiry_actor_cleanup_passed": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7"
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "inherited_body_query_requests_pending": 48
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0"
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "48ee35d91321faa95de668279150300fc482573b8ec6585b8c7dfd486709f053",
+      "workspace": "8b9331d2c2decceb01e28be3c268a77a075a774ecbb0c8e4f2bdcc9ad0268202",
+      "original-content": "abcbfa8ea4aefdfc1814ed009448faf450d3155b5559039ad20800fda55a45cc",
+      "desktop-build": "fca8fc77ce71481d856809a6445725740f99c97b5738578603f94bfb118e1007",
+      "capture-idle": "fca9ce0f931dbf0387b14e4b935751af341af4167d1dd1848654f15a892b211c",
+      "capture-futon": "7d633164667f2ff54a009425ff9838afe79a1a0bedaa8798cb775526aba4e01c",
+      "capture-yokai": "a83d79cc1f1d316d10dd199ddf0fbc97c7c008ab0bc80d25624d1b720daeed04",
+      "capture-expiry": "70de4842a6dba907c99a337b9383e5ff6d6a1d004a2ee4ab08dc61be4a01cba3",
+      "capture-legacy": "dac928289ba77b7ac1a3cf97682809ed5f917c344ae0a0502a37848ce331ca44"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "real_geometry_collision_or_natural_scene_ancestry_cadence_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/model_actor.rs": "cc8155750f68850dbb82089bcafdffa16b429cf45d011072dd75bf572fea3a0a",
+    "crates/lsd-core/src/chunk_collision.rs": "4a938012d269e3b1e4fe0ac1a2b15a0520669abd5d8da603dab94ff4e5c2447a",
+    "crates/lsd-core/tests/native_prepared_cloud.rs": "0eb948e5faa009f647370e004115982b83e749055ea1318f43be34ab681dc7c7",
+    "crates/lsd-core/tests/fixtures/prepared-cloud.json": "051f77b73978b5936851478c721fb27c1bb6568e977518927924aa4685e01ceb",
+    "crates/lsd-assets/src/formats/mom.rs": "01fb14812169e5bfa7e4cc44dcddb0f01b53c5c91e7591a15189da643be765d3",
+    "crates/lsd-assets/src/encounter_scene.rs": "3c613226a6d7700d530fb943608b8e5735928ad6b608f4b68eaa76d1dc320dfa",
+    "crates/lsd-assets/tests/native_actor_geometry.rs": "65d3f2ce8c64abbc40fd5fe6d781148ab1c8556848054329bead46ad872c9b4f"
+  },
+  "scope_limits": [
+    "Prepared cloud cases use owned vertices and supplied cached matrices, including saturated scaling, shear and signed extension wrapping.",
+    "The canonical root collision binding/bounds subset uses real constructors and original geometry; eight animation steps do not accept complete resource rebind behavior.",
+    "SDK unit-matrix/CD initialization is supplied. In-memory canonical inputs are isolated from SDK BSS/allocator storage.",
+    "Exploratory live body probes initially collapsed clouds through uninitialized cached matrices and overlapped SDK BSS. Corrected exploration still produced no contacts and is not collision acceptance evidence.",
+    "Original function outputs are not replaced. Geometry import and cloud preparation do not complete pending inherited query/response, cache ancestry, movement correction or physical timing.",
+    "The Yokai capture retains 48 pending inherited queries. No whole encounter, feature group or GPU/SPU output is accepted.",
+    "No original model bytes, geometry rows, detailed canonical observations or captures are published."
+  ],
+  "original_named_callbacks_implemented": 12,
+  "remaining_pending_callbacks": 95,
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

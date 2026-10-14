@@ -86,6 +86,10 @@ Entity body-message gates and contact state now have native comparisons, and
 bound journal acknowledgements deliver their link/video/end consequences
 synchronously. See [entity body routing](docs/ENTITY_BODY.md) for the inherited
 contact correction and the geometry queries that remain pending.
+Imported actors now retain their original copied root collision binding, and
+model cuboid preparation, movement extension and cached-world matrix application
+have native comparisons. See [actor collision geometry](docs/ACTOR_GEOMETRY.md)
+for the import path and the remaining live query/response integration.
 
 ## Start here
 
@@ -215,6 +219,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Owned actor-journal scenarios compared with original CPU execution | 336 |
 | Owned entity body-notification scenarios compared | 2,016 |
 | Coupled journal/actor-contact scenarios compared in a supplied parent graph | 336 |
+| Owned prepared-cloud comparisons | 504 |
+| Canonical actor collision-binding/bounds observations | 900 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

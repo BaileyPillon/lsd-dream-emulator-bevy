@@ -28,6 +28,8 @@ impl ActorAxis {
 pub struct ModelActor {
     pub animation: AnimationPlayer,
     pub root_part: usize,
+    /// The actor copies the root part's geometry binding at construction.
+    pub collision_primitive: Option<usize>,
     pub pose: GenerationPose,
     pub attributes: u32,
     pub action_kind: u8,
@@ -69,9 +71,11 @@ impl ModelActor {
         }
         let mut animation = AnimationPlayer::new(types, primitives);
         animation.select_clip(clips, 0)?;
+        let collision_primitive = animation.parts[root].primitive;
         Ok(Self {
             animation,
             root_part: root,
+            collision_primitive,
             pose: GenerationPose::default(),
             attributes: 1 << 31,
             action_kind: 65,

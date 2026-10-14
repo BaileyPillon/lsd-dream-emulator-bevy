@@ -800,6 +800,21 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "actor_geometry_recovery_20261014": {
+      "scope": "Real canonical MOM/SDK/model actor construction, copied root collision primitive binding, original bounds and eight animation steps. In-memory file data is isolated from SDK BSS/heap; initialized unit matrix and CD are supplied. Cache/world refresh, live queries/collision response and complete resource lifetimes remain unaccepted.",
+      "checks": {
+        "path": "docs/actor-geometry-checks.json",
+        "sha256": "40859bd64d4d78df101f8320010eeb96c7c1749c7441fec9cd9d4aeaeaddfd24"
+      },
+      "owned_prepared_cloud_cases": 504,
+      "canonical_actor_geometry_constructors": 100,
+      "canonical_geometry_observations": 900,
+      "encounter_collision_geometry_import_connected": true,
+      "live_collision_query_response_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

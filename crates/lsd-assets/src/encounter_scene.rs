@@ -40,6 +40,7 @@ pub struct SceneActor {
     pub model: i8,
     pub resource: Arc<Mom>,
     pub actor: ModelActor,
+    pub collision: Option<lsd_core::CollisionModel>,
     pub properties: EntityProperties,
     pub behavior_active: bool,
     pub behavior_pending: bool,
@@ -484,6 +485,9 @@ impl<S: GenerationSound> EncounterHost for Host<'_, S> {
         );
         let active = behavior.active != 0;
         let pending = script.pending();
+        let Ok(collision) = resource.collision_model(&actor) else {
+            return false;
+        };
         *self.serial = self.serial.wrapping_add(1);
         self.actors.push(SceneActor {
             serial: *self.serial,
@@ -493,6 +497,7 @@ impl<S: GenerationSound> EncounterHost for Host<'_, S> {
             model: spawn.model,
             resource: Arc::clone(resource),
             actor,
+            collision,
             properties,
             behavior_active: active,
             behavior_pending: pending,

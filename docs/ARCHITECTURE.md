@@ -104,3 +104,11 @@ wrapper stores its inherited code-four contact before filtering, then bound
 actor acknowledgements can deliver a recursive link/video/end notification in
 the same call. `InheritedBodyQuery` explicitly records unfinished DreamSys
 geometry work. See [entity body routing](ENTITY_BODY.md).
+
+`ModelActor::collision_primitive` retains the geometry binding copied from the
+root part at construction. `Mom::collision_model` imports that object's original
+bounds and ordered triangle/quad faces. `SceneActor` keeps this geometry alongside
+its animation rig. `CollisionModel::prepared_cloud` expands its bounds, extends
+the moving side of the cuboid and applies a supplied cached world matrix using
+the original saturated SDK arithmetic. Live query/response and native cache/
+ancestry scheduling remain open; see [actor collision geometry](ACTOR_GEOMETRY.md).
