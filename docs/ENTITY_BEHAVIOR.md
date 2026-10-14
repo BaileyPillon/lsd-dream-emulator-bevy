@@ -2,8 +2,9 @@
 
 The day profile now runs the original interaction policy against imported actors
 and the player's integer pose/view. The shared lifecycle and three-slot sound
-context run in Rust. Futon, Television and Drumstick callbacks are implemented;
-the other 104 distinct callbacks retain an explicit pending state.
+context run in Rust. Twelve distinct callbacks are implemented, including the
+initial Futon, Television and Drumstick scripts and nine further callbacks in
+[actor motion](ACTOR_MOTION.md). The other 95 retain an explicit pending state.
 
 This is partial original-game recovery. Trigger, link, video and end notifications
 now reach the original journal policy immediately; see
@@ -63,7 +64,8 @@ interaction timer and query policy run; that state is explicitly incomplete.
 | Their controlled constructor/behavior/animation observations | 40 |
 | Original distinct callback catalog | 107 |
 | Entity property records / nonzero callback records | 130 / 111 |
-| Named callbacks implemented and compared in supplied graphs | 3 |
+| Initial named callbacks implemented and compared in supplied graphs | 3 |
+| Current total after the actor-motion checkpoint | 12 |
 | Whole NPC encounters accepted | 0 |
 
 Native checks execute identified original functions with the real allocator,

@@ -137,7 +137,7 @@ impl StageLinkSession {
         self.encounters = Some(EncounterScene::new(tables, properties));
     }
     /// Scene binding and presentation for the original encounter channel.
-    /// Three named callbacks, query policy and journal consequences are connected.
+    /// Named callbacks, query policy and journal consequences are connected.
     /// Inherited body/aim dispatch and native scheduling remain open.
     pub fn tick_encounters(
         &mut self,
@@ -208,10 +208,11 @@ impl StageLinkSession {
             controls: &mut player.controls,
             services,
         };
-        let result = encounters.tick_with_events(
+        let result = encounters.tick_with_motion(
             target,
             &mut linked.rng,
             &mut self.encounter_audio,
+            math,
             &mut events,
         );
         encounters.pending_notifications = pending;

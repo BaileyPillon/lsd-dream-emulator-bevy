@@ -1,4 +1,29 @@
-use crate::{AnimationClip, AnimationError, AnimationPlayer, GenerationPose};
+use crate::{
+    AnimationClip, AnimationError, AnimationPlayer, FixedMatrix, GenerationFault, GenerationPose,
+    transform_number,
+};
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ActorAxis {
+    X,
+    Y,
+    Z,
+}
+impl ActorAxis {
+    pub fn notification(self) -> i32 {
+        match self {
+            Self::X => 7,
+            Self::Y => 8,
+            Self::Z => 6,
+        }
+    }
+    fn index(self) -> usize {
+        match self {
+            Self::X => 0,
+            Self::Y => 1,
+            Self::Z => 2,
+        }
+    }
+}
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ModelActor {
     pub animation: AnimationPlayer,
@@ -7,7 +32,8 @@ pub struct ModelActor {
     pub attributes: u32,
     pub action_kind: u8,
     pub collision_mode: i32,
-    pub turn_limit: i32,
+    /// Signed halfword at original node offset 0x48, initialized to 300.
+    pub move_distance: i16,
 }
 impl ModelActor {
     /// Successful original actor construction allocates parts, finds the root
@@ -49,7 +75,7 @@ impl ModelActor {
             attributes: 1 << 31,
             action_kind: 65,
             collision_mode: 1,
-            turn_limit: 300,
+            move_distance: 300,
         })
     }
     pub fn set_hidden(&mut self, hidden: bool) {
@@ -63,5 +89,61 @@ impl ModelActor {
     }
     pub fn tick_animation(&mut self, clips: &[AnimationClip]) -> Result<(), AnimationError> {
         self.animation.tick(clips, |_| {})
+    }
+    /// Original scene movement truncates the amount before rotating its local vector.
+    pub fn move_local(&mut self, axis: ActorAxis, amount: i32, matrix: FixedMatrix) {
+        self.move_distance = amount as i16;
+        let mut vector = [0; 3];
+        vector[axis.index()] = i32::from(self.move_distance);
+        self.translate(matrix.apply_long(vector), false);
+    }
+    pub fn translate(&mut self, vector: [i32; 3], absolute: bool) {
+        for (position, value) in self.pose.position.iter_mut().zip(vector) {
+            *position = if absolute {
+                value
+            } else {
+                position.wrapping_add(value)
+            };
+        }
+        self.animation.actor_coordinate_cache = 0;
+    }
+    pub fn rotate_packet(
+        &mut self,
+        packet: [u32; 3],
+        absolute: bool,
+    ) -> Result<(), GenerationFault> {
+        let mut values = [0; 3];
+        for (value, word) in values.iter_mut().zip(packet) {
+            *value = transform_number(word).ok_or(GenerationFault::InvalidDivision)? / 360;
+        }
+        for (angle, value) in self.pose.angles.iter_mut().zip(values) {
+            *angle = if absolute {
+                value as i16
+            } else {
+                (i32::from(*angle).wrapping_add(value) % 4096) as i16
+            };
+        }
+        self.animation.actor_coordinate_cache = 0;
+        Ok(())
+    }
+    pub fn scale_packet(
+        &mut self,
+        packet: [u32; 3],
+        absolute: bool,
+    ) -> Result<(), GenerationFault> {
+        let mut values = [0; 3];
+        for (value, word) in values.iter_mut().zip(packet) {
+            *value =
+                i32::from(transform_number(word).ok_or(GenerationFault::InvalidDivision)? as i16);
+        }
+        for (scale, value) in self.pose.scale.iter_mut().zip(values) {
+            *scale = if absolute {
+                value
+            } else {
+                scale.wrapping_add(value)
+            };
+        }
+        self.animation.actor_coordinate_cache = 0;
+        Ok(())
     }
 }

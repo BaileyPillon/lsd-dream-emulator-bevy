@@ -1,8 +1,8 @@
 use crate::{PsxExeHeader, StreamedStage, formats::Mom, is_canonical_reference};
 use lsd_core::{
     BehaviorTick, EncounterFrame, EncounterHost, EncounterSpawn, EncounterTables, EntityBehavior,
-    EntityInteractionHost, EntityTarget, GenerationSound, ModelActor, NpcScript, PsxRng,
-    transform_number,
+    EntityInteractionHost, EntityScriptHost, EntityTarget, GenerationSound, ModelActor, NpcScript,
+    PsxRng, transform_number,
 };
 use std::sync::Arc;
 
@@ -243,6 +243,26 @@ impl EncounterScene {
         sound: &mut impl GenerationSound,
         events: &mut impl EncounterEventHost,
     ) -> Result<(), lsd_core::BehaviorFault> {
+        self.tick_script_services(target, rng, sound, None, events)
+    }
+    pub fn tick_with_motion(
+        &mut self,
+        target: EntityTarget,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        math: &lsd_core::PsxMathTables,
+        events: &mut impl EncounterEventHost,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.tick_script_services(target, rng, sound, Some(math), events)
+    }
+    fn tick_script_services(
+        &mut self,
+        target: EntityTarget,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        math: Option<&lsd_core::PsxMathTables>,
+        events: &mut impl EncounterEventHost,
+    ) -> Result<(), lsd_core::BehaviorFault> {
         for actor in &mut self.actors {
             let mut host = InteractionHost {
                 target,
@@ -251,6 +271,7 @@ impl EncounterScene {
                 fields: actor.properties.fields,
                 events,
                 error: None,
+                math,
             };
             actor.behavior.update_interaction(
                 &mut actor.actor,
@@ -264,7 +285,7 @@ impl EncounterScene {
             }
             actor.behavior_active = actor.behavior.active != 0;
             if !actor.behavior_pending {
-                actor.behavior.tick(
+                actor.behavior.tick_with_services(
                     &mut actor.actor,
                     &actor.resource.animations,
                     BehaviorTick {
@@ -273,6 +294,7 @@ impl EncounterScene {
                     },
                     rng,
                     sound,
+                    &mut host,
                 )?;
             } else {
                 // The interaction timer is independent of a pending named action.
@@ -289,6 +311,30 @@ struct InteractionHost<'a, H> {
     fields: [i8; 12],
     events: &'a mut H,
     error: Option<lsd_core::DayFault>,
+    math: Option<&'a lsd_core::PsxMathTables>,
+}
+impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn movement_matrix(
+        &mut self,
+        angles: [i16; 3],
+    ) -> Result<lsd_core::FixedMatrix, lsd_core::BehaviorFault> {
+        self.math
+            .map(|math| math.rotation(angles))
+            .ok_or(lsd_core::BehaviorFault::MissingMotionServices)
+    }
+    fn notify(&mut self, rng: &mut PsxRng, code: i32) -> Result<(), lsd_core::BehaviorFault> {
+        self.events
+            .dispatch(
+                EncounterNotification {
+                    serial: self.serial,
+                    entity: self.entity,
+                    kind: EncounterNotificationKind::Notify(code),
+                },
+                self.fields,
+                rng,
+            )
+            .map_err(lsd_core::BehaviorFault::Journal)
+    }
 }
 impl<H: EncounterEventHost> EntityInteractionHost for InteractionHost<'_, H> {
     fn proximity(&mut self, position: [i32; 3], forward: i32, radius: i32) -> bool {
@@ -379,6 +425,9 @@ impl<S: GenerationSound> EncounterHost for Host<'_, S> {
             };
             *angle = (value / 360) as i16;
         }
+        // The original entity_start applies its supplied origin and invalidates
+        // the coordinate cache after construction.
+        actor.translate(actor.pose.position, true);
         let script = NpcScript::from_reference_address(properties.callback);
         let behavior = EntityBehavior::construct(
             spawn.entity,

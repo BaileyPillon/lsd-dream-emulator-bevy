@@ -78,7 +78,7 @@ owns the three sound slots. Its behavior counter, context counter and the
 animation interpreter's interaction timer stay separate. `EntityTarget` provides
 integer projection, height interpolation, proximity and facing-distance queries.
 The asset adapter supplies loaded properties, the current player pose/view and
-an independent actor sound queue. Three named callbacks are implemented; see
+an independent actor sound queue. Twelve named callbacks are implemented; see
 [entity behavior](ENTITY_BEHAVIOR.md) for the remaining catalog and timing work.
 
 `ActorJournalDispatcher` handles notifications inside the emitting actor's
@@ -87,3 +87,11 @@ direct dynamic-link and video/end-clock policy with the shared RNG. The adapter
 consumes newly emitted map-effect commands in the same host tick. Aim and
 inherited body acknowledgement remain queued; full scene scheduling and media
 playback remain open. See [actor journal recovery](ACTOR_JOURNAL.md).
+
+`ModelActor` now retains the original movement halfword and pose setters.
+Local-axis movement uses a signed halfword vector and the original rotation
+matrix, followed by a synchronous notification when requested. `EntityScriptHost`
+supplies rotation math and notification delivery to the callback interpreter.
+The Bevy session supplies imported math tables; callers without motion services
+receive an explicit fault for a script that requires them. See
+[actor motion](ACTOR_MOTION.md) for the callback catalog and remaining body work.

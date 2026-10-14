@@ -90,7 +90,7 @@ The shared entity start/stop/link state, three clocks, sound context, interactio
 policy and target query math now have original CPU comparisons. Futon, Television
 and Drumstick callbacks are implemented, including canonical model/property
 comparisons for the first two. The scene adapter connects the query policy and
-queues sound/notification requests. Recover the other 104 callbacks and Gray Man
+queues sound/notification requests. Recover the other 95 callbacks and Gray Man
 activation, then inherited body/mood/notification/aim consequences, full scene
 scheduling and original GPU/SPU output. Whole NPC encounters remain unaccepted;
 see [entity behavior](ENTITY_BEHAVIOR.md).
@@ -101,3 +101,11 @@ profile delivers these notifications immediately with the shared RNG, and a
 loaded Futon scenario verifies a single mood/score contribution. Inherited body
 acknowledgement, aim rotation, cinematic playback and full original scene order
 remain open; see [actor journal recovery](ACTOR_JOURNAL.md).
+
+Local-axis movement and pose setters now have original CPU comparisons, and nine
+additional callbacks are connected. Eight have controlled comparisons using
+canonical encounter/model/property bindings. The day-eight Yokai capture uses
+the original proximity policy to start its script, change clip and move its
+render instance. Inherited movement/body consequences, the remaining callbacks,
+natural scene scheduling and original GPU/SPU output remain open; see
+[actor motion](ACTOR_MOTION.md).

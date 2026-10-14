@@ -30,11 +30,11 @@ mod links;
 mod map_effect;
 mod map_links;
 mod model_actor;
-pub use model_actor::ModelActor;
+pub use model_actor::{ActorAxis, ModelActor};
 mod entity_behavior;
 pub use entity_behavior::{
     BehaviorContext, BehaviorFault, BehaviorTick, EntityBehavior, EntityInteractionHost,
-    EntityTarget, NpcScript, entity_distance,
+    EntityScriptHost, EntityTarget, NpcScript, entity_distance,
 };
 mod pad;
 mod player_controls;

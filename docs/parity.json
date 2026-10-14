@@ -233,9 +233,9 @@
       "id": "F027",
       "title": "Original scripted NPC and moving-object behavior catalog",
       "requirement": "Preserve 107 distinct callbacks selected by 130 records, including timed poses, movements, random states and interaction consequences.",
-      "port_status": "partial_three_of_107_original_callbacks_native_checked_and_connected",
+      "port_status": "partial_twelve_of_107_original_callbacks_native_checked_and_connected",
       "whole_feature_accepted": false,
-      "evidence": "docs/ENTITY_BEHAVIOR.md"
+      "evidence": "docs/ACTOR_MOTION.md"
     },
     {
       "id": "F028",
@@ -751,6 +751,33 @@
       "inherited_body_acknowledgement_accepted": false,
       "aim_rotation_accepted": false,
       "full_scene_cadence_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "actor_motion_recovery_20261014": {
+      "scope": "Original local-axis movement, rotation/scale packet setters and nine callbacks with real owned entity/MOM/SDK construction and owned sparse trig inputs. Actual original frame/action/context ordering, RNG and sound/notification requests are observed. Initialized CD, typed roots, target positions and external audio are supplied; complete inherited body/scene consequences, original asset encounters, GPU/SPU and global cadence remain unaccepted.",
+      "checks": {
+        "path": "docs/actor-motion-checks.json",
+        "sha256": "7e1df93a5aa7e01a5de24650c75aa193efe66fbfd68445dfc0e3f4280f585bec"
+      },
+      "owned_motion_cases": 288,
+      "owned_packet_setter_cases": 144,
+      "owned_invalid_packet_fault_cases": 12,
+      "owned_callback_scenarios": 54,
+      "owned_callback_states": 2214,
+      "canonical_original_callback_types": 8,
+      "canonical_original_model_property_cases": 9,
+      "canonical_original_callback_states": 378,
+      "original_named_callbacks_implemented": 12,
+      "distinct_original_callbacks": 107,
+      "remaining_pending_callbacks": 95,
+      "original_movement_halfword_label_corrected": true,
+      "entity_start_origin_cache_invalidation_connected": true,
+      "supplied_yokai_calendar_day": 8,
+      "supplied_yokai_active_ticks": 63,
+      "yokai_behavior_activation_forced": false,
+      "inherited_body_movement_consequences_accepted": false,
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

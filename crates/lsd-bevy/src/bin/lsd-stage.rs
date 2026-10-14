@@ -145,6 +145,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut live_capture = false;
     let mut original_day = false;
     let mut supplied_day = 1;
+    let mut supplied_actor_motion = false;
     let mut supplied_actor_query = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
@@ -176,10 +177,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     | "--dream-capture"
                     | "--dream-scenario-capture"
                     | "--npc-behavior-capture"
+                    | "--npc-motion-capture"
             ) =>
         {
             original_day = true;
-            supplied_actor_query = value == "--npc-behavior-capture";
+            supplied_actor_motion = value == "--npc-motion-capture";
+            if supplied_actor_motion {
+                supplied_day = 8;
+            }
+            supplied_actor_query = value == "--npc-behavior-capture" || supplied_actor_motion;
             walk = true;
             walk_stream = true;
             walk_links = true;
@@ -484,13 +490,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         },
                     )?;
                     if supplied_actor_query && step_index == 0 {
+                        let entity = if supplied_actor_motion { 93 } else { 5 };
                         let actor = session
                             .as_ref()
                             .and_then(|session| session.encounters.as_ref())
                             .and_then(|encounters| {
-                                encounters.actors.iter().find(|actor| actor.entity == 5)
+                                encounters
+                                    .actors
+                                    .iter()
+                                    .find(|actor| actor.entity == entity)
                             })
-                            .ok_or("Supplied NPC capture requires the original Futon encounter")?;
+                            .ok_or("Supplied NPC capture requires its original encounter")?;
+                        let forward = i32::from(actor.properties.fields[11])
+                            .abs()
+                            .wrapping_shl(11);
                         let offset = lsd_core::EntityTarget {
                             position: [0; 3],
                             local_y: 0,
@@ -498,7 +511,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             eye: player.controls.eye,
                             target: player.controls.target,
                         }
-                        .resolve(2048)?;
+                        .resolve(forward)?;
                         player.position = std::array::from_fn(|axis| {
                             actor.actor.pose.position[axis].wrapping_sub(offset[axis])
                         });
@@ -507,7 +520,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .unwrap()
                             .refresh_key(&streamed.collision, player.position)?;
                         println!(
-                            "profile=supplied_original_npc_proximity entity=5 supplied_player_placement=true original_npc_script_and_query_math=true original_global_cadence_gpu_spu_pending=true"
+                            "profile=supplied_original_npc_proximity entity={entity} initial_actor_position={:?} supplied_player_placement=true supplied_behavior_activation=false original_npc_script_and_query_math=true original_global_cadence_gpu_spu_pending=true",
+                            actor.actor.pose.position,
                         );
                     }
                     let selected = session
@@ -620,18 +634,37 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 );
             }
             if supplied_actor_query {
+                let entity = if supplied_actor_motion { 93 } else { 5 };
                 let actor = session
                     .encounters
                     .as_ref()
-                    .and_then(|encounters| encounters.actors.iter().find(|actor| actor.entity == 5))
-                    .ok_or("Futon actor retired before supplied capture")?;
-                println!(
-                    "supplied_futon_behavior_active={} supplied_futon_behavior_ticks={} supplied_futon_context_ticks={} supplied_futon_animation_frame={}",
-                    actor.behavior.active,
-                    actor.behavior.ticks,
-                    actor.behavior.context.words[1],
-                    actor.actor.animation.frame_index
-                );
+                    .and_then(|encounters| {
+                        encounters
+                            .actors
+                            .iter()
+                            .find(|actor| actor.entity == entity)
+                    })
+                    .ok_or("NPC actor retired before supplied capture")?;
+                if supplied_actor_motion {
+                    println!(
+                        "supplied_yokai_behavior_active={} supplied_yokai_behavior_ticks={} supplied_yokai_context_ticks={} supplied_yokai_animation_clip={:?} supplied_yokai_animation_frame={} supplied_yokai_position={:?} supplied_yokai_movement_amount={}",
+                        actor.behavior.active,
+                        actor.behavior.ticks,
+                        actor.behavior.context.words[1],
+                        actor.actor.animation.selected_clip,
+                        actor.actor.animation.frame_index,
+                        actor.actor.pose.position,
+                        actor.actor.move_distance
+                    );
+                } else {
+                    println!(
+                        "supplied_futon_behavior_active={} supplied_futon_behavior_ticks={} supplied_futon_context_ticks={} supplied_futon_animation_frame={}",
+                        actor.behavior.active,
+                        actor.behavior.ticks,
+                        actor.behavior.context.words[1],
+                        actor.actor.animation.frame_index
+                    );
+                }
             }
             println!(
                 "session_state={} rebuilds={} loaded_stage={} pending_day_event={:?}",

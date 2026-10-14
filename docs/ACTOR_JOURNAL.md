@@ -66,7 +66,7 @@ tables, assets, detailed original observations and captures stay private.
 ## Remaining requirements
 
 Implement inherited journal/body dispatch, acknowledgement effects and aim
-rotation, the remaining 104 callbacks, Gray Man activation, cinematic playback,
+rotation, the remaining 95 callbacks, Gray Man activation, cinematic playback,
 full scene construction/lifetimes and native scheduling. Compare original GPU
 and SPU output with the running port. Notification 4 currently queues an
 acknowledgement request; this does not establish its body effect. Video selection

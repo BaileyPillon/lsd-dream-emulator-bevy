@@ -1,5 +1,7 @@
 //! Original entity lifecycle and three-slot behavior/sound contexts.
-use crate::{AnimationClip, AnimationError, GenerationSound, ModelActor, PsxRng};
+use crate::{
+    ActorAxis, AnimationClip, AnimationError, FixedMatrix, GenerationSound, ModelActor, PsxRng,
+};
 use std::fmt;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -7,6 +9,7 @@ pub enum BehaviorFault {
     Division,
     Animation(AnimationError),
     PendingCallback,
+    MissingMotionServices,
     Journal(crate::DayFault),
 }
 impl fmt::Display for BehaviorFault {
@@ -110,6 +113,15 @@ pub enum NpcScript {
     Futon,
     Television,
     Drumstick,
+    Yokai,
+    Sailboat,
+    Balloon,
+    FishGiant,
+    Halo,
+    SiblingsFlock,
+    BedBoneDead,
+    KickingMan,
+    PrincePrincess,
     Pending(u32),
 }
 impl NpcScript {
@@ -119,6 +131,15 @@ impl NpcScript {
             Some(0x8005_e480) => Self::Futon,
             Some(0x8006_3e68) => Self::Television,
             Some(0x8005_ed10) => Self::Drumstick,
+            Some(0x8006_41c0) => Self::Yokai,
+            Some(0x8005_fa64) => Self::Sailboat,
+            Some(0x8005_fec8) => Self::Balloon,
+            Some(0x8006_51d0) => Self::FishGiant,
+            Some(0x8005_ef20) => Self::Halo,
+            Some(0x8005_f6d4) => Self::SiblingsFlock,
+            Some(0x8006_4b14) => Self::BedBoneDead,
+            Some(0x8006_1c04) => Self::KickingMan,
+            Some(0x8006_07f8) => Self::PrincePrincess,
             Some(at) => Self::Pending(at),
         }
     }
@@ -140,6 +161,38 @@ pub trait EntityInteractionHost {
     fn facing_target(&mut self, position: [i32; 3], distance: i32) -> bool;
     fn aim_at_target(&mut self, rng: &mut PsxRng);
     fn notify(&mut self, rng: &mut PsxRng, code: i32);
+}
+/// Script services use the original rotation math and synchronous notification order.
+pub trait EntityScriptHost {
+    fn movement_matrix(&mut self, angles: [i16; 3]) -> Result<FixedMatrix, BehaviorFault>;
+    fn notify(&mut self, rng: &mut PsxRng, code: i32) -> Result<(), BehaviorFault>;
+}
+struct UnconnectedScriptHost;
+impl EntityScriptHost for UnconnectedScriptHost {
+    fn movement_matrix(&mut self, _angles: [i16; 3]) -> Result<FixedMatrix, BehaviorFault> {
+        Err(BehaviorFault::MissingMotionServices)
+    }
+    fn notify(&mut self, _rng: &mut PsxRng, _code: i32) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingMotionServices)
+    }
+}
+fn trigger_ratio(
+    actor: &ModelActor,
+    context: &BehaviorContext,
+    input: BehaviorTick,
+) -> Result<i32, BehaviorFault> {
+    let distance = entity_distance(actor.pose.position, input.target);
+    let range = i32::from(input.proximity).wrapping_shl(11);
+    if range < distance {
+        return Ok(-1);
+    }
+    distance
+        .checked_div(
+            range
+                .checked_div(context.words[5])
+                .ok_or(BehaviorFault::Division)?,
+        )
+        .ok_or(BehaviorFault::Division)
 }
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EntityBehavior {
@@ -352,6 +405,17 @@ impl EntityBehavior {
         rng: &mut PsxRng,
         sound: &mut impl GenerationSound,
     ) -> Result<(), BehaviorFault> {
+        self.tick_with_services(actor, clips, input, rng, sound, &mut UnconnectedScriptHost)
+    }
+    pub fn tick_with_services(
+        &mut self,
+        actor: &mut ModelActor,
+        clips: &[AnimationClip],
+        input: BehaviorTick,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        host: &mut impl EntityScriptHost,
+    ) -> Result<(), BehaviorFault> {
         if self.script.pending() {
             return Err(BehaviorFault::PendingCallback);
         }
@@ -361,21 +425,9 @@ impl EntityBehavior {
             let script = self.script;
             self.context.update(sound, |context| {
                 match script {
-                    NpcScript::None => {}
+                    NpcScript::None | NpcScript::PrincePrincess => {}
                     NpcScript::Futon | NpcScript::Television => {
-                        let distance = entity_distance(actor.pose.position, input.target);
-                        let range = i32::from(input.proximity).wrapping_shl(11);
-                        context.words[4] = if range >= distance {
-                            distance
-                                .checked_div(
-                                    range
-                                        .checked_div(context.words[5])
-                                        .ok_or(BehaviorFault::Division)?,
-                                )
-                                .ok_or(BehaviorFault::Division)?
-                        } else {
-                            -1
-                        };
+                        context.words[4] = trigger_ratio(actor, context, input)?;
                         if context.words[1] == 0 {
                             if script == NpcScript::Futon {
                                 context.words[7] = 23;
@@ -389,6 +441,56 @@ impl EntityBehavior {
                         if ticks == 0 {
                             context.words[4] = 0;
                             context.words[7] = 15;
+                        }
+                    }
+                    NpcScript::Yokai => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if context.words[1] % 10 == 0 {
+                            context.words[7] = 3;
+                        }
+                        let variant = actor
+                            .animation
+                            .selected_clip
+                            .ok_or(AnimationError::InvalidClip)?;
+                        let duration = clips
+                            .get(variant)
+                            .ok_or(AnimationError::InvalidClip)?
+                            .frames
+                            .len();
+                        if ticks == duration as i32 {
+                            actor.animation.select_clip(clips, 1)?;
+                        }
+                        if actor.animation.selected_clip == Some(1) {
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Z, -128, matrix);
+                            host.notify(rng, 6)?;
+                        }
+                    }
+                    NpcScript::Sailboat | NpcScript::Balloon => {
+                        let (axis, amount) = if script == NpcScript::Sailboat {
+                            (ActorAxis::Z, -30)
+                        } else {
+                            (ActorAxis::Y, -90)
+                        };
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(axis, amount, matrix);
+                    }
+                    NpcScript::FishGiant | NpcScript::SiblingsFlock | NpcScript::Halo => {
+                        let packet = if script == NpcScript::Halo {
+                            0x0002_0001
+                        } else {
+                            0x0001_0006
+                        };
+                        actor
+                            .scale_packet([packet; 3], true)
+                            .map_err(|_| BehaviorFault::Division)?;
+                    }
+                    NpcScript::BedBoneDead => actor.set_hidden(!rng.next_u15().is_multiple_of(20)),
+                    NpcScript::KickingMan => {
+                        if actor.animation.frame_index == 30 {
+                            context.words[7] = 18;
+                            context.words[4] = 0;
+                            context.words[8] = -1;
                         }
                     }
                     NpcScript::Pending(_) => return Err(BehaviorFault::PendingCallback),

@@ -70,14 +70,18 @@ Stream release, scene rebuild and dream expiry retire their render instances.
 See [encounter recovery](docs/ENCOUNTERS.md) for original CPU comparisons and
 the remaining named NPC scripts, interaction, physics and scheduling work.
 The shared entity lifecycle, perception query math and interaction policy now
-also run in Rust. Futon, Television and Drumstick scripts are connected; the
-other 104 original callbacks remain pending. See
+also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
+additional callbacks now retain their original movement, scaling, visibility,
+frame-gated sound or empty action; 95 callbacks remain pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch.
 Actor notifications now apply original mood/score, recall, direct dynamic-link
 and video/end-clock policy during the emitting actor's update. See
 [actor journal recovery](docs/ACTOR_JOURNAL.md) for native comparisons and
 the remaining inherited body, aim, cinematic playback and full-session work.
+See [actor motion and callbacks](docs/ACTOR_MOTION.md) for the new operations,
+canonical model comparisons and a day-eight Yokai capture using the original
+proximity policy.
 
 ## Start here
 
@@ -191,7 +195,15 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Original chunk encounter records checked against local model libraries | 98 |
 | Available declared actor-model bindings in those records | 159 |
 | Loaded encounter contexts checked for bind/retire/rebuild behavior | 97 |
-| Original named callbacks implemented and compared in supplied graphs | 3 / 107 |
+| Callbacks at the initial entity-behavior checkpoint | 3 / 107 |
+| Additional callbacks compared using owned model/action graphs | 9 |
+| Total original callbacks implemented and compared in supplied graphs | 12 / 107 |
+| Local-axis motion cases compared with original CPU execution | 288 |
+| Rotation/scale packet cases compared with original CPU execution | 144 |
+| Invalid packet cases preserving transform state before a native fault | 12 |
+| Additional callback state observations with owned models | 2,214 |
+| Additional callback types compared with canonical models/properties | 8 |
+| Their canonical model/property state observations | 378 |
 | Entity lifecycle state observations compared with original CPU execution | 544 |
 | Supplied interaction-policy scenarios compared | 288 |
 | Original target-query projection/height/boundary cases compared | 720 |

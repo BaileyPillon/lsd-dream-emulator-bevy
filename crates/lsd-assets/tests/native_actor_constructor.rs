@@ -4,7 +4,8 @@ use serde_json::{Value, json};
 fn snapshot(actor: &ModelActor) -> Value {
     let player = &actor.animation;
     json!({"root_part":actor.root_part,"pose":{"position":actor.pose.position,"angles":actor.pose.angles,"scale":actor.pose.scale},
-        "attributes":actor.attributes,"collision_mode":actor.collision_mode,"turn_limit":actor.turn_limit,
+        // Historical fixture key; native motion verifies this is the movement halfword.
+        "attributes":actor.attributes,"collision_mode":actor.collision_mode,"turn_limit":actor.move_distance,
         "animation":{"ticks":player.ticks,"enabled":player.enabled,"action_enabled":player.action_enabled,
         "clip":player.selected_clip,"frame":player.frame_index,"actor_cache":player.actor_coordinate_cache,"actor_children":player.actor_children,
         "parts":player.parts.iter().map(|part|json!({"part_type":part.part_type,"attributes":part.attributes,"cache":part.coordinate_cache,

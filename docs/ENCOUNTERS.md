@@ -6,7 +6,7 @@ multipart model actors with original spawn positions and rotations. Stream
 release and scene rebuild retire the previous actors; dream completion clears
 the channel and its Bevy render instances.
 
-Three original named callbacks now use the shared entity lifecycle and sound
+Twelve original named callbacks now use the shared entity lifecycle and sound
 context; other callbacks keep an explicit pending state. Perception/interaction
 policy runs before action and animation. See [entity behavior](ENTITY_BEHAVIOR.md)
 for scope and remaining body dispatch. Trigger/link/video/end journal consequences
@@ -27,7 +27,7 @@ failed day gate outside stage zero, including its Gray Man activation request.
 `lsd-core/src/model_actor.rs` creates the initial part types, finds the root via
 the first frame's primitive selector, binds primitives/parents and selects clip
 zero through `AnimationPlayer`. The successful constructor's owner flags,
-action kind, turn limit and collision mode are retained. Allocation failure
+action kind, initial movement halfword and collision mode are retained. Allocation failure
 and complete resource ownership require more original comparisons.
 
 `lsd-assets/src/encounter_tables.rs` and `encounter_scene.rs` import the canonical
