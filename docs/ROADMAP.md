@@ -24,6 +24,8 @@ does not imply every provisional feature group is accepted.
 
 Current checks cover original scalar primitives, asset decoding, integer
 animation, controls and collision, plus scene lookup and query selection.
+Body geometry also has fixed-point parent rotations compared with the original
+hit/notification path in supplied graphs; natural actor hierarchies remain open.
 The streamed viewer now uses recovered neighbor, slot-reuse and completion
 rules. Original CD timing, complete binding/actor callbacks and session
 scheduling remain open. All 40 provisional whole-game groups require acceptance; use

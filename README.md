@@ -24,6 +24,9 @@ callbacks still need implementation.
 
 Surrounding body queries now preserve the original rectangle/chain order and
 tile attribute gate; see [body dispatch recovery](docs/BODY_DISPATCH_RECOVERY.md).
+The shared geometry path also retains fixed-point parent rotation and matrix
+saturation, compared with the original hit and actor notification chain in
+supplied graphs; see [body transform recovery](docs/BODY_TRANSFORMS.md).
 
 ## Start here
 
@@ -92,6 +95,7 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Original animation entries compared in supplied actor graphs | 122 |
 | Matching native animation state observations | 10,228 |
 | Reference control steps compared in supplied graphs | 960 |
+| Supplied body-transform cases compared with the original hit/notification path | 120 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |

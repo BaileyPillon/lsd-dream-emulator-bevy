@@ -446,6 +446,23 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "body_transforms_20261013": {
+      "scope": "Rust fixed-point body transforms and supplied parent rotation chains compared with native SDK matrix routines and hit presence through the complete original hit/geometry/actor-notification CPU path in supplied graphs. Natural construction, complete callback state, general-angle hit-chain scenarios, hardware timing/flags, link behavior and whole-game acceptance remain open.",
+      "evidence": {
+        "path": "docs/body-transform-checks.json",
+        "sha256": "8949a0c04cd93d1088ac0b3e4b6d3216e58cc0b699176254886f70e50a968cfc"
+      },
+      "native_matrix_application_cases": 24,
+      "native_matrix_multiplication_cases": 16,
+      "native_hit_cases": 120,
+      "native_successful_hits": 36,
+      "function_result_stubs": 0,
+      "fixed_point_body_geometry_integrated": true,
+      "natural_actor_parent_lifecycle_implemented": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

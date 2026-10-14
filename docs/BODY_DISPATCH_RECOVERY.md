@@ -20,6 +20,8 @@ slot labels and unready slots. Tile notification is captured at its virtual
 boundary; sender and message arguments are checked. A separate scalar run checks
 contact assignment. These observations do not execute the entire native
 transform, geometry and actor callback graph.
+The subsequent [body transform checks](BODY_TRANSFORMS.md) execute that native
+hit path in separate supplied graphs and compare its hit results with Rust.
 
 Another fixture records 168 executions of the original tile reader, including
 primary and chained entries, signed heights, wrapped headings, flags/category
@@ -32,7 +34,7 @@ the final contact and flag gates. Original-input stream checks and Bevy captures
 exercise the updated queries. See [body-dispatch-checks.json](body-dispatch-checks.json)
 for source hashes and exact scope.
 
-Natural native binding/allocation, actor/MML lifetimes, complete body transforms,
-link outcomes, floor effects, session timing, original NPC behavior and end-to-end
-game comparisons remain open. Whole original acceptance remains 0/40 provisional
-groups.
+Natural native binding/allocation, actor/MML lifetimes, complete session transform
+graphs, link outcomes, floor effects, session timing, original NPC behavior and
+end-to-end game comparisons remain open. Whole original acceptance remains 0/40
+provisional groups.

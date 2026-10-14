@@ -86,6 +86,29 @@ impl FixedMatrix {
         self.apply_short(vector)
             .map(|value| value.clamp(-32768, 32767) as i16)
     }
+
+    /// SDK MulMatrix2 multiplies each right-hand column and stores saturated IR halfwords.
+    pub fn multiply(self, right: Self) -> Self {
+        let columns: [[i16; 3]; 3] = std::array::from_fn(|column| {
+            self.apply_saturated(std::array::from_fn(|row| right.0[row][column]))
+        });
+        Self(std::array::from_fn(|row| {
+            std::array::from_fn(|column| columns[column][row])
+        }))
+    }
+}
+
+impl PsxMathTables {
+    /// Local inverse rotation followed by each parent's inverse, retaining SDK rounding.
+    pub fn inverse_rotation_chain(&self, local: [i16; 3], parents: &[[i16; 3]]) -> FixedMatrix {
+        let mut matrix = self.rotation(local.map(i16::wrapping_neg));
+        for parent in parents {
+            matrix = self
+                .rotation(parent.map(i16::wrapping_neg))
+                .multiply(matrix);
+        }
+        matrix
+    }
 }
 
 /// The transform setter reads each word as a signed numerator/denominator pair.

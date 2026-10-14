@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T00:35:31.451785+00:00",
+  "base_commit": "ae4ed6c6b163d8e4ea3beb9841b75ddab49446b4",
+  "scope": "Rust fixed-point body transforms and supplied parent rotation chains compared with native SDK matrix routines and hit presence through the complete original hit/geometry/actor-notification CPU path in supplied graphs. Natural construction, complete callback state, general-angle hit-chain scenarios, hardware timing/flags, link behavior and whole-game acceptance remain open.",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "matrix_application_cases": 24,
+  "matrix_multiplication_cases": 16,
+  "native_short_vector_loop_runs": 4,
+  "native_hit_cases": 120,
+  "native_successful_hits": 36,
+  "native_functions_reached": 27,
+  "native_matrix_function_entries": {
+    "apply": 48,
+    "vectors": 4,
+    "multiply": 16
+  },
+  "native_hit_function_entries": {
+    "hit": 120,
+    "active": 310,
+    "world": 120,
+    "matrix": 270,
+    "rot": 270,
+    "multiply": 150,
+    "vectors": 240,
+    "apply": 1080,
+    "bounds": 120,
+    "refresh": 120,
+    "make_bounds": 120,
+    "get_bounds": 224,
+    "aggregate": 70,
+    "segment_box": 570,
+    "outcode": 1140,
+    "intersect": 36,
+    "decode_face": 72,
+    "cross": 36,
+    "square": 72,
+    "sqrt": 72,
+    "notify": 36,
+    "base_vtable": 36,
+    "base_notify": 36,
+    "actor_kind": 36,
+    "tile_actor_notify": 36,
+    "transform_vtable": 36,
+    "assign_contact": 36
+  },
+  "native_matrix_function_ranges": [
+    {
+      "name": "apply",
+      "address": "0x80015d58",
+      "bytes": 92,
+      "sha256": "5eff75f8ee6fc6b6ac7eeddc06c53876383fb018ca6e5376e057d09dd3ec7716"
+    },
+    {
+      "name": "multiply",
+      "address": "0x80015bfc",
+      "bytes": 268,
+      "sha256": "a734ee02e6512418b26dc635985184e8f31a57dbcaefcd38aaac2440d3847485"
+    },
+    {
+      "name": "vectors",
+      "address": "0x8001ee04",
+      "bytes": 148,
+      "sha256": "74b9652a0ae0931dd6eb06c82c842861520d03f232c48aa1467ffdd2336867e0"
+    }
+  ],
+  "native_hit_function_ranges": [
+    {
+      "name": "hit",
+      "address": "0x8001d714",
+      "bytes": 572,
+      "sha256": "588643a9b5e959ae764b2abe491c44af44a58fc04cf5aeee62498d840bdf6961"
+    },
+    {
+      "name": "world",
+      "address": "0x8001d950",
+      "bytes": 216,
+      "sha256": "d0653e9db5365190ad2f1fa6d716ed17554cf9177b580788cf0a771dbfc70536"
+    },
+    {
+      "name": "matrix",
+      "address": "0x8001d4dc",
+      "bytes": 140,
+      "sha256": "66d6016ba623639a9f3c1e4d2ad39782f05a3eedaa2d4658e9aeaa0d634f950f"
+    },
+    {
+      "name": "rot",
+      "address": "0x800160b0",
+      "bytes": 656,
+      "sha256": "0530114f1e6758601728bad4743821faba7c0a6be795ea442050a743262d0270"
+    },
+    {
+      "name": "multiply",
+      "address": "0x80015bfc",
+      "bytes": 268,
+      "sha256": "a734ee02e6512418b26dc635985184e8f31a57dbcaefcd38aaac2440d3847485"
+    },
+    {
+      "name": "vectors",
+      "address": "0x8001ee04",
+      "bytes": 148,
+      "sha256": "74b9652a0ae0931dd6eb06c82c842861520d03f232c48aa1467ffdd2336867e0"
+    },
+    {
+      "name": "apply",
+      "address": "0x80015d58",
+      "bytes": 92,
+      "sha256": "5eff75f8ee6fc6b6ac7eeddc06c53876383fb018ca6e5376e057d09dd3ec7716"
+    },
+    {
+      "name": "bounds",
+      "address": "0x8001da28",
+      "bytes": 972,
+      "sha256": "3d22831376f252fd6b67ce17385baa2d31740bf3d8c7b7c785f4bb9b91641fd4"
+    },
+    {
+      "name": "refresh",
+      "address": "0x8001f4e4",
+      "bytes": 40,
+      "sha256": "53ac0118d566d634d6de5187c748fad0e7327e8a10270c907ae38f24cc3b37da"
+    },
+    {
+      "name": "make_bounds",
+      "address": "0x8001f3b0",
+      "bytes": 308,
+      "sha256": "6ac1cdbb58c9d23f95f664b3213f167f0cb397435688b4ce9e248be8d861c291"
+    },
+    {
+      "name": "get_bounds",
+      "address": "0x8001f50c",
+      "bytes": 16,
+      "sha256": "3960bf714c3d63c777cb90c0336714cf7599f0e575ed62e305a53527258c9ea5"
+    },
+    {
+      "name": "active",
+      "address": "0x8001f3a4",
+      "bytes": 12,
+      "sha256": "1a4bb67a6e467146f4884650e603989a0a95394e10e71ce01c54c63f4f726199"
+    },
+    {
+      "name": "aggregate",
+      "address": "0x8001ddf4",
+      "bytes": 796,
+      "sha256": "e61be058229e5ecc97387ea9e246d7b578594f5d77495b56fc3f2900f2a6b193"
+    },
+    {
+      "name": "segment_box",
+      "address": "0x8001e110",
+      "bytes": 472,
+      "sha256": "c6bb20cf05899b90950c8aa14708812e200a46e305aa34d53489d0df78128530"
+    },
+    {
+      "name": "outcode",
+      "address": "0x8001ecfc",
+      "bytes": 176,
+      "sha256": "5070c8f9b60f3e51ea87f2d35887a3a097bc932f9f00a2c3e3449f10c66d8eda"
+    },
+    {
+      "name": "intersect",
+      "address": "0x8001f8b8",
+      "bytes": 1944,
+      "sha256": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513"
+    },
+    {
+      "name": "decode_face",
+      "address": "0x80020050",
+      "bytes": 1152,
+      "sha256": "d58160f9ae8a3adcc81dfda474988896476e823a614afd7f686896ec64677469"
+    },
+    {
+      "name": "sqrt",
+      "address": "0x800205c0",
+      "bytes": 132,
+      "sha256": "97c082d2d41751f9fccfc5cf37e8dd0b369fbc97fddd6d85c81c2fa2ca3feff7"
+    },
+    {
+      "name": "cross",
+      "address": "0x800179ac",
+      "bytes": 88,
+      "sha256": "b0df3db5528e30315b774c82d909799911f21a661fc9d23bf7ce2dbb33ef3f53"
+    },
+    {
+      "name": "square",
+      "address": "0x800178e8",
+      "bytes": 40,
+      "sha256": "99cb1c8d0c79529e8c6f1a56f640ebd7400c2eb0f57312cdc2e252c1e34f201b"
+    },
+    {
+      "name": "notify",
+      "address": "0x8001cd60",
+      "bytes": 208,
+      "sha256": "7645c1426bb416583494ee0b64a4409e90121ad9d0827cb58086f6342de08a62"
+    },
+    {
+      "name": "base_vtable",
+      "address": "0x80018390",
+      "bytes": 16,
+      "sha256": "6f3e96c03b803dbf1321407c23ea13c5f2b782f40d0be26b977088b8a0b51196"
+    },
+    {
+      "name": "base_notify",
+      "address": "0x80018358",
+      "bytes": 56,
+      "sha256": "b70d56bf5fb046b9fa5c84e2573b3cb4314b6f48e0dba812c6eb409046b7c565"
+    },
+    {
+      "name": "actor_notify",
+      "address": "0x80057b90",
+      "bytes": 132,
+      "sha256": "253912217134c61f691a28ee7313149f48be936edabbcaddf0f49017e9acbc61"
+    },
+    {
+      "name": "transform_vtable",
+      "address": "0x8001e57c",
+      "bytes": 16,
+      "sha256": "6b444c29202af0f323b5dfd638e1c9677848593458bdf1a70a8fc235380de21c"
+    },
+    {
+      "name": "assign_contact",
+      "address": "0x8001d6b4",
+      "bytes": 96,
+      "sha256": "64dad369cdfde0f14d187d39f7924a9c3dc40cf4afd70753f739156bab3ecb6d"
+    },
+    {
+      "name": "actor_kind",
+      "address": "0x80057320",
+      "bytes": 100,
+      "sha256": "e0cc1ac2cf9a9b0e8daeeb6fa0834ef6d51dd8746ea8cea659f1a70f51cda222"
+    },
+    {
+      "name": "tile_actor_notify",
+      "address": "0x80057c14",
+      "bytes": 88,
+      "sha256": "5c1a5fa774c55ea25d8aee6e2954a8443f7a547c4ec643e2cbe0babf84bab006"
+    }
+  ],
+  "matrix_software_gte_operations": {
+    "ctc2": 320,
+    "load": 96,
+    "MVMVA": 96,
+    "mfc2": 272,
+    "mtc2": 96,
+    "store": 16
+  },
+  "hit_software_gte_operations": {
+    "ctc2": 6366,
+    "mtc2": 972,
+    "MVMVA": 1530,
+    "mfc2": 4512,
+    "store": 474,
+    "load": 2484,
+    "cfc2": 108,
+    "OP": 36,
+    "SQR": 72
+  },
+  "function_result_stubs": 0,
+  "captured_virtual_boundaries": [],
+  "rust_hit_comparison": "Hit presence only, observed through native actor contact assignment",
+  "full_hit_rotation_scope": "Cardinal local and parent rotations, depth zero through two",
+  "matrix_scope": "Original SDK rotation-matrix application/multiplication and short-vector loop with explicit used MVMVA semantics; hardware timing, complete GTE flags and native object lifetime are not accepted.",
+  "native_hit_scope": "Complete original hit/parent-rotation/bounds/geometry/actor-notification CPU path in supplied allocated transform graphs with cached world positions and explicit software GTE. Natural allocation, broader actor behavior, hardware timing/flags and original stage scenarios remain open.",
+  "instruction_reference": "https://psx-spx.consoledev.net/geometrytransformationenginegte/",
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/matrix-chain.json": "030b3c0912e962b624fad369af137789db62281491eac17f89660a230ce018a1",
+    "crates/lsd-core/tests/fixtures/native-hit-chain.json": "79836e0ed4192a20302706a8f70374a77f1354be9d7aa2d54065ce62f7877e7b"
+  },
+  "local_validation": {
+    "workspace_tests_passed": 65,
+    "workspace_failed": 0,
+    "private_original_tests_ignored": 6,
+    "format_passed": true,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "original_stage_stream_integration_passed": true,
+    "desktop_build_passed": true
+  },
+  "captures": [
+    {
+      "stage": 3,
+      "map": 136,
+      "ticks": 1800,
+      "image_sha256": "1716acfe47a32e18306ff828af4c04271114902530bdaef2d6f1249ec516e298",
+      "previous_capture_identical": true
+    },
+    {
+      "stage": 0,
+      "map": 0,
+      "ticks": 32,
+      "image_sha256": "65be73b8f5c37a28f74f09c4ebca21f56ea73efaaab4152db7df3c9bf7173553",
+      "previous_capture_identical": true
+    }
+  ],
+  "validation_log_sha256": {
+    "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "clippy": "c60024a8823f4c0e4f8a5ddbcee1c7c8313e08c48ba86b227fd1bf82c9613782",
+    "original-stream": "10c472d1592080b9d113ce23d9d640d0506a24ea3acad33299875db20260e02a",
+    "desktop-build": "b1016c2d8a7122b5227f14991d65faec1c9f534ca8127feb510e96256dac0c40",
+    "render-3-136": "16731f249d9ae198045da6729d05a9714eb2269db4127ede5c62c568fa14ef2f",
+    "render-0-0": "9772e73b67f939a9c925c173a826373426ab3a8286a4a60f486fd9d8bd229127"
+  },
+  "binary_sha256": "db03d602808d371adac241f6aa0080b727116dd83e3177f95247b9dc8e3235a9",
+  "working_source_sha256": {
+    "crates/lsd-core/src/fixed_math.rs": "adcf51f0aaafe1c0894028eaa4d2bef023baeb1cc83f4e54000b6786abcede06",
+    "crates/lsd-core/src/body_transform.rs": "e7607085bcc1eeb778535a297e7752501031349d27369f2ae88fcb94d590e10e",
+    "crates/lsd-core/src/chunk_collision.rs": "6fdb2bdf2ad177cb1f5f35ab933ba07a8d43b52a9b5e1c9dcff53bc52c03b32d",
+    "crates/lsd-core/src/lib.rs": "8a6ef654b0cc7e4d5ac130df5dcf93350ffe0773f26cdd5e38f3a6a080ab8e6b",
+    "crates/lsd-core/tests/native_matrix_chain.rs": "847d9e48e2f36ede57d896c7f2a8d4d60b77a71fd6f413457fbcd4992ddfbabc",
+    "crates/lsd-core/tests/native_hit_chain.rs": "6e6dd290b6aeb6e0ba683be35bf3d4dae6095d2f7b11b6291b0460c8b8e9d4cd"
+  },
+  "private_proof_sha256": {
+    "native-matrix-proof-eighth.json": "01d25517de4e712add1c122800c6132bfcbb888ab8f691e68043d7a7e652647a",
+    "native-hit-proof-eighth.json": "ce51809e8398f47311d677a30d8624aa0540b72046741ecde365e903f07b0612",
+    "hit-validation-proof-eighth.json": "19c61e817a76a44a15b97db2f2871da042335df4297e434029cc17dea4923bc1"
+  },
+  "c_decompilation_paused_and_preserved": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

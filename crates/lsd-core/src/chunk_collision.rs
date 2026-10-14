@@ -1,5 +1,5 @@
 use crate::{
-    CollisionBounds, CollisionCloud, CollisionFace, CollisionFault, MotionAxis, MotionRequest,
+    BodyGeometryQuery, CollisionBounds, CollisionFace, CollisionFault, MotionAxis, MotionRequest,
     PsxMathTables,
 };
 
@@ -162,34 +162,26 @@ impl CollisionChunk {
         );
         let rotation = tables.rotation([0, query.heading, 0]);
         cloud.0 = cloud.0.map(|point| rotation.apply_saturated(point));
-        let inverse = tables.rotation([0, tile.heading.wrapping_neg(), 0]);
-        let offset = inverse.apply_saturated(delta.map(|value| value as i16));
-        let local = CollisionCloud(cloud.0.map(|point| {
-            let rotated = inverse.apply_saturated(point);
-            std::array::from_fn(|axis| rotated[axis].wrapping_add(offset[axis]))
-        }));
-        if !model_bounds.overlaps(CollisionBounds::from_points(&local.0).unwrap()) {
-            return Ok(None);
+        let inverse = tables.inverse_rotation_chain([0, tile.heading, 0], &[]);
+        Ok(BodyGeometryQuery {
+            world_delta: delta,
+            inverse,
+            cloud,
+            ignore_low_midpoint: self.policy.ignore_low_midpoint,
         }
-        Ok(local
-            .intersection(
-                model_bounds,
-                &model.faces,
-                self.policy.ignore_low_midpoint,
-                tables,
-            )?
-            .map(|hit| {
-                let rotated = tables
-                    .rotation([0, tile.heading, 0])
-                    .apply_saturated(hit.position);
-                WorldContact {
-                    cell,
-                    tile: index,
-                    model: tile.model,
-                    position: std::array::from_fn(|axis| {
-                        tile.translation[axis].wrapping_add(i32::from(rotated[axis]))
-                    }),
-                }
-            }))
+        .intersect(model_bounds, &model.faces, tables)?
+        .map(|hit| {
+            let rotated = tables
+                .rotation([0, tile.heading, 0])
+                .apply_saturated(hit.position);
+            WorldContact {
+                cell,
+                tile: index,
+                model: tile.model,
+                position: std::array::from_fn(|axis| {
+                    tile.translation[axis].wrapping_add(i32::from(rotated[axis]))
+                }),
+            }
+        }))
     }
 }

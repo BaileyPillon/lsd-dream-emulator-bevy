@@ -3,6 +3,7 @@
 mod animation;
 mod animation_player;
 mod body_dispatch;
+mod body_transform;
 mod chunk_collision;
 mod chunk_player;
 mod collision;
@@ -20,6 +21,7 @@ mod streaming;
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
 pub use animation_player::{AnimationError, AnimationParent, AnimationPart, AnimationPlayer};
 pub use body_dispatch::{BodyContactState, BodyNotification};
+pub use body_transform::BodyGeometryQuery;
 pub use chunk_collision::{
     BodyQueryState, CollisionChunk, CollisionModel, CollisionPolicy, CollisionTile, WorldContact,
 };
