@@ -20,6 +20,7 @@ pub use encounters::{
     EncounterTables, EncounterVariant, encounter_object_gate,
 };
 mod fixed_math;
+mod frame_phase;
 mod generation;
 mod generation_effects;
 mod generation_layers;
@@ -72,6 +73,7 @@ pub use dream_day::{
 pub use dream_session::{DreamSession, DreamSessionHost};
 pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
+pub use frame_phase::{FramePhase, FrameSignal};
 pub use generation::GenerationFrame;
 mod gpu_boxes;
 pub use generation::{

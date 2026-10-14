@@ -859,6 +859,26 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "actor_clock_recovery_20261014": {
+      "scope": "Original entity_start clock attachments, newest-first parent traversal, entity interaction/action/animation callbacks with shared RNG/audio request order, waiting and finish codes, original stop/restart subscription reorder and actor destruction during live frame iteration. Real allocator/MOM/entity/frame constructors and owned callback/property inputs run. Target/root coordinates, SDK unit/CD initialization and external audio services are supplied. Global player/map/generation/renderer/CD scheduling, dynamic birth during traversal, GPU/SPU and whole encounters remain open.",
+      "checks": {
+        "path": "docs/actor-clock-checks.json",
+        "sha256": "b67e04a6f4b77b34e644ad29d9acb054fc6e530b71cc279a714ebacc19da2494"
+      },
+      "owned_actor_clock_scenarios": 32,
+      "state_observations": 416,
+      "real_owned_entities_constructed": 96,
+      "scalar_clock_cases": 36,
+      "newest_first_actor_subscriptions_connected": true,
+      "stop_restart_subscription_reorder_connected": true,
+      "waiting_interaction_with_action_animation_hold_connected": true,
+      "finished_actor_retirement_connected": true,
+      "global_player_map_generation_renderer_cd_schedule_accepted": false,
+      "general_live_cursor_mutation_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

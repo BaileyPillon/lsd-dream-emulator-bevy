@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Original entity_start clock attachments, newest-first parent traversal, entity interaction/action/animation callbacks with shared RNG/audio request order, waiting and finish codes, original stop/restart subscription reorder and actor destruction during live frame iteration. Real allocator/MOM/entity/frame constructors and owned callback/property inputs run. Target/root coordinates, SDK unit/CD initialization and external audio services are supplied. Global player/map/generation/renderer/CD scheduling, dynamic birth during traversal, GPU/SPU and whole encounters remain open.",
+  "owned_actor_clock_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/actor-frame-clock.json",
+    "sha256": "019f8fdb414a996b6d529384dde4c3698462b26bde2575ac1cefdfd60384100a",
+    "scenarios": 32,
+    "state_observations": 416,
+    "real_entities_constructed": 96
+  },
+  "scalar_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/frame-phase.json",
+    "sha256": "2f81b8ebd747055668a3b3f53a0c0bfc9447bd774fdfcf421f83d71e26db6283",
+    "cases": 36,
+    "codes_observed_from_original_function": true
+  },
+  "native_function_entries": {
+    "frame_phase_create": 32,
+    "frame_phase_construct": 32,
+    "frame_phase_advance": 292,
+    "frame_phase_notify": 292,
+    "frame_phase_remove_parent": 128,
+    "entity_start": 160,
+    "entity_stop": 160,
+    "func_80065918": 160,
+    "func_80066748": 160,
+    "func_800667B0": 160,
+    "entity_update": 640,
+    "func_80065B80": 640,
+    "func_80065FD8": 352,
+    "entity_cleanup": 96,
+    "base_class_attach": 896,
+    "base_class_add_parent": 896,
+    "linked_list_prepend": 1792
+  },
+  "native_function_sha256": {
+    "frame_phase_create": "ec3ccb2a3181ed2896610ef960ff18d8717ea45a2c5de1de48514fad7f21f0fc",
+    "frame_phase_construct": "12b8259c57974a739c9d9131558c2c3d569cd62bd6535f0143133b96bb637ad6",
+    "frame_phase_advance": "3e6693cb32496a0c48b1c1fa6407ee0e135d2cc3dde0feb23b207b7ed0a6c3ab",
+    "frame_phase_notify": "9c28952751ef2a11fb75c2b3cdf01b3f0a3687c16cef8bd178ce9b5b35debc0e",
+    "frame_phase_remove_parent": "ea35fd49eeee1ebbcae0a6278933ffa75c6e13be0c72ce6f129a6c04d223150f",
+    "entity_start": "da57e9c1407b13009117a3341b32b35de0c883fbcbb5adad17b56e58bc1e053c",
+    "entity_stop": "2dae66d1c1a6f32ac06dbe24b7a389bfc883a957827b3beb6ea8bc2334549cfd",
+    "func_80065918": "23dd83d1a7e6c058eed9f74af9e19cb0e2fc946b6899d2d7b314aea16908c082",
+    "func_80066748": "219161da69557692fd7579be9af2ead8626111de4df1fcbf15d9d29a0f61e02b",
+    "func_800667B0": "9e262d5411b0520678235b4ad3529847c3a198bd430d4c5cce5e1a4b3b9d3520",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "func_80065B80": "d4bb2f1acd10c255e361b0bee85387d65ec3a3f168e47a4ced1443da7e19cdc6",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "entity_cleanup": "404b11a3286d5e746a018650fa3d2802ad1cf057ddb57f085288bed1a4efbb10",
+    "base_class_attach": "9d7d8917f3ea126b15d78a9593aa1fbab39aef267d052e2b941bf8b3b6c61c29",
+    "base_class_add_parent": "474a4064dc384c934727263ea6b18e5281ae447367c6cad264f0caf76d99716f",
+    "linked_list_prepend": "45e27fd763628db43f06a3b52e66fc38e3ee733b40e79b2b45827c4b81cadf7c"
+  },
+  "private_proof_sha256": {
+    "actors": "0312882b5412bc1047bdd5f86a01b84e417d586213c17fb764fc9d00bba26cc9",
+    "scalar": "b0f90957fe3bcdeff913acbf6be4d6443bc5ac041c436ced415bd3de465fe82e",
+    "actor_producer": "bfeaf4febc868b58ea1bb8c6209dc9cf73714bbbb740a713b9a34d2df7a90033",
+    "scalar_producer": "e2f0c6703637c09dfb26894ed08c1f3313b92e68ad6847c4d123f82ff9272168",
+    "validation": "a341889d571773ade37b04208aa6b5c6e7bab6fcca2ec474038d6c53f928bea8"
+  },
+  "validation": {
+    "workspace_counts": [
+      123,
+      0,
+      24
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_actor_clock_scenarios": 32,
+    "clock_state_observations": 416,
+    "real_clock_entities_constructed": 96,
+    "scalar_clock_cases": 36,
+    "full_owned_movement_wrapper_cases": 270,
+    "full_owned_pair_cases": 32,
+    "full_owned_pair_contacts": 20,
+    "canonical_full_pair_cases": 16,
+    "canonical_full_pair_contacts": 12,
+    "wrong_fresh_position_owned_contact_mismatches": 20,
+    "wrong_fresh_position_canonical_contact_mismatches": 8,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48,
+        "body_contacts": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "49339d2d1e4d32f28bff0f82e49e8f61126d87781d9b09ad4d6984058c5c7954",
+      "workspace": "e910cba75b4e05a364126643f075c304e250f3650dc678a12d9ea111531f6dea",
+      "owned-contact-counters": "9b2eff4d81fad427714e9abd605976364ae51d448a5d4cd39565c9e58d5e7357",
+      "original-content": "8fc2e2edc10f2be306da045e6ac7d40a1dd428aedceedcdd5d42435bd1eb6a47",
+      "desktop-build": "3ab452a469f9c5eefd12bda52b5fb4dbd8c1f8ef5271ebf39fd18f7021064bbf",
+      "capture-idle": "e29873520c88de87380a40c0808ce684e4b764689fb4798f8f1356ef3a92e3c6",
+      "capture-futon": "9abafdef5999888405d6e897aa2ccebd0567d7a419cb78a45cd6bd93397f30f1",
+      "capture-yokai": "7f071f429265dcb3412009dbc6e7513e81b2c7c3184567be052d1b8925ac54d8",
+      "capture-expiry": "abed5da879d9487353c14856be15872a98f8fed2fba7466aad6b92ee5baf2675",
+      "capture-legacy": "5af162ccad358e3c89d96d8b76eb8db701330562f3f574b9d8c1289ce68359f2"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "natural_frame_cache_ancestry_response_whole_game_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/frame_phase.rs": "2edcdb2ef1c0216f0c085f99db9c555fb78fdc798629e8352f640e51bbc72db3",
+    "crates/lsd-core/src/lib.rs": "fb69f288578713b257a7f100a48d5f4d4ee8880841d5423bf19145f80618649d",
+    "crates/lsd-core/tests/native_frame_phase.rs": "05e3ddf3d771b606841a6292a35887f14da319684f76d1b0a9717792d472f17f",
+    "crates/lsd-core/tests/fixtures/frame-phase.json": "2f81b8ebd747055668a3b3f53a0c0bfc9447bd774fdfcf421f83d71e26db6283",
+    "crates/lsd-assets/src/encounter_scene.rs": "9da8e1556c8f5103232e1563d97a0ca1323ae63b3be12388eaf86ae2aa4bc501",
+    "crates/lsd-assets/src/stage_session.rs": "5d56ae4874f08bb257a4fc5e7f6dc1c5814e1d4e180486a3f02e0d2e38c36ad2",
+    "crates/lsd-assets/tests/native_actor_clock.rs": "ee00b057fbbd578d64c34a89153806a8b3945675ade193b8514253a873717e91",
+    "crates/lsd-assets/tests/fixtures/actor-frame-clock.json": "019f8fdb414a996b6d529384dde4c3698462b26bde2575ac1cefdfd60384100a",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "3687a138cf5aef70c028c27e4ed56f143d2191c2a48d40cb9c3a598bbf225955"
+  },
+  "scope_limits": [
+    "Original actor_start attaches the passed frame-phase object separately from the player/target owner; native attach/stop/restart routines and newest-first traversal execute.",
+    "Three-actor fixtures use owned empty primitives, typed target/root coordinates outside the trigger radius, SDK/CD initialization and explicit external audio services. Target geometry and physical audio/rendering are unaccepted.",
+    "Actor clocks/contexts/parts, shared RNG and audio request order are compared across normal/waiting/finished signals, stop/restart, cleanup and signed phase wrap.",
+    "The port snapshots actor membership at dispatch entry and retires registered actors on finish. General live cursor mutation, dynamic births, detach/restart or destruction of other subscribers during callbacks remain unaccepted.",
+    "StageLinkSession currently drives an encounter-slice clock. Global player/map/generation/renderer/CD attach timing, phase synchronization and natural cache/scene scheduling remain open.",
+    "Whole encounters/feature groups, remaining 95 callbacks, original GPU/SPU and other full-game requirements are not accepted. Original assets/captures remain private."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

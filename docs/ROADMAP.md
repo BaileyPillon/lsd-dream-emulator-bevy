@@ -140,3 +140,11 @@ Using the new local position instead of the cached position disagrees with the
 original contacts in 20 owned and eight original-mesh scenarios. Natural hierarchy/
 frame scheduling, reciprocal queries and movement response remain open; see
 [cached movement](CACHED_MOVEMENT.md).
+
+The encounter channel now tracks clock attachment order separately from actor
+storage. Original start/stop/restart routines establish newest-first delivery;
+32 controlled three-actor clock scenarios compare 416 states, shared RNG,
+sound requests, waiting signals and finish cleanup. The phase counter/flags have
+36 original CPU comparisons. Global player/map/generation/render/CD ordering and
+dynamic births/removals during callbacks remain open. See
+[actor clock recovery](ACTOR_CLOCK.md).

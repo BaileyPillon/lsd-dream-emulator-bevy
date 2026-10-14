@@ -107,6 +107,7 @@ pub struct StageLinkSession {
     pub journal_body_contact: lsd_core::BodyContactState<lsd_core::BodyPeer>,
     pub player_collision: Option<lsd_core::CollisionModel>,
     pub actor_body_queries: crate::ActorBodyQueryCounts,
+    pub encounter_frame: lsd_core::FramePhase,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -136,6 +137,7 @@ impl Default for StageLinkSession {
             journal_body_contact: lsd_core::BodyContactState { current: None },
             player_collision: None,
             actor_body_queries: Default::default(),
+            encounter_frame: Default::default(),
         }
     }
 }
@@ -230,12 +232,14 @@ impl StageLinkSession {
             controls: &mut player.controls,
             services,
         };
-        let result = encounters.tick_with_motion(
+        let signal = self.encounter_frame.advance();
+        let result = encounters.tick_frame(
             target,
             &mut linked.rng,
             &mut self.encounter_audio,
             math,
             &mut events,
+            signal,
         );
         encounters.pending_notifications = pending;
         result?;
@@ -331,10 +335,12 @@ impl StageLinkSession {
         self.policy.state = 1;
         self.finished = None;
         self.pending_day_event = None;
+        self.encounter_frame.reset(0);
         Ok(())
     }
 
     pub fn begin_original_day(&mut self, linked: &mut LinkedPlayer, tables: DayTables) {
+        self.encounter_frame.reset(0);
         let mut day = DreamDay::default();
         day.init_new_game(&tables, &mut linked.context);
         self.day = Some(day);

@@ -638,6 +638,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     "actor_body_queries_executed={} actor_body_query_contacts={}",
                     session.actor_body_queries.queries, session.actor_body_queries.contacts
                 );
+                println!(
+                    "encounter_frame_phase={} encounter_clock_members={} encounter_frame_waiting={} encounter_frame_finished={}",
+                    session.encounter_frame.phase,
+                    encounters.frame_actor_order().len(),
+                    session.encounter_frame.waiting,
+                    session.encounter_frame.finished
+                );
             }
             if supplied_actor_query {
                 let entity = if supplied_actor_motion { 93 } else { 5 };

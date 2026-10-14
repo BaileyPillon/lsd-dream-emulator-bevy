@@ -125,3 +125,12 @@ update entry; local movement and setters do not replace it during the call.
 `0x54`, separately from its movement halfword. Corner-side selection uses that
 halfword's sign before applying the margin. See [cached movement](CACHED_MOVEMENT.md)
 for full wrapper comparisons and the supplied-frame boundary still in use.
+
+`FramePhase` preserves signed counter wrap and waiting/finished flag precedence.
+`EncounterScene` stores actor clock subscriptions separately from resident actor
+storage. New subscriptions prepend; stop removes the member; restart prepends it
+again with a supplied origin. `tick_frame` runs interaction policy on each signal,
+advances action/animation only on code two and retires registered actors on code
+four. `StageLinkSession::encounter_frame` supplies this clock to the loaded channel.
+Other original clock subscribers and dynamic changes during notification remain
+unconnected; see [actor clock recovery](ACTOR_CLOCK.md).

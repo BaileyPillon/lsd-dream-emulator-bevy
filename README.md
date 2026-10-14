@@ -98,6 +98,11 @@ Movement notifications now preserve cached world position/matrix through local
 pose changes, and keep the original signed collision margin. See
 [cached movement queries](docs/CACHED_MOVEMENT.md) for full movement-wrapper
 comparisons and the remaining natural frame/hierarchy work.
+Actors now follow the original clock subscription order, including stop/restart
+reordering. Waiting signals retain interaction checks while holding action and
+animation timers; finished signals retire registered actors. See
+[actor clock recovery](docs/ACTOR_CLOCK.md) for native comparisons and the
+remaining global player/map/generation/renderer schedule.
 
 ## Start here
 

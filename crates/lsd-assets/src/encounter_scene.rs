@@ -128,6 +128,7 @@ pub struct EncounterScene {
     seen: [Option<(u8, u16)>; 7],
     epoch: u64,
     serial: u64,
+    frame_members: Vec<u64>,
 }
 impl EncounterScene {
     pub fn new(mut tables: EncounterTables, properties: Vec<EntityProperties>) -> Self {
@@ -147,19 +148,64 @@ impl EncounterScene {
             seen: [None; 7],
             epoch: u64::MAX,
             serial: 0,
+            frame_members: Vec::new(),
         }
     }
     pub fn stop(&mut self) {
         self.stop_with_audio(&mut UnavailableAudio);
     }
     pub fn stop_with_audio(&mut self, sound: &mut impl GenerationSound) {
-        for actor in &mut self.actors {
-            actor.behavior.disable_link(&mut actor.actor, sound);
+        for serial in &self.frame_members {
+            if let Some(actor) = self.actors.iter_mut().find(|actor| actor.serial == *serial) {
+                actor.behavior.disable_link(&mut actor.actor, sound);
+            }
         }
         self.actors.clear();
+        self.frame_members.clear();
         self.seen = [None; 7];
         self.teleports_requested = false;
         self.pending_notifications.clear();
+    }
+    /// Publish an already-constructed actor and prepend its clock subscription.
+    pub fn add_actor(&mut self, mut actor: SceneActor) -> u64 {
+        self.serial = self.serial.wrapping_add(1);
+        actor.serial = self.serial;
+        self.frame_members.insert(0, self.serial);
+        self.actors.push(actor);
+        self.serial
+    }
+    pub fn frame_actor_order(&self) -> &[u64] {
+        &self.frame_members
+    }
+    pub fn stop_actor(&mut self, serial: u64, sound: &mut impl GenerationSound) -> bool {
+        if !self.frame_members.contains(&serial) {
+            return false;
+        }
+        let Some(actor) = self.actors.iter_mut().find(|actor| actor.serial == serial) else {
+            return false;
+        };
+        actor.behavior.disable_link(&mut actor.actor, sound);
+        actor.behavior_active = false;
+        self.frame_members.retain(|member| *member != serial);
+        true
+    }
+    pub fn restart_actor(&mut self, serial: u64, position: [i32; 3]) -> bool {
+        if self.frame_members.contains(&serial) {
+            return false;
+        }
+        let Some(actor) = self.actors.iter_mut().find(|actor| actor.serial == serial) else {
+            return false;
+        };
+        actor.actor.translate(position, true);
+        if actor.properties.fields[3] == 0 {
+            actor.behavior.enable_link(&mut actor.actor);
+            if actor.properties.fields[11] == 0 {
+                actor.behavior.start_behavior(&mut actor.actor);
+            }
+        }
+        actor.behavior_active = actor.behavior.active != 0;
+        self.frame_members.insert(0, serial);
+        true
     }
     pub fn update(
         &mut self,
@@ -208,6 +254,8 @@ impl EncounterScene {
                     actor.behavior.disable_link(&mut actor.actor, sound);
                 }
                 self.actors.retain(|actor| actor.slot != slot);
+                self.frame_members
+                    .retain(|serial| self.actors.iter().any(|actor| actor.serial == *serial));
                 self.seen[slot] = identity;
                 if ready {
                     let grid = stage.collision.slots.grid;
@@ -227,6 +275,7 @@ impl EncounterScene {
                         gray_requests: &mut self.gray_man_activation_requests,
                         teleports: &mut self.teleports_requested,
                         serial: &mut self.serial,
+                        frame_members: &mut self.frame_members,
                         selected: None,
                         sound,
                     };
@@ -266,7 +315,14 @@ impl EncounterScene {
         sound: &mut impl GenerationSound,
         events: &mut impl EncounterEventHost,
     ) -> Result<(), lsd_core::BehaviorFault> {
-        self.tick_script_services(target, rng, sound, None, events)
+        self.tick_script_services(
+            target,
+            rng,
+            sound,
+            None,
+            events,
+            lsd_core::FrameSignal::Tick,
+        )
     }
     pub fn tick_with_motion(
         &mut self,
@@ -276,7 +332,25 @@ impl EncounterScene {
         math: &lsd_core::PsxMathTables,
         events: &mut impl EncounterEventHost,
     ) -> Result<(), lsd_core::BehaviorFault> {
-        self.tick_script_services(target, rng, sound, Some(math), events)
+        self.tick_frame(
+            target,
+            rng,
+            sound,
+            math,
+            events,
+            lsd_core::FrameSignal::Tick,
+        )
+    }
+    pub fn tick_frame(
+        &mut self,
+        target: EntityTarget,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        math: &lsd_core::PsxMathTables,
+        events: &mut impl EncounterEventHost,
+        signal: lsd_core::FrameSignal,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.tick_script_services(target, rng, sound, Some(math), events, signal)
     }
     fn tick_script_services(
         &mut self,
@@ -285,8 +359,13 @@ impl EncounterScene {
         sound: &mut impl GenerationSound,
         math: Option<&lsd_core::PsxMathTables>,
         events: &mut impl EncounterEventHost,
+        signal: lsd_core::FrameSignal,
     ) -> Result<(), lsd_core::BehaviorFault> {
-        for actor in &mut self.actors {
+        // The frame sender latches its traversal at notification entry.
+        for serial in self.frame_members.clone() {
+            let Some(actor) = self.actors.iter_mut().find(|actor| actor.serial == serial) else {
+                continue;
+            };
             let mut host = InteractionHost {
                 target,
                 serial: actor.serial,
@@ -316,6 +395,13 @@ impl EncounterScene {
                 return Err(lsd_core::BehaviorFault::Journal(error));
             }
             actor.behavior_active = actor.behavior.active != 0;
+            if signal == lsd_core::FrameSignal::Finished {
+                actor.behavior.disable_link(&mut actor.actor, sound);
+                continue;
+            }
+            if signal == lsd_core::FrameSignal::Waiting {
+                continue;
+            }
             if !actor.behavior_pending {
                 actor.behavior.tick_with_services(
                     &mut actor.actor,
@@ -332,6 +418,11 @@ impl EncounterScene {
                 // The interaction timer is independent of a pending named action.
                 actor.actor.animation.ticks = actor.actor.animation.ticks.wrapping_add(1);
             }
+        }
+        if signal == lsd_core::FrameSignal::Finished {
+            self.actors
+                .retain(|actor| !self.frame_members.contains(&actor.serial));
+            self.frame_members.clear();
         }
         Ok(())
     }
@@ -463,6 +554,7 @@ struct Host<'a, S> {
     gray_requests: &'a mut u64,
     teleports: &'a mut bool,
     serial: &'a mut u64,
+    frame_members: &'a mut Vec<u64>,
     selected: Option<Arc<Mom>>,
     sound: &'a mut S,
 }
@@ -530,6 +622,7 @@ impl<S: GenerationSound> EncounterHost for Host<'_, S> {
             return false;
         };
         *self.serial = self.serial.wrapping_add(1);
+        self.frame_members.insert(0, *self.serial);
         self.actors.push(SceneActor {
             serial: *self.serial,
             slot: self.slot,
