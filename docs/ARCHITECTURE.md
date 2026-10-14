@@ -85,7 +85,7 @@ an independent actor sound queue. Twelve named callbacks are implemented; see
 interaction update. `actor_journal` applies original mood/score, recall capture,
 direct dynamic-link and video/end-clock policy with the shared RNG. The adapter
 consumes newly emitted map-effect commands in the same host tick. Aim and
-inherited body acknowledgement remain queued; full scene scheduling and media
+inherited geometry queries remain queued; full scene scheduling and media
 playback remain open. See [actor journal recovery](ACTOR_JOURNAL.md).
 
 `ModelActor` now retains the original movement halfword and pose setters.
@@ -95,3 +95,12 @@ supplies rotation math and notification delivery to the callback interpreter.
 The Bevy session supplies imported math tables; callers without motion services
 receive an explicit fault for a script that requires them. See
 [actor motion](ACTOR_MOTION.md) for the callback catalog and remaining body work.
+
+`EntityBodyPlan` retains the original sender/type/link-stage gates and contact,
+query, disable and notification order. `EntityBehavior::receive_body` invokes
+the geometry backend and applies lifecycle consequences. `ModelActor` and the
+day session retain separate actor and DreamSys contact identities. The journal
+wrapper stores its inherited code-four contact before filtering, then bound
+actor acknowledgements can deliver a recursive link/video/end notification in
+the same call. `InheritedBodyQuery` explicitly records unfinished DreamSys
+geometry work. See [entity body routing](ENTITY_BODY.md).

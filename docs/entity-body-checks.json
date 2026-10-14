@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "body_scope": "Original actor/transform/scene/entity body notification routing with two real owned entities and valid meshless MOM construction. Typed peers, prior contact identity and audio handles are supplied. Inherited geometry query entry and request/stop/contact/link policy are observed; empty primitives produce no geometry hit. Real geometry/collision output, natural scene ancestry and complete NPC encounters remain unaccepted.",
+  "coupled_journal_scope": "Original inherited DreamSys contact storage before filtering, real entity acknowledgement, actor notifications and recursively delivered link/video/end journal consequences in a provided original parent subscription graph. Real owned entity/MOM construction, getters and journal dependencies execute. Typed roots, external key/notification/audio services and initialized dream state are supplied. Natural scene ancestry, geometry/collision output, GPU/SPU and whole encounters remain unaccepted.",
+  "owned_body_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/entity-body.json",
+    "sha256": "4a3c8ad7d68e7b722c1f0859d4acd017c7defec1bf852fe410a3d1ba43714135",
+    "scenarios": 2016,
+    "entities_constructed": 4032
+  },
+  "owned_coupled_journal_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/actor-journal-body.json",
+    "sha256": "316325af8019d01040a16f74167bfd3b570f2510dfd12ced2780a38bea857aba",
+    "scenarios": 336
+  },
+  "native_body": {
+    "function_entries": {
+      "func_80065790": 2016,
+      "func_8001CD60": 2088,
+      "func_80057320": 2088,
+      "entity_notify_interaction": 1008,
+      "entity_notify_interaction_done": 504,
+      "func_80057B90": 828,
+      "func_80057C14": 504,
+      "func_8001D6B4": 1332,
+      "func_8001D714": 288,
+      "entity_disable_link": 5076,
+      "entity_stop_behaviour": 5076,
+      "sound_entity_stop": 5076
+    },
+    "function_sha256": {
+      "func_80065790": "34dfab42c9ed1da5f70c63f9b6340d625c458cf902f9be564a58f9176400659d",
+      "func_8001CD60": "7645c1426bb416583494ee0b64a4409e90121ad9d0827cb58086f6342de08a62",
+      "func_80057320": "e0cc1ac2cf9a9b0e8daeeb6fa0834ef6d51dd8746ea8cea659f1a70f51cda222",
+      "entity_notify_interaction": "03204a8663052793a8762db2df8d47d83adc202cb2dec26c991b33f7bea161be",
+      "entity_notify_interaction_done": "a7f9f39b82d7a6a3ec0e8add7fd22e2dd49ce51011c7f26d6a5a9a4f077ee8ea",
+      "func_80057B90": "253912217134c61f691a28ee7313149f48be936edabbcaddf0f49017e9acbc61",
+      "func_80057C14": "5c1a5fa774c55ea25d8aee6e2954a8443f7a547c4ec643e2cbe0babf84bab006",
+      "func_8001D6B4": "64dad369cdfde0f14d187d39f7924a9c3dc40cf4afd70753f739156bab3ecb6d",
+      "func_8001D714": "588643a9b5e959ae764b2abe491c44af44a58fc04cf5aeee62498d840bdf6961",
+      "entity_disable_link": "730e458b8fcbb0fbdd92a20f7825c109697c11b5c02e57668ba54d424df14efd",
+      "entity_stop_behaviour": "4fa7621002bfabe6bf1c105adc34415e5f321cde133ecbc8dc1a00aee60dcaf0",
+      "sound_entity_stop": "c6f4076782c64045103290ab510c5ba5581a700a9fd0fde8b6a8cbd12538e1e1"
+    }
+  },
+  "native_journal": {
+    "function_entries": {
+      "base_class_add_parent": 2352,
+      "base_class_notify": 4,
+      "dream_sys_on_journal_event": 340,
+      "dream_sys_instance_effects_on_journal": 228,
+      "dream_sys_dynamic_link": 20,
+      "get_random_spawn_from_stage": 20,
+      "execute_link": 20,
+      "entity_get_link_stage": 20,
+      "entity_get_event_video": 8
+    },
+    "function_sha256": {
+      "base_class_add_parent": "474a4064dc384c934727263ea6b18e5281ae447367c6cad264f0caf76d99716f",
+      "base_class_notify": "93c69c638a65d12953fb79d42cf86d92b2017cafc03ed424e791a0ad697eab44",
+      "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec",
+      "dream_sys_instance_effects_on_journal": "cc343b8ecf4353c01a7435c05fd525b5eccbcd2b2c5d6b31d900852be1846010",
+      "dream_sys_dynamic_link": "5d2b1a8e49557bc361344d5a3f2d77dcb0035f6ed1f266ee22c833aaf5569d6b",
+      "get_random_spawn_from_stage": "8c3328af4df34b9baa95865545f441a7bff3edfd1f117c0553a14fc71e298a90",
+      "execute_link": "fb76d9ee481365efdb3acbecd851e00d5b2b5ef52e1223dacbc72c6add3b7361",
+      "entity_get_link_stage": "2447f0b836ca948eed0e82ac68735bdb4c6e7b7c61e3ec14691d9ac4d6d5259f",
+      "entity_get_event_video": "025d8d5e2c8582e6740ae9d06da3c3028526c8941c51b92f0f106b380da3d08f"
+    }
+  },
+  "private_proof_sha256": {
+    "body_cpu": "79c5996d14168ab4b926e56491043b12ee43e4216c1ab47a975cb98f2377f38b",
+    "coupled_journal_cpu": "08b3f73609294868246df91762b7b348d5a803dc124c8939dcaff9ab15182916",
+    "local_validation": "baf9264d12a06dac316bb4e596c91ba378266cb4dec6aeada1396ed02c86415f",
+    "body_producer": "3aa4a8f4c31f175687228d085bf18b32a00f0e390bcda3f68f57025c91decdff",
+    "coupled_journal_producer": "d53540bf10c2405ae34af3c4d266cce16128eef02e276f503830db7cb6402b94"
+  },
+  "validation": {
+    "workspace_counts": [
+      116,
+      0,
+      21
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_body_notification_scenarios": 2016,
+    "real_owned_entities_constructed": 4032,
+    "inherited_geometry_query_entries_compared": 288,
+    "coupled_owned_actor_journal_scenarios": 336,
+    "inherited_journal_contact_before_filter_and_state_guards_verified": true,
+    "actor_contact_and_recursive_link_video_end_consequences_compared": true,
+    "bound_actor_acknowledgement_dispatch_connected": true,
+    "actor_link_map_fade_and_cancellation_regression_passed": true,
+    "captures_unchanged": true,
+    "day_expiry_actor_cleanup_passed": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7"
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "inherited_body_query_requests_pending": 48
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0"
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "7c8951ade1d20e77b022536dca496fafa90cfa63393801db56afa6f352b62a6a",
+      "workspace": "331b2a8ccb4786600b28924e0d7551f47a8c5b53cce16157de8d02d53799abb4",
+      "original-content": "91c53d4d01fa68e61c9c67cf3130ca8c114d2c5e2e163c690f18ce4830edbca4",
+      "desktop-build": "afafc2b985220f3e3d472f5cb397477fe9ea01172754b6de1037f4c341862873",
+      "capture-idle": "123f427dd8dfd15ca88bfe363b782ec77beb157475656b8b3c26c8662184dca5",
+      "capture-futon": "a85deeed77e86319d39ed052b4f5e1acaef97c4cfc975196fe1b0da55f500607",
+      "capture-yokai": "592c9596d64c8a238499ee8eb661ad371a99cab8a503744d151c9d109f03634e",
+      "capture-expiry": "4058c6353debd1f68f1bc3d28a0580f7b5189e261cebe11dd5c9cbbaa15fc6fa",
+      "capture-legacy": "18ad6901a42e207e3f976f37c0c14104e22a88d0310d43795e819745d66d67f9"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "real_geometry_collision_or_natural_scene_ancestry_cadence_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/actor_journal.rs": "752ddae533178b35c698d00700c605ba79f952aa1950c1b97fc558f00d778b42",
+    "crates/lsd-core/src/entity_behavior.rs": "3caec8325d31aeb5fb83eef5bc430750037365816476b311a0ee44eebbe807c8",
+    "crates/lsd-core/src/entity_body.rs": "dfcea8a65e08ec8893a6ccf251e9c736b985212a25b605de14d5098a7c37a241",
+    "crates/lsd-core/src/lib.rs": "283cb513ae4c134eb89db83e2caaf227ca837ef36eafa2773cd3bae632d11296",
+    "crates/lsd-core/src/model_actor.rs": "8aff3fc234ea8f3ba1fa8a5ef4dcfbb84c90846b5ef492800534de62ea91dbca",
+    "crates/lsd-core/tests/native_actor_journal.rs": "d91ab3692aae819a1134f4c2378cc5c64587af6bc675282ce8c63515271216ea",
+    "crates/lsd-core/tests/fixtures/actor-journal-body.json": "316325af8019d01040a16f74167bfd3b570f2510dfd12ced2780a38bea857aba",
+    "crates/lsd-core/tests/fixtures/entity-body.json": "4a3c8ad7d68e7b722c1f0859d4acd017c7defec1bf852fe410a3d1ba43714135",
+    "crates/lsd-assets/src/actor_journal.rs": "4361f458b40a25814b5804dc4e48402c50791c9d38c3a1245d1a3d872ef5b190",
+    "crates/lsd-assets/src/encounter_scene.rs": "b3ded1a1ce60c71bcdc712d4925faaa83edd40e5e3b07f7c95f692a1f0533935",
+    "crates/lsd-assets/src/stage_session.rs": "476ddf2c5cc8ac8f49701f9620cf8d2d5b04e429f7ed0bfe8a21a9274b3df347",
+    "crates/lsd-assets/tests/actor_journal_integration.rs": "f40c3396c7498c2ab946a9440d7df1109378f6e060c9d0850a9be31282f7932c",
+    "crates/lsd-assets/tests/native_actor_journal_body.rs": "f06479da9f34e91eff684013d7ba66ff1af14a6f245ad118d41b7e39d33060b9",
+    "crates/lsd-assets/tests/native_entity_body.rs": "192d3358464f7cb8d8154a0f196f16898dfe300aab213234dde754ad4e5ca8e1"
+  },
+  "scope_limits": [
+    "Body notification tests construct real owned entities with empty model primitives. Geometry query entry and policy are compared, not geometry hits.",
+    "The coupled journal fixture supplies a real original linked-list parent subscription. Natural scene ancestry/cadence is not accepted.",
+    "Native original function outputs are not replaced; typed roots, initial state and external key/notification/audio services are supplied.",
+    "Actor and inherited DreamSys contact state plus recursive link/video/end effects are now compared. The earlier unbound fixture excluded these fields.",
+    "The inherited DreamSys contact mutation executes before sender filtering and link-state guards; the earlier adapter omitted it.",
+    "Bound acknowledgements finish synchronously. Calls without an actor subject and inherited geometry queries retain explicit pending requests.",
+    "The day-eight Yokai capture exposes 48 pending inherited geometry requests; unchanged rendering does not prove collision output.",
+    "Full imported root geometry/cloud preparation, movement correction, ground reconciliation, aim, GPU/SPU and whole encounters remain unfinished.",
+    "No original executable, asset, decoded original table or capture is published."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 12,
+  "remaining_pending_callbacks": 95,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

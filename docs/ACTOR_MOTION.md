@@ -17,7 +17,9 @@ actor's rotation matrix and applies the original long-vector SDK arithmetic.
 Position addition wraps as signed 32-bit arithmetic. The original axis methods
 use Z for notification 6, X for 7 and Y for 8. Requested notifications follow the
 translation immediately. The Bevy adapter delivers them through the journal
-interface; the inherited body consequences remain unfinished.
+interface. Entity contact and acknowledgement policy is now connected separately
+in [entity body routing](ENTITY_BODY.md); real movement collision geometry remains
+unfinished.
 
 Rotation packets retain original fraction decoding, degree conversion and signed
 remainder behavior. Scale packets retain signed halfword conversion and their
@@ -92,7 +94,7 @@ remain private; CI uses owned inputs.
 ## Remaining requirements
 
 Recover the other 95 callbacks, Gray Man behavior, inherited motion/body
-acknowledgement, ground reconciliation, aim and full journal ancestry. Establish
+geometry, ground reconciliation, aim and full journal ancestry. Establish
 natural construction/lifetimes and global scheduling, then compare original GPU,
 SPU, camera and whole encounters. Menus, persistence, media and full-game
 acceptance remain separate requirements. Optional AI tools and mods stay separate

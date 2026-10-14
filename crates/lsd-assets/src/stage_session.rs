@@ -99,6 +99,7 @@ pub struct StageLinkSession {
     pub generation_audio: GenerationAudioRequests,
     pub encounters: Option<EncounterScene>,
     pub encounter_audio: GenerationAudioRequests,
+    pub journal_body_contact: lsd_core::BodyContactState<lsd_core::BodyPeer>,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -125,6 +126,7 @@ impl Default for StageLinkSession {
             generation_audio: Default::default(),
             encounters: None,
             encounter_audio: Default::default(),
+            journal_body_contact: lsd_core::BodyContactState { current: None },
         }
     }
 }
@@ -198,6 +200,7 @@ impl StageLinkSession {
                 attached: true,
                 pending: &mut pending,
                 events: &mut self.events,
+                body_contact: &mut self.journal_body_contact,
             },
         );
         let first_command = services.commands.len();

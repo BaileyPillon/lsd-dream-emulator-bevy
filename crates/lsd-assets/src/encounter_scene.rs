@@ -50,6 +50,7 @@ pub enum EncounterNotificationKind {
     Notify(i32),
     AimAtPlayer,
     Acknowledge(i32),
+    InheritedBodyQuery(i32),
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct EncounterNotification {
@@ -64,6 +65,15 @@ pub trait EncounterEventHost {
         fields: [i8; 12],
         rng: &mut PsxRng,
     ) -> Result<(), lsd_core::DayFault>;
+    fn dispatch_actor(
+        &mut self,
+        _actor: &mut ModelActor,
+        event: EncounterNotification,
+        fields: [i8; 12],
+        rng: &mut PsxRng,
+    ) -> Result<(), lsd_core::DayFault> {
+        self.dispatch(event, fields, rng)
+    }
 }
 struct DeferredEvents<'a>(&'a mut Vec<EncounterNotification>);
 impl EncounterEventHost for DeferredEvents<'_> {
@@ -335,6 +345,25 @@ impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
             )
             .map_err(lsd_core::BehaviorFault::Journal)
     }
+    fn notify_actor(
+        &mut self,
+        actor: &mut ModelActor,
+        rng: &mut PsxRng,
+        code: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.events
+            .dispatch_actor(
+                actor,
+                EncounterNotification {
+                    serial: self.serial,
+                    entity: self.entity,
+                    kind: EncounterNotificationKind::Notify(code),
+                },
+                self.fields,
+                rng,
+            )
+            .map_err(lsd_core::BehaviorFault::Journal)
+    }
 }
 impl<H: EncounterEventHost> EntityInteractionHost for InteractionHost<'_, H> {
     fn proximity(&mut self, position: [i32; 3], forward: i32, radius: i32) -> bool {
@@ -363,6 +392,23 @@ impl<H: EncounterEventHost> EntityInteractionHost for InteractionHost<'_, H> {
         };
         if self.error.is_none() {
             self.error = self.events.dispatch(event, self.fields, rng).err();
+        }
+    }
+    fn notify_actor(&mut self, actor: &mut ModelActor, rng: &mut PsxRng, code: i32) {
+        if self.error.is_none() {
+            self.error = self
+                .events
+                .dispatch_actor(
+                    actor,
+                    EncounterNotification {
+                        serial: self.serial,
+                        entity: self.entity,
+                        kind: EncounterNotificationKind::Notify(code),
+                    },
+                    self.fields,
+                    rng,
+                )
+                .err();
         }
     }
 }

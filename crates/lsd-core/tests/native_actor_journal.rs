@@ -89,9 +89,10 @@ impl DreamLinkEffects for LinkEffects<'_> {
     }
 }
 impl ActorJournalHost for Host {
-    fn base_journal(&mut self, _code: i32) {}
-    fn acknowledge_actor(&mut self, code: i32) {
+    fn base_journal(&mut self, _event: ActorJournalEvent) {}
+    fn acknowledge_actor(&mut self, code: i32) -> Option<i32> {
         self.trace.push(json!(["acknowledge", code]));
+        None
     }
     fn capture_flashback(
         &mut self,
@@ -221,6 +222,7 @@ fn original_entity_journal_mood_score_recall_dynamic_link_cinematic_and_end_matc
         actor_journal(
             ActorJournalEvent {
                 sender_type: input["sender_type"].as_u64().unwrap() as u32,
+                sender_identity: 1,
                 code: input["code"].as_i64().unwrap() as i32,
                 fields: std::array::from_fn(|i| input["fields"][i].as_i64().unwrap() as i8),
             },

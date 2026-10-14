@@ -161,11 +161,22 @@ pub trait EntityInteractionHost {
     fn facing_target(&mut self, position: [i32; 3], distance: i32) -> bool;
     fn aim_at_target(&mut self, rng: &mut PsxRng);
     fn notify(&mut self, rng: &mut PsxRng, code: i32);
+    fn notify_actor(&mut self, _actor: &mut ModelActor, rng: &mut PsxRng, code: i32) {
+        self.notify(rng, code);
+    }
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
     fn movement_matrix(&mut self, angles: [i16; 3]) -> Result<FixedMatrix, BehaviorFault>;
     fn notify(&mut self, rng: &mut PsxRng, code: i32) -> Result<(), BehaviorFault>;
+    fn notify_actor(
+        &mut self,
+        _actor: &mut ModelActor,
+        rng: &mut PsxRng,
+        code: i32,
+    ) -> Result<(), BehaviorFault> {
+        self.notify(rng, code)
+    }
 }
 struct UnconnectedScriptHost;
 impl EntityScriptHost for UnconnectedScriptHost {
@@ -329,7 +340,7 @@ impl EntityBehavior {
                 && fields[8] != 0
                 && host.facing_target(position, i32::from(fields[8]).wrapping_shl(9))
             {
-                host.notify(rng, 10);
+                host.notify_actor(actor, rng, 10);
             }
             let kind = fields[4] as u8;
             let disable = if kind == 0 || kind == 3 {
@@ -389,7 +400,7 @@ impl EntityBehavior {
                     host,
                 )
             {
-                host.notify(rng, 9);
+                host.notify_actor(actor, rng, 9);
                 self.triggered = 1;
             }
             if fields[6] < 0 {
@@ -463,7 +474,7 @@ impl EntityBehavior {
                         if actor.animation.selected_clip == Some(1) {
                             let matrix = host.movement_matrix(actor.pose.angles)?;
                             actor.move_local(ActorAxis::Z, -128, matrix);
-                            host.notify(rng, 6)?;
+                            host.notify_actor(actor, rng, 6)?;
                         }
                     }
                     NpcScript::Sailboat | NpcScript::Balloon => {

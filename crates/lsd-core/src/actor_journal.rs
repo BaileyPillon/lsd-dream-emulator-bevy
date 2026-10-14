@@ -4,12 +4,14 @@ use crate::{DayFault, DreamDay, DreamLinks, Mood, PlayerControls, PsxRng};
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ActorJournalEvent {
     pub sender_type: u32,
+    pub sender_identity: u64,
     pub code: i32,
     pub fields: [i8; 12],
 }
 pub trait ActorJournalHost {
-    fn base_journal(&mut self, code: i32);
-    fn acknowledge_actor(&mut self, code: i32);
+    fn base_journal(&mut self, event: ActorJournalEvent);
+    /// Return the actor's synchronous link/video/end notification, when emitted.
+    fn acknowledge_actor(&mut self, code: i32) -> Option<i32>;
     fn capture_flashback(
         &mut self,
         day: &mut DreamDay,
@@ -39,12 +41,23 @@ pub fn actor_journal(
     rng: &mut PsxRng,
     host: &mut impl ActorJournalHost,
 ) -> Result<(), DayFault> {
-    host.base_journal(event.code);
+    host.base_journal(event);
     if event.sender_type & 0xfffff != 0x1f234 || links.execution.state != 0 {
         return Ok(());
     }
     match event.code {
-        4 => host.acknowledge_actor(4),
+        4 => {
+            if let Some(code) = host.acknowledge_actor(4) {
+                actor_journal(
+                    ActorJournalEvent { code, ..event },
+                    day,
+                    links,
+                    controls,
+                    rng,
+                    host,
+                )?;
+            }
+        }
         9 => {
             if !links.execution.flashback {
                 day.instances.log(Mood([event.fields[0], event.fields[1]]));

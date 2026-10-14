@@ -241,9 +241,9 @@
       "id": "F028",
       "title": "Encounter effects on mood, score, links and cinematics",
       "requirement": "Apply encounter notifications to mood/score, forced destinations, recall capture and cinematic/ending descriptors.",
-      "port_status": "partial_native_checked_journal_policy_and_immediate_actor_dispatch",
+      "port_status": "partial_native_checked_journal_body_contact_and_recursive_actor_consequences",
       "whole_feature_accepted": false,
-      "evidence": "docs/ACTOR_JOURNAL.md"
+      "evidence": "docs/ENTITY_BODY.md"
     },
     {
       "id": "F029",
@@ -778,6 +778,25 @@
       "supplied_yokai_active_ticks": 63,
       "yokai_behavior_activation_forced": false,
       "inherited_body_movement_consequences_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "entity_body_recovery_20261014": {
+      "body_scope": "Original actor/transform/scene/entity body notification routing with two real owned entities and valid meshless MOM construction. Typed peers, prior contact identity and audio handles are supplied. Inherited geometry query entry and request/stop/contact/link policy are observed; empty primitives produce no geometry hit. Real geometry/collision output, natural scene ancestry and complete NPC encounters remain unaccepted.",
+      "coupled_journal_scope": "Original inherited DreamSys contact storage before filtering, real entity acknowledgement, actor notifications and recursively delivered link/video/end journal consequences in a provided original parent subscription graph. Real owned entity/MOM construction, getters and journal dependencies execute. Typed roots, external key/notification/audio services and initialized dream state are supplied. Natural scene ancestry, geometry/collision output, GPU/SPU and whole encounters remain unaccepted.",
+      "checks": {
+        "path": "docs/entity-body-checks.json",
+        "sha256": "e37acd4dcad23fb88e3f5a414bb58dda97952116aa5e8c8f53da65ba398932ea"
+      },
+      "owned_body_notification_scenarios": 2016,
+      "owned_entities_constructed": 4032,
+      "inherited_geometry_query_entries_compared": 288,
+      "coupled_owned_journal_scenarios": 336,
+      "inherited_contact_before_guards_corrected": true,
+      "bound_actor_contact_and_recursive_consequence_delivery_connected": true,
+      "yokai_inherited_queries_pending": 48,
+      "real_geometry_collision_or_natural_scene_cadence_accepted": false,
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

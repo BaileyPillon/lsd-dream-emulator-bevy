@@ -10,6 +10,10 @@ behavior without accepting a whole NPC encounter or whole-game feature group.
 The journal wrapper invokes the inherited handler first, then filters the
 sender's low 20 type bits. Entity effects apply only while link state is zero.
 The Rust policy retains these gates and the original signed property getters.
+The inherited code-four handler now stores the sender before either guard.
+The earlier snapshot did not measure this base contact field and its adapter
+omitted that mutation. [Entity body routing](ENTITY_BODY.md) records the
+correction and the connected acknowledgement consequences.
 
 | Notification | Consequence |
 | --- | --- |
@@ -40,10 +44,12 @@ gates, recall mode, signed fields, score overflow, clock widths, record capacity
 attachment and cancellation. External key, notification and audio services and
 initialized dream state are supplied. Original function outputs are not replaced.
 
-The Rust comparison checks state, mood, score, recall records, spawn, RNG,
+The original checkpoint comparison checks state, mood, score, recall records, spawn, RNG,
 penalty and request order. Acknowledgement routing is compared; the native
 fixture's inherited body-target observation is explicitly excluded from the
-accepted state comparison. That body chain remains unfinished.
+accepted state comparison. The additional coupled comparison now accepts both
+actor and DreamSys contact fields and recursive journal consequences in a
+supplied original parent subscription graph; real geometry remains unfinished.
 
 A private integration check loads the original day-one Futon model and properties
 and supplies a nearby player position. It verifies one mood contribution, an
@@ -65,11 +71,13 @@ tables, assets, detailed original observations and captures stay private.
 
 ## Remaining requirements
 
-Implement inherited journal/body dispatch, acknowledgement effects and aim
+Implement inherited geometry/body queries, movement collision consequences and aim
 rotation, the remaining 95 callbacks, Gray Man activation, cinematic playback,
 full scene construction/lifetimes and native scheduling. Compare original GPU
 and SPU output with the running port. Notification 4 currently queues an
-acknowledgement request; this does not establish its body effect. Video selection
+acknowledgement request when no actor subject is available. Bound actor delivery
+now stores its permitted contact and handles the resulting notification before
+returning. Geometry queries and aim requests remain pending. Video selection
 sets descriptors and clock state; it does not play a movie. Sound requests do
 not establish audio playback. Whole NPC encounters and whole-game feature groups
 remain unaccepted. Optional AI analysis/mods remain separate and make no model

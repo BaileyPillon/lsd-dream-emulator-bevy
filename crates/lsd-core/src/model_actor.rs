@@ -1,6 +1,6 @@
 use crate::{
-    AnimationClip, AnimationError, AnimationPlayer, FixedMatrix, GenerationFault, GenerationPose,
-    transform_number,
+    AnimationClip, AnimationError, AnimationPlayer, BodyContactState, BodyPeer, FixedMatrix,
+    GenerationFault, GenerationPose, transform_number,
 };
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ActorAxis {
@@ -34,6 +34,7 @@ pub struct ModelActor {
     pub collision_mode: i32,
     /// Signed halfword at original node offset 0x48, initialized to 300.
     pub move_distance: i16,
+    pub body_contact: BodyContactState<BodyPeer>,
 }
 impl ModelActor {
     /// Successful original actor construction allocates parts, finds the root
@@ -76,6 +77,7 @@ impl ModelActor {
             action_kind: 65,
             collision_mode: 1,
             move_distance: 300,
+            body_contact: BodyContactState { current: None },
         })
     }
     pub fn set_hidden(&mut self, hidden: bool) {

@@ -109,3 +109,10 @@ the original proximity policy to start its script, change clip and move its
 render instance. Inherited movement/body consequences, the remaining callbacks,
 natural scene scheduling and original GPU/SPU output remain open; see
 [actor motion](ACTOR_MOTION.md).
+
+Inherited entity body-message gates, contact/disable policy and synchronous
+journal acknowledgement consequences now have original CPU comparisons. The
+journal base stores contact before its sender/link-state filters, correcting an
+omission in the earlier adapter. Real inherited geometry queries and movement
+collision response remain pending, alongside complete native scene ancestry and
+scheduling; see [entity body routing](ENTITY_BODY.md).

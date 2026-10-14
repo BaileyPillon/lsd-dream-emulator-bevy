@@ -8,8 +8,9 @@ initial Futon, Television and Drumstick scripts and nine further callbacks in
 
 This is partial original-game recovery. Trigger, link, video and end notifications
 now reach the original journal policy immediately; see
-[actor journal recovery](ACTOR_JOURNAL.md). Aim and body acknowledgement requests
-remain queued. Inherited body dispatch, complete NPC scripts, parent/camera
+[actor journal recovery](ACTOR_JOURNAL.md). Bound body acknowledgements now run
+synchronously; see [entity body routing](ENTITY_BODY.md). Aim requests and full
+inherited geometry queries remain queued. Complete NPC scripts, parent/camera
 construction, global cadence and GPU/SPU output remain unfinished. Optional AI tooling is
 separate and the default simulation makes no AI model calls.
 

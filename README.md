@@ -82,6 +82,10 @@ the remaining inherited body, aim, cinematic playback and full-session work.
 See [actor motion and callbacks](docs/ACTOR_MOTION.md) for the new operations,
 canonical model comparisons and a day-eight Yokai capture using the original
 proximity policy.
+Entity body-message gates and contact state now have native comparisons, and
+bound journal acknowledgements deliver their link/video/end consequences
+synchronously. See [entity body routing](docs/ENTITY_BODY.md) for the inherited
+contact correction and the geometry queries that remain pending.
 
 ## Start here
 
@@ -209,6 +213,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Original target-query projection/height/boundary cases compared | 720 |
 | Futon/Television observations with their actual model/property bindings | 40 |
 | Owned actor-journal scenarios compared with original CPU execution | 336 |
+| Owned entity body-notification scenarios compared | 2,016 |
+| Coupled journal/actor-contact scenarios compared in a supplied parent graph | 336 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

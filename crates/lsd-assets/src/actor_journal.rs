@@ -18,6 +18,7 @@ pub struct ActorJournalServices<'a> {
     pub attached: bool,
     pub pending: &'a mut Vec<EncounterNotification>,
     pub events: &'a mut Vec<StageSessionEvent>,
+    pub body_contact: &'a mut lsd_core::BodyContactState<lsd_core::BodyPeer>,
     source: Option<EncounterNotification>,
 }
 impl<'a> ActorJournalServices<'a> {
@@ -33,6 +34,7 @@ impl<'a> ActorJournalServices<'a> {
             attached: bindings.attached,
             pending: bindings.pending,
             events: bindings.events,
+            body_contact: bindings.body_contact,
             source: None,
         }
     }
@@ -47,6 +49,7 @@ pub struct ActorJournalBindings<'a> {
     pub attached: bool,
     pub pending: &'a mut Vec<EncounterNotification>,
     pub events: &'a mut Vec<StageSessionEvent>,
+    pub body_contact: &'a mut lsd_core::BodyContactState<lsd_core::BodyPeer>,
 }
 struct LinkEffects<'a> {
     map: &'a mut MapLinkPolicy,
@@ -118,14 +121,26 @@ impl DreamDayEffects for ActorJournalServices<'_> {
     }
 }
 impl ActorJournalHost for ActorJournalServices<'_> {
-    // The inherited journal/body chain is separate; supplied valid policy
-    // graphs have no base mutation for these events.
-    fn base_journal(&mut self, _code: i32) {}
-    fn acknowledge_actor(&mut self, code: i32) {
+    fn base_journal(&mut self, event: ActorJournalEvent) {
+        if event.code == 4 {
+            self.body_contact.current = Some(lsd_core::BodyPeer {
+                type_id: event.sender_type,
+                identity: event.sender_identity,
+            });
+        } else if matches!(event.code, 2 | 3 | 5 | 6 | 7 | 8)
+            && let Some(mut source) = self.source
+        {
+            // Full inherited DreamSys geometry/collision queries remain pending.
+            source.kind = EncounterNotificationKind::InheritedBodyQuery(event.code);
+            self.pending.push(source);
+        }
+    }
+    fn acknowledge_actor(&mut self, code: i32) -> Option<i32> {
         if let Some(mut source) = self.source {
             source.kind = EncounterNotificationKind::Acknowledge(code);
             self.pending.push(source);
         }
+        None
     }
     fn capture_flashback(
         &mut self,
@@ -164,9 +179,73 @@ pub struct ActorJournalDispatcher<'a> {
     pub controls: &'a mut PlayerControls,
     pub services: ActorJournalServices<'a>,
 }
+struct BoundActorJournal<'a, 'services> {
+    services: &'a mut ActorJournalServices<'services>,
+    actor: &'a mut lsd_core::ModelActor,
+    fields: [i8; 12],
+}
+impl ActorJournalHost for BoundActorJournal<'_, '_> {
+    fn base_journal(&mut self, event: ActorJournalEvent) {
+        self.services.base_journal(event);
+    }
+    fn acknowledge_actor(&mut self, code: i32) -> Option<i32> {
+        let event = lsd_core::EntityBodyEvent {
+            sender: lsd_core::BodyPeer {
+                type_id: 0x1f34,
+                identity: 0,
+            },
+            code,
+        };
+        let plan = lsd_core::entity_body_plan(self.fields, event);
+        if plan.store_contact {
+            self.actor.body_contact.current = Some(event.sender);
+        }
+        // Journal acknowledgements use the DreamSys 0x34 route and code four;
+        // no geometry query or behavior disable occurs in this route.
+        debug_assert!(!plan.query_geometry && !plan.disable_link);
+        plan.notification
+    }
+    fn capture_flashback(
+        &mut self,
+        day: &mut DreamDay,
+        links: &mut DreamLinks,
+        controls: &mut PlayerControls,
+        rng: &mut PsxRng,
+    ) -> Result<(), DayFault> {
+        self.services.capture_flashback(day, links, controls, rng)
+    }
+    fn dynamic_link(
+        &mut self,
+        links: &mut DreamLinks,
+        controls: &mut PlayerControls,
+        rng: &mut PsxRng,
+    ) -> Result<(), DayFault> {
+        self.services.dynamic_link(links, controls, rng)
+    }
+}
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
     fn dispatch(
         &mut self,
+        event: EncounterNotification,
+        fields: [i8; 12],
+        rng: &mut PsxRng,
+    ) -> Result<(), DayFault> {
+        self.dispatch_subject(None, event, fields, rng)
+    }
+    fn dispatch_actor(
+        &mut self,
+        actor: &mut lsd_core::ModelActor,
+        event: EncounterNotification,
+        fields: [i8; 12],
+        rng: &mut PsxRng,
+    ) -> Result<(), DayFault> {
+        self.dispatch_subject(Some(actor), event, fields, rng)
+    }
+}
+impl ActorJournalDispatcher<'_> {
+    fn dispatch_subject(
+        &mut self,
+        actor: Option<&mut lsd_core::ModelActor>,
         event: EncounterNotification,
         fields: [i8; 12],
         rng: &mut PsxRng,
@@ -180,18 +259,36 @@ impl EncounterEventHost for ActorJournalDispatcher<'_> {
         let applied = self.links.execution.state == 0
             && (matches!(code, 4 | 10)
                 || (!self.links.execution.flashback && matches!(code, 9 | 11 | 12)));
-        actor_journal(
-            ActorJournalEvent {
-                sender_type: 0x1f234,
-                code,
+        let journal_event = ActorJournalEvent {
+            sender_type: 0x1f234,
+            sender_identity: event.serial,
+            code,
+            fields,
+        };
+        if let Some(actor) = actor {
+            let mut host = BoundActorJournal {
+                services: &mut self.services,
+                actor,
                 fields,
-            },
-            self.day,
-            self.links,
-            self.controls,
-            rng,
-            &mut self.services,
-        )?;
+            };
+            actor_journal(
+                journal_event,
+                self.day,
+                self.links,
+                self.controls,
+                rng,
+                &mut host,
+            )?;
+        } else {
+            actor_journal(
+                journal_event,
+                self.day,
+                self.links,
+                self.controls,
+                rng,
+                &mut self.services,
+            )?;
+        }
         self.services.events.push(StageSessionEvent::ActorJournal {
             entity: event.entity,
             code,

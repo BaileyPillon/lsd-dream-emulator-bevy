@@ -32,9 +32,13 @@ mod map_links;
 mod model_actor;
 pub use model_actor::{ActorAxis, ModelActor};
 mod entity_behavior;
+mod entity_body;
 pub use entity_behavior::{
     BehaviorContext, BehaviorFault, BehaviorTick, EntityBehavior, EntityInteractionHost,
     EntityScriptHost, EntityTarget, NpcScript, entity_distance,
+};
+pub use entity_body::{
+    BodyPeer, EntityBodyEvent, EntityBodyHost, EntityBodyPlan, entity_body_plan,
 };
 mod pad;
 mod player_controls;
