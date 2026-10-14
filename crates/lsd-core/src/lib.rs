@@ -56,7 +56,8 @@ pub use animation_player::{AnimationError, AnimationParent, AnimationPart, Anima
 pub use body_dispatch::{BodyContactState, BodyNotification};
 pub use body_transform::BodyGeometryQuery;
 pub use chunk_collision::{
-    BodyQueryState, CollisionChunk, CollisionModel, CollisionPolicy, CollisionTile, WorldContact,
+    BodyQueryState, BodyWorldFrame, CollisionChunk, CollisionModel, CollisionPolicy, CollisionTile,
+    PreparedActorCloud, WorldContact,
 };
 pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
 pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};

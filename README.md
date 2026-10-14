@@ -94,6 +94,10 @@ player mesh and apply contact/link/video/end consequences in the same call.
 The day profile also corrects its player body to `DREAME5.TMD`; `DREAMER.TMD`
 belongs to scene/generated helpers. See [actor/player queries](docs/ACTOR_PLAYER_QUERIES.md)
 for comparisons and the remaining movement response and native cache timing.
+Movement notifications now preserve cached world position/matrix through local
+pose changes, and keep the original signed collision margin. See
+[cached movement queries](docs/CACHED_MOVEMENT.md) for full movement-wrapper
+comparisons and the remaining natural frame/hierarchy work.
 
 ## Start here
 

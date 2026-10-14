@@ -81,7 +81,7 @@ pub trait EncounterEventHost {
         actor: &mut ModelActor,
         event: EncounterNotification,
         fields: [i8; 12],
-        _cloud: lsd_core::CollisionCloud,
+        _cloud: lsd_core::PreparedActorCloud,
         rng: &mut PsxRng,
     ) -> Result<(), lsd_core::BehaviorFault> {
         self.dispatch_actor(actor, event, fields, rng)
@@ -296,6 +296,14 @@ impl EncounterScene {
                 error: None,
                 math,
                 collision: actor.collision.as_ref(),
+                // This adapter supplies an identity parent frame at update entry.
+                // Hold it through local movement; native notifications read cached world state.
+                body_world: math.map(|math| lsd_core::BodyWorldFrame {
+                    matrix: math
+                        .rotation(actor.actor.pose.angles)
+                        .scaled(actor.actor.pose.scale),
+                    position: actor.actor.pose.position,
+                }),
             };
             actor.behavior.update_interaction(
                 &mut actor.actor,
@@ -337,6 +345,7 @@ struct InteractionHost<'a, H> {
     error: Option<lsd_core::DayFault>,
     math: Option<&'a lsd_core::PsxMathTables>,
     collision: Option<&'a lsd_core::CollisionModel>,
+    body_world: Option<lsd_core::BodyWorldFrame>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
     fn movement_matrix(
@@ -367,11 +376,9 @@ impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
         code: i32,
     ) -> Result<(), lsd_core::BehaviorFault> {
         if matches!(code, 2 | 3 | 5 | 6 | 7 | 8)
-            && let (Some(model), Some(math)) = (self.collision, self.math)
-            && let Some(cloud) = model.prepared_cloud(
-                math.rotation(actor.pose.angles).scaled(actor.pose.scale),
-                matches!(code, 6..=8).then_some((code == 7, actor.move_distance)),
-            )
+            && let (Some(model), Some(world)) = (self.collision, self.body_world)
+            && let Some(cloud) =
+                model.prepared_actor_cloud(world, code, actor.move_distance, actor.collision_margin)
         {
             actor.body_contact.current = None;
             return self.events.dispatch_actor_cloud(

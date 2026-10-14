@@ -131,3 +131,12 @@ the original `DREAME5.TMD` body, correcting the earlier flat `DREAMER.TMD` bound
 mesh scenarios include four contacts. Natural cache/ancestry timing, movement
 response and complete encounters remain open. See
 [actor/player queries](ACTOR_PLAYER_QUERIES.md).
+
+Moving-actor queries now carry cached world position independently of the new
+local pose. 270 full original movement-wrapper scenarios compare cached matrices,
+positions, margin arithmetic and cloud notifications. Full movement/player-pair
+comparisons include 32 owned scenarios and 16 original Yokai/player-mesh scenarios.
+Using the new local position instead of the cached position disagrees with the
+original contacts in 20 owned and eight original-mesh scenarios. Natural hierarchy/
+frame scheduling, reciprocal queries and movement response remain open; see
+[cached movement](CACHED_MOVEMENT.md).

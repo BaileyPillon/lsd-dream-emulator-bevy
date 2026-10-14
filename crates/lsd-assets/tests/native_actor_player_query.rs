@@ -30,7 +30,12 @@ fn receiver(tmd: &Tmd) -> CollisionModel {
         faces: object.collision_faces(),
     }
 }
-fn compare(fixture: &Value, model: &Mom, receiver: &CollisionModel, math: &PsxMathTables) -> usize {
+fn compare(
+    fixture: &Value,
+    model: &Mom,
+    receiver: &CollisionModel,
+    math: &PsxMathTables,
+) -> (usize, usize) {
     let catalog = support::catalog(&fixture["catalog"]);
     let tables = DayTables {
         grids: [SceneGrid {
@@ -47,6 +52,7 @@ fn compare(fixture: &Value, model: &Mom, receiver: &CollisionModel, math: &PsxMa
         start_rotation: [65536; 3],
     };
     let mut contacts = 0;
+    let mut fresh_position_mismatches = 0;
     for (number, case) in fixture["cases"].as_array().unwrap().iter().enumerate() {
         let input = &case["input"];
         let initial = &case["initial"];
@@ -65,6 +71,23 @@ fn compare(fixture: &Value, model: &Mom, receiver: &CollisionModel, math: &PsxMa
             .unwrap();
         let flat = cloud.0.into_iter().flatten().collect::<Vec<_>>();
         assert_eq!(json!(flat), case["prepared_cloud"], "cloud {number}");
+        let cached_position = actor.pose.position;
+        if let Some(amount) = input["movement_amount"].as_i64() {
+            actor.move_local(lsd_core::ActorAxis::Z, amount as i32, FixedMatrix::IDENTITY);
+            assert_eq!(json!(actor.pose.position), case["after_local_move"]);
+            assert_eq!(json!(cached_position), case["after_cached_world"]);
+            let fresh_contact = lsd_core::BodyGeometryQuery {
+                world_delta: actor.pose.position,
+                inverse: FixedMatrix::IDENTITY,
+                cloud,
+                ignore_low_midpoint: input["filter"].as_i64().unwrap() != 0,
+            }
+            .intersect(receiver.bounds.unwrap(), &receiver.faces, math)
+            .unwrap()
+            .is_some();
+            fresh_position_mismatches +=
+                usize::from(fresh_contact != case["player_contact"].as_bool().unwrap());
+        }
         let mut day = DreamDay {
             cinematic: [3, 4],
             ..Default::default()
@@ -141,6 +164,10 @@ fn compare(fixture: &Value, model: &Mom, receiver: &CollisionModel, math: &PsxMa
             controls: &mut controls,
             services,
         };
+        let prepared = lsd_core::PreparedActorCloud {
+            world_position: cached_position,
+            cloud,
+        };
         dispatcher
             .dispatch_actor_cloud(
                 &mut actor,
@@ -163,7 +190,7 @@ fn compare(fixture: &Value, model: &Mom, receiver: &CollisionModel, math: &PsxMa
                     10,
                     0,
                 ],
-                cloud,
+                prepared,
                 &mut rng,
             )
             .unwrap();
@@ -196,7 +223,7 @@ fn compare(fixture: &Value, model: &Mom, receiver: &CollisionModel, math: &PsxMa
             lsd_assets::StageSessionEvent::ActorJournal { code: 10..=12, .. }
         )));
     }
-    contacts
+    (contacts, fresh_position_mismatches)
 }
 #[test]
 fn original_actor_player_geometry_contact_and_journal_consequences_match() {
@@ -204,6 +231,11 @@ fn original_actor_player_geometry_contact_and_journal_consequences_match() {
         serde_json::from_str(include_str!("fixtures/actor-player-query.json")).unwrap();
     let model = Mom::parse(&decode_hex(&fixture["owned_sender_mom_hex"])).unwrap();
     let tmd = Tmd::parse(&decode_hex(&fixture["owned_receiver_tmd_hex"])).unwrap();
+    let math = owned_math();
+    assert_eq!(compare(&fixture, &model, &receiver(&tmd), &math), (40, 0));
+    assert_eq!(fixture["cases"].as_array().unwrap().len(), 300);
+}
+fn owned_math() -> PsxMathTables {
     let mut math = PsxMathTables {
         sin_cos: Box::new([0; 4096]),
         sqrt_window: Box::new([0; 512]),
@@ -212,19 +244,21 @@ fn original_actor_player_geometry_contact_and_journal_consequences_match() {
     for (i, value) in math.sqrt_window[320..].iter_mut().enumerate() {
         *value = (((i + 64) as f64).sqrt() * 512.0) as i16;
     }
-    assert_eq!(compare(&fixture, &model, &receiver(&tmd), &math), 40);
-    assert_eq!(fixture["cases"].as_array().unwrap().len(), 300);
+    math
 }
 #[test]
 #[ignore = "Requires original model/player corpus and private contact observations"]
 fn canonical_yokai_player_mesh_contacts_match_original_cpu() {
+    let (fixture, model, tmd, math) = canonical_case("LSD_NATIVE_ACTOR_PLAYER");
+    assert_eq!(compare(&fixture, &model, &receiver(&tmd), &math), (4, 0));
+    assert_eq!(fixture["cases"].as_array().unwrap().len(), 20);
+}
+fn canonical_case(variable: &str) -> (Value, Mom, Tmd, PsxMathTables) {
     let files =
         std::path::PathBuf::from(std::env::var_os("LSD_GAME_FILES").expect("Set LSD_GAME_FILES"));
     let fixture: Value = serde_json::from_slice(
-        &std::fs::read(
-            std::env::var_os("LSD_NATIVE_ACTOR_PLAYER").expect("Set LSD_NATIVE_ACTOR_PLAYER"),
-        )
-        .unwrap(),
+        &std::fs::read(std::env::var_os(variable).expect("Set private native observation path"))
+            .unwrap(),
     )
     .unwrap();
     let source = &fixture["sender_input"];
@@ -249,6 +283,37 @@ fn canonical_yokai_player_mesh_contacts_match_original_cpu() {
     let tmd = Tmd::parse(&data).unwrap();
     let math =
         lsd_assets::load_math_tables(&std::fs::read(files.join("SLPS_015.56")).unwrap()).unwrap();
-    assert_eq!(compare(&fixture, &model, &receiver(&tmd), &math), 4);
-    assert_eq!(fixture["cases"].as_array().unwrap().len(), 20);
+    (fixture, model, tmd, math)
+}
+#[test]
+fn full_original_movement_pair_contacts_use_pre_movement_cache() {
+    let fixture: Value =
+        serde_json::from_str(include_str!("fixtures/moving-actor-player.json")).unwrap();
+    let model = Mom::parse(&decode_hex(&fixture["owned_sender_mom_hex"])).unwrap();
+    let tmd = Tmd::parse(&decode_hex(&fixture["owned_receiver_tmd_hex"])).unwrap();
+    let (contacts, mismatches) = compare(&fixture, &model, &receiver(&tmd), &owned_math());
+    assert_eq!(contacts, 20);
+    assert_eq!(
+        mismatches, 20,
+        "fixture must distinguish cached and fresh-position contacts"
+    );
+    println!(
+        "owned_full_movement_pairs=32 contacts={contacts} fresh_position_contact_mismatches={mismatches}"
+    );
+    assert_eq!(fixture["cases"].as_array().unwrap().len(), 32);
+}
+#[test]
+#[ignore = "Requires original meshes and private full movement observations"]
+fn full_original_yokai_movement_pair_contacts_use_pre_movement_cache() {
+    let (fixture, model, tmd, math) = canonical_case("LSD_NATIVE_MOVING_ACTOR_PLAYER");
+    let (contacts, mismatches) = compare(&fixture, &model, &receiver(&tmd), &math);
+    assert_eq!(contacts, 12);
+    assert_eq!(
+        mismatches, 8,
+        "original meshes must distinguish cached and fresh-position contacts"
+    );
+    println!(
+        "canonical_full_movement_pairs=16 contacts={contacts} fresh_position_contact_mismatches={mismatches}"
+    );
+    assert_eq!(fixture["cases"].as_array().unwrap().len(), 16);
 }

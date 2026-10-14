@@ -838,6 +838,27 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "cached_actor_movement_recovery_20261014": {
+      "scope": "Full original local movement/cloud wrapper, cached-position query, real player geometry, entity contact gates and recursive journal consequences in initialized supplied parent/cache states. Owned geometry and original Yokai/DREAME5 meshes are measured separately. Natural frame/cache ancestry, movement response, complete encounters and GPU/SPU remain open.",
+      "checks": {
+        "path": "docs/actor-cache-checks.json",
+        "sha256": "c74afb4a8d844a9356eb5f6f0507487a80b2a227ca807e6701dfdad03138da16"
+      },
+      "full_owned_movement_wrapper_cases": 270,
+      "sdk_and_matrix_refresh_observations": 540,
+      "owned_full_movement_pair_cases": 32,
+      "owned_contacts": 20,
+      "canonical_full_movement_pair_cases": 16,
+      "canonical_contacts": 12,
+      "fresh_position_owned_contact_mismatches": 20,
+      "fresh_position_canonical_contact_mismatches": 8,
+      "cached_sender_position_and_matrix_held_during_local_movement": true,
+      "signed_margin_and_corner_direction_connected": true,
+      "natural_frame_ancestry_cache_and_movement_response_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

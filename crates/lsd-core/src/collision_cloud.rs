@@ -86,16 +86,21 @@ pub struct CollisionCloud(pub [[i16; 3]; 8]);
 impl CollisionCloud {
     /// The native forward/strafe preparation reorders the cube for X motion.
     pub fn extend(&mut self, strafe: bool, amount: i16) {
+        self.extend_with_direction(strafe, amount >= 0, i32::from(amount));
+    }
+
+    /// The original corner side follows the movement sign before margin adjustment.
+    pub fn extend_with_direction(&mut self, strafe: bool, non_negative: bool, amount: i32) {
         if strafe {
             let old = self.0;
             self.0 = [
                 old[4], old[5], old[1], old[0], old[7], old[6], old[2], old[3],
             ];
         }
-        let indices = if amount < 0 { 0..4 } else { 4..8 };
+        let indices = if non_negative { 4..8 } else { 0..4 };
         for index in indices {
             let axis = if strafe { 0 } else { 2 };
-            self.0[index][axis] = self.0[index][axis].wrapping_add(amount);
+            self.0[index][axis] = self.0[index][axis].wrapping_add(amount as i16);
         }
     }
 

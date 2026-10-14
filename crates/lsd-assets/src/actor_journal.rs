@@ -265,7 +265,7 @@ impl EncounterEventHost for ActorJournalDispatcher<'_> {
         actor: &mut lsd_core::ModelActor,
         event: EncounterNotification,
         fields: [i8; 12],
-        cloud: lsd_core::CollisionCloud,
+        cloud: lsd_core::PreparedActorCloud,
         rng: &mut PsxRng,
     ) -> Result<(), lsd_core::BehaviorFault> {
         let EncounterNotificationKind::Notify(code @ (2 | 3 | 5 | 6 | 7 | 8)) = event.kind else {
@@ -282,10 +282,10 @@ impl EncounterEventHost for ActorJournalDispatcher<'_> {
         let contact = if let Some(bounds) = body.model.bounds {
             lsd_core::BodyGeometryQuery {
                 world_delta: std::array::from_fn(|axis| {
-                    actor.pose.position[axis].wrapping_sub(body.position[axis])
+                    cloud.world_position[axis].wrapping_sub(body.position[axis])
                 }),
                 inverse: body.inverse,
-                cloud,
+                cloud: cloud.cloud,
                 ignore_low_midpoint: body.policy.ignore_low_midpoint,
             }
             .intersect(bounds, &body.model.faces, body.math)

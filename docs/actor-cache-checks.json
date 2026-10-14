@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "wrapper_scope": "Full original local-axis movement, scene-node cloud wrapper, signed margin/corner selection and transient cloud notification using a real original owned MOM/entity construction and initialized identity parent. Actual SDK cached matrices/positions are recorded before local movement, during notification and after explicit SDK/matrix refresh. Owned cardinal trig, initial/cache state and refresh timing are supplied. Natural global scene ancestry, frame order, collision response and GPU/SPU remain open.",
+  "full_pair_scope": "Full original local movement/cloud wrapper, cached-position query, real player geometry, entity contact gates and recursive journal consequences in initialized supplied parent/cache states. Owned geometry and original Yokai/DREAME5 meshes are measured separately. Natural frame/cache ancestry, movement response, complete encounters and GPU/SPU remain open.",
+  "owned_wrapper_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/actor-cache-movement.json",
+    "sha256": "af4b740540067c14228e5da7a819fc76fa1ec2d249d9359f7d89f63109084b81",
+    "cases": 270
+  },
+  "owned_pair_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/moving-actor-player.json",
+    "sha256": "7e59072f35d3357547918122cdebc2d9d7d010c8445630b60830c5c54999a3b5",
+    "cases": 32,
+    "contacts": 20
+  },
+  "canonical_full_pair_cases": 16,
+  "canonical_contacts": 12,
+  "wrong_fresh_position_contact_mismatches": {
+    "owned": 20,
+    "canonical_meshes": 8
+  },
+  "native_wrapper_function_entries": {
+    "func_8005748C": 90,
+    "func_800574C4": 90,
+    "func_800574FC": 90,
+    "func_80057534": 270,
+    "func_800571F8": 270,
+    "func_8001D624": 270,
+    "func_8001F66C": 270,
+    "GsGetLw": 810,
+    "RotMatrix": 810,
+    "ScaleMatrix": 540
+  },
+  "native_wrapper_function_sha256": {
+    "func_8005748C": "56c4b7f4e13cde1be03d9e0f549a37ad158f8194a73c986e003153ea0acfe087",
+    "func_800574C4": "29303f176ed3d04daf35423bed542cbae4fafeaff90abdf8182d51eb31613f55",
+    "func_800574FC": "e22cf1c7265259493c587b72e18fdd9cf18a600fcf0189cc6bed5784078fef66",
+    "func_80057534": "6bfcd219c77dc157668f2ca054b8ae40423b9bf2cc61552577216917aa6b37da",
+    "func_800571F8": "ad0d13796e3f4d7e32fff7005062eeff57e4a0af7b9218ce81d2ffbc2d219ce0",
+    "func_8001D624": "a95bc9e9f844dc5121ca4c4fa72888c24259736bca4c563b313f28ddc6ab33ec",
+    "func_8001F66C": "f0b0ff1121df8193c06a986047242bf5ed7068954634060b3f9e7557c01d56f5",
+    "GsGetLw": "371cb63c4853accea971f0570596d275e075b0cfaff486d9f123f2586cb4b33b",
+    "RotMatrix": "0530114f1e6758601728bad4743821faba7c0a6be795ea442050a743262d0270",
+    "ScaleMatrix": "6fa6bca1ebd36af6824a61f942ef870aa8600ab2b0d0bbc86ffa868c85a85629"
+  },
+  "native_pair_function_sha256": {
+    "func_8005748C": "56c4b7f4e13cde1be03d9e0f549a37ad158f8194a73c986e003153ea0acfe087",
+    "func_800571F8": "ad0d13796e3f4d7e32fff7005062eeff57e4a0af7b9218ce81d2ffbc2d219ce0",
+    "func_8001D714": "588643a9b5e959ae764b2abe491c44af44a58fc04cf5aeee62498d840bdf6961",
+    "func_8001D950": "d0653e9db5365190ad2f1fa6d716ed17554cf9177b580788cf0a771dbfc70536",
+    "func_8001DA28": "3d22831376f252fd6b67ce17385baa2d31740bf3d8c7b7c785f4bb9b91641fd4",
+    "func_8001DDF4": "e61be058229e5ecc97387ea9e246d7b578594f5d77495b56fc3f2900f2a6b193",
+    "func_8001F8B8": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513",
+    "entity_notify_interaction": "03204a8663052793a8762db2df8d47d83adc202cb2dec26c991b33f7bea161be",
+    "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec"
+  },
+  "private_proof_sha256": {
+    "wrappers": "b1702c91034110f7ff9d9f8bef8277150ee1cdce67f135f13a5b42b09bd07454",
+    "pairs": "a967eb3bc2d0d64e584fb91ac03b94a728ee308df613024ad6e02823b63dff50",
+    "wrapper_producer": "3c86efb153606a34b028ceca8ca91e0e08519614e3d9e4f2f235eabb96acb1bf",
+    "pair_producer": "5ac52aad00e2c0a8993bb45254f52bc8a1edc74788129e8d5d1f3b134c73bd9c",
+    "validation": "68f8ce23ad8b0675b7e8fb8c1df6800287a26b2efc890529d8eb7a1985b0dfb5"
+  },
+  "validation": {
+    "workspace_counts": [
+      121,
+      0,
+      24
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "full_owned_movement_wrapper_cases": 270,
+    "full_owned_pair_cases": 32,
+    "full_owned_pair_contacts": 20,
+    "canonical_full_pair_cases": 16,
+    "canonical_full_pair_contacts": 12,
+    "wrong_fresh_position_owned_contact_mismatches": 20,
+    "wrong_fresh_position_canonical_contact_mismatches": 8,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48,
+        "body_contacts": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "90bd87b62d82a58c40392874ce2ad35819de01021cf6ae5259e2386cb604f9e2",
+      "workspace": "f699d8c9c22534914c5c8e715527e480553bacf576c712dfecbb79d6a6a857d7",
+      "owned-contact-counters": "403bbf8ba6355c5bf91af8964e694e800aeabf77baa23ef2b3ea0aef4b9367a9",
+      "original-content": "f8567624662410dee3117238332012a5d9e17a3560b3c3caae11f5aa959691aa",
+      "desktop-build": "c6bc326f5222aaa60412c759f823b4cb8f210f711ccdfe58db39b06832f72ae8",
+      "capture-idle": "dc8b9bde99e0094ef51ed3c966fbdfbae584d07acd74286a09336fccf7b84537",
+      "capture-futon": "2f3a9cdc535c8e89eafa9f72df82f1d131c392fe66ad5a348523328b78305fa8",
+      "capture-yokai": "050543431e030203964218065dc555397dc59d65b982264eb74fe9bcdf3385b0",
+      "capture-expiry": "57ce51c81ddc228f5b55a2fd89bfb40b1c3d42ec1b5c6e379bfd0f549100f67a",
+      "capture-legacy": "6d64c58f3bb828c0f768a7af89c8d1f1aae8380c6ec7194a0ff9b1862f89aff9"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "natural_frame_cache_ancestry_response_whole_game_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/chunk_collision.rs": "d2c3abe65f26b301a4f7f298fc876119d2f8a4558af1bcc0448786aa6f025552",
+    "crates/lsd-core/src/collision_cloud.rs": "425bb91c2016dce9583ba86cf945d893aa3a4c963fc828631fc0c94674aeacb2",
+    "crates/lsd-core/src/lib.rs": "a6f25f8f0753386c40d41c2446b83b3cedfd6f72ad3e87e882652e5dc49926af",
+    "crates/lsd-core/src/model_actor.rs": "add6a05d73171db41968e865d08db12398f9d9a8907103b43901cf7bee11bca1",
+    "crates/lsd-assets/src/actor_journal.rs": "9560b00e5621d4976a088ad094e9b6d6d300bd0328e815d7d27be00d37726a6b",
+    "crates/lsd-assets/src/encounter_scene.rs": "9b483831d6ac103c1cf33e8bee3357dc933b4ee067726c02adb630ebba8ce180",
+    "crates/lsd-assets/tests/native_actor_player_query.rs": "a47996f9f5eb812878bdf3db26fecab4fe16a9cbc8a9f33cdef3dd1adc547818",
+    "crates/lsd-assets/tests/native_actor_cache.rs": "f364c5a3fa0347d1aed2ac02fbb08e0589e6cc284254c741a4bf965ce74200d3",
+    "crates/lsd-assets/tests/fixtures/actor-cache-movement.json": "af4b740540067c14228e5da7a819fc76fa1ec2d249d9359f7d89f63109084b81",
+    "crates/lsd-assets/tests/fixtures/moving-actor-player.json": "7e59072f35d3357547918122cdebc2d9d7d010c8445630b60830c5c54999a3b5"
+  },
+  "scope_limits": [
+    "Full original movement wrapper preserves cached matrix/position until an explicitly supplied SDK refresh; the renderer local-matrix rebuild is a separately observed phase.",
+    "Corner direction uses the movement halfword sign before applying the signed word margin at native node offset 0x54, including overflow and sign-reversing margins.",
+    "Current loaded actor adapter supplies an identity parent frame at update entry and retains it through script mutation. Complete natural parent graphs, SDK/frame cache scheduling, initial/reused storage and renderer timing remain unaccepted.",
+    "The separate full movement/player-pair cases compare contacts and recursive journal effects. Original-mesh cases have supplied positions/properties/ancestry/cache timing; no natural encounter is accepted.",
+    "Reciprocal queries, movement response, ground reconciliation, original GPU/SPU and other full-game work remain open. Public fixtures contain owned inputs; original geometry observations and captures stay private."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

@@ -41,20 +41,25 @@ are supplied. These are controlled mesh-pair comparisons, not natural encounters
 ```sh
 cargo test -p lsd-assets --test native_actor_player_query --locked
 cargo test -p lsd-core --test native_scale_matrix --locked
-LSD_GAME_FILES=/path/to/files LSD_NATIVE_ACTOR_PLAYER=/path/to/private-observations.json cargo test -p lsd-assets --test native_actor_player_query --locked -- --ignored --nocapture
+LSD_GAME_FILES=/path/to/files LSD_NATIVE_ACTOR_PLAYER=/path/to/private-observations.json cargo test -p lsd-assets --test native_actor_player_query --locked canonical_yokai_player_mesh_contacts_match_original_cpu -- --ignored --nocapture
 ```
 
 See [query checks](actor-player-query-checks.json) for measured identities and
 validation. Public fixtures contain owned inputs. Original assets, canonical
 geometry observations and captures remain private.
 
-The local workspace passes 119 tests with 23 opt-in tests ignored, plus the
+The local workspace passes 121 tests with 24 opt-in tests ignored, plus the
 canonical regression suite, formatting, all-feature Clippy and desktop builds.
 Five rendered profiles match their previous images and expiry retires actor
 instances. The supplied day-eight Yokai profile now executes 48 inherited
 queries over 63 active ticks, leaving zero pending notifications. That placement
 produces zero contacts; positive contacts come from the separately identified
 supplied pair scenarios above. Query execution alone does not accept physics.
+
+The query now carries its cached world position separately from the actor's
+local pose. The encounter adapter holds its supplied world frame through the
+actor update. Full native movement-wrapper comparisons detect the earlier
+fresh-position bug; see [cached movement queries](CACHED_MOVEMENT.md).
 
 ## Remaining work
 

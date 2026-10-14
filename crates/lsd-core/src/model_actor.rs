@@ -34,6 +34,8 @@ pub struct ModelActor {
     pub attributes: u32,
     pub action_kind: u8,
     pub collision_mode: i32,
+    /// Signed extension margin at original scene-node offset 0x54.
+    pub collision_margin: i32,
     /// Signed halfword at original node offset 0x48, initialized to 300.
     pub move_distance: i16,
     pub body_contact: BodyContactState<BodyPeer>,
@@ -80,6 +82,7 @@ impl ModelActor {
             attributes: 1 << 31,
             action_kind: 65,
             collision_mode: 1,
+            collision_margin: 0,
             move_distance: 300,
             body_contact: BodyContactState { current: None },
         })

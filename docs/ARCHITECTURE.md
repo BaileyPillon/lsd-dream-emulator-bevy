@@ -117,3 +117,11 @@ geometry query before journal filtering. A hit stores the receiver contact befor
 calling the actor's contact gate, then delivers its journal consequence using the
 same RNG. Native cache/ancestry scheduling and movement response remain open;
 see [actor/player queries](ACTOR_PLAYER_QUERIES.md).
+
+`PreparedActorCloud` carries the world position used by the body query with its
+already transformed corners. `InteractionHost` holds a `BodyWorldFrame` at actor
+update entry; local movement and setters do not replace it during the call.
+`ModelActor::collision_margin` preserves the signed word at native node offset
+`0x54`, separately from its movement halfword. Corner-side selection uses that
+halfword's sign before applying the margin. See [cached movement](CACHED_MOVEMENT.md)
+for full wrapper comparisons and the supplied-frame boundary still in use.

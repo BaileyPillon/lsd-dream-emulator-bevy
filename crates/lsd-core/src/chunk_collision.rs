@@ -8,7 +8,43 @@ pub struct CollisionModel {
     pub bounds: Option<CollisionBounds>,
     pub faces: Vec<CollisionFace>,
 }
+/// Cached world state read during a synchronous body notification.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct BodyWorldFrame {
+    pub matrix: crate::FixedMatrix,
+    pub position: [i32; 3],
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct PreparedActorCloud {
+    pub world_position: [i32; 3],
+    pub cloud: crate::CollisionCloud,
+}
 impl CollisionModel {
+    pub fn prepared_actor_cloud(
+        &self,
+        world: BodyWorldFrame,
+        code: i32,
+        distance: i16,
+        margin: i32,
+    ) -> Option<PreparedActorCloud> {
+        if !matches!(code, 2 | 3 | 5 | 6 | 7 | 8) {
+            return None;
+        }
+        let mut cloud = self.bounds?.cloud();
+        if matches!(code, 6..=8) {
+            let non_negative = distance >= 0;
+            let amount = if non_negative {
+                i32::from(distance).wrapping_add(margin)
+            } else {
+                i32::from(distance).wrapping_sub(margin)
+            };
+            cloud.extend_with_direction(code == 7, non_negative, amount);
+        }
+        Some(PreparedActorCloud {
+            world_position: world.position,
+            cloud: crate::CollisionCloud(cloud.0.map(|point| world.matrix.apply_saturated(point))),
+        })
+    }
     /// Original model cuboid, optional movement extension, then cached world rotation.
     pub fn prepared_cloud(
         &self,
