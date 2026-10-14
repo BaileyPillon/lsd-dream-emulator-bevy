@@ -61,6 +61,13 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn actor_floor_query(
+        &mut self,
+        _position: [i32; 3],
+        _math: &lsd_core::PsxMathTables,
+    ) -> Result<lsd_core::ActorFloorQuery, lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingMotionServices)
+    }
     fn move_player_local(
         &mut self,
         _axis: lsd_core::ActorAxis,
@@ -707,6 +714,15 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn actor_floor_query(
+        &mut self,
+        position: [i32; 3],
+    ) -> Result<lsd_core::ActorFloorQuery, lsd_core::BehaviorFault> {
+        let math = self
+            .math
+            .ok_or(lsd_core::BehaviorFault::MissingMotionServices)?;
+        self.events.actor_floor_query(position, math)
+    }
     fn move_player_local(
         &mut self,
         axis: lsd_core::ActorAxis,

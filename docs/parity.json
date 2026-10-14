@@ -1051,6 +1051,29 @@
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "movie_playback_implemented": false,
       "ai_model_calls": 0
+    },
+    "actor_floor_following_and_horse_20261014": {
+      "scope": "Full Horse action/animation/context through real original entity, map owner lookup, ready-slot/chain geometry/floor corrections and local floor signals in eight owned map graphs. Original Horse model/properties/math imported privately. Explicit original behavior start is supplied. Static world caches, target, trigger/context/start states; natural encounter, floor body-contact bypass composition, residency, GPU/SPU/timing unaccepted.",
+      "checks": {
+        "path": "docs/actor-floor-checks.json",
+        "sha256": "9a62caff7bc43da9026beeeb17a74255e66174ff0f59e2ec8fb6a684f21839a8"
+      },
+      "floor_wrapper_cases": 2304,
+      "floor_wrapper_states": 4608,
+      "owned_action_scenarios": 48,
+      "owned_action_states": 1216,
+      "canonical_action_scenarios": 48,
+      "canonical_action_states": 1216,
+      "horse_scene_adapter_states": 130,
+      "floor_scene_bound_to_shared_actor_clock": true,
+      "shared_contact_slot_retained": true,
+      "original_named_callbacks_implemented_before": 31,
+      "original_named_callbacks_implemented_after": 32,
+      "remaining_pending_callbacks": 75,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

@@ -140,7 +140,11 @@ fn actor_journal_adapter_starts_fades_and_preserves_cancelled_source() {
                 if code == 4 { Some(1) } else { None }
             );
             assert_eq!(
-                actor.body_contact.current.map(|peer| peer.type_id),
+                actor
+                    .body_contact
+                    .current
+                    .and_then(lsd_core::ActorContact::peer)
+                    .map(|peer| peer.type_id),
                 if code == 4 { Some(0x1f34) } else { None }
             );
             assert_eq!(links.execution.stage, if busy { 0 } else { 13 });

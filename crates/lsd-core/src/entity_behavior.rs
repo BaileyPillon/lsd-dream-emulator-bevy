@@ -17,6 +17,7 @@ pub enum BehaviorFault {
     Aim(crate::AimFault),
     MissingAimServices,
     MissingPlayerServices,
+    Scene(crate::SceneCollisionError),
 }
 impl fmt::Display for BehaviorFault {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -154,6 +155,7 @@ pub enum NpcScript {
     OperaSinger,
     MarchingBand,
     Gears,
+    Horse,
     Pending(u32),
 }
 impl NpcScript {
@@ -191,6 +193,7 @@ impl NpcScript {
             Some(0x8005_fef8) => Self::OperaSinger,
             Some(0x8006_03c4) => Self::MarchingBand,
             Some(0x8006_23e8) => Self::Gears,
+            Some(0x8005_f544) => Self::Horse,
             Some(at) => Self::Pending(at),
         }
     }
@@ -232,6 +235,20 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn actor_floor_query(
+        &mut self,
+        _position: [i32; 3],
+    ) -> Result<crate::ActorFloorQuery, BehaviorFault> {
+        Err(BehaviorFault::MissingMotionServices)
+    }
+    /// Negative floor signals are local virtual calls, not parent journal events.
+    fn actor_floor_signal(
+        &mut self,
+        _actor: &mut ModelActor,
+        _code: i32,
+    ) -> Result<(), BehaviorFault> {
+        Ok(())
+    }
     fn move_player_local(&mut self, _axis: ActorAxis, _amount: i32) -> Result<(), BehaviorFault> {
         Err(BehaviorFault::MissingPlayerServices)
     }
@@ -777,6 +794,24 @@ impl EntityBehavior {
                             context.words[17] = 13;
                             context.words[18] = 1;
                         }
+                    }
+                    NpcScript::Horse => {
+                        if context.words[1]
+                            .checked_rem(animation_duration(actor, clips)?)
+                            .ok_or(BehaviorFault::Division)?
+                            == 0
+                        {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 26;
+                        }
+                        crate::move_actor_on_floor(
+                            actor,
+                            ActorAxis::Z,
+                            if ticks == 110 { -11520 } else { -384 },
+                            false,
+                            rng,
+                            host,
+                        )?;
                     }
                     NpcScript::Gargoyle => {
                         context.words[4] = 0;

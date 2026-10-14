@@ -102,7 +102,14 @@ impl StageLinkSession {
                 self.frame_trace.push(SceneFrameVisit::Clock(member));
                 match member {
                     SceneClockMember::Actor(serial) => {
-                        self.tick_encounter_actor(serial, signal, linked, player, math, effect)?;
+                        self.tick_encounter_actor(
+                            (serial, signal),
+                            &stage.collision,
+                            linked,
+                            player,
+                            math,
+                            effect,
+                        )?;
                     }
                     SceneClockMember::ActorEffect(serial) => {
                         if let Some(encounters) = &mut self.encounters {

@@ -2,6 +2,25 @@ use crate::{
     AnimationClip, AnimationError, AnimationPlayer, BodyContactState, BodyPeer, FixedMatrix,
     GenerationFault, GenerationPose, transform_number,
 };
+/// The original node contact slot contains either a notified peer or a floor tile.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ActorContact {
+    Peer(BodyPeer),
+    Floor(crate::SceneContact),
+}
+impl ActorContact {
+    pub fn peer(self) -> Option<BodyPeer> {
+        match self {
+            Self::Peer(peer) => Some(peer),
+            Self::Floor(_) => None,
+        }
+    }
+}
+impl From<BodyPeer> for ActorContact {
+    fn from(peer: BodyPeer) -> Self {
+        Self::Peer(peer)
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ActorAxis {
     X,
@@ -38,7 +57,7 @@ pub struct ModelActor {
     pub collision_margin: i32,
     /// Signed halfword at original node offset 0x48, initialized to 300.
     pub move_distance: i16,
-    pub body_contact: BodyContactState<BodyPeer>,
+    pub body_contact: BodyContactState<ActorContact>,
 }
 impl ModelActor {
     /// Successful original actor construction allocates parts, finds the root

@@ -113,7 +113,7 @@ impl ActorJournalHost for Host {
         };
         let plan = entity_body_plan(self.fields, event);
         if plan.store_contact {
-            self.actor.body_contact.current = Some(event.sender);
+            self.actor.body_contact.current = Some(event.sender.into());
         }
         plan.notification
     }

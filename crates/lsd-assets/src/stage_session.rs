@@ -180,7 +180,14 @@ impl StageLinkSession {
     ) -> Result<(), Box<dyn std::error::Error>> {
         self.bind_encounters(stage, linked, player, math)?;
         let signal = self.encounter_frame.advance();
-        self.tick_encounter_callbacks(None, signal, linked, player, math, effect)
+        self.tick_encounter_callbacks(
+            (None, signal),
+            &stage.collision,
+            linked,
+            player,
+            math,
+            effect,
+        )
     }
     /// Stream notifications construct and attach actors without updating them.
     pub fn bind_encounters(
@@ -230,24 +237,32 @@ impl StageLinkSession {
     /// Execute one entity at its current position in the shared clock list.
     pub fn tick_encounter_actor(
         &mut self,
-        serial: u64,
-        signal: lsd_core::FrameSignal,
+        clock_actor: (u64, lsd_core::FrameSignal),
+        scene: &lsd_core::SceneCollision,
         linked: &mut LinkedPlayer,
         player: &mut ChunkPlayer,
         math: &lsd_core::PsxMathTables,
         effect: &mut MapEffect,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        self.tick_encounter_callbacks(Some(serial), signal, linked, player, math, effect)
+        self.tick_encounter_callbacks(
+            (Some(clock_actor.0), clock_actor.1),
+            scene,
+            linked,
+            player,
+            math,
+            effect,
+        )
     }
     fn tick_encounter_callbacks(
         &mut self,
-        serial: Option<u64>,
-        signal: lsd_core::FrameSignal,
+        clock_actor: (Option<u64>, lsd_core::FrameSignal),
+        scene: &lsd_core::SceneCollision,
         linked: &mut LinkedPlayer,
         player: &mut ChunkPlayer,
         math: &lsd_core::PsxMathTables,
         effect: &mut MapEffect,
     ) -> Result<(), Box<dyn std::error::Error>> {
+        let (serial, signal) = clock_actor;
         let Some(encounters) = &mut self.encounters else {
             return Ok(());
         };
@@ -293,6 +308,7 @@ impl StageLinkSession {
             });
         }
         services.view_callback = Some(&mut linked.view_callback);
+        services.floor_scene = Some(scene);
         services.player_motion = Some(crate::ActorJournalPlayerMotion {
             position: &mut player.position,
             move_distance: &mut linked.move_distance,

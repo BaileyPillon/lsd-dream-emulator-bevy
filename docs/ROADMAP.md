@@ -185,8 +185,8 @@ original CPU comparisons through destination selection, RNG and sound.
 Player clock comparisons cover callback clearing, retained camera updates and
 input locking. See [player-interacting NPCs](PLAYER_NPCS.md). That checkpoint
 implemented 19 actions. The newer
-[sound, motion and event work](ACTION_PHASES.md) raises the current total to 31
-among 107 distinct callbacks, leaving 76 pending. Natural
+[sound, motion and event work](ACTION_PHASES.md), followed by [actor floor recovery](ACTOR_FLOOR.md),
+raises the current total to 32 among 107 distinct callbacks, leaving 75 pending. Natural
 encounters and all 40 provisional whole-feature groups still need acceptance.
 
 Ferris Wheel now retains the action window, camera-preserving ride and
@@ -195,3 +195,9 @@ further actions add original sound loops, scaling, signed remainder and
 animation pause/resume behavior. The Ferris Wheel scene adapter also compares
 280 states against original-code observations. This connects existing event
 requests; movie playback and full natural encounters remain unfinished.
+
+The shared actor floor wrapper now retains contact clearing, synchronous
+movement callbacks, located-versus-miss behavior, floor correction and local
+negative signals. Horse uses it in the encounter scene, including its original
+movement burst at tick 110. See [floor actors](ACTOR_FLOOR.md). Body-contact
+bypass composition and natural cache/residency/timing still need comparison.

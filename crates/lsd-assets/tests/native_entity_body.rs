@@ -59,7 +59,7 @@ fn state(
         "part_attributes":actor.animation.parts.iter().map(|part|part.attributes).collect::<Vec<_>>(),
         "part_positions":actor.animation.parts.iter().map(|part|part.coordinate_translation).collect::<Vec<_>>(),
         "context":behavior.context.words,"rng":rng.state(),"audio":sound.events,
-        "body_contact":actor.body_contact.current.map(|peer|peer.identity),"notifications":host.notifications,"queries":host.queries})
+        "body_contact":actor.body_contact.current.and_then(lsd_core::ActorContact::peer).map(|peer|peer.identity),"notifications":host.notifications,"queries":host.queries})
 }
 #[test]
 fn original_actor_transform_scene_and_entity_body_notifications_match() {
@@ -94,10 +94,13 @@ fn original_actor_transform_scene_and_entity_body_notifications_match() {
             behavior.context.words[index] = voice;
         }
         if input["previous_contact"].as_bool().unwrap() {
-            actor.body_contact.current = Some(BodyPeer {
-                type_id: 0x1f34,
-                identity: 2,
-            });
+            actor.body_contact.current = Some(
+                BodyPeer {
+                    type_id: 0x1f34,
+                    identity: 2,
+                }
+                .into(),
+            );
         }
         let mut rng = PsxRng::new(1);
         let mut host = Host {

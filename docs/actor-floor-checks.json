@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "floor_scope": "Full original entity/scene-node movement wrapper, supplied owned ready-slot and real transform/mesh graphs with consistent cached static-tile world positions and supplied owned trigonometric and square-root tables, original locate/query-order/floor geometry/correction/local signals. Natural residency/timing and native GPU/SPU remain unaccepted.",
+  "horse_scope": "Full Horse action/animation/context through real original entity, map owner lookup, ready-slot/chain geometry/floor corrections and local floor signals in eight owned map graphs. Original Horse model/properties/math imported privately. Explicit original behavior start is supplied. Static world caches, target, trigger/context/start states; natural encounter, floor body-contact bypass composition, residency, GPU/SPU/timing unaccepted.",
+  "floor_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/actor-floor-runtime.json",
+    "sha256": "45ddc7973e3958159c05e6adf846b42e791ebd97c505c52193420522c9b82352",
+    "cases": 2304,
+    "graphs": 8,
+    "states": 4608,
+    "hits": 234,
+    "misses": 614,
+    "unlocated_or_unbound": 1456
+  },
+  "horse_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/horse-floor-runtime.json",
+    "sha256": "f62c48a53abd0a26d520e68885426693bcedcf5f46c78618a25ac05403e64f73",
+    "owned_scenarios": 48,
+    "owned_states": 1216,
+    "canonical_scenarios": 48,
+    "canonical_states": 1216,
+    "canonical_binding": {
+      "path": "CDI/STG03/N4/M120.LBD",
+      "offset": 22540,
+      "bytes": 8228,
+      "entity": 26,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "24aa24075692665eca3de5cdc7c731ec96ed3f239c706759e2dc50c2df03ea53",
+      "mom_sha256": "c75e0e4e06575c53e0234b9a4247f696efc4e96221df30d39cf6a1f1d0e2d278"
+    },
+    "private_fixture_sha256": "cf8b281c885da4062020591e1246a3fe6d13d0e6f7126f97af9dec3dbfb1101b",
+    "encounter_adapter_states": 130
+  },
+  "native_function_sha256": {
+    "func_800575B0": "44a71bba6d7de19ba1bae29cd06592439cbb2ca2e100b66c4c0c0070cb5382f8",
+    "func_800575E0": "de7b3f2e4ba8acf3b32f060d5dec12278dbbf4107ff1e999e69b197f3fc8901e",
+    "func_80057618": "ef60e801e3fc8b996abf317a07ea00cb8e51b4375269d28d46e9453cdbf9286e",
+    "func_80057668": "8976835b3b01ef8b9c796e38d720fe8d0ccb0711fca311f1e73c06625ec6d39e",
+    "func_80057784": "ad3921a883baed60d4e8d09a62ef5695024af1bf79235c5b7dcfba1b8d6c1be5",
+    "func_80057954": "cdf5b2e39470a0c78a907685449c786e2de246938bf8eebbce2b82d475d2322b",
+    "func_80057A18": "4d4aad06ace1f50fea2f407f5acd7ab92a4ecd7eb2c9e2deb53a3eb8f8df576c",
+    "func_80057B54": "c32482d08ec50220e2b3979934a1d9519760c6dfa85737b8d40ad9727e240da3",
+    "func_8001E7BC": "f0a182a01ac13af8a034c5b831f47210d88887087dd0aa8b813944b2fde0abf2",
+    "func_8001F8B8": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513",
+    "func_800571F8": "ad0d13796e3f4d7e32fff7005062eeff57e4a0af7b9218ce81d2ffbc2d219ce0",
+    "func_80057534": "6bfcd219c77dc157668f2ca054b8ae40423b9bf2cc61552577216917aa6b37da",
+    "entity_horse": "bad476d8a6f01d61fed03d831c9a4008240296171a105e8ba9a77ffbf360ff05",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69"
+  },
+  "native_function_entries": {
+    "floor": {
+      "func_800575B0": 1152,
+      "func_800575E0": 1152,
+      "func_80057618": 2304,
+      "func_80057668": 2304,
+      "func_80057784": 848,
+      "func_80057954": 848,
+      "func_80057A18": 978,
+      "func_80057B54": 1038,
+      "func_8001E7BC": 774,
+      "func_8001F8B8": 4830,
+      "func_800571F8": 2000,
+      "func_80057534": 2304
+    },
+    "horse": {
+      "func_800575B0": 2336,
+      "func_80057618": 2336,
+      "func_80057668": 2336,
+      "func_80057784": 126,
+      "func_80057954": 126,
+      "func_80057A18": 162,
+      "func_80057B54": 180,
+      "func_8001E7BC": 162,
+      "func_8001F8B8": 278,
+      "func_800571F8": 126,
+      "func_80057534": 2336,
+      "entity_horse": 2336,
+      "func_80065FD8": 2336,
+      "sound_entity_update": 2336
+    }
+  },
+  "private_proof_sha256": {
+    "floor": "2d34e2244df2e12146e68171e0e373ff65c72f80f29b6e49448fe164e67f8d7f",
+    "floor_producer": "993661d89eadc9772c53b8a86a6afc5e8f32c5e5121b703dcdff5f6fe59f8cec",
+    "horse": "f553f2cb6ab7c783a3a06f925166932d33e1ff23743d2bb4960f951eb8e1ba15",
+    "horse_producer": "25ba0a0eca38e560daa7c403aed6b2eafe695d6595157a6b504e316529b09ec2",
+    "horse_graph_library": "afdbc0ccceb6be57102c47a58c57badf9b76147299d321cb2f37eda8d9d47f91",
+    "repeat": "62afd4194dcaf3ea690056132875da2ada19b6c91f22b1cac67308f018682adc",
+    "validation": "9a91c177e83d46543ded3b79622fb22d3624b1b230c72c543451a5efb68f8fa2",
+    "callback_inventory": "340a5adef56ff10fa421c319ec9f54ef795d0b1aafb2a72c31ee518e5b605f41"
+  },
+  "validation": {
+    "workspace_counts": [
+      140,
+      0,
+      33
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 48,
+    "owned_action_states": 1216,
+    "canonical_action_scenarios": 48,
+    "canonical_action_states": 1216,
+    "floor_wrapper_cases": 2304,
+    "horse_scene_adapter_states": 130,
+    "local_floor_signals_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "bafe52caed46eb08c3a37b1ce530414a55a2a765549ded06314516934843ca1e",
+      "workspace": "b19967e80415f20ed0096557d27bf4488b0fed42ecc7a0d78d9ae1f1cc366677",
+      "original-content": "af58b0001de287ec6926632f6f98b2e0b74575c4ccdfb766a462429711361894",
+      "desktop-build": "b2942c709b15fc613627744860a3f80eb1d8dbd840fbad00b62fb10214d7c670",
+      "capture-idle": "83394dce8a28edb9e2df4a63cee4c6361ba00557cb0fe6659a47757f4182924c",
+      "capture-futon": "b05cab1f756abab30b658a6fa2654a3639556559b93708c42df5c523d157c818",
+      "capture-yokai": "d86b4f499518ed243a54fbc72cf2d5c7e29288c64507f70072133ae2ee88734b",
+      "capture-expiry": "ba1fabea1cb922d76c76f2351a6435fdaa251753036ae6a63b8e70cf49cf9316",
+      "capture-gray-birth": "5d2671d8a7a090d96a82b4a29e4854d381e0bd956bb64fd2ca741e8b65eafaf5",
+      "capture-gray-fade": "607962e9f68c633bd8ddd35420d9a959ea32da34332159dfde62035a6353f78b",
+      "capture-gray-complete": "9b97a9ca56eae029680a6ca47f5d1a1fd349a515f10d6201fd851261fabb3d09"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 32,
+    "remaining_pending_callbacks": 75,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/actor_floor.rs": "af73cbfd47f3f667b338ecd2dbfb5c2c8eb025fe75c2efdd5c65bcbf5993c916",
+    "crates/lsd-core/src/entity_behavior.rs": "1fe3751177ea5921b2eb39fed70d37eb4a2c38029c9c420d5c24932f29c793e9",
+    "crates/lsd-core/src/entity_body.rs": "1b788106a44656e705eb1ac14121eead0e9672e1ad80e79f92e58e542357d12a",
+    "crates/lsd-core/src/lib.rs": "686f20e9f3c3f4b2c0533f7b313d9ea537ade00066c382f61f0570385579bcef",
+    "crates/lsd-core/src/model_actor.rs": "5e60941eaa0cccece9c909c0db7e92116ea56a1dd2ec1d396c29da191ac48742",
+    "crates/lsd-core/src/scene_collision.rs": "6fde4bef226d1fe2de8d5ded972f1d88deff9dc391dd2b6ab6198c782de44d86",
+    "crates/lsd-assets/src/actor_journal.rs": "c9543d963a2d5afedc351a423f6b98faf383902713eabd891992ce1efae74c62",
+    "crates/lsd-assets/src/encounter_scene.rs": "0f4ab5c780500043ba8c1d52a617c4b8f41948cdaecfd1dbf32839c60b106d15",
+    "crates/lsd-assets/src/stage_session.rs": "925b65ca2f4ec96e397b78d59c3197c8f5f5a06d2e172346dba99ff6e83e8080",
+    "crates/lsd-assets/src/scene_frame.rs": "2055556eccb58b648425552351c191dbb69da3ac72c61b7b30a8cef6381cea76",
+    "crates/lsd-assets/tests/native_actor_floor.rs": "9b582239b03cc5e188b16cb949a276be92e12e645dccf272b2ec4e1fbfbc467b",
+    "crates/lsd-assets/tests/actor_journal_integration.rs": "2b0f90b36d5107b656705e91b5d182a3fbe12e873e554e510f2f5cffe910effa",
+    "crates/lsd-assets/tests/native_actor_journal_body.rs": "5b6d18928b5d30985bc3a65f2524d252d2c886cf07f89df5be8fbfa3473214f0",
+    "crates/lsd-assets/tests/native_entity_body.rs": "ede8c394bb231ea68436fa0004457237354901d8d180df9e5fc0778e93898adf",
+    "crates/lsd-assets/tests/fixtures/actor-floor-runtime.json": "45ddc7973e3958159c05e6adf846b42e791ebd97c505c52193420522c9b82352",
+    "crates/lsd-assets/tests/fixtures/horse-floor-runtime.json": "f62c48a53abd0a26d520e68885426693bcedcf5f46c78618a25ac05403e64f73"
+  },
+  "scope_limits": [
+    "The movement wrapper retains the single contact slot, local-axis halfword movement, optional synchronous notification, owner lookup, ready-layer/cell/chain order, floor correction and local hit/miss calls.",
+    "Negative floor calls do not become parent journal events. Peer acknowledgements and floor contacts share ActorContact; body-contact bypass composition still needs a coupled original native scenario.",
+    "Horse duration-gated sound, special movement at110, context/behavior/animation timing and floor consequences match owned and original-model recordings. The canonical model is explicitly started through the original method; natural activation remains unaccepted.",
+    "The encounter adapter matches130 original Horse states through a supplied live floor scene. Direct wrapper/action replay records local-call instrumentation; the scene adapter compares resulting state.",
+    "Static world caches and valid owned trigonometric/square-root table inputs are supplied. Original allocator/model/entity/transform construction and geometry execute without original game function output replacements. Semantic GTE does not accept flags/timing.",
+    "Public fixtures use owned inputs; original model/property/observation details stay private. Seven development captures are unchanged. Full collision/floor body-response, natural cache/residency/lifetimes, media and GPU/SPU remain open.",
+    "Current callback count is32 of107,75 pending,0 accepted whole NPC encounters and0 accepted groups among40 provisional groups. C remains paused, with AI tooling/mods separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 32,
+  "remaining_pending_callbacks": 75,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

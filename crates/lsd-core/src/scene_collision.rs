@@ -72,6 +72,20 @@ impl fmt::Display for SceneCollisionError {
 impl std::error::Error for SceneCollisionError {}
 
 impl SceneCollision {
+    /// A failed owner lookup does not issue the original local floor-miss signal.
+    pub fn actor_floor_query(
+        &self,
+        position: [i32; 3],
+        tables: &PsxMathTables,
+    ) -> Result<crate::ActorFloorQuery, SceneCollisionError> {
+        if self.slots.locate(position)?.is_none() {
+            return Ok(crate::ActorFloorQuery::Unlocated);
+        }
+        Ok(match self.floor(position, tables)? {
+            Some(contact) => crate::ActorFloorQuery::Hit(contact),
+            None => crate::ActorFloorQuery::Miss,
+        })
+    }
     pub fn body_candidates(
         &self,
         location: SceneLocation,

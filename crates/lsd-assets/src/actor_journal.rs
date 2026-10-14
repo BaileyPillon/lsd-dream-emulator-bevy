@@ -23,6 +23,7 @@ pub struct ActorJournalServices<'a> {
     pub body_query: Option<ActorJournalBody<'a>>,
     pub view_callback: Option<&'a mut i32>,
     pub player_motion: Option<ActorJournalPlayerMotion<'a>>,
+    pub floor_scene: Option<&'a lsd_core::SceneCollision>,
 }
 pub struct ActorJournalPlayerMotion<'a> {
     pub position: &'a mut [i32; 3],
@@ -60,6 +61,7 @@ impl<'a> ActorJournalServices<'a> {
             body_query: None,
             view_callback: None,
             player_motion: None,
+            floor_scene: None,
         }
     }
 }
@@ -226,7 +228,7 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
         };
         let plan = lsd_core::entity_body_plan(self.fields, event);
         if plan.store_contact {
-            self.actor.body_contact.current = Some(event.sender);
+            self.actor.body_contact.current = Some(event.sender.into());
         }
         // Journal acknowledgements use the DreamSys 0x34 route and code four;
         // no geometry query or behavior disable occurs in this route.
@@ -252,6 +254,20 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn actor_floor_query(
+        &mut self,
+        position: [i32; 3],
+        math: &lsd_core::PsxMathTables,
+    ) -> Result<lsd_core::ActorFloorQuery, lsd_core::BehaviorFault> {
+        use lsd_core::BehaviorFault;
+        let scene = self
+            .services
+            .floor_scene
+            .ok_or(BehaviorFault::MissingMotionServices)?;
+        scene
+            .actor_floor_query(position, math)
+            .map_err(BehaviorFault::Scene)
+    }
     fn move_player_local(
         &mut self,
         axis: lsd_core::ActorAxis,
@@ -369,7 +385,7 @@ impl EncounterEventHost for ActorJournalDispatcher<'_> {
             };
             let plan = lsd_core::entity_body_plan(fields, body_event);
             if plan.store_contact {
-                actor.body_contact.current = Some(body_event.sender);
+                actor.body_contact.current = Some(body_event.sender.into());
             }
             if let Some(notification) = plan.notification {
                 self.dispatch_subject(

@@ -68,7 +68,7 @@ impl EntityBehavior {
     ) -> Result<(), BehaviorFault> {
         let plan = entity_body_plan(fields, event);
         if plan.store_contact {
-            actor.body_contact.current = Some(event.sender);
+            actor.body_contact.current = Some(event.sender.into());
         }
         if plan.query_geometry {
             host.query_body(actor, event)?;
