@@ -73,7 +73,11 @@ The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected; the
 other 104 original callbacks remain pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
-actor sound queues and notification/body dispatch still required.
+actor sound queues and the remaining body dispatch.
+Actor notifications now apply original mood/score, recall, direct dynamic-link
+and video/end-clock policy during the emitting actor's update. See
+[actor journal recovery](docs/ACTOR_JOURNAL.md) for native comparisons and
+the remaining inherited body, aim, cinematic playback and full-session work.
 
 ## Start here
 
@@ -192,6 +196,7 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Supplied interaction-policy scenarios compared | 288 |
 | Original target-query projection/height/boundary cases compared | 720 |
 | Futon/Television observations with their actual model/property bindings | 40 |
+| Owned actor-journal scenarios compared with original CPU execution | 336 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

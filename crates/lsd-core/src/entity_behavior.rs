@@ -7,6 +7,7 @@ pub enum BehaviorFault {
     Division,
     Animation(AnimationError),
     PendingCallback,
+    Journal(crate::DayFault),
 }
 impl fmt::Display for BehaviorFault {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -137,8 +138,8 @@ pub fn entity_distance(position: [i32; 3], target: [i32; 3]) -> i32 {
 pub trait EntityInteractionHost {
     fn proximity(&mut self, position: [i32; 3], forward: i32, radius: i32) -> bool;
     fn facing_target(&mut self, position: [i32; 3], distance: i32) -> bool;
-    fn aim_at_target(&mut self);
-    fn notify(&mut self, code: i32);
+    fn aim_at_target(&mut self, rng: &mut PsxRng);
+    fn notify(&mut self, rng: &mut PsxRng, code: i32);
 }
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EntityBehavior {
@@ -275,7 +276,7 @@ impl EntityBehavior {
                 && fields[8] != 0
                 && host.facing_target(position, i32::from(fields[8]).wrapping_shl(9))
             {
-                host.notify(10);
+                host.notify(rng, 10);
             }
             let kind = fields[4] as u8;
             let disable = if kind == 0 || kind == 3 {
@@ -335,11 +336,11 @@ impl EntityBehavior {
                     host,
                 )
             {
-                host.notify(9);
+                host.notify(rng, 9);
                 self.triggered = 1;
             }
             if fields[6] < 0 {
-                host.aim_at_target();
+                host.aim_at_target(rng);
             }
         }
     }

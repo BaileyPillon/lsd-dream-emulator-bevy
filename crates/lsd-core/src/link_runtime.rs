@@ -53,6 +53,21 @@ pub fn rotation_degrees(angles: [i16; 3]) -> [i16; 3] {
 }
 
 impl DreamLinks {
+    /// Original direct dynamic-link handler used by wall and entity journals.
+    pub fn force_dynamic(
+        &mut self,
+        controls: &mut PlayerControls,
+        catalog: &LinkCatalog,
+        context: &mut LinkContext,
+        rng: &mut PsxRng,
+        effects: &mut impl DreamLinkEffects,
+    ) -> Result<bool, LinkError> {
+        if self.execution.state != 0 {
+            return Ok(false);
+        }
+        let target = catalog.random_spawn(self.execution.stage, &mut self.spawn, context, rng)?;
+        Ok(self.execute(controls, target, 12, true, effects))
+    }
     pub fn execute(
         &mut self,
         controls: &mut PlayerControls,

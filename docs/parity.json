@@ -241,8 +241,9 @@
       "id": "F028",
       "title": "Encounter effects on mood, score, links and cinematics",
       "requirement": "Apply encounter notifications to mood/score, forced destinations, recall capture and cinematic/ending descriptors.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_journal_policy_and_immediate_actor_dispatch",
+      "whole_feature_accepted": false,
+      "evidence": "docs/ACTOR_JOURNAL.md"
     },
     {
       "id": "F029",
@@ -731,6 +732,25 @@
       "remaining_unimplemented_distinct_callbacks": 104,
       "supplied_futon_active_ticks": 31,
       "corrected_owned_spawn_cases": 161,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "actor_journal_recovery_20261014": {
+      "scope": "Original journal wrapper/type filter, entity getters, mood logging/score wrap, RNG/flashback capture, direct dynamic-link spawn/execute/cancellation, video/end clock and acknowledgement routing with real owned entity/model construction. External key/notification/audio services and initialized dream state are supplied; natural scene/body/parent cadence, whole NPC and GPU/SPU remain unaccepted.",
+      "checks": {
+        "path": "docs/actor-journal-checks.json",
+        "sha256": "b116d88451189f5fe03d43322e661a021a4be0baf1ccfd4f8d9789d3d0d60e31"
+      },
+      "owned_journal_scenarios": 336,
+      "immediate_shared_rng_order_verified": true,
+      "loaded_futon_instance_mood_contributions": 1,
+      "loaded_futon_instance_score": -50000,
+      "loaded_futon_duplicate_trigger_suppressed": true,
+      "actor_link_map_fade_and_cancellation_checked": true,
+      "inherited_body_acknowledgement_accepted": false,
+      "aim_rotation_accepted": false,
+      "full_scene_cadence_accepted": false,
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

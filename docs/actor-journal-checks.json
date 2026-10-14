@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Original journal wrapper/type filter, entity getters, mood logging/score wrap, RNG/flashback capture, direct dynamic-link spawn/execute/cancellation, video/end clock and acknowledgement routing with real owned entity/model construction. External key/notification/audio services and initialized dream state are supplied; natural scene/body/parent cadence, whole NPC and GPU/SPU remain unaccepted.",
+  "owned_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/actor-journal.json",
+    "sha256": "5ca2354d366412d4877d13ed3c5e3b16c7f384659df7595662451fafb28129ad",
+    "scenarios": 336
+  },
+  "native_function_entries": {
+    "dream_sys_on_journal_event": 336,
+    "dream_sys_instance_effects_on_journal": 224,
+    "entity_get_mood_effect": 8,
+    "entity_get_unlock_effect": 8,
+    "entity_get_link_stage": 16,
+    "entity_get_event_video": 8,
+    "dream_sys_log_instance_mood": 8,
+    "dream_sys_log_mood": 8,
+    "dream_sys_flashback_saving": 8,
+    "dream_sys_add_flashback": 2,
+    "object_get_rotation_360": 2,
+    "dream_sys_dynamic_link": 16,
+    "get_random_spawn_from_stage": 16,
+    "execute_link": 16,
+    "entity_notify_interaction": 16,
+    "func_8001CD60": 24,
+    "entity_create": 336,
+    "entity_construct": 336,
+    "actor_construct": 336,
+    "rand": 30
+  },
+  "native_function_sha256": {
+    "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec",
+    "dream_sys_instance_effects_on_journal": "cc343b8ecf4353c01a7435c05fd525b5eccbcd2b2c5d6b31d900852be1846010",
+    "entity_get_mood_effect": "b5399e3310c647d3bf1769e79f1f208a9f45d534946a0dc0dbf9e3a45e27cbed",
+    "entity_get_unlock_effect": "e7aed987af33254251bc34773295776326c2cf33b4d8cf3db96fdc2b6339231a",
+    "entity_get_link_stage": "2447f0b836ca948eed0e82ac68735bdb4c6e7b7c61e3ec14691d9ac4d6d5259f",
+    "entity_get_event_video": "025d8d5e2c8582e6740ae9d06da3c3028526c8941c51b92f0f106b380da3d08f",
+    "dream_sys_log_instance_mood": "ff2c664874751dcd618005212cd4ea09c64fc93eb9453096134483468a8bdf5b",
+    "dream_sys_log_mood": "98c247bf4d57936384e43807dc398720f382191b00dd07e061a6a22eec168dcb",
+    "dream_sys_flashback_saving": "57b8d5b37518afe68690eea29b5e8ac7d968ff104cefeca4c2c8422843577d89",
+    "dream_sys_add_flashback": "b2ff59fa8f1a0c4d609c5a327724a982b44bad286fec9d2a0531e7b4f46471ea",
+    "object_get_rotation_360": "23c2fb3758d91943a99790ac39b908aa493a47a802e9316e1261febfa36dd50f",
+    "dream_sys_dynamic_link": "5d2b1a8e49557bc361344d5a3f2d77dcb0035f6ed1f266ee22c833aaf5569d6b",
+    "get_random_spawn_from_stage": "8c3328af4df34b9baa95865545f441a7bff3edfd1f117c0553a14fc71e298a90",
+    "execute_link": "fb76d9ee481365efdb3acbecd851e00d5b2b5ef52e1223dacbc72c6add3b7361",
+    "entity_notify_interaction": "03204a8663052793a8762db2df8d47d83adc202cb2dec26c991b33f7bea161be",
+    "func_8001CD60": "7645c1426bb416583494ee0b64a4409e90121ad9d0827cb58086f6342de08a62",
+    "entity_create": "7595c573f0419e558dadeed0f9b126ee0802bb3f3ef739885db0867220686a1a",
+    "entity_construct": "db480a2198354c078b7a9908912f95a189f192f1086429ca2eccc0d39a78c58a",
+    "actor_construct": "dffb402f8e253b28df065d1acd12dff49dfee5f5fbfc28fb89ca2204ab254c77",
+    "rand": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+  },
+  "private_proof_sha256": {
+    "journal_native": "cb6d9a1d50c57f4ae974991e5c509b0c327d1eb26bb1f1252fd2a15b50fb5ab9",
+    "local_validation": "777f020663bc1d426c064f6e314377db2221b33b8d6943b83ff9d15410758b5e",
+    "native_driver": "c20166486e317488640c39dc5f5a00b6f60024eabfa9bef8fac21ed2db341bb4",
+    "owned_producer": "3f576da0ac0c4bc5d29bc74b579b735ac82c55a3836b65bb8834ffed9764e97e"
+  },
+  "validation": {
+    "workspace_counts": [
+      110,
+      0,
+      20
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_journal_scenarios": 336,
+    "native_original_journal_comparisons_passed": true,
+    "loaded_futon_instance_moods": 1,
+    "loaded_futon_instance_score": -50000,
+    "immediate_shared_rng_order_verified": true,
+    "duplicate_trigger_mood_and_rng_unchanged": true,
+    "actor_link_map_fade_and_cancellation_regression_passed": true,
+    "idle_capture_unchanged": true,
+    "legacy_capture_unchanged": true,
+    "day_expiry_actor_cleanup_passed": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "source_image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "supplied_player_placement": true,
+        "active_futon_ticks": 31,
+        "instance_mood_count": 1,
+        "instance_score": -50000,
+        "pending_notifications": 0,
+        "source_image_sha256": "1370fd5e35ed7b47252f47a6971fdb203ad6bede87fd247fba94c868a551cd65"
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "source_image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0"
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "cbdc8041be3ad39da04809d7ddd03ce7ada86dfbabbb0f6da79535d549014d50",
+      "workspace": "e6bf11e7202ac1a6baa4933ba7b70569aee88df04a95d15228dc958b795b5315",
+      "original-content": "c1d3ba96bced83e59078402c26df725d61920fef81029beee6a2a622fd3a7eb3",
+      "desktop-build": "0cfabbe215633fdd5c91455a0c651af97949a9267be9764c19ba7b808f931c86",
+      "capture-idle": "e5ed026ff06601a78ea8864921b60c6730d3b61bba6f6309c64316a188cfc51d",
+      "capture-futon": "d9d487e7520fa97c021a27c75c6379b6db6ef0246b13ac6ef386a931d8cb7bc6",
+      "capture-expiry": "8db87bfc13b2a0983fee806ee98474b74be303be0b8d4dc82fce2efe9257d33e",
+      "capture-legacy": "f83f9668751f106933c92830db13b66583229d23c9373e0c2d48a46e46e38611"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 3,
+    "distinct_original_callbacks": 107,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_body_acknowledgement_aim_scene_gpu_spu_or_global_cadence_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/actor_journal.rs": "4a70e9b76bc5d80230187e4403217a419685e53e66d029c5eaad0af0164daffe",
+    "crates/lsd-core/src/entity_behavior.rs": "8bc9207af508eb9599352a7da01b7425661a40abbff75f712141b3f2f41f91e1",
+    "crates/lsd-core/src/lib.rs": "d6c4d615477bbf611bb1a4310841666eeb07e8eb3cdeb48fc720354e71df554c",
+    "crates/lsd-core/src/link_runtime.rs": "09cab19bdb1eafb22f778b7ceb491d4620f9efd1334f78b1b1ebcaa84a9db4ac",
+    "crates/lsd-core/tests/native_actor_journal.rs": "1fbdceddca23193f0f9f536f2382084dc0cb81818da5ed849e9bf9410549e198",
+    "crates/lsd-core/tests/fixtures/actor-journal.json": "5ca2354d366412d4877d13ed3c5e3b16c7f384659df7595662451fafb28129ad",
+    "crates/lsd-assets/src/actor_journal.rs": "8b9d9b4f761fbb7b08d95529b8a424820495b20fd0e1736dcf856845aba5c3e9",
+    "crates/lsd-assets/src/encounter_scene.rs": "daf01a7b8abea9b47ddeca84104ef51c518c764db50cc7c2bded65cde8c8df07",
+    "crates/lsd-assets/src/lib.rs": "d6da06fa7b8dceb541c2868db16e81d8a24ea3560dad6fbbcab500af398aab90",
+    "crates/lsd-assets/src/stage_session.rs": "3b71cf37307ca29af84ec982fa88827755ee796f0e4ef9826660e93f865e312a",
+    "crates/lsd-assets/tests/actor_journal_integration.rs": "e78a4b56393d6c911288a321872254962e4bdea35774f412e146cb12ad172d67",
+    "crates/lsd-assets/tests/native_actor_journal_scene.rs": "6b852b7153f865547dd926eee8fb35c0b53630059705d2175b6724c18c7b6082",
+    "crates/lsd-assets/tests/native_dream_runtime.rs": "d11c5de4023382aad84e2594cb024244625615a54f2dd2edada78f73ddb84bab",
+    "crates/lsd-assets/tests/native_entity_runtime.rs": "1168fbfed766f93bbc5f0324964550ec6c97eb9edfd6d5f2270e09fc6a1f2595",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "6782904c338e115ed09fe9658dd476fbbcb24efe8b7860733d19c48eefa33053"
+  },
+  "scope_limits": [
+    "Initialized dream state, typed roots and external key/notification/audio services are supplied.",
+    "Native original function outputs are not replaced; original_function_output_stubs is zero.",
+    "Acknowledgement request routing is compared; inherited actor body-target state is excluded from the accepted comparison.",
+    "The local Futon scene supplies player placement and checks one mood/score contribution plus shared RNG order.",
+    "Direct actor dynamic linking uses event 12; the map observes requested stage before destination commit.",
+    "Whole scene ancestry/cadence, other 104 callbacks, cinematic playback and original GPU/SPU output remain unfinished.",
+    "No original executable, asset, decoded original table or capture is included in this repository."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

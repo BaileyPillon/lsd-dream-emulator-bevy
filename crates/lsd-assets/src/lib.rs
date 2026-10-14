@@ -1,11 +1,13 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
+mod actor_journal;
 mod day_tables;
+pub use actor_journal::{ActorJournalBindings, ActorJournalDispatcher, ActorJournalServices};
 mod effect_palette;
 mod encounter_scene;
 mod encounter_tables;
 pub use encounter_scene::{
-    EncounterNotification, EncounterNotificationKind, EncounterScene, EncounterUpdate,
-    EntityProperties, SceneActor, load_entity_properties,
+    EncounterEventHost, EncounterNotification, EncounterNotificationKind, EncounterScene,
+    EncounterUpdate, EntityProperties, SceneActor, load_entity_properties,
 };
 pub use encounter_tables::load_encounter_tables;
 mod generation_assets;

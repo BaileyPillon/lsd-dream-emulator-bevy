@@ -49,12 +49,33 @@ pub struct SceneActor {
 pub enum EncounterNotificationKind {
     Notify(i32),
     AimAtPlayer,
+    Acknowledge(i32),
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct EncounterNotification {
     pub serial: u64,
     pub entity: u8,
     pub kind: EncounterNotificationKind,
+}
+pub trait EncounterEventHost {
+    fn dispatch(
+        &mut self,
+        event: EncounterNotification,
+        fields: [i8; 12],
+        rng: &mut PsxRng,
+    ) -> Result<(), lsd_core::DayFault>;
+}
+struct DeferredEvents<'a>(&'a mut Vec<EncounterNotification>);
+impl EncounterEventHost for DeferredEvents<'_> {
+    fn dispatch(
+        &mut self,
+        event: EncounterNotification,
+        _fields: [i8; 12],
+        _rng: &mut PsxRng,
+    ) -> Result<(), lsd_core::DayFault> {
+        self.0.push(event);
+        Ok(())
+    }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct EncounterUpdate {
@@ -210,12 +231,26 @@ impl EncounterScene {
         rng: &mut PsxRng,
         sound: &mut impl GenerationSound,
     ) -> Result<(), lsd_core::BehaviorFault> {
+        let mut pending = std::mem::take(&mut self.pending_notifications);
+        let result = self.tick_with_events(target, rng, sound, &mut DeferredEvents(&mut pending));
+        self.pending_notifications = pending;
+        result
+    }
+    pub fn tick_with_events(
+        &mut self,
+        target: EntityTarget,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        events: &mut impl EncounterEventHost,
+    ) -> Result<(), lsd_core::BehaviorFault> {
         for actor in &mut self.actors {
             let mut host = InteractionHost {
                 target,
                 serial: actor.serial,
                 entity: actor.entity,
-                notifications: &mut self.pending_notifications,
+                fields: actor.properties.fields,
+                events,
+                error: None,
             };
             actor.behavior.update_interaction(
                 &mut actor.actor,
@@ -224,6 +259,9 @@ impl EncounterScene {
                 sound,
                 &mut host,
             );
+            if let Some(error) = host.error {
+                return Err(lsd_core::BehaviorFault::Journal(error));
+            }
             actor.behavior_active = actor.behavior.active != 0;
             if !actor.behavior_pending {
                 actor.behavior.tick(
@@ -244,13 +282,15 @@ impl EncounterScene {
         Ok(())
     }
 }
-struct InteractionHost<'a> {
+struct InteractionHost<'a, H> {
     target: EntityTarget,
     serial: u64,
     entity: u8,
-    notifications: &'a mut Vec<EncounterNotification>,
+    fields: [i8; 12],
+    events: &'a mut H,
+    error: Option<lsd_core::DayFault>,
 }
-impl EntityInteractionHost for InteractionHost<'_> {
+impl<H: EncounterEventHost> EntityInteractionHost for InteractionHost<'_, H> {
     fn proximity(&mut self, position: [i32; 3], forward: i32, radius: i32) -> bool {
         self.target
             .proximity(position, forward, radius)
@@ -259,19 +299,25 @@ impl EntityInteractionHost for InteractionHost<'_> {
     fn facing_target(&mut self, position: [i32; 3], distance: i32) -> bool {
         self.target.facing(position, distance)
     }
-    fn aim_at_target(&mut self) {
-        self.notifications.push(EncounterNotification {
+    fn aim_at_target(&mut self, rng: &mut PsxRng) {
+        let event = EncounterNotification {
             serial: self.serial,
             entity: self.entity,
             kind: EncounterNotificationKind::AimAtPlayer,
-        });
+        };
+        if self.error.is_none() {
+            self.error = self.events.dispatch(event, self.fields, rng).err();
+        }
     }
-    fn notify(&mut self, code: i32) {
-        self.notifications.push(EncounterNotification {
+    fn notify(&mut self, rng: &mut PsxRng, code: i32) {
+        let event = EncounterNotification {
             serial: self.serial,
             entity: self.entity,
             kind: EncounterNotificationKind::Notify(code),
-        });
+        };
+        if self.error.is_none() {
+            self.error = self.events.dispatch(event, self.fields, rng).err();
+        }
     }
 }
 struct Host<'a, S> {

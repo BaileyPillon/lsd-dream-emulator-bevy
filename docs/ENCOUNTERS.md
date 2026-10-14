@@ -9,7 +9,9 @@ the channel and its Bevy render instances.
 Three original named callbacks now use the shared entity lifecycle and sound
 context; other callbacks keep an explicit pending state. Perception/interaction
 policy runs before action and animation. See [entity behavior](ENTITY_BEHAVIOR.md)
-for scope and remaining notification/body dispatch. The two proximity sound slots documented in
+for scope and remaining body dispatch. Trigger/link/video/end journal consequences
+are connected separately in [actor journal recovery](ACTOR_JOURNAL.md).
+The two proximity sound slots documented in
 [generation recovery](GENERATION.md) have their own state and lifetime.
 
 ## Recovered rules
@@ -98,7 +100,7 @@ excluded from the public repository.
 ## Remaining requirements
 
 Recover the original named NPC callback catalog, Gray Man construction and
-activation, body and interaction dispatch, mood/link consequences, actor audio,
+activation, inherited body and aim dispatch, full encounter consequences, actor audio,
 full lifetime/allocation failure paths and global timing. Compare native scenes
 and original GPU/audio output with the running port. These checks accept zero
 whole NPC behaviors and zero whole-game feature groups. Optional AI analysis or

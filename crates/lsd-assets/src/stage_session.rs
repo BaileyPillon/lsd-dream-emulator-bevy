@@ -14,9 +14,17 @@ pub enum StageSessionEvent {
     AttachMap,
     RunMap,
     MoodRequested(SpawnLocation),
+    ActorJournal {
+        entity: u8,
+        code: i32,
+        applied: bool,
+    },
     DayServicePending(i32),
     DayFinished(i32),
-    ContentSelected { texture: char, music: usize },
+    ContentSelected {
+        texture: char,
+        music: usize,
+    },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -129,14 +137,15 @@ impl StageLinkSession {
         self.encounters = Some(EncounterScene::new(tables, properties));
     }
     /// Scene binding and presentation for the original encounter channel.
-    /// Three named callbacks and query policy are connected; inherited body,
-    /// notification/mood consequences and native scheduling remain open.
+    /// Three named callbacks, query policy and journal consequences are connected.
+    /// Inherited body/aim dispatch and native scheduling remain open.
     pub fn tick_encounters(
         &mut self,
         stage: &StreamedStage,
         linked: &mut LinkedPlayer,
-        player: &ChunkPlayer,
+        player: &mut ChunkPlayer,
         math: &lsd_core::PsxMathTables,
+        effect: &mut MapEffect,
     ) -> Result<(), Box<dyn std::error::Error>> {
         let Some(encounters) = &mut self.encounters else {
             return Ok(());
@@ -148,7 +157,7 @@ impl StageLinkSession {
         let generation = self.generation.as_ref().unwrap();
         let day = self
             .day
-            .as_ref()
+            .as_mut()
             .ok_or("Encounter channel requires original day state")?;
         let palette = self
             .day_tables
@@ -169,17 +178,52 @@ impl StageLinkSession {
         if std::mem::take(&mut encounters.teleports_requested) {
             linked.context.teleports_enabled = 1;
         }
-        encounters.tick_behaviors(
-            lsd_core::EntityTarget {
-                position: player.position,
-                local_y: player.position[1],
-                matrix: math.rotation(player.controls.angles),
-                eye: player.controls.eye,
-                target: player.controls.target,
+        let target = lsd_core::EntityTarget {
+            position: player.position,
+            local_y: player.position[1],
+            matrix: math.rotation(player.controls.angles),
+            eye: player.controls.eye,
+            target: player.controls.target,
+        };
+        let mut pending = std::mem::take(&mut encounters.pending_notifications);
+        let services = crate::ActorJournalServices::new(
+            &linked.tables.catalog,
+            crate::ActorJournalBindings {
+                context: &mut linked.context,
+                map: &mut linked.map,
+                palette: linked.palette,
+                commands: &mut linked.commands,
+                sounds: &mut linked.sounds,
+                current_key: linked.keys.current,
+                attached: true,
+                pending: &mut pending,
+                events: &mut self.events,
             },
+        );
+        let first_command = services.commands.len();
+        let mut events = crate::ActorJournalDispatcher {
+            day,
+            tables: self.day_tables.as_ref().unwrap(),
+            links: &mut linked.links,
+            controls: &mut player.controls,
+            services,
+        };
+        let result = encounters.tick_with_events(
+            target,
             &mut linked.rng,
             &mut self.encounter_audio,
-        )?;
+            &mut events,
+        );
+        encounters.pending_notifications = pending;
+        result?;
+        linked.palette.dream = self.day_tables.as_ref().unwrap().color(day.chart()?);
+        for command in linked.commands[first_command..].iter().copied() {
+            for signal in effect.consume(command)? {
+                if let lsd_core::MapCompletionCommand::Notify(code) = signal {
+                    self.receive(code);
+                }
+            }
+        }
         Ok(())
     }
     pub fn enable_generation(&mut self, tables: GenerationTables, paths: GenerationPaths) {

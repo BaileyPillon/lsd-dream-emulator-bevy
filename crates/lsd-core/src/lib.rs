@@ -1,7 +1,9 @@
 //! Original-behavior primitives. This crate never accesses a renderer or AI service.
 
+mod actor_journal;
 mod animation;
 mod animation_player;
+pub use actor_journal::{ActorJournalEvent, ActorJournalHost, actor_journal, actor_link_stage};
 mod body_dispatch;
 mod body_transform;
 mod chunk_collision;

@@ -159,10 +159,10 @@ impl lsd_core::EntityInteractionHost for InteractionHost {
         self.events.push(json!(["facing", distance]));
         true
     }
-    fn aim_at_target(&mut self) {
+    fn aim_at_target(&mut self, _rng: &mut PsxRng) {
         self.events.push(json!(["aim"]));
     }
-    fn notify(&mut self, code: i32) {
+    fn notify(&mut self, _rng: &mut PsxRng, code: i32) {
         self.events.push(json!(["notify", code]));
     }
 }

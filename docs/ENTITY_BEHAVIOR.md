@@ -5,10 +5,11 @@ and the player's integer pose/view. The shared lifecycle and three-slot sound
 context run in Rust. Futon, Television and Drumstick callbacks are implemented;
 the other 104 distinct callbacks retain an explicit pending state.
 
-This is partial original-game recovery. Notifications for trigger/link/video
-consequences and aim requests are queued. Inherited body dispatch, mood effects,
-native consequence delivery, complete NPC scripts, parent/camera construction,
-global cadence and GPU/SPU output remain unfinished. Optional AI tooling is
+This is partial original-game recovery. Trigger, link, video and end notifications
+now reach the original journal policy immediately; see
+[actor journal recovery](ACTOR_JOURNAL.md). Aim and body acknowledgement requests
+remain queued. Inherited body dispatch, complete NPC scripts, parent/camera
+construction, global cadence and GPU/SPU output remain unfinished. Optional AI tooling is
 separate and the default simulation makes no AI model calls.
 
 ## Implementation

@@ -94,3 +94,10 @@ queues sound/notification requests. Recover the other 104 callbacks and Gray Man
 activation, then inherited body/mood/notification/aim consequences, full scene
 scheduling and original GPU/SPU output. Whole NPC encounters remain unaccepted;
 see [entity behavior](ENTITY_BEHAVIOR.md).
+
+Actor journal type/state gates, mood/score, recall capture, direct dynamic links
+and video/end-clock effects now have 336 owned original CPU comparisons. The day
+profile delivers these notifications immediately with the shared RNG, and a
+loaded Futon scenario verifies a single mood/score contribution. Inherited body
+acknowledgement, aim rotation, cinematic playback and full original scene order
+remain open; see [actor journal recovery](ACTOR_JOURNAL.md).

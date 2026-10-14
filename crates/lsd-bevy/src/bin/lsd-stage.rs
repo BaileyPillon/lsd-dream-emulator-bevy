@@ -639,6 +639,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             );
             if let Some(day) = &session.day {
                 println!(
+                    "actor_journal_instance_moods={} actor_journal_instance_score={} actor_journal_current_mood={:?}",
+                    day.instances.count,
+                    day.instance_score,
+                    day.chart()?.0
+                );
+                println!(
                     "original_day={} year={} stored_day={} time_limit={} result={:?} flashback_count={} score={}",
                     day.day + 1,
                     day.year,
@@ -1009,7 +1015,9 @@ fn streamed_step(
             session.log_current_chunk(linked)?;
         }
         if let Some(session) = session {
-            session.tick_encounters(stage, linked, player, tables)?;
+            if let Some(effect) = effect {
+                session.tick_encounters(stage, linked, player, tables, effect)?;
+            }
             session.tick_generation_actors(stage, linked, &player.controls)?;
         }
     } else {
