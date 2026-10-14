@@ -121,7 +121,9 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
                 }
             }
         }
-        session.tick_encounters(&stage, &mut linked).unwrap();
+        session
+            .tick_encounters(&stage, &mut linked, &player, &math)
+            .unwrap();
         if tick == 1 {
             assert_eq!(session.encounters.as_ref().unwrap().actors.len(), 5);
         }

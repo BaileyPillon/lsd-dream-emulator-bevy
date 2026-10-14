@@ -225,15 +225,17 @@
       "id": "F026",
       "title": "NPC perception, triggers and behavior lifecycle",
       "requirement": "Use original proximity/facing/height/random/time tests to start/stop interactions/scripts and emit events.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_lifecycle_query_math_and_interaction_policy",
+      "whole_feature_accepted": false,
+      "evidence": "docs/ENTITY_BEHAVIOR.md"
     },
     {
       "id": "F027",
       "title": "Original scripted NPC and moving-object behavior catalog",
       "requirement": "Preserve 107 distinct callbacks selected by 130 records, including timed poses, movements, random states and interaction consequences.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_three_of_107_original_callbacks_native_checked_and_connected",
+      "whole_feature_accepted": false,
+      "evidence": "docs/ENTITY_BEHAVIOR.md"
     },
     {
       "id": "F028",
@@ -262,9 +264,9 @@
       "id": "F031",
       "title": "Encounter sound effects and command scheduler",
       "requirement": "Load instruments/map programs, play/stop/mute notes and synchronize three command slots with callbacks.",
-      "port_status": "partial_native_checked_generation_channels",
+      "port_status": "partial_native_checked_generation_and_actor_sound_command_queues",
       "whole_feature_accepted": false,
-      "evidence": "docs/GENERATION.md"
+      "evidence": "docs/ENTITY_BEHAVIOR.md"
     },
     {
       "id": "F032",
@@ -706,6 +708,29 @@
         8,
         17
       ],
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "entity_behavior_recovery_20261014": {
+      "scope": "Original real entity lifecycle, three clocks, sound scheduling, query math and interaction policy; three named callbacks and controlled canonical Futon/Television model/property comparisons. Bevy scene integration and supplied nearby Futon capture. Other 104 callbacks, Gray Man, inherited body, native notification/mood/aim consequences, parent/camera construction, allocation failures, GPU/SPU output and global cadence remain unaccepted.",
+      "checks": {
+        "path": "docs/entity-behavior-checks.json",
+        "sha256": "6b6fc0884f1310342054295aefa709579ecd9c28bfcf403b3e4789ffa94e2e30"
+      },
+      "owned_lifecycle_scenarios": 32,
+      "owned_entity_state_observations": 544,
+      "owned_interaction_policy_scenarios": 288,
+      "owned_target_geometry_cases": 720,
+      "private_canonical_callback_model_bindings": 2,
+      "private_original_callback_observations": 40,
+      "original_named_callbacks_implemented": 3,
+      "distinct_original_callbacks": 107,
+      "original_entity_records": 130,
+      "nonzero_callback_records": 111,
+      "remaining_unimplemented_distinct_callbacks": 104,
+      "supplied_futon_active_ticks": 31,
+      "corrected_owned_spawn_cases": 161,
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

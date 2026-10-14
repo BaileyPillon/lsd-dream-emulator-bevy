@@ -6,9 +6,10 @@ multipart model actors with original spawn positions and rotations. Stream
 release and scene rebuild retire the previous actors; dream completion clears
 the channel and its Bevy render instances.
 
-Original NPC scripts are a separate remaining requirement. A named callback
-keeps an explicit pending state; the port currently advances common animation
-only for callback-free actors. The two proximity sound slots documented in
+Three original named callbacks now use the shared entity lifecycle and sound
+context; other callbacks keep an explicit pending state. Perception/interaction
+policy runs before action and animation. See [entity behavior](ENTITY_BEHAVIOR.md)
+for scope and remaining notification/body dispatch. The two proximity sound slots documented in
 [generation recovery](GENERATION.md) have their own state and lifetime.
 
 ## Recovered rules
@@ -78,6 +79,11 @@ the original global scheduler. The first-day timeout regression also exercises
 the connected encounter channel. Capture checks count live Bevy roots, bones
 and meshes and preserve private PNG hashes. See
 [encounter checks](encounter-checks.json) for recorded evidence and exact scope.
+The owned coupled model input has since had its MOS/TMD offsets corrected and
+been regenerated. All 161 spawn observations stayed unchanged. A decoder check
+now requires a valid MOM with two frames and two primitives; see
+[entity behavior](ENTITY_BEHAVIOR.md) for the correction evidence. The initial
+entity part-flag setup has also been corrected against real entity constructors.
 
 ```sh
 cargo test -p lsd-core --test native_encounter_gates --test native_encounter_program --locked

@@ -29,6 +29,11 @@ mod map_effect;
 mod map_links;
 mod model_actor;
 pub use model_actor::ModelActor;
+mod entity_behavior;
+pub use entity_behavior::{
+    BehaviorContext, BehaviorFault, BehaviorTick, EntityBehavior, EntityInteractionHost,
+    EntityTarget, NpcScript, entity_distance,
+};
 mod pad;
 mod player_controls;
 mod rng;

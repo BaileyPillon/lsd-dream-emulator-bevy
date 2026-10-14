@@ -72,3 +72,12 @@ to streamed slots, retaining used flags across scene rebuilds. `StageLinkSession
 clears live actors on dream completion. The Bevy adapter maintains part parents,
 mesh bindings, hidden mesh flags and palette updates; named callbacks remain
 explicitly pending. See [encounter recovery](ENCOUNTERS.md).
+
+`EntityBehavior` owns the original link/trigger/behavior state and `BehaviorContext`
+owns the three sound slots. Its behavior counter, context counter and the
+animation interpreter's interaction timer stay separate. `EntityTarget` provides
+integer projection, height interpolation, proximity and facing-distance queries.
+The asset adapter supplies loaded properties, the current player pose/view and
+an independent actor sound queue. Notification and aim requests remain queued
+for native consequence dispatch. Three named callbacks are implemented; see
+[entity behavior](ENTITY_BEHAVIOR.md) for the remaining catalog and timing work.

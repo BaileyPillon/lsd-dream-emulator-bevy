@@ -145,6 +145,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut live_capture = false;
     let mut original_day = false;
     let mut supplied_day = 1;
+    let mut supplied_actor_query = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -171,10 +172,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Some(value)
             if matches!(
                 value.as_str(),
-                "--dream" | "--dream-capture" | "--dream-scenario-capture"
+                "--dream"
+                    | "--dream-capture"
+                    | "--dream-scenario-capture"
+                    | "--npc-behavior-capture"
             ) =>
         {
             original_day = true;
+            supplied_actor_query = value == "--npc-behavior-capture";
             walk = true;
             walk_stream = true;
             walk_links = true;
@@ -463,7 +468,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("profile=supplied_wall_link original_collision_encounter_supplied=true");
         }
         if let Some(steps) = walk_steps.filter(|_| !live_capture) {
-            for _ in 0..steps {
+            for step_index in 0..steps {
                 if let Some(streamed) = &mut streamed {
                     streamed_step(
                         &mut player,
@@ -478,6 +483,33 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             0x1000
                         },
                     )?;
+                    if supplied_actor_query && step_index == 0 {
+                        let actor = session
+                            .as_ref()
+                            .and_then(|session| session.encounters.as_ref())
+                            .and_then(|encounters| {
+                                encounters.actors.iter().find(|actor| actor.entity == 5)
+                            })
+                            .ok_or("Supplied NPC capture requires the original Futon encounter")?;
+                        let offset = lsd_core::EntityTarget {
+                            position: [0; 3],
+                            local_y: 0,
+                            matrix: tables.rotation(player.controls.angles),
+                            eye: player.controls.eye,
+                            target: player.controls.target,
+                        }
+                        .resolve(2048)?;
+                        player.position = std::array::from_fn(|axis| {
+                            actor.actor.pose.position[axis].wrapping_sub(offset[axis])
+                        });
+                        linked
+                            .as_mut()
+                            .unwrap()
+                            .refresh_key(&streamed.collision, player.position)?;
+                        println!(
+                            "profile=supplied_original_npc_proximity entity=5 supplied_player_placement=true original_npc_script_and_query_math=true original_global_cadence_gpu_spu_pending=true"
+                        );
+                    }
                     let selected = session
                         .as_ref()
                         .and_then(|session| session.content_choice.as_ref())
@@ -566,6 +598,39 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .filter(|actor| actor.behavior_pending)
                         .count(),
                     encounters.gray_man_activation_requests
+                );
+                println!(
+                    "original_entity_behavior_channel_connected=true implemented_named_callbacks={} active_implemented_named_callbacks={} encounter_audio_requests={} encounter_notifications_pending={}",
+                    encounters
+                        .actors
+                        .iter()
+                        .filter(
+                            |actor| !actor.behavior_pending && actor.properties.callback.is_some()
+                        )
+                        .count(),
+                    encounters
+                        .actors
+                        .iter()
+                        .filter(|actor| !actor.behavior_pending
+                            && actor.properties.callback.is_some()
+                            && actor.behavior_active)
+                        .count(),
+                    session.encounter_audio.requests.len(),
+                    encounters.pending_notifications.len()
+                );
+            }
+            if supplied_actor_query {
+                let actor = session
+                    .encounters
+                    .as_ref()
+                    .and_then(|encounters| encounters.actors.iter().find(|actor| actor.entity == 5))
+                    .ok_or("Futon actor retired before supplied capture")?;
+                println!(
+                    "supplied_futon_behavior_active={} supplied_futon_behavior_ticks={} supplied_futon_context_ticks={} supplied_futon_animation_frame={}",
+                    actor.behavior.active,
+                    actor.behavior.ticks,
+                    actor.behavior.context.words[1],
+                    actor.actor.animation.frame_index
                 );
             }
             println!(
@@ -944,7 +1009,7 @@ fn streamed_step(
             session.log_current_chunk(linked)?;
         }
         if let Some(session) = session {
-            session.tick_encounters(stage, linked)?;
+            session.tick_encounters(stage, linked, player, tables)?;
             session.tick_generation_actors(stage, linked, &player.controls)?;
         }
     } else {

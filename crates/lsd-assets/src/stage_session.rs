@@ -90,6 +90,7 @@ pub struct StageLinkSession {
     pub music_override: i32,
     pub generation_audio: GenerationAudioRequests,
     pub encounters: Option<EncounterScene>,
+    pub encounter_audio: GenerationAudioRequests,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -115,6 +116,7 @@ impl Default for StageLinkSession {
             music_override: 0,
             generation_audio: Default::default(),
             encounters: None,
+            encounter_audio: Default::default(),
         }
     }
 }
@@ -127,17 +129,20 @@ impl StageLinkSession {
         self.encounters = Some(EncounterScene::new(tables, properties));
     }
     /// Scene binding and presentation for the original encounter channel.
-    /// Named behavior, body/interaction dispatch and native scheduling remain open.
+    /// Three named callbacks and query policy are connected; inherited body,
+    /// notification/mood consequences and native scheduling remain open.
     pub fn tick_encounters(
         &mut self,
         stage: &StreamedStage,
         linked: &mut LinkedPlayer,
+        player: &ChunkPlayer,
+        math: &lsd_core::PsxMathTables,
     ) -> Result<(), Box<dyn std::error::Error>> {
         let Some(encounters) = &mut self.encounters else {
             return Ok(());
         };
         if self.finished.is_some() || !self.generation.as_ref().is_some_and(|g| g.owner_active) {
-            encounters.stop();
+            encounters.stop_with_audio(&mut self.encounter_audio);
             return Ok(());
         }
         let generation = self.generation.as_ref().unwrap();
@@ -150,18 +155,31 @@ impl StageLinkSession {
             .as_ref()
             .ok_or("Encounter channel requires original day content")?
             .color(day.chart()?);
-        encounters.update(
+        encounters.update_with_audio(
             stage,
-            self.rebuilds,
-            day.day.wrapping_add(1),
-            palette,
-            generation.generation_type,
+            crate::EncounterUpdate {
+                epoch: self.rebuilds,
+                day: day.day.wrapping_add(1),
+                palette,
+                generation_type: generation.generation_type,
+            },
             &mut linked.rng,
+            &mut self.encounter_audio,
         )?;
         if std::mem::take(&mut encounters.teleports_requested) {
             linked.context.teleports_enabled = 1;
         }
-        encounters.tick_animations()?;
+        encounters.tick_behaviors(
+            lsd_core::EntityTarget {
+                position: player.position,
+                local_y: player.position[1],
+                matrix: math.rotation(player.controls.angles),
+                eye: player.controls.eye,
+                target: player.controls.target,
+            },
+            &mut linked.rng,
+            &mut self.encounter_audio,
+        )?;
         Ok(())
     }
     pub fn enable_generation(&mut self, tables: GenerationTables, paths: GenerationPaths) {
@@ -284,7 +302,7 @@ impl StageLinkSession {
         self.events.clear();
         if self.finished.is_some() || (self.pending_day_event.is_some() && self.day.is_none()) {
             if let Some(encounters) = &mut self.encounters {
-                encounters.stop();
+                encounters.stop_with_audio(&mut self.encounter_audio);
             }
             return Ok(false);
         }
@@ -312,7 +330,7 @@ impl StageLinkSession {
             if host.finished.is_some() {
                 *host.finished = Some(self.policy.result);
                 if let Some(encounters) = &mut self.encounters {
-                    encounters.stop();
+                    encounters.stop_with_audio(&mut self.encounter_audio);
                 }
                 return Ok(false);
             }
@@ -321,7 +339,7 @@ impl StageLinkSession {
         if host.finished.is_some() {
             *host.finished = Some(self.policy.result);
             if let Some(encounters) = &mut self.encounters {
-                encounters.stop();
+                encounters.stop_with_audio(&mut self.encounter_audio);
             }
         }
         if host.rebuilt {

@@ -228,6 +228,11 @@ impl AnimationPlayer {
         if self.action_enabled {
             action(self);
         }
+        self.advance_frame(clips)
+    }
+
+    /// The action callback may change the clip or playback flags before this phase.
+    pub fn advance_frame(&mut self, clips: &[AnimationClip]) -> Result<(), AnimationError> {
         if self.enabled
             && let Some(index) = self.selected_clip
         {

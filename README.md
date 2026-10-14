@@ -69,6 +69,11 @@ original signed gates, placement, model selection and cousin-spawn order.
 Stream release, scene rebuild and dream expiry retire their render instances.
 See [encounter recovery](docs/ENCOUNTERS.md) for original CPU comparisons and
 the remaining named NPC scripts, interaction, physics and scheduling work.
+The shared entity lifecycle, perception query math and interaction policy now
+also run in Rust. Futon, Television and Drumstick scripts are connected; the
+other 104 original callbacks remain pending. See
+[entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
+actor sound queues and notification/body dispatch still required.
 
 ## Start here
 
@@ -182,6 +187,11 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Original chunk encounter records checked against local model libraries | 98 |
 | Available declared actor-model bindings in those records | 159 |
 | Loaded encounter contexts checked for bind/retire/rebuild behavior | 97 |
+| Original named callbacks implemented and compared in supplied graphs | 3 / 107 |
+| Entity lifecycle state observations compared with original CPU execution | 544 |
+| Supplied interaction-policy scenarios compared | 288 |
+| Original target-query projection/height/boundary cases compared | 720 |
+| Futon/Television observations with their actual model/property bindings | 40 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

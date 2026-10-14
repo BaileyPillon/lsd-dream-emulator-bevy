@@ -91,7 +91,11 @@ fn original_loaded_encounters_bind_once_retire_slots_and_rebuild_without_stale_a
                 assert!(loaded.collision.slots.slots[actor.slot].ready);
                 assert_eq!(loaded.protocol.slots[actor.slot].map_index, actor.map);
                 assert_eq!(properties[actor.entity as usize], actor.properties);
-                assert_eq!(actor.properties.callback.is_some(), actor.behavior_pending);
+                assert_eq!(
+                    lsd_core::NpcScript::from_reference_address(actor.properties.callback)
+                        .pending(),
+                    actor.behavior_pending
+                );
                 assert!(actor.actor.root_part < actor.actor.animation.parts.len());
             }
             actors += scene.actors.len();

@@ -70,6 +70,39 @@ pub struct FixedMatrix(pub [[i16; 3]; 3]);
 impl FixedMatrix {
     pub const IDENTITY: Self = Self([[4096, 0, 0], [0, 4096, 0], [0, 0, 4096]]);
 
+    /// PsyQ ApplyMatrixLV splits signed magnitudes at bit fifteen and runs two
+    /// MVMVA operations, preserving their separate shifts and 32-bit results.
+    pub fn apply_long(self, vector: [i32; 3]) -> [i32; 3] {
+        let split = vector.map(|value| {
+            let magnitude = if value < 0 {
+                value.wrapping_neg()
+            } else {
+                value
+            };
+            let (high, low) = (magnitude >> 15, magnitude & 0x7fff);
+            if value < 0 {
+                (high.wrapping_neg() as i16, low.wrapping_neg() as i16)
+            } else {
+                (high as i16, low as i16)
+            }
+        });
+        self.0.map(|row| {
+            let high: i64 = row
+                .iter()
+                .zip(split)
+                .map(|(&coefficient, (high, _))| i64::from(coefficient) * i64::from(high))
+                .sum();
+            let low: i64 = row
+                .iter()
+                .zip(split)
+                .map(|(&coefficient, (_, low))| i64::from(coefficient) * i64::from(low))
+                .sum();
+            (high as i32)
+                .wrapping_shl(3)
+                .wrapping_add((low >> 12) as i32)
+        })
+    }
+
     /// MAC results before the GTE's optional IR saturation, for short local vectors.
     pub fn apply_short(self, vector: [i16; 3]) -> [i32; 3] {
         self.0.map(|row| {

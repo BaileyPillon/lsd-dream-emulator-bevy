@@ -85,3 +85,12 @@ placement, rotation, RNG and constructor/animation state. Loaded slot release,
 scene rebuild and day expiry also have integration checks. Named NPC scripts,
 Gray Man activation, body/interaction/mood dispatch, audio and full native scene
 cadence remain unfinished; see [encounter recovery](ENCOUNTERS.md).
+
+The shared entity start/stop/link state, three clocks, sound context, interaction
+policy and target query math now have original CPU comparisons. Futon, Television
+and Drumstick callbacks are implemented, including canonical model/property
+comparisons for the first two. The scene adapter connects the query policy and
+queues sound/notification requests. Recover the other 104 callbacks and Gray Man
+activation, then inherited body/mood/notification/aim consequences, full scene
+scheduling and original GPU/SPU output. Whole NPC encounters remain unaccepted;
+see [entity behavior](ENTITY_BEHAVIOR.md).
