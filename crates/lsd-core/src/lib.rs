@@ -12,6 +12,11 @@ mod contact_links;
 mod dream_day;
 mod dream_session;
 mod effect;
+mod encounters;
+pub use encounters::{
+    EncounterChunk, EncounterFault, EncounterFrame, EncounterHost, EncounterObject, EncounterSpawn,
+    EncounterTables, EncounterVariant, encounter_object_gate,
+};
 mod fixed_math;
 mod generation;
 mod generation_effects;
@@ -22,6 +27,8 @@ mod linked_player;
 mod links;
 mod map_effect;
 mod map_links;
+mod model_actor;
+pub use model_actor::ModelActor;
 mod pad;
 mod player_controls;
 mod rng;

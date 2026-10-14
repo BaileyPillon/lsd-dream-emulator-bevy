@@ -102,8 +102,9 @@
       "id": "F009",
       "title": "Stage grids, chunk traversal and placed objects",
       "requirement": "Traverse 14 stage grids, choose chunk models and instantiate day/color-conditioned objects.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_chunk_selection_and_streamed_actor_binding",
+      "whole_feature_accepted": false,
+      "evidence": "docs/ENCOUNTERS.md"
     },
     {
       "id": "F010",
@@ -245,8 +246,9 @@
       "id": "F029",
       "title": "Actor model assembly and animation scripts",
       "requirement": "Build multipart actors, select sequences and apply original keyframe commands/timers.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_actor_constructor_and_animation_with_bevy_presentation",
+      "whole_feature_accepted": false,
+      "evidence": "docs/ENCOUNTERS.md"
     },
     {
       "id": "F030",
@@ -679,6 +681,31 @@
       "active_gradient_scenario_day": 8,
       "active_environment_scenario_day": 17,
       "original_gpu_framebuffer_parity_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "encounter_actor_recovery_20261014": {
+      "scope": "Original signed chunk/object selection, cousin order, shared RNG, real owned MML/model/entity construction and placement; private original MOM constructor/animation comparisons and streamed model binding with Bevy multipart presentation. Named NPC callbacks, Gray Man behavior, body/interaction/mood/audio, allocation failures, complete resource graph, native GPU and global scheduling remain unaccepted.",
+      "checks": {
+        "path": "docs/encounter-checks.json",
+        "sha256": "f3bb8d12ab0d13a95ac7b2c8cbcd5bbef57ec10a9220060c88b0c383e210b411"
+      },
+      "owned_gate_cases": 18432,
+      "owned_chunk_lookup_cases": 168,
+      "owned_coupled_spawn_cases": 161,
+      "owned_entities_constructed": 106,
+      "private_original_actor_constructors": 100,
+      "private_original_actor_animation_steps": 600,
+      "original_chunk_records": 98,
+      "available_declared_model_bindings": 159,
+      "loaded_lifecycle_contexts": 97,
+      "bound_actor_instances_in_regression": 364,
+      "bevy_supplied_scenario_days": [
+        1,
+        8,
+        17
+      ],
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

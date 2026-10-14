@@ -64,6 +64,11 @@ Screen boxes now use the original SDK packet fields and draw order. Background
 composition and foreground blending use five-bit integer color arithmetic;
 see [box rendering](docs/BOX_RENDERING.md) for native packet checks, shader pixel
 comparisons and the remaining full-renderer requirements.
+The day profile now binds chunk encounters to imported multipart actors, with
+original signed gates, placement, model selection and cousin-spawn order.
+Stream release, scene rebuild and dream expiry retire their render instances.
+See [encounter recovery](docs/ENCOUNTERS.md) for original CPU comparisons and
+the remaining named NPC scripts, interaction, physics and scheduling work.
 
 ## Start here
 
@@ -111,8 +116,8 @@ day generation and audio remain open.
 
 Append `--dream` to start the original first-day state with a supplied new-game
 bootstrap and seed 1. `--dream-capture /path/to/new.png 4000` runs supplied idle
-host ticks through timeout and the next-day result. Original menus, generated objects,
-special-day media, GPU fades and audio remain unfinished.
+host ticks through timeout and the next-day result. Original menus, named NPC
+scripts, special-day media, camera/raster accuracy, GPU fades and audio remain unfinished.
 
 For a supplied permanent-wall contact followed by scene replacement, append
 `--link-rebuild-capture /path/to/new.png 0 24`. The final numbers select the
@@ -168,6 +173,15 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Private original-content generation builds compared | 168 |
 | Supplied original permanent-link destinations rebuilt locally | 17 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
+| Owned signed encounter-gate comparisons | 18,432 |
+| Owned chunk lookup comparisons | 168 |
+| Coupled owned chunk/model/entity spawn comparisons | 161 |
+| Entities constructed by the coupled native spawn checks | 106 |
+| Original model actor constructors compared | 100 |
+| Constructor-following original animation steps compared | 600 |
+| Original chunk encounter records checked against local model libraries | 98 |
+| Available declared actor-model bindings in those records | 159 |
+| Loaded encounter contexts checked for bind/retire/rebuild behavior | 97 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
 

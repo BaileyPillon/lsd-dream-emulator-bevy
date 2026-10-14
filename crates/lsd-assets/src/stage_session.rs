@@ -1,4 +1,4 @@
-use crate::{GenerationPaths, StreamedStage};
+use crate::{EncounterScene, EntityProperties, GenerationPaths, StreamedStage};
 use lsd_core::{
     ChunkPlayer, DayStartInputs, DayTables, DreamDay, DreamDayEffects, DreamGeneration, DreamLinks,
     DreamSession, DreamSessionHost, GenerationEffectTables, GenerationFrame,
@@ -89,6 +89,7 @@ pub struct StageLinkSession {
     pub content_choice: Option<SceneContentChoice>,
     pub music_override: i32,
     pub generation_audio: GenerationAudioRequests,
+    pub encounters: Option<EncounterScene>,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -113,10 +114,56 @@ impl Default for StageLinkSession {
             content_choice: None,
             music_override: 0,
             generation_audio: Default::default(),
+            encounters: None,
         }
     }
 }
 impl StageLinkSession {
+    pub fn enable_encounters(
+        &mut self,
+        tables: lsd_core::EncounterTables,
+        properties: Vec<EntityProperties>,
+    ) {
+        self.encounters = Some(EncounterScene::new(tables, properties));
+    }
+    /// Scene binding and presentation for the original encounter channel.
+    /// Named behavior, body/interaction dispatch and native scheduling remain open.
+    pub fn tick_encounters(
+        &mut self,
+        stage: &StreamedStage,
+        linked: &mut LinkedPlayer,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        let Some(encounters) = &mut self.encounters else {
+            return Ok(());
+        };
+        if self.finished.is_some() || !self.generation.as_ref().is_some_and(|g| g.owner_active) {
+            encounters.stop();
+            return Ok(());
+        }
+        let generation = self.generation.as_ref().unwrap();
+        let day = self
+            .day
+            .as_ref()
+            .ok_or("Encounter channel requires original day state")?;
+        let palette = self
+            .day_tables
+            .as_ref()
+            .ok_or("Encounter channel requires original day content")?
+            .color(day.chart()?);
+        encounters.update(
+            stage,
+            self.rebuilds,
+            day.day.wrapping_add(1),
+            palette,
+            generation.generation_type,
+            &mut linked.rng,
+        )?;
+        if std::mem::take(&mut encounters.teleports_requested) {
+            linked.context.teleports_enabled = 1;
+        }
+        encounters.tick_animations()?;
+        Ok(())
+    }
     pub fn enable_generation(&mut self, tables: GenerationTables, paths: GenerationPaths) {
         self.generation = Some(DreamGeneration::default());
         self.generation_tables = Some(tables);
@@ -236,6 +283,9 @@ impl StageLinkSession {
     ) -> Result<bool, Box<dyn std::error::Error>> {
         self.events.clear();
         if self.finished.is_some() || (self.pending_day_event.is_some() && self.day.is_none()) {
+            if let Some(encounters) = &mut self.encounters {
+                encounters.stop();
+            }
             return Ok(false);
         }
         let mut host = Host {
@@ -261,12 +311,18 @@ impl StageLinkSession {
             self.policy.link_code(&mut host, 1, code)?;
             if host.finished.is_some() {
                 *host.finished = Some(self.policy.result);
+                if let Some(encounters) = &mut self.encounters {
+                    encounters.stop();
+                }
                 return Ok(false);
             }
         }
         self.policy.tick(&mut host, 2)?;
         if host.finished.is_some() {
             *host.finished = Some(self.policy.result);
+            if let Some(encounters) = &mut self.encounters {
+                encounters.stop();
+            }
         }
         if host.rebuilt {
             self.rebuilds = self.rebuilds.wrapping_add(1);

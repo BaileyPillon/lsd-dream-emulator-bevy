@@ -60,6 +60,10 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
     session.enable_generated_objects(load_generation_object_tables(&executable).unwrap());
     session
         .enable_generation_layers(lsd_assets::load_generation_effect_tables(&executable).unwrap());
+    session.enable_encounters(
+        lsd_assets::load_encounter_tables(&executable).unwrap(),
+        lsd_assets::load_entity_properties(&executable).unwrap(),
+    );
     session.begin_original_day(&mut linked, content);
     assert!(
         session
@@ -117,6 +121,10 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
                 }
             }
         }
+        session.tick_encounters(&stage, &mut linked).unwrap();
+        if tick == 1 {
+            assert_eq!(session.encounters.as_ref().unwrap().actors.len(), 5);
+        }
         session
             .tick_generation_actors(&stage, &mut linked, &player.controls)
             .unwrap();
@@ -134,6 +142,7 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
     assert_eq!(day.total_unlock_score, 0);
     assert_eq!(session.pending_day_event, None);
     assert!(player.controls.input_locked);
+    assert!(session.encounters.as_ref().unwrap().actors.is_empty());
     let retained_rng = linked.rng.state();
     session.begin_next_dream().unwrap();
     assert_eq!(linked.rng.state(), retained_rng);

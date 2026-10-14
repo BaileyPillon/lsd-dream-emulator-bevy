@@ -15,6 +15,13 @@ pub struct Mom {
 }
 
 impl Mom {
+    pub fn construct_actor(&self) -> Result<lsd_core::ModelActor, lsd_core::AnimationError> {
+        lsd_core::ModelActor::construct(
+            &self.animations,
+            &self.initial_part_types,
+            self.tmd.objects.len(),
+        )
+    }
     pub fn parse(bytes: &[u8]) -> Result<Self, DecodeError> {
         let reader = Reader(bytes);
         if reader.bytes(0, 4)? != b"MOM " {

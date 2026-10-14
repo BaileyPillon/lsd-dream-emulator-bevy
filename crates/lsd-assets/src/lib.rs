@@ -1,6 +1,10 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 mod day_tables;
 mod effect_palette;
+mod encounter_scene;
+mod encounter_tables;
+pub use encounter_scene::{EncounterScene, EntityProperties, SceneActor, load_entity_properties};
+pub use encounter_tables::load_encounter_tables;
 mod generation_assets;
 mod generation_tables;
 pub use day_tables::load_day_tables;

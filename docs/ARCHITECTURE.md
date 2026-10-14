@@ -64,3 +64,11 @@ local content. The original sound scheduler targets a backend interface;
 profile consumes scene choices and selected textures, while generated structures,
 gradient rendering and the full generation RNG history remain incomplete. See
 [generation recovery](GENERATION.md).
+
+`EncounterTables` supplies the original chunk/day/color gates and ordered actor
+spawn program. `ModelActor` creates the multipart animation rig and initial clip.
+`EncounterScene` connects canonical local model libraries and entity properties
+to streamed slots, retaining used flags across scene rebuilds. `StageLinkSession`
+clears live actors on dream completion. The Bevy adapter maintains part parents,
+mesh bindings, hidden mesh flags and palette updates; named callbacks remain
+explicitly pending. See [encounter recovery](ENCOUNTERS.md).

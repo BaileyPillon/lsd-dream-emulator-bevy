@@ -19,6 +19,7 @@ use lsd_assets::{
     load_layered_stage, load_link_tables, load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
+use lsd_bevy::asset_scene::MeshBinding;
 use lsd_bevy::box_material::{BoxMaterial, BoxMaterialPlugin, BoxUniform};
 use lsd_core::{
     BoxFramebuffer, ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, GenerationChild,
@@ -88,6 +89,31 @@ struct GeneratedVisuals {
     count: usize,
     entities: Vec<Entity>,
     models: Vec<Vec<(Handle<Mesh>, Handle<StandardMaterial>)>>,
+}
+#[derive(Component)]
+struct ActorBone {
+    serial: u64,
+    part: usize,
+}
+#[derive(Component)]
+struct ActorRoot(u64);
+#[derive(Component)]
+struct ActorMeshPart {
+    serial: u64,
+    part: usize,
+}
+struct ActorVisual {
+    root: Entity,
+    bones: Vec<Entity>,
+    meshes: Vec<Vec<MeshBinding>>,
+    bound: Vec<Option<(usize, Vec<Entity>)>>,
+    parents: Vec<Option<lsd_core::AnimationParent>>,
+}
+#[derive(Resource, Default)]
+struct ActorVisuals {
+    actors: std::collections::BTreeMap<u64, ActorVisual>,
+    textures: Vec<(u16, u16, Handle<Image>)>,
+    palette_revision: u64,
 }
 
 #[derive(Component)]
@@ -404,6 +430,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             );
             session.enable_generated_objects(load_generation_object_tables(&executable)?);
             session.enable_generation_layers(load_generation_effect_tables(&executable)?);
+            session.enable_encounters(
+                lsd_assets::load_encounter_tables(&executable)?,
+                lsd_assets::load_entity_properties(&executable)?,
+            );
             session.begin_original_day(linked, load_day_tables(&executable)?);
             session.day.as_mut().unwrap().day = supplied_day - 1;
             session.tick(
@@ -521,6 +551,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             );
         }
         if let Some(session) = &session {
+            if let Some(encounters) = &session.encounters {
+                println!(
+                    "original_actor_channel_connected=true actor_instances={} actor_parts={} named_npc_callbacks_pending={} gray_man_activation_requests_pending={}",
+                    encounters.actors.len(),
+                    encounters
+                        .actors
+                        .iter()
+                        .map(|actor| actor.actor.animation.parts.len())
+                        .sum::<usize>(),
+                    encounters
+                        .actors
+                        .iter()
+                        .filter(|actor| actor.behavior_pending)
+                        .count(),
+                    encounters.gray_man_activation_requests
+                );
+            }
             println!(
                 "session_state={} rebuilds={} loaded_stage={} pending_day_event={:?}",
                 session.policy.state, session.rebuilds, display_stage, session.pending_day_event
@@ -615,6 +662,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .map_or(texture.chars().next().unwrap(), |choice| choice.texture);
     let mut app = App::new();
     if original_day {
+        app.init_resource::<ActorVisuals>()
+            .add_systems(Update, scene_actors);
         app.insert_resource(GeneratedVisuals {
             assets: GenerationAssets::load(&root, &executable)?,
             epoch: u64::MAX,
@@ -895,6 +944,7 @@ fn streamed_step(
             session.log_current_chunk(linked)?;
         }
         if let Some(session) = session {
+            session.tick_encounters(stage, linked)?;
             session.tick_generation_actors(stage, linked, &player.controls)?;
         }
     } else {
@@ -978,6 +1028,231 @@ fn generated_pose(pose: GenerationPose) -> Transform {
         rotation: Quat::from_euler(EulerRot::XYZ, rx, -ry, -rz),
         scale: Vec3::from_array(pose.scale.map(|v| v as f32 / 4096.0)),
     }
+}
+
+type ActorNodes<'w, 's> = (
+    Query<
+        'w,
+        's,
+        (
+            &'static ActorBone,
+            &'static mut Transform,
+            &'static mut Visibility,
+        ),
+        (Without<ActorRoot>, Without<ActorMeshPart>),
+    >,
+    Query<'w, 's, (&'static ActorRoot, &'static mut Transform), (Without<ActorBone>,)>,
+    Query<'w, 's, (&'static ActorMeshPart, &'static mut Visibility)>,
+);
+fn scene_actors(
+    mut commands: Commands,
+    scene: Res<WalkingScene>,
+    source: Res<StageAssets>,
+    mut visuals: ResMut<ActorVisuals>,
+    assets: GeneratedAssetStores<'_>,
+    nodes: ActorNodes<'_, '_>,
+) {
+    let Some(encounters) = scene
+        .session
+        .as_ref()
+        .and_then(|session| session.encounters.as_ref())
+    else {
+        return;
+    };
+    let (mut meshes, mut materials, mut images) = assets;
+    if visuals.palette_revision != source.palette_revision {
+        for (page, clut, handle) in &visuals.textures {
+            if (clut >> 6) & 511 >= 496
+                && let Some(mut image) = images.get_mut(handle)
+            {
+                image.data = Some(
+                    source
+                        .vram
+                        .texture_rgba(*page, *clut)
+                        .expect("validated actor palette texture"),
+                );
+            }
+        }
+        visuals.palette_revision = source.palette_revision;
+    }
+    let retired: Vec<_> = visuals
+        .actors
+        .keys()
+        .copied()
+        .filter(|serial| {
+            !encounters
+                .actors
+                .iter()
+                .any(|actor| actor.serial == *serial)
+        })
+        .collect();
+    for serial in retired {
+        let visual = visuals.actors.remove(&serial).unwrap();
+        commands.entity(visual.root).despawn();
+    }
+    if visuals.actors.is_empty() {
+        visuals.textures.clear();
+    }
+    for actor in &encounters.actors {
+        if !visuals.actors.contains_key(&actor.serial) {
+            let root = commands
+                .spawn((
+                    ActorRoot(actor.serial),
+                    Name::new(format!(
+                        "Original entity {} slot {} map {}",
+                        actor.entity, actor.slot, actor.map
+                    )),
+                    generated_pose(actor.actor.pose),
+                    Visibility::Inherited,
+                ))
+                .id();
+            let bones = actor
+                .actor
+                .animation
+                .parts
+                .iter()
+                .enumerate()
+                .map(|(part, data)| {
+                    commands
+                        .spawn((
+                            ActorBone {
+                                serial: actor.serial,
+                                part,
+                            },
+                            Name::new(format!("Entity {} part {}", actor.entity, data.part_type)),
+                            actor_part_pose(data),
+                            if data.parent.is_none() {
+                                Visibility::Hidden
+                            } else {
+                                Visibility::Inherited
+                            },
+                        ))
+                        .id()
+                })
+                .collect::<Vec<_>>();
+            for (part, data) in actor.actor.animation.parts.iter().enumerate() {
+                let parent = match data.parent {
+                    Some(lsd_core::AnimationParent::Part(owner)) => bones[owner],
+                    _ => root,
+                };
+                commands.entity(bones[part]).insert(ChildOf(parent));
+            }
+            let mut builder =
+                AssetSceneBuilder::new(&source.vram, &mut meshes, &mut materials, &mut images);
+            let model_meshes = actor
+                .resource
+                .tmd
+                .objects
+                .iter()
+                .map(|object| builder.build_object(object, 0))
+                .collect();
+            visuals.textures.extend(builder.take_texture_bindings());
+            visuals.actors.insert(
+                actor.serial,
+                ActorVisual {
+                    root,
+                    bones,
+                    meshes: model_meshes,
+                    bound: vec![None; actor.actor.animation.parts.len()],
+                    parents: actor
+                        .actor
+                        .animation
+                        .parts
+                        .iter()
+                        .map(|part| part.parent)
+                        .collect(),
+                },
+            );
+        }
+        let visual = visuals.actors.get_mut(&actor.serial).unwrap();
+        for (part, data) in actor.actor.animation.parts.iter().enumerate() {
+            if visual.parents[part] != data.parent {
+                let parent = match data.parent {
+                    Some(lsd_core::AnimationParent::Part(owner)) => visual.bones[owner],
+                    _ => visual.root,
+                };
+                commands.entity(visual.bones[part]).insert(ChildOf(parent));
+                visual.parents[part] = data.parent;
+            }
+            if visual.bound[part].as_ref().map(|binding| binding.0) != data.primitive {
+                if let Some((_, old_meshes)) = visual.bound[part].take() {
+                    for entity in old_meshes {
+                        commands.entity(entity).despawn();
+                    }
+                }
+                let Some(primitive) = data.primitive else {
+                    continue;
+                };
+                let mut entities = Vec::new();
+                for (mesh, material) in &visual.meshes[primitive] {
+                    let entity = commands
+                        .spawn((
+                            ActorMeshPart {
+                                serial: actor.serial,
+                                part,
+                            },
+                            Mesh3d(mesh.clone()),
+                            MeshMaterial3d(material.clone()),
+                            Transform::default(),
+                            ChildOf(visual.bones[part]),
+                            if data.attributes & (1 << 31) != 0 {
+                                Visibility::Hidden
+                            } else {
+                                Visibility::Inherited
+                            },
+                        ))
+                        .id();
+                    entities.push(entity);
+                }
+                visual.bound[part] = Some((primitive, entities));
+            }
+        }
+    }
+    let (mut bones, mut roots, mut visible_meshes) = nodes;
+    for (bone, mut transform, mut visibility) in &mut bones {
+        if let Some(actor) = encounters
+            .actors
+            .iter()
+            .find(|actor| actor.serial == bone.serial)
+        {
+            let part = &actor.actor.animation.parts[bone.part];
+            *transform = actor_part_pose(part);
+            *visibility = if part.parent.is_none() {
+                Visibility::Hidden
+            } else {
+                Visibility::Inherited
+            };
+        }
+    }
+    for (root, mut transform) in &mut roots {
+        if let Some(actor) = encounters
+            .actors
+            .iter()
+            .find(|actor| actor.serial == root.0)
+        {
+            *transform = generated_pose(actor.actor.pose);
+        }
+    }
+    for (mesh, mut visibility) in &mut visible_meshes {
+        if let Some(actor) = encounters
+            .actors
+            .iter()
+            .find(|actor| actor.serial == mesh.serial)
+        {
+            *visibility = if actor.actor.animation.parts[mesh.part].attributes & (1 << 31) != 0 {
+                Visibility::Hidden
+            } else {
+                Visibility::Inherited
+            };
+        }
+    }
+}
+fn actor_part_pose(part: &lsd_core::AnimationPart) -> Transform {
+    generated_pose(GenerationPose {
+        position: part.coordinate_translation,
+        angles: part.angles,
+        scale: part.scale,
+    })
 }
 
 type GeneratedAssetStores<'w> = (
@@ -1486,12 +1761,29 @@ fn setup(
     ));
 }
 
-fn capture_frame(mut commands: Commands, time: Res<Time<Real>>, mut capture: ResMut<Capture>) {
+fn capture_frame(
+    mut commands: Commands,
+    time: Res<Time<Real>>,
+    mut capture: ResMut<Capture>,
+    actor_roots: Query<(), With<ActorRoot>>,
+    actor_bones: Query<(), With<ActorBone>>,
+    actor_meshes: Query<&InheritedVisibility, With<ActorMeshPart>>,
+) {
     if !capture.requested
         && capture.remaining_ticks.is_none_or(|ticks| ticks == 0)
         && time.elapsed_secs_f64() > 5.0
         && let Some(target) = &capture.target
     {
+        println!(
+            "bevy_actor_render_roots={} bevy_actor_render_bones={} bevy_actor_render_meshes={} inherited_visible_actor_meshes={}",
+            actor_roots.iter().len(),
+            actor_bones.iter().len(),
+            actor_meshes.iter().len(),
+            actor_meshes
+                .iter()
+                .filter(|visibility| visibility.get())
+                .count()
+        );
         if let Some(source) = &capture.source {
             commands
                 .spawn(Screenshot::image(source.clone()))

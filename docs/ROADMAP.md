@@ -76,3 +76,12 @@ and blends foreground boxes in an integer shader. Owned pixel plates and three
 captured Bevy scenes match the integer model. Original GPU framebuffers, model
 projection/lighting, textured rasterization, mask/interlace behavior and complete
 draw ordering remain open; see [box rendering](BOX_RENDERING.md).
+
+Original chunk encounter selection and actor construction now feed the day
+profile. Canonical model libraries and 130 entity-property records load locally;
+the imported actor rigs track part parents, mesh replacement and animation.
+Original CPU checks cover signed encounter gates, recursive cousin spawning,
+placement, rotation, RNG and constructor/animation state. Loaded slot release,
+scene rebuild and day expiry also have integration checks. Named NPC scripts,
+Gray Man activation, body/interaction/mood dispatch, audio and full native scene
+cadence remain unfinished; see [encounter recovery](ENCOUNTERS.md).
