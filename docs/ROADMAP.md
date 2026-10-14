@@ -161,3 +161,12 @@ before polling new input; its separate clock and pad APIs allow later scene
 integration. Connect the observed actor/map/generation/stream/render/player order,
 session handoff and pad phase to one shared clock, including delayed actor births,
 waiting and transform-cache refresh. See [frame and pad order](FRAME_ORDER.md).
+
+The loaded scene now connects actor/effect/map/stream/render/session/player
+phases to one clock, followed by pad dispatch and session handoff. 8 original
+owned-clock scenarios compare 192 notifications and 24 real actor births during
+stream callbacks. A local original-asset integration checks delayed first updates,
+shared waiting, journal delivery and render-before-player state. Recover actual
+CD completion/wait transitions, original renderer/cache and cross-map residency,
+NPC-requested lifetime changes and the remaining fidelity requirements. See
+[shared scene frame](SHARED_FRAME.md).

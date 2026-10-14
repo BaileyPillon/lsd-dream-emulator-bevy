@@ -70,11 +70,20 @@ impl MapEffect {
         policy: &mut MapLinkPolicy,
         controls: &mut PlayerControls,
     ) -> Result<Vec<MapCompletionCommand>, EffectFault> {
+        self.tick_signal(policy, controls, crate::FrameSignal::Tick)
+    }
+
+    pub fn tick_signal(
+        &mut self,
+        policy: &mut MapLinkPolicy,
+        controls: &mut PlayerControls,
+        signal: crate::FrameSignal,
+    ) -> Result<Vec<MapCompletionCommand>, EffectFault> {
         if !self.render_attached {
             return Ok(Vec::new());
         }
         let mut commands = Vec::new();
-        for event in self.effect.tick(&self.palette, 2) {
+        for event in self.effect.tick(&self.palette, signal.code()) {
             match event {
                 EffectEvent::Detach => self.render_attached = false,
                 EffectEvent::Notify(code) if self.map_attached => {

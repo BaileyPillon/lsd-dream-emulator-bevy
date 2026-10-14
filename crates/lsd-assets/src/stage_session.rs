@@ -108,6 +108,11 @@ pub struct StageLinkSession {
     pub player_collision: Option<lsd_core::CollisionModel>,
     pub actor_body_queries: crate::ActorBodyQueryCounts,
     pub encounter_frame: lsd_core::FramePhase,
+    pub frame_members: lsd_core::FrameSubscribers<crate::SceneClockMember>,
+    pub frame_trace: Vec<crate::SceneFrameVisit>,
+    pub session_ticks: u32,
+    pub rendered_player: Option<ChunkPlayer>,
+    pub rendered_rebuild: u64,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -138,6 +143,11 @@ impl Default for StageLinkSession {
             player_collision: None,
             actor_body_queries: Default::default(),
             encounter_frame: Default::default(),
+            frame_members: crate::scene_frame::initial_clock_members(),
+            frame_trace: Vec::new(),
+            session_ticks: 0,
+            rendered_player: None,
+            rendered_rebuild: 0,
         }
     }
 }
@@ -149,9 +159,7 @@ impl StageLinkSession {
     ) {
         self.encounters = Some(EncounterScene::new(tables, properties));
     }
-    /// Scene binding and presentation for the original encounter channel.
-    /// Named callbacks, query policy and journal consequences are connected.
-    /// Inherited body/aim dispatch and native scheduling remain open.
+    /// Combined binding/update entry point for supplied encounter fixtures.
     pub fn tick_encounters(
         &mut self,
         stage: &StreamedStage,
@@ -159,6 +167,16 @@ impl StageLinkSession {
         player: &mut ChunkPlayer,
         math: &lsd_core::PsxMathTables,
         effect: &mut MapEffect,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        self.bind_encounters(stage, linked)?;
+        let signal = self.encounter_frame.advance();
+        self.tick_encounter_callbacks(None, signal, linked, player, math, effect)
+    }
+    /// Stream notifications construct and attach actors without updating them.
+    pub fn bind_encounters(
+        &mut self,
+        stage: &StreamedStage,
+        linked: &mut LinkedPlayer,
     ) -> Result<(), Box<dyn std::error::Error>> {
         let Some(encounters) = &mut self.encounters else {
             return Ok(());
@@ -191,6 +209,40 @@ impl StageLinkSession {
         if std::mem::take(&mut encounters.teleports_requested) {
             linked.context.teleports_enabled = 1;
         }
+        Ok(())
+    }
+    /// Execute one entity at its current position in the shared clock list.
+    pub fn tick_encounter_actor(
+        &mut self,
+        serial: u64,
+        signal: lsd_core::FrameSignal,
+        linked: &mut LinkedPlayer,
+        player: &mut ChunkPlayer,
+        math: &lsd_core::PsxMathTables,
+        effect: &mut MapEffect,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        self.tick_encounter_callbacks(Some(serial), signal, linked, player, math, effect)
+    }
+    fn tick_encounter_callbacks(
+        &mut self,
+        serial: Option<u64>,
+        signal: lsd_core::FrameSignal,
+        linked: &mut LinkedPlayer,
+        player: &mut ChunkPlayer,
+        math: &lsd_core::PsxMathTables,
+        effect: &mut MapEffect,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        let Some(encounters) = &mut self.encounters else {
+            return Ok(());
+        };
+        if self.finished.is_some() || !self.generation.as_ref().is_some_and(|g| g.owner_active) {
+            encounters.stop_with_audio(&mut self.encounter_audio);
+            return Ok(());
+        }
+        let day = self
+            .day
+            .as_mut()
+            .ok_or("Encounter channel requires original day state")?;
         let target = lsd_core::EntityTarget {
             position: player.position,
             local_y: player.position[1],
@@ -232,15 +284,28 @@ impl StageLinkSession {
             controls: &mut player.controls,
             services,
         };
-        let signal = self.encounter_frame.advance();
-        let result = encounters.tick_frame(
-            target,
-            &mut linked.rng,
-            &mut self.encounter_audio,
-            math,
-            &mut events,
-            signal,
-        );
+        let result = if let Some(serial) = serial {
+            encounters.tick_actor_frame(
+                crate::ActorFrame {
+                    serial,
+                    target,
+                    signal,
+                },
+                &mut linked.rng,
+                &mut self.encounter_audio,
+                math,
+                &mut events,
+            )
+        } else {
+            encounters.tick_frame(
+                target,
+                &mut linked.rng,
+                &mut self.encounter_audio,
+                math,
+                &mut events,
+                signal,
+            )
+        };
         encounters.pending_notifications = pending;
         result?;
         linked.palette.dream = self.day_tables.as_ref().unwrap().color(day.chart()?);
@@ -335,12 +400,12 @@ impl StageLinkSession {
         self.policy.state = 1;
         self.finished = None;
         self.pending_day_event = None;
-        self.encounter_frame.reset(0);
+        self.reset_frame();
         Ok(())
     }
 
     pub fn begin_original_day(&mut self, linked: &mut LinkedPlayer, tables: DayTables) {
-        self.encounter_frame.reset(0);
+        self.reset_frame();
         let mut day = DreamDay::default();
         day.init_new_game(&tables, &mut linked.context);
         self.day = Some(day);
@@ -373,6 +438,15 @@ impl StageLinkSession {
         effect: &mut MapEffect,
     ) -> Result<bool, Box<dyn std::error::Error>> {
         self.events.clear();
+        self.tick_services(stage, player, linked, effect)
+    }
+    pub(crate) fn tick_services(
+        &mut self,
+        stage: &mut StreamedStage,
+        player: &mut ChunkPlayer,
+        linked: &mut LinkedPlayer,
+        effect: &mut MapEffect,
+    ) -> Result<bool, Box<dyn std::error::Error>> {
         if self.finished.is_some() || (self.pending_day_event.is_some() && self.day.is_none()) {
             if let Some(encounters) = &mut self.encounters {
                 encounters.stop_with_audio(&mut self.encounter_audio);

@@ -70,11 +70,12 @@ with the corrected input phase. Original images, RAM and disc data stay private.
 
 ## Remaining work
 
-The port still needs the entire observed graph connected to one shared clock.
-Its loaded inspector currently places player work before actor/generation work,
-binds new actors during the encounter tick, and supplies simplified asynchronous
-stream completion. Recover original birth timing, session handoff, CD waiting,
-renderer/cache refresh, reciprocal movement response and resource destruction.
+The later [shared scene frame](SHARED_FRAME.md) connects the loaded simulation
+phases to one live clock, moves actor/generation work ahead of the player, delays
+stream-born updates and applies session handoff after pad dispatch. The stream
+still uses host file completion, and the renderer phase records presentation
+state. Recover native CD waiting, renderer/cache refresh, cross-map render
+residency, reciprocal movement response and complete resource destruction.
 
 Rendering/audio fidelity, the remaining 95 NPC callbacks, menus, persistence,
 media and endings remain incomplete. This change accepts no whole feature group

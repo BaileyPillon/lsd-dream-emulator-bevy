@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Original display timer, live clock, real owned MOM/TMD/actor/DreamSys/pad/scene/renderer constructors and entity callbacks execute. Owned stream MIPS callback creates and attaches three entities during traversal; first updates occur on the following notification. Real renderer is inactive; generic scene counts, player clock and SDK pad chain run. Audio failure and firmware/controller startup boundaries, target cache and owned empty primitives are supplied. Global imported map/generation/CD/GPU lifetimes, natural encounters and whole-game parity remain unaccepted.",
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/shared-clock-birth.json",
+    "sha256": "cfd598ffa82b8cdced7421875408efdc7a688ed9d3d7bce23a6808381435c33d",
+    "scenarios": 8,
+    "display_events": 192,
+    "real_owned_actor_births": 24
+  },
+  "native_function_entries": {
+    "func_8003E418": 192,
+    "frame_phase_advance": 192,
+    "frame_phase_notify": 192,
+    "frame_phase_remove_parent": 24,
+    "entity_create": 32,
+    "entity_construct": 32,
+    "entity_start": 32,
+    "entity_update": 528,
+    "entity_cleanup": 24,
+    "func_8001D0EC": 592,
+    "dream_sys_create": 8,
+    "dream_sys_timer_tick": 192,
+    "func_8003EE40": 192,
+    "scene_update": 192,
+    "pad_poll": 192,
+    "func_80025D10": 192,
+    "PadRead": 192,
+    "PAD_dr": 192,
+    "rand": 16
+  },
+  "native_function_sha256": {
+    "func_8003E418": "2ebf1ebee0091a1755b3ce86e6994b6a5388e9ae83b678d2b348c5f5aea98aeb",
+    "frame_phase_advance": "3e6693cb32496a0c48b1c1fa6407ee0e135d2cc3dde0feb23b207b7ed0a6c3ab",
+    "frame_phase_notify": "9c28952751ef2a11fb75c2b3cdf01b3f0a3687c16cef8bd178ce9b5b35debc0e",
+    "frame_phase_remove_parent": "ea35fd49eeee1ebbcae0a6278933ffa75c6e13be0c72ce6f129a6c04d223150f",
+    "entity_create": "7595c573f0419e558dadeed0f9b126ee0802bb3f3ef739885db0867220686a1a",
+    "entity_construct": "db480a2198354c078b7a9908912f95a189f192f1086429ca2eccc0d39a78c58a",
+    "entity_start": "da57e9c1407b13009117a3341b32b35de0c883fbcbb5adad17b56e58bc1e053c",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "entity_cleanup": "404b11a3286d5e746a018650fa3d2802ad1cf057ddb57f085288bed1a4efbb10",
+    "func_8001D0EC": "4b990f15427dd61e15b48537e78e15d6614669ee87a1d00b497c8240818a9844",
+    "dream_sys_create": "aa1277b8d539211bce31c5456aabf9d516893e8bdb314db71eaedee2038d9dce",
+    "dream_sys_timer_tick": "37836055f8900486b4aa8cffad57c0b91e26015d5d44ad4dd0eb5bbb5c50826f",
+    "func_8003EE40": "678ca628ae1899bf7bd63c09dbe7d0d8242f51a23e7a521b4cf3faf95182d7c1",
+    "scene_update": "13405a3df71c7666913fd53f67e9322b39399102a90c90e4f2bf46b14fe8ea29",
+    "pad_poll": "22c69c07be3b773b7c1e6c0951c93ceec57e22d93fdda9179d6f2cd1e08aca49",
+    "func_80025D10": "493678c81760ffdf9e82c487910dd28b2d269e92dc49d92f630dd85777c77161",
+    "PadRead": "d08f84a6b2a12f7bb71028964cb75b3d4761fe5c80971058065962832efcb882",
+    "PAD_dr": "f01dcf59b84d86bb81db5485d2b22cc3b4109756b42b0b05d4945f56440fbda2",
+    "rand": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+  },
+  "original_role_graph_reference": {
+    "path": "docs/frame-order-checks.json",
+    "sha256": "95a394a7863d3a3aaee3ff37c639e5a518cc3480cdd7acac46b4bed58eb1e5c3"
+  },
+  "private_proof_sha256": {
+    "native": "57c055b798e72c305718cd759ea381c9d20d6db04b8631494615b22b6d4f1373",
+    "producer": "4d77779b581d49d8f3889acf2e9fa765ae2ec282208b887350cff69868c7b070",
+    "validation": "707468afef15f6ca4c3cf5c81bc5a820808113efbeb286094f280ed0232a4730"
+  },
+  "validation": {
+    "workspace_counts": [
+      127,
+      0,
+      25
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "native_shared_birth_scenarios": 8,
+    "native_shared_birth_display_events": 192,
+    "native_owned_births": 24,
+    "loaded_shared_frame_integration_passed": true,
+    "display_pad_sequences": 120,
+    "display_pad_events": 3840,
+    "original_emulator_graph_samples": 121,
+    "live_cursor_cases": 88,
+    "live_cursor_notifications": 176,
+    "live_cursor_callback_observations": 698,
+    "owned_actor_clock_scenarios": 32,
+    "clock_state_observations": 416,
+    "real_clock_entities_constructed": 96,
+    "scalar_clock_cases": 36,
+    "full_owned_movement_wrapper_cases": 270,
+    "full_owned_pair_cases": 32,
+    "full_owned_pair_contacts": 20,
+    "canonical_full_pair_cases": 16,
+    "canonical_full_pair_contacts": 12,
+    "wrong_fresh_position_owned_contact_mismatches": 20,
+    "wrong_fresh_position_canonical_contact_mismatches": 8,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48,
+        "body_contacts": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "f2a88f999c16a37b1d8716d67a714a3fc2688a21c28dded0fa3d3275f3a93e30",
+        "same_as_previous_image": false
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "94796d00066eb37588d25bdf33c0ebbbbcf0fa39a138e19f378bc4a83e33f91e",
+      "workspace": "e1a660e3883a44fa3687900df3c98b5e475c3d540b634488eadb075e6c4bd1e5",
+      "owned-contact-counters": "e5e089542a5e1b1073bc92a8c33093787ade50e3debf7eb7e3dbc6df2b97fb5f",
+      "original-content": "efbe06df9d56f7fe68a420f04cb6a2899cf0c727d3a879e53bcc5b66a4ec5cd8",
+      "desktop-build": "58e1594e1cc09392483663cdcea573e1b9d5171674565965e257469b456c7869",
+      "capture-idle": "b3f8d37d978321b67c8771d90f74ef1283015be567021bd6afd7bab2faba031b",
+      "capture-futon": "3321d99a51556f843ed42ee72fb18e5471c4813243234529a95ee051dbb222a9",
+      "capture-yokai": "328675154ad8ab412a73c582dd257f40d4ff92a7dfbfb2d7dffc5e5ac142c145",
+      "capture-expiry": "4cba69da0e435d296b4a90a683aed2bdf8c57bc0f2e4b6d5dee9a74c01b5b29b",
+      "capture-legacy": "e5d5ed089138d9541b0c6ace294c1c1cfdf2af70c255a9c847f2bbc7c24aadf8",
+      "final-format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "final-clippy": "309effa518bbc25257a6833a4c09dfa429b4beacefaf6a0281b6d4cfc07dcc33",
+      "final-desktop": "ce0726bf2728ec3d14c1d5b87b0b4e0326e67710c8d03d2cfc9149abe56c7f70"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "natural_frame_cache_ancestry_response_whole_game_accepted": false,
+    "final_diagnostic_source_build_checked": true
+  },
+  "source_sha256": {
+    "crates/lsd-assets/src/encounter_scene.rs": "4037d5038e02ef74ef97e9c1048bb9e695673b658f99445b7c3c4cbe249efaa1",
+    "crates/lsd-assets/src/lib.rs": "63e2b5774b25d312c3613fb4f2ad5026c6416234b8a3e98f286a2b65a6682c5c",
+    "crates/lsd-assets/src/stage_session.rs": "ce6327bd12778402b08295c46fbec107daec9610f50f449a725ebcf57fc08ee5",
+    "crates/lsd-assets/src/scene_frame.rs": "67c114907555ac2b2cd487a036fdf83c84fd2d99a15e834c428e06459f23fb26",
+    "crates/lsd-assets/tests/native_shared_clock_birth.rs": "20d6d9e7c30d454d8453fb3f89711f167a8ba0ba9c7b56a0cb46add79c13811a",
+    "crates/lsd-assets/tests/shared_scene_frame.rs": "c906f657110da2f48939c317a73f1b047530d5400f40ee0544b6383040ad4aa8",
+    "crates/lsd-assets/tests/fixtures/shared-clock-birth.json": "cfd598ffa82b8cdced7421875408efdc7a688ed9d3d7bce23a6808381435c33d",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "a4a318b2a8a87145d8afe3d89efcee46a0bed77052006fe813835bae7a182f1b",
+    "crates/lsd-core/src/map_effect.rs": "a43c2e1e2d0e8a3b7c95a6a11580b314d3fcaf9e3f5c017ecb95f6fc81512a85"
+  },
+  "scope_limits": [
+    "The loaded inspector now uses one live list for actors, effect, map generation, stream work, render-state capture, session counter and player; pad and handoff follow it.",
+    "Original static subscriber order was observed in a canonical original-emulator saved dream. The owned native cohort separately executes real constructors/clock/entity/player/pad routines with a supplied stream birth callback.",
+    "The cohort renderer is inactive, primitives are owned/empty, audio and firmware boundaries are supplied, and player transform parent/cache state is provided. No original game function output is replaced.",
+    "The local original-asset integration verifies delayed actor updates, shared waiting, journal retention and render-before-player state. It does not accept all original stream/CD/GPU/lifetime behaviors.",
+    "The renderer records player/camera state; original packet sorting, draw/swap and cross-map render residency remain open. Native CD completion/wait triggers and natural matrix caches remain open.",
+    "Map display/texture policy, extra subscriber types and NPC-requested birth/destruction remain incomplete. Whole encounters/feature groups and other full-game requirements are not accepted.",
+    "Original assets/RAM/images remain private; C remains paused. Four images are unchanged; walking differs with the corrected phase order."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

@@ -918,6 +918,28 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "shared_scene_clock_recovery_20261014": {
+      "scope": "Original display timer, live clock, real owned MOM/TMD/actor/DreamSys/pad/scene/renderer constructors and entity callbacks execute. Owned stream MIPS callback creates and attaches three entities during traversal; first updates occur on the following notification. Real renderer is inactive; generic scene counts, player clock and SDK pad chain run. Audio failure and firmware/controller startup boundaries, target cache and owned empty primitives are supplied. Global imported map/generation/CD/GPU lifetimes, natural encounters and whole-game parity remain unaccepted.",
+      "checks": {
+        "path": "docs/shared-frame-checks.json",
+        "sha256": "d934cbb47e3d2996a40873fc165da243016aa6a594c5df4a78ccae29dcf4537b"
+      },
+      "owned_native_birth_scenarios": 8,
+      "display_events": 192,
+      "real_owned_actor_births": 24,
+      "single_loaded_scene_clock_connected": true,
+      "stream_birth_update_delay_connected": true,
+      "earlier_actor_events_and_commands_retained": true,
+      "renderer_player_snapshot_before_callbacks_connected": true,
+      "pad_and_session_handoff_after_clock_connected": true,
+      "local_original_asset_integration_passed": true,
+      "original_gpu_cd_cache_and_full_lifetime_accepted": false,
+      "original_named_callbacks_implemented": 12,
+      "remaining_pending_callbacks": 95,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

@@ -137,13 +137,25 @@ Removal repairs that cursor before unlinking, and new subscriptions prepend.
 `EncounterScene` uses this traversal and removes finished actors immediately.
 The list permits duplicate subscriptions to preserve the original base-list
 semantics; actor attachment still guards against duplicate registration.
-Other original clock subscribers and actor births/removals requested by callbacks
-remain unconnected; see [live clock traversal](FRAME_CURSOR.md).
+The shared loaded-scene host now incorporates other scene phases and stream
+births. NPC-requested births/removals and full native lifetimes remain open;
+see [shared scene frame](SHARED_FRAME.md).
 
 `LinkedPlayer::tick_clock` consumes the control state left by the previous pad
 dispatch. Waiting and finished signals hold the player clock. `poll_pad` applies
 new input afterward, matching the original display timer. `begin_frame` separates
-report clearing from callbacks so the eventual shared scene host can retain
+report clearing from callbacks so the shared scene host can retain
 commands emitted by earlier subscribers. The combined linked-player step now
 uses the corrected clock-before-pad order. The single-chunk movement probe remains
 a supplied-input primitive. See [frame and pad order](FRAME_ORDER.md).
+
+`StageLinkSession::step_frame` owns the loaded scene's live subscriber list.
+Actor attachment/detachment events are drained after each callback, preserving
+newest-first order and next-member removal. Map generation precedes stream
+selection/binding. New actors wait at the head until the following notification.
+The renderer phase records the player state before player callbacks; Bevy's
+camera consumes that snapshot. Pad dispatch and session policy follow traversal.
+Actor journal events and commands survive the later player and handoff phases.
+The existing `encounter_frame` field now supplies the shared phase and signal.
+Original GPU draw/swap, cross-map render residency, automatic CD waiting and
+natural coordinate-cache updates are still separate work.

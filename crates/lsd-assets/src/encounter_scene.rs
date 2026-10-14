@@ -107,6 +107,17 @@ pub struct EncounterUpdate {
     pub palette: i32,
     pub generation_type: i32,
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum EncounterSubscription {
+    Attach(u64),
+    Detach(u64),
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ActorFrame {
+    pub serial: u64,
+    pub target: EntityTarget,
+    pub signal: lsd_core::FrameSignal,
+}
 struct UnavailableAudio;
 impl GenerationSound for UnavailableAudio {
     fn stop_note(&mut self, _handle: i32) -> i32 {
@@ -129,6 +140,7 @@ pub struct EncounterScene {
     epoch: u64,
     serial: u64,
     frame_members: lsd_core::FrameSubscribers<u64>,
+    frame_changes: Vec<EncounterSubscription>,
 }
 impl EncounterScene {
     pub fn new(mut tables: EncounterTables, properties: Vec<EntityProperties>) -> Self {
@@ -149,6 +161,7 @@ impl EncounterScene {
             epoch: u64::MAX,
             serial: 0,
             frame_members: lsd_core::FrameSubscribers::default(),
+            frame_changes: Vec::new(),
         }
     }
     pub fn stop(&mut self) {
@@ -159,6 +172,8 @@ impl EncounterScene {
             if let Some(actor) = self.actors.iter_mut().find(|actor| actor.serial == serial) {
                 actor.behavior.disable_link(&mut actor.actor, sound);
             }
+            self.frame_changes
+                .push(EncounterSubscription::Detach(serial));
         }
         self.actors.clear();
         self.frame_members.clear();
@@ -171,11 +186,16 @@ impl EncounterScene {
         self.serial = self.serial.wrapping_add(1);
         actor.serial = self.serial;
         self.frame_members.subscribe(self.serial);
+        self.frame_changes
+            .push(EncounterSubscription::Attach(self.serial));
         self.actors.push(actor);
         self.serial
     }
     pub fn frame_actor_order(&self) -> Vec<u64> {
         self.frame_members.order()
+    }
+    pub fn take_frame_changes(&mut self) -> Vec<EncounterSubscription> {
+        std::mem::take(&mut self.frame_changes)
     }
     pub fn stop_actor(&mut self, serial: u64, sound: &mut impl GenerationSound) -> bool {
         if !self.frame_members.contains(serial) {
@@ -187,6 +207,8 @@ impl EncounterScene {
         actor.behavior.disable_link(&mut actor.actor, sound);
         actor.behavior_active = false;
         self.frame_members.remove(serial);
+        self.frame_changes
+            .push(EncounterSubscription::Detach(serial));
         true
     }
     pub fn restart_actor(&mut self, serial: u64, position: [i32; 3]) -> bool {
@@ -205,6 +227,8 @@ impl EncounterScene {
         }
         actor.behavior_active = actor.behavior.active != 0;
         self.frame_members.subscribe(serial);
+        self.frame_changes
+            .push(EncounterSubscription::Attach(serial));
         true
     }
     pub fn update(
@@ -250,6 +274,10 @@ impl EncounterScene {
             let map = stage.protocol.slots[slot].map_index;
             let identity = ready.then_some((stage.stage_id(), map));
             if self.seen[slot] != identity {
+                for actor in self.actors.iter().filter(|actor| actor.slot == slot) {
+                    self.frame_changes
+                        .push(EncounterSubscription::Detach(actor.serial));
+                }
                 for actor in self.actors.iter_mut().filter(|actor| actor.slot == slot) {
                     actor.behavior.disable_link(&mut actor.actor, sound);
                 }
@@ -276,6 +304,7 @@ impl EncounterScene {
                         teleports: &mut self.teleports_requested,
                         serial: &mut self.serial,
                         frame_members: &mut self.frame_members,
+                        frame_changes: &mut self.frame_changes,
                         selected: None,
                         sound,
                     };
@@ -352,6 +381,98 @@ impl EncounterScene {
     ) -> Result<(), lsd_core::BehaviorFault> {
         self.tick_script_services(target, rng, sound, Some(math), events, signal)
     }
+    /// Execute one registered entity in its position within the shared clock list.
+    pub fn tick_actor_frame(
+        &mut self,
+        frame: ActorFrame,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        math: &lsd_core::PsxMathTables,
+        events: &mut impl EncounterEventHost,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.tick_actor_services(frame, rng, sound, Some(math), events)
+    }
+    fn tick_actor_services(
+        &mut self,
+        frame: ActorFrame,
+        rng: &mut PsxRng,
+        sound: &mut impl GenerationSound,
+        math: Option<&lsd_core::PsxMathTables>,
+        events: &mut impl EncounterEventHost,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        let ActorFrame {
+            serial,
+            target,
+            signal,
+        } = frame;
+        if !self.frame_members.contains(serial) {
+            return Ok(());
+        }
+        let Some(index) = self.actors.iter().position(|actor| actor.serial == serial) else {
+            self.frame_members.remove(serial);
+            self.frame_changes
+                .push(EncounterSubscription::Detach(serial));
+            return Ok(());
+        };
+        let actor = &mut self.actors[index];
+        let mut host = InteractionHost {
+            target,
+            serial: actor.serial,
+            entity: actor.entity,
+            fields: actor.properties.fields,
+            events,
+            error: None,
+            math,
+            collision: actor.collision.as_ref(),
+            // This adapter supplies an identity parent frame at update entry.
+            // Hold it through local movement; native notifications read cached world state.
+            body_world: math.map(|math| lsd_core::BodyWorldFrame {
+                matrix: math
+                    .rotation(actor.actor.pose.angles)
+                    .scaled(actor.actor.pose.scale),
+                position: actor.actor.pose.position,
+            }),
+        };
+        actor.behavior.update_interaction(
+            &mut actor.actor,
+            actor.properties.fields,
+            rng,
+            sound,
+            &mut host,
+        );
+        if let Some(error) = host.error {
+            return Err(lsd_core::BehaviorFault::Journal(error));
+        }
+        actor.behavior_active = actor.behavior.active != 0;
+        if signal == lsd_core::FrameSignal::Finished {
+            actor.behavior.disable_link(&mut actor.actor, sound);
+            self.frame_members.remove(serial);
+            self.frame_changes
+                .push(EncounterSubscription::Detach(serial));
+            self.actors.remove(index);
+            return Ok(());
+        }
+        if signal == lsd_core::FrameSignal::Waiting {
+            return Ok(());
+        }
+        if !actor.behavior_pending {
+            actor.behavior.tick_with_services(
+                &mut actor.actor,
+                &actor.resource.animations,
+                BehaviorTick {
+                    target: target.position,
+                    proximity: actor.properties.fields[10],
+                },
+                rng,
+                sound,
+                &mut host,
+            )?;
+        } else {
+            // The interaction timer is independent of a pending named action.
+            actor.actor.animation.ticks = actor.actor.animation.ticks.wrapping_add(1);
+        }
+        Ok(())
+    }
     fn tick_script_services(
         &mut self,
         target: EntityTarget,
@@ -361,70 +482,20 @@ impl EncounterScene {
         events: &mut impl EncounterEventHost,
         signal: lsd_core::FrameSignal,
     ) -> Result<(), lsd_core::BehaviorFault> {
-        // The original sender advances its live cursor before each callback.
         self.frame_members.begin_notification();
         let result = (|| {
             while let Some(serial) = self.frame_members.next_subscriber() {
-                let Some(index) = self.actors.iter().position(|actor| actor.serial == serial)
-                else {
-                    self.frame_members.remove(serial);
-                    continue;
-                };
-                let actor = &mut self.actors[index];
-                let mut host = InteractionHost {
-                    target,
-                    serial: actor.serial,
-                    entity: actor.entity,
-                    fields: actor.properties.fields,
-                    events,
-                    error: None,
-                    math,
-                    collision: actor.collision.as_ref(),
-                    // This adapter supplies an identity parent frame at update entry.
-                    // Hold it through local movement; native notifications read cached world state.
-                    body_world: math.map(|math| lsd_core::BodyWorldFrame {
-                        matrix: math
-                            .rotation(actor.actor.pose.angles)
-                            .scaled(actor.actor.pose.scale),
-                        position: actor.actor.pose.position,
-                    }),
-                };
-                actor.behavior.update_interaction(
-                    &mut actor.actor,
-                    actor.properties.fields,
+                self.tick_actor_services(
+                    ActorFrame {
+                        serial,
+                        target,
+                        signal,
+                    },
                     rng,
                     sound,
-                    &mut host,
-                );
-                if let Some(error) = host.error {
-                    return Err(lsd_core::BehaviorFault::Journal(error));
-                }
-                actor.behavior_active = actor.behavior.active != 0;
-                if signal == lsd_core::FrameSignal::Finished {
-                    actor.behavior.disable_link(&mut actor.actor, sound);
-                    self.frame_members.remove(serial);
-                    self.actors.remove(index);
-                    continue;
-                }
-                if signal == lsd_core::FrameSignal::Waiting {
-                    continue;
-                }
-                if !actor.behavior_pending {
-                    actor.behavior.tick_with_services(
-                        &mut actor.actor,
-                        &actor.resource.animations,
-                        BehaviorTick {
-                            target: target.position,
-                            proximity: actor.properties.fields[10],
-                        },
-                        rng,
-                        sound,
-                        &mut host,
-                    )?;
-                } else {
-                    // The interaction timer is independent of a pending named action.
-                    actor.actor.animation.ticks = actor.actor.animation.ticks.wrapping_add(1);
-                }
+                    math,
+                    events,
+                )?;
             }
             Ok(())
         })();
@@ -560,6 +631,7 @@ struct Host<'a, S> {
     teleports: &'a mut bool,
     serial: &'a mut u64,
     frame_members: &'a mut lsd_core::FrameSubscribers<u64>,
+    frame_changes: &'a mut Vec<EncounterSubscription>,
     selected: Option<Arc<Mom>>,
     sound: &'a mut S,
 }
@@ -628,6 +700,8 @@ impl<S: GenerationSound> EncounterHost for Host<'_, S> {
         };
         *self.serial = self.serial.wrapping_add(1);
         self.frame_members.subscribe(*self.serial);
+        self.frame_changes
+            .push(EncounterSubscription::Attach(*self.serial));
         self.actors.push(SceneActor {
             serial: *self.serial,
             slot: self.slot,

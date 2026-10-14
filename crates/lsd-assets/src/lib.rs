@@ -9,8 +9,9 @@ mod effect_palette;
 mod encounter_scene;
 mod encounter_tables;
 pub use encounter_scene::{
-    EncounterEventHost, EncounterNotification, EncounterNotificationKind, EncounterScene,
-    EncounterUpdate, EntityProperties, SceneActor, load_entity_properties,
+    ActorFrame, EncounterEventHost, EncounterNotification, EncounterNotificationKind,
+    EncounterScene, EncounterSubscription, EncounterUpdate, EntityProperties, SceneActor,
+    load_entity_properties,
 };
 pub use encounter_tables::load_encounter_tables;
 mod generation_assets;
@@ -28,6 +29,8 @@ mod math_tables;
 pub use link_tables::{OriginalLinkTables, load_link_tables};
 pub use math_tables::load_math_tables;
 mod scene_config;
+mod scene_frame;
+pub use scene_frame::{SceneClockMember, SceneFrameVisit};
 mod stage_session;
 mod streamed_stage;
 pub use scene_config::{

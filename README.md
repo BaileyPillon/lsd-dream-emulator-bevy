@@ -111,6 +111,11 @@ Player clock callbacks now run before fresh pad dispatch, preserving the origina
 input phase in the linked scene. An unmodified original-emulator run also records
 the shared clock graph. See [frame and pad order](docs/FRAME_ORDER.md) for the
 comparisons and the remaining work to connect every scene phase.
+The loaded scene now uses one live clock for actors, effect, map generation,
+streaming, render snapshot, session counter and player work. Actors born during
+streaming wait for the next notification; pad dispatch and session handoff follow
+the clock. See [shared scene frame](docs/SHARED_FRAME.md) for its checks and the
+remaining original CD, renderer/cache and lifetime work.
 
 ## Start here
 

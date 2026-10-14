@@ -645,6 +645,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     session.encounter_frame.waiting,
                     session.encounter_frame.finished
                 );
+                println!(
+                    "shared_clock_members={} shared_session_ticks={} shared_frame_trace={:?} renderer_player_snapshot_available={}",
+                    session.frame_members.len(),
+                    session.session_ticks,
+                    session.frame_trace,
+                    session.rendered_player.is_some()
+                );
             }
             if supplied_actor_query {
                 let entity = if supplied_actor_motion { 93 } else { 5 };
@@ -983,11 +990,22 @@ fn streamed_step(
     player: &mut ChunkPlayer,
     stage: &mut StreamedStage,
     tables: &PsxMathTables,
-    linked: Option<&mut LinkedPlayer>,
-    effect: Option<&mut MapEffect>,
-    session: Option<&mut StageLinkSession>,
+    mut linked: Option<&mut LinkedPlayer>,
+    mut effect: Option<&mut MapEffect>,
+    mut session: Option<&mut StageLinkSession>,
     buttons: u32,
 ) -> Result<(), Box<dyn std::error::Error>> {
+    if let (Some(linked), Some(effect), Some(session)) = (
+        linked.as_deref_mut(),
+        effect.as_deref_mut(),
+        session.as_deref_mut(),
+    ) {
+        session.step_frame(stage, linked, player, tables, effect, buttons)?;
+        for event in &session.events {
+            println!("session_command={event:?}");
+        }
+        return Ok(());
+    }
     stage.complete_frame()?;
     if let Some(linked) = linked {
         let mut effect = effect;
@@ -1677,7 +1695,12 @@ fn walking_camera(
     scene: Res<WalkingScene>,
     mut cameras: Query<&mut Transform, (With<Camera3d>, Without<GenerationLayerCamera>)>,
 ) {
-    let player = &scene.player;
+    let player = scene
+        .session
+        .as_ref()
+        .filter(|session| session.rendered_rebuild == session.rebuilds)
+        .and_then(|session| session.rendered_player.as_ref())
+        .unwrap_or(&scene.player);
     let rotation = scene.tables.rotation(player.controls.angles);
     let eye = rotation.apply_short(player.controls.eye.map(|value| value as i16));
     let target = rotation.apply_short(player.controls.target.map(|value| value as i16));
