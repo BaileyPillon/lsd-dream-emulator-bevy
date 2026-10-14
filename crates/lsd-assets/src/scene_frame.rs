@@ -116,7 +116,7 @@ impl StageLinkSession {
                         if previous_chunk != linked.keys.current.chunk {
                             self.log_current_chunk(linked)?;
                         }
-                        self.bind_encounters(stage, linked)?;
+                        self.bind_encounters(stage, linked, player, math)?;
                     }
                     SceneClockMember::Renderer if signal != FrameSignal::Finished => {
                         self.rendered_player = Some(player.clone());

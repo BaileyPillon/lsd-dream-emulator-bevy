@@ -32,6 +32,10 @@ scheduling remain open. Link lookup, random destinations, facing gates and
 transition policy now have original CPU checks; natural link callbacks and
 visible transitions still need integration. All 40 provisional whole-game groups require acceptance; use
 [parity.json](parity.json) for the frozen initial baseline and dated progress.
+The special Gray Man model now has a dormant per-scene instance and original
+activation placement/facing/restart order. The loaded original day gate is
+connected; its action callback, actor effect and flashback reset remain pending.
+See [special encounters](SPECIAL_ENCOUNTERS.md) for the comparison scope.
 Dream link handlers, cached actor keys and all four stair scripts now have
 original CPU comparisons. Their scene/notification interfaces still need
 connection to the running Bevy session and its full transition lifecycle.

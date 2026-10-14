@@ -168,7 +168,7 @@ impl StageLinkSession {
         math: &lsd_core::PsxMathTables,
         effect: &mut MapEffect,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        self.bind_encounters(stage, linked)?;
+        self.bind_encounters(stage, linked, player, math)?;
         let signal = self.encounter_frame.advance();
         self.tick_encounter_callbacks(None, signal, linked, player, math, effect)
     }
@@ -177,6 +177,8 @@ impl StageLinkSession {
         &mut self,
         stage: &StreamedStage,
         linked: &mut LinkedPlayer,
+        player: &ChunkPlayer,
+        math: &lsd_core::PsxMathTables,
     ) -> Result<(), Box<dyn std::error::Error>> {
         let Some(encounters) = &mut self.encounters else {
             return Ok(());
@@ -195,6 +197,7 @@ impl StageLinkSession {
             .as_ref()
             .ok_or("Encounter channel requires original day content")?
             .color(day.chart()?);
+        encounters.set_encounter_player(player.position, math.rotation(player.controls.angles));
         encounters.update_with_audio(
             stage,
             crate::EncounterUpdate {
@@ -206,6 +209,9 @@ impl StageLinkSession {
             &mut linked.rng,
             &mut self.encounter_audio,
         )?;
+        if let Some(enabled) = encounters.teleports_initialization.take() {
+            linked.context.teleports_enabled = i32::from(enabled);
+        }
         if std::mem::take(&mut encounters.teleports_requested) {
             linked.context.teleports_enabled = 1;
         }

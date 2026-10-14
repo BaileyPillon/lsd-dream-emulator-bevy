@@ -135,7 +135,9 @@ pub struct EncounterScene {
     pub actors: Vec<SceneActor>,
     pub gray_man_activation_requests: u64,
     pub teleports_requested: bool,
+    pub teleports_initialization: Option<bool>,
     pub pending_notifications: Vec<EncounterNotification>,
+    special: Option<crate::special_encounter::SpecialEncounter>,
     seen: [Option<(u8, u16)>; 7],
     epoch: u64,
     serial: u64,
@@ -156,7 +158,9 @@ impl EncounterScene {
             actors: Vec::new(),
             gray_man_activation_requests: 0,
             teleports_requested: false,
+            teleports_initialization: None,
             pending_notifications: Vec::new(),
+            special: None,
             seen: [None; 7],
             epoch: u64::MAX,
             serial: 0,
@@ -179,7 +183,81 @@ impl EncounterScene {
         self.frame_members.clear();
         self.seen = [None; 7];
         self.teleports_requested = false;
+        self.teleports_initialization = None;
         self.pending_notifications.clear();
+        if let Some(special) = &mut self.special {
+            special.serial = None;
+        }
+    }
+    pub fn enable_special_encounter(&mut self, assets: crate::SpecialEncounterAssets) {
+        self.special = Some(crate::special_encounter::SpecialEncounter {
+            assets,
+            serial: None,
+            player_position: [0; 3],
+            player_matrix: lsd_core::FixedMatrix::IDENTITY,
+        });
+    }
+    /// Supply the player transform observed at the original stream callback.
+    pub fn set_encounter_player(&mut self, position: [i32; 3], matrix: lsd_core::FixedMatrix) {
+        if let Some(special) = &mut self.special {
+            special.player_position = position;
+            special.player_matrix = matrix;
+        }
+    }
+    /// entity_create for the special slot deliberately does not call entity_start.
+    pub fn ensure_special_actor(
+        &mut self,
+        sound: &mut impl GenerationSound,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        let Some(special) = &mut self.special else {
+            return Ok(());
+        };
+        if special.serial.is_some() {
+            return Ok(());
+        }
+        let properties = *self
+            .properties
+            .get(98)
+            .ok_or("Missing special entity properties")?;
+        let resource = Arc::clone(&special.assets.model);
+        let mut actor = resource.construct_actor()?;
+        let script = NpcScript::from_reference_address(properties.callback);
+        let behavior =
+            EntityBehavior::construct_dormant(98, script, properties.fields, &mut actor, sound);
+        let collision = resource.collision_model(&actor)?;
+        self.serial = self.serial.wrapping_add(1);
+        special.serial = Some(self.serial);
+        self.actors.push(SceneActor {
+            serial: self.serial,
+            slot: 7,
+            map: 0,
+            entity: 98,
+            model: -1,
+            resource,
+            actor,
+            collision,
+            properties,
+            behavior_active: false,
+            behavior_pending: script.pending(),
+            behavior,
+        });
+        Ok(())
+    }
+    pub fn activate_gray_man(
+        &mut self,
+        sound: &mut impl GenerationSound,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        self.ensure_special_actor(sound)?;
+        self.gray_man_activation_requests = self.gray_man_activation_requests.wrapping_add(1);
+        if let Some(special) = &mut self.special {
+            special.activate(
+                &mut self.actors,
+                &mut self.frame_members,
+                &mut self.frame_changes,
+                sound,
+            )?;
+        }
+        Ok(())
     }
     /// Publish an already-constructed actor and prepend its clock subscription.
     pub fn add_actor(&mut self, mut actor: SceneActor) -> u64 {
@@ -269,6 +347,11 @@ impl EncounterScene {
             self.stop_with_audio(sound);
             self.epoch = epoch;
         }
+        let special_created = self.special.as_ref().is_some_and(|v| v.serial.is_none());
+        self.ensure_special_actor(sound)?;
+        if special_created {
+            self.teleports_initialization = Some(matches!(stage.stage_id(), 3 | 11));
+        }
         for slot in 0..7 {
             let ready = stage.collision.slots.slots[slot].ready;
             let map = stage.protocol.slots[slot].map_index;
@@ -301,6 +384,8 @@ impl EncounterScene {
                         properties: &self.properties,
                         actors: &mut self.actors,
                         gray_requests: &mut self.gray_man_activation_requests,
+                        special: self.special.as_mut(),
+                        activation_error: None,
                         teleports: &mut self.teleports_requested,
                         serial: &mut self.serial,
                         frame_members: &mut self.frame_members,
@@ -319,6 +404,9 @@ impl EncounterScene {
                         rng,
                         &mut host,
                     )?;
+                    if let Some(error) = host.activation_error {
+                        return Err(error.into());
+                    }
                 }
             }
         }
@@ -628,6 +716,8 @@ struct Host<'a, S> {
     properties: &'a [EntityProperties],
     actors: &'a mut Vec<SceneActor>,
     gray_requests: &'a mut u64,
+    special: Option<&'a mut crate::special_encounter::SpecialEncounter>,
+    activation_error: Option<lsd_core::AimFault>,
     teleports: &'a mut bool,
     serial: &'a mut u64,
     frame_members: &'a mut lsd_core::FrameSubscribers<u64>,
@@ -720,5 +810,15 @@ impl<S: GenerationSound> EncounterHost for Host<'_, S> {
     }
     fn activate_gray_man(&mut self) {
         *self.gray_requests = self.gray_requests.wrapping_add(1);
+        if let Some(special) = &mut self.special {
+            self.activation_error = special
+                .activate(
+                    self.actors,
+                    self.frame_members,
+                    self.frame_changes,
+                    self.sound,
+                )
+                .err();
+        }
     }
 }

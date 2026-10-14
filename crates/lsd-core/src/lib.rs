@@ -33,6 +33,8 @@ mod map_effect;
 mod map_links;
 mod model_actor;
 pub use model_actor::{ActorAxis, ModelActor};
+mod object_aim;
+pub use object_aim::{AimFault, PsxAimTables};
 mod entity_behavior;
 mod entity_body;
 pub use entity_behavior::{

@@ -116,6 +116,11 @@ streaming, render snapshot, session counter and player work. Actors born during
 streaming wait for the next notification; pad dispatch and session handoff follow
 the clock. See [shared scene frame](docs/SHARED_FRAME.md) for its checks and the
 remaining original CD, renderer/cache and lifetime work.
+The day profile now imports the original Gray Man model and creates one dormant
+special instance per scene. Original day gates activate that instance with
+player-relative placement, integer facing and stop/restart clock ordering.
+See [special encounters](docs/SPECIAL_ENCOUNTERS.md) for original CPU comparisons.
+Its movement/contact effect and flashback reset remain pending.
 
 ## Start here
 

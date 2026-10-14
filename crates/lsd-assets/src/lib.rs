@@ -30,7 +30,9 @@ pub use link_tables::{OriginalLinkTables, load_link_tables};
 pub use math_tables::load_math_tables;
 mod scene_config;
 mod scene_frame;
+mod special_encounter;
 pub use scene_frame::{SceneClockMember, SceneFrameVisit};
+pub use special_encounter::{SpecialEncounterAssets, load_special_encounter_assets};
 mod stage_session;
 mod streamed_stage;
 pub use scene_config::{

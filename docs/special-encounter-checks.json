@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Original special-slot construction and activation using owned and local canonical model resources, supplied player transforms/cache and external sound boundary. Original named action and complete natural encounter remain pending.",
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/special-encounter-activation.json",
+    "sha256": "8e7a82631543bc7c98373860174b1d1bb789667d6d8982cd5959be086e8f4eb9",
+    "dormant_constructors": 2,
+    "activations": 12,
+    "canonical_model_activations": 6,
+    "owned_sdk_angle_cases": 425
+  },
+  "native_function_entries": {
+    "link_spawn_special_entity": 2,
+    "link_activate_object": 12,
+    "entity_create": 4,
+    "entity_construct": 4,
+    "entity_init": 4,
+    "entity_start": 14,
+    "entity_stop": 12,
+    "entity_enable_link": 14,
+    "entity_disable_link": 14,
+    "entity_start_behaviour": 14,
+    "entity_stop_behaviour": 14,
+    "transform_local_to_world": 24,
+    "func_8001EACC": 12,
+    "ratan2": 449,
+    "set_teleports_enabled": 2
+  },
+  "native_function_sha256": {
+    "link_spawn_special_entity": "0552ceb3f98283a401183efa39b3d095d902baf1577c0684e795539fa97f696a",
+    "link_activate_object": "db6eed36471bb0a50f5dd16fa8efa22d413c330de2298f18784a4cfcccffca3b",
+    "entity_create": "7595c573f0419e558dadeed0f9b126ee0802bb3f3ef739885db0867220686a1a",
+    "entity_construct": "db480a2198354c078b7a9908912f95a189f192f1086429ca2eccc0d39a78c58a",
+    "entity_init": "763e9464843838c6e2ab282a88fffcd4890b5824cef4d6dfb954a7f1732a2e85",
+    "entity_start": "da57e9c1407b13009117a3341b32b35de0c883fbcbb5adad17b56e58bc1e053c",
+    "entity_stop": "2dae66d1c1a6f32ac06dbe24b7a389bfc883a957827b3beb6ea8bc2334549cfd",
+    "entity_enable_link": "bd5559607fd4d93a9e7f48de982dd05e75c14fcf74a89b01649e78f84d318c92",
+    "entity_disable_link": "730e458b8fcbb0fbdd92a20f7825c109697c11b5c02e57668ba54d424df14efd",
+    "entity_start_behaviour": "02ba2f74d4281a6350ef763d44ffe77c18cfc9d95dc662f1f36b5fbe25ba3476",
+    "entity_stop_behaviour": "4fa7621002bfabe6bf1c105adc34415e5f321cde133ecbc8dc1a00aee60dcaf0",
+    "transform_local_to_world": "720529d7f67d74acdcb49dea9bebb9c90ecf2df0d18dc62be20336b53a34ad33",
+    "func_8001EACC": "1ef5e1970a4cd213702b82c21aca301041b73a3f8cb241affe06f208bbcb80be",
+    "ratan2": "1290409d02187ac280bfc64265ca18e6bf990f6d1f997c3ef40635ddd3c518a1",
+    "set_teleports_enabled": "6798ed394e84e09d549fc701e4bdc3f00c13019b58d5f55e5babfeeb09aa8d3a"
+  },
+  "private_proof_sha256": {
+    "native": "08a732dab8650146fc62638c2130e4a4c2d7cb39d75837bdbe2151fd86b500ab",
+    "producer": "276800869a62cb6a7cddd6e351c0e1539103871949d34b2832e85dccecfbabc3",
+    "validation": "1402573cf2332132349008e92bb1663d5b3fe927eb68f61eda56f991e7a06d72"
+  },
+  "validation": {
+    "workspace_counts": [
+      128,
+      0,
+      27
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "special_constructors": 2,
+    "special_activations": 12,
+    "canonical_special_activations": 6,
+    "owned_atan_cases": 425,
+    "local_original_special_gate_integration_passed": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "9a7e2926d75179b1d3d7ab22a00be2e5ef62222a8f81272975be233ead6563ab",
+      "workspace": "14caf96b4c612412a488caf4d2b2477b78ea099cd439cef92a12936e93f0e06d",
+      "original-content": "35e770d7dff58d738625bf8398a28035a99a8ad3ffc3354b011fedebac1c2e9b",
+      "desktop-build": "989848186d3c5fbf87a6b2cadb9abb1b0f40254d32865408da62d05fd331d316",
+      "capture-idle": "494da5b4f5a1e0cc35f3ef814820cef5bb9b4854fbc0b41ac12ea0dc828ae48d",
+      "capture-futon": "7dc587f5501d1fa810920862033eff41382d4c128b0bb613fbf8b9e809687417",
+      "capture-yokai": "29e24178f285624991709070caaaa74de090f4b52e138f94317d43e96f6fdecf",
+      "capture-expiry": "fbf1a4f89377c82eb6d7d7f8b71de56ff11779ebd812690c3fa4ae890fa38fb6"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "gray_man_action_contact_effect_flashback_reset_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/object_aim.rs": "72e8119a6cbe5d72fb2f5c723363586f57c7e4b5dc66d7fdf9dacf07bd5ccd42",
+    "crates/lsd-core/src/entity_behavior.rs": "82f5c506aecc0f05547b87fb58439817404696fcca7f7c7097162c1ff6c00938",
+    "crates/lsd-core/src/lib.rs": "53fd19921522b5aaacea2ed03a388b013102f3efde026d3932fe54012e25ca39",
+    "crates/lsd-assets/src/special_encounter.rs": "f5238404fbcdd986725a81a959ae78f7dc15406f933841981f7d7b4e4a533212",
+    "crates/lsd-assets/src/encounter_scene.rs": "965de0194d2ad6f418496c205a72fe1052d241d2472c47f5eee4789672c7e003",
+    "crates/lsd-assets/src/lib.rs": "b0e576c1ac224be453107b4df20eeab906d35e8ecb9b0998d663320b78784661",
+    "crates/lsd-assets/src/stage_session.rs": "e7c6324ece82f642f022b1bc9cc20ce135dc885b2db56a00055f059f69bd5f45",
+    "crates/lsd-assets/src/scene_frame.rs": "d73d7570e3679f469de5994bf87e0abc33d46d3584abba9b4516d7775141ce04",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "345373b150dd79b2ca6a6776de64b071455922e2f2c1f033297344fb3df33dea",
+    "crates/lsd-assets/tests/native_special_encounter.rs": "ae69e29cde3898d2a3b5e96758d4ba85e728091ea0ac496eb25b239bdf84c02a",
+    "crates/lsd-assets/tests/fixtures/special-encounter-activation.json": "8e7a82631543bc7c98373860174b1d1bb789667d6d8982cd5959be086e8f4eb9"
+  },
+  "scope_limits": [
+    "The default day profile loads the identified special model and SDK atan table locally. Original assets are not bundled.",
+    "One special actor is created dormant before chunk callbacks, with no clock membership. Activation reuses it, stops/restarts, applies the player-relative offset and original facing packet, and prepends its subscription.",
+    "The native fixture does not call the Gray Man action callback. The installed behavior remains Pending; the implemented callback tally stays 12 of 107.",
+    "Player transforms/world cache and parent identity are supplied. Natural hierarchy/cache refresh, actor pursuit, contact/effect/flashback reset and full lifetimes remain incomplete.",
+    "The loaded local-content scenario verifies an actual even-day chunk gate, ordinary slot release and scene rebuild. It does not accept a whole natural NPC encounter.",
+    "Native GPU/SPU output, effect rendering, menus, persistence, movies/endings and full-game parity remain open. Four existing captures are unchanged regressions; they do not prove activated Gray Man rendering."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

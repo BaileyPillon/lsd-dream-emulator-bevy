@@ -225,6 +225,18 @@ impl EntityBehavior {
         actor: &mut ModelActor,
         sound: &mut impl GenerationSound,
     ) -> Self {
+        let mut out = Self::construct_dormant(entity, script, fields, actor, sound);
+        out.start(fields, actor);
+        out
+    }
+    /// entity_create constructs a disabled actor without binding its scene/clock.
+    pub fn construct_dormant(
+        entity: u8,
+        script: NpcScript,
+        fields: [i8; 12],
+        actor: &mut ModelActor,
+        sound: &mut impl GenerationSound,
+    ) -> Self {
         let mut out = Self {
             entity,
             script,
@@ -242,13 +254,16 @@ impl EntityBehavior {
         }
         actor.action_kind = 66;
         out.disable_link(actor, sound);
+        out
+    }
+    /// Apply entity_start policy after the inherited actor has been attached.
+    pub fn start(&mut self, fields: [i8; 12], actor: &mut ModelActor) {
         if fields[3] == 0 {
-            out.enable_link(actor);
+            self.enable_link(actor);
             if fields[11] == 0 {
-                out.start_behavior(actor);
+                self.start_behavior(actor);
             }
         }
-        out
     }
     pub fn start_behavior(&mut self, actor: &mut ModelActor) {
         self.context.initialize(

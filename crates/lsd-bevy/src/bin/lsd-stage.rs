@@ -447,6 +447,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 lsd_assets::load_encounter_tables(&executable)?,
                 lsd_assets::load_entity_properties(&executable)?,
             );
+            session
+                .encounters
+                .as_mut()
+                .unwrap()
+                .enable_special_encounter(lsd_assets::load_special_encounter_assets(
+                    &executable,
+                    &root,
+                )?);
             session.begin_original_day(linked, load_day_tables(&executable)?);
             session.day.as_mut().unwrap().day = supplied_day - 1;
             session.tick(
