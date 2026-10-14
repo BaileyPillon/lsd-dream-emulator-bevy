@@ -156,6 +156,8 @@ pub enum NpcScript {
     MarchingBand,
     Gears,
     Horse,
+    Soldier,
+    GiantTurtle,
     Pending(u32),
 }
 impl NpcScript {
@@ -194,6 +196,8 @@ impl NpcScript {
             Some(0x8006_03c4) => Self::MarchingBand,
             Some(0x8006_23e8) => Self::Gears,
             Some(0x8005_f544) => Self::Horse,
+            Some(0x8006_0148) => Self::Soldier,
+            Some(0x8005_fa94) => Self::GiantTurtle,
             Some(at) => Self::Pending(at),
         }
     }
@@ -793,6 +797,50 @@ impl EntityBehavior {
                         if context.words[1] % 200 == 0 {
                             context.words[17] = 13;
                             context.words[18] = 1;
+                        }
+                    }
+                    NpcScript::Soldier | NpcScript::GiantTurtle => {
+                        if script == NpcScript::Soldier {
+                            if context.words[1] % 7 == 0 {
+                                context.words[4] = trigger_ratio(actor, context, input)?;
+                                context.words[7] = 3;
+                                context.words[9] = 64;
+                                context.words[10] = 64;
+                            }
+                            let turn = match ticks {
+                                200 => Some(-90i16),
+                                400 => Some(180),
+                                600 => Some(90),
+                                800 => {
+                                    *mutable_ticks = -1;
+                                    Some(180)
+                                }
+                                _ => None,
+                            };
+                            if let Some(turn) = turn {
+                                actor
+                                    .rotate_packet(
+                                        [
+                                            0x0001_0000,
+                                            0x0001_0000 | u32::from(turn as u16),
+                                            0x0001_0000,
+                                        ],
+                                        false,
+                                    )
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            }
+                        } else if *triggered != 0 {
+                            actor
+                                .scale_packet([0x0004_0001; 3], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                        } else if context.words[1] % 30 == 0 {
+                            context.words[4] = 0;
+                            context.words[7] = 3;
+                        }
+                        crate::move_actor_on_floor(actor, ActorAxis::Z, -30, false, rng, host)?;
+                        if actor.body_contact.current.is_some() {
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Y, -200, matrix);
                         }
                     }
                     NpcScript::Horse => {

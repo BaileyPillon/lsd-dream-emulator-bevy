@@ -2,8 +2,8 @@
 
 Horse now executes its original sound, animation and forward/floor action in
 the encounter scene. The shared wrapper also provides the floor-following
-operation required by several remaining NPCs. There are 32 implemented action
-callbacks among 107 distinct original callbacks; 75 remain pending. This count
+operation required by several remaining NPCs. There are 34 implemented action
+callbacks among 107 distinct original callbacks; 73 remain pending. This count
 does not accept complete NPC encounters or whole-game parity.
 
 ## Movement and floor protocol
@@ -78,9 +78,9 @@ LSD_NATIVE_HORSE_FLOOR=/path/to/private/original-horse-floor-cases.json \
 ```
 
 See [floor-following checks](actor-floor-checks.json) for hashes, repeated native
-recordings and wider validation. Original body-contact acknowledgement has
-separate comparisons; its combined bypass of this floor wrapper still needs
-an original native scenario. Natural activation, complete collision response,
+recordings and wider validation. The combined original player-contact and
+floor-bypass path now has [coupled comparisons](CONTACT_FLOOR.md), alongside
+Soldier and Giant Turtle actions. Natural activation, complete collision response,
 cache/residency/lifetime timing and GPU/SPU output remain unaccepted. All 40
 provisional whole-feature groups still require acceptance. C decompilation
 stays paused and preserved; original behavior makes no AI model calls.

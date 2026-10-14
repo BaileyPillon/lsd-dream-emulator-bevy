@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "contact_floor_scope": "Full original forward/sideways movement, cached cloud/player geometry, original acknowledgement/video/end journal and floor bypass/correction in real constructed entity/player/owned slot graphs. Original model/math imported separately. Target/cache/filter/properties/initial state supplied; natural encounters, MapScene transition/media/GPU/SPU/timing unaccepted.",
+  "npc_scope": "Full Soldier and Giant Turtle action/context/animation through original forward-floor wrapper and subsequent contact-dependent localY movement in eight owned floor graphs; explicit original behavior start and supplied target/cache/tick/trigger state. Original models/properties/math imported separately. Natural activation, whole encounters, full map lifetime and GPU/SPU/timing unaccepted.",
+  "contact_floor_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/floor-bypass-runtime.json",
+    "fixture_sha256": "198382cb6a16e75944064a9d5d1c1f8d595904e3874e0c3fd5916f014727eb14",
+    "private_fixture_sha256": "abacf9216d47c309daaab9b6277165f62866a679a1180fd6a462dfece2f34b3d",
+    "owned_cases": 1280,
+    "owned_bypasses": 80,
+    "owned_player_contacts_without_actor_ack": 80,
+    "canonical_cases": 48,
+    "canonical_bypasses": 4
+  },
+  "npc_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/floor-npc-runtime.json",
+    "fixture_sha256": "8e5b3b495c14c662a16755f3dc36ed3c5d153b4297676fbf1e771d6170e54608",
+    "private_fixture_sha256": "e72c6bfc4f5b1c0b598da953095f193393c318ce998498553cfab27524a4aa88",
+    "owned_scenarios": 144,
+    "owned_states": 3172,
+    "canonical_scenarios": 144,
+    "canonical_states": 3172,
+    "canonical_bindings": {
+      "entity_turtle_giant": {
+        "path": "CDI/STG03/N4/M115.LBD",
+        "offset": 16396,
+        "bytes": 12380,
+        "entity": 33,
+        "stage": 3,
+        "model_index": 0,
+        "source_sha256": "0580124021215f9f0a16befaa7d5e7733cc7b5ed34b35450bc886da9510896b4",
+        "mom_sha256": "97932de7c6c78bb757d594b0ef6476ad52f595aa1738576eed7b4e8dfeff6754"
+      },
+      "entity_soldier": {
+        "path": "CDI/STG04/M006.LBD",
+        "offset": 18444,
+        "bytes": 3456,
+        "entity": 40,
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "e33c792ec4f38db7d45b6c9d673fe781753f9823cb847ef37967c68279b54033",
+        "mom_sha256": "d9e106ffd52fefd1d376122689b8837628b6eaee37f293f3bdc645f0a0e2ff76"
+      }
+    },
+    "encounter_adapter_scenarios": 4,
+    "encounter_adapter_states": 986
+  },
+  "native_function_sha256": {
+    "func_800575B0": "44a71bba6d7de19ba1bae29cd06592439cbb2ca2e100b66c4c0c0070cb5382f8",
+    "func_800575E0": "de7b3f2e4ba8acf3b32f060d5dec12278dbbf4107ff1e999e69b197f3fc8901e",
+    "func_80057618": "ef60e801e3fc8b996abf317a07ea00cb8e51b4375269d28d46e9453cdbf9286e",
+    "func_80057668": "8976835b3b01ef8b9c796e38d720fe8d0ccb0711fca311f1e73c06625ec6d39e",
+    "func_8001D714": "588643a9b5e959ae764b2abe491c44af44a58fc04cf5aeee62498d840bdf6961",
+    "func_800571F8": "ad0d13796e3f4d7e32fff7005062eeff57e4a0af7b9218ce81d2ffbc2d219ce0",
+    "entity_soldier": "8bf8288cefc94cfe9c0bf1c6b440238c6b0891a11d2dda0a2ba45ec6a2519d3e",
+    "entity_turtle_giant": "4bdef1c9acc30a88df2cc23c2cfeca2432185e4af759fee7b3f0fe757162aea6",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69"
+  },
+  "native_function_entries": {
+    "contact_floor": {
+      "func_800575B0": 688,
+      "func_800575E0": 640,
+      "func_80057618": 1328,
+      "func_80057668": 1244,
+      "func_8001D714": 664,
+      "func_800571F8": 1844
+    },
+    "npcs": {
+      "func_800575B0": 6056,
+      "func_80057618": 6056,
+      "func_80057668": 6056,
+      "func_800571F8": 2742,
+      "entity_soldier": 3736,
+      "entity_turtle_giant": 2320,
+      "func_80065FD8": 6056,
+      "sound_entity_update": 6056
+    }
+  },
+  "private_proof_sha256": {
+    "contact_floor": "62f2ad4d3ae7698778aaa54a55a2a557aa25572dab2877b04c8a7d5117d10d5d",
+    "contact_floor_producer": "98003d8c4aacb12152cea4edd23214e36c9b041974b54ed18218f05f2d3be4a5",
+    "npcs": "02143389948b8bc414602281997ea8ad0e45ae4ba00a2e5641cb8044707b9717",
+    "npc_producer": "4d650ff8747e59caf9b69aa4e50a7364a2c77b22b26ace8565e07f3e575e5786",
+    "npc_graph_library": "d9620f96684ec7f49956b7d170281649fb3bc33dc1cdb95aad5c7ef29d224a9b",
+    "repeat": "6b2ef137d3ba284eae6d2a0c83ba4332e033e7a1ad21732de20207c896dddc55",
+    "validation": "26b4b540a28b79b410c7109839ee1a2b7695472dd1e54a7838ee5eb8a27134a5",
+    "callback_inventory": "bca429ff5079380b87dcd28af6cf13dccb334bce5c0a27f266a4f3f77a8eee3d"
+  },
+  "validation": {
+    "workspace_counts": [
+      143,
+      0,
+      35
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 144,
+    "owned_action_states": 3172,
+    "canonical_action_scenarios": 144,
+    "canonical_action_states": 3172,
+    "coupled_floor_cases": 1280,
+    "coupled_floor_canonical_cases": 48,
+    "floor_npc_scene_adapter_states": 986,
+    "original_geometry_acknowledgement_and_floor_gate_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "aba9561ea27068908b66cd400fc880adf8d409d3f177fd9b5e5dea76ff9d0c38",
+      "workspace": "ae8f1e2ad712ea35de31412fa8f0463ac9596e13e1bc83c634f6b38e3ef1977e",
+      "original-content": "67f82eda23ee2ca0675db1eb41515620eb84f4f6c883ce371b59c88c407475d5",
+      "desktop-build": "2c1cd7d9561559028cf29f8472e272a6d05afc2de16285d953f2336b9aaef8b1",
+      "capture-idle": "822a36eed4d8d569828727d160994d54630f6bb5411d97ca74c7e78346bbe12b",
+      "capture-futon": "c10fa202aab57df96750e842784d9ab4f24ed0d3dc9f494321ffb31e67df0205",
+      "capture-yokai": "480a4d2b457253f2cd56e959ccba8231d4893195c463b8dceb0a83e37d56e88f",
+      "capture-expiry": "f1ce189d71f7fba9f05346eaafff78cea949e9d0f185dcb835236355086f24a5",
+      "capture-gray-birth": "9f99bbc2f99359359d2d7371a16f1b9eacaa9280dd27ddb72d758bd94f275211",
+      "capture-gray-fade": "6e2c4c540781caa1f09d7a75d059f5e241efb9afe993d57fb0c3727349d6f571",
+      "capture-gray-complete": "5c0cd74d32bd19c30ec059a7796f4fd2683df992916ac75e535443ac059f57e5"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 34,
+    "remaining_pending_callbacks": 73,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "54dc1eaf9a22a9a61bcc4dc8e3efab41f8e646f5ab345aade42c4e33c868b4b9",
+    "crates/lsd-assets/tests/native_actor_floor.rs": "afece0209950fe33fdfc161d7268a0eb5fb08e05cb4cda4df87c1ee4e5cc001f",
+    "crates/lsd-assets/tests/native_floor_bypass.rs": "d2c9b1ad6d60f600e533a00bde746052f5f4025caaa52ae3e6507bfb303483af",
+    "crates/lsd-assets/tests/support/actor_floor.rs": "45c293b804d680eb3dc3d8f4c1992fb0ba47ed8bfedbc2c25e40aaf39ffee878",
+    "crates/lsd-assets/tests/fixtures/floor-bypass-runtime.json": "198382cb6a16e75944064a9d5d1c1f8d595904e3874e0c3fd5916f014727eb14",
+    "crates/lsd-assets/tests/fixtures/floor-npc-runtime.json": "8e5b3b495c14c662a16755f3dc36ed3c5d153b4297676fbf1e771d6170e54608"
+  },
+  "scope_limits": [
+    "Owned coupled cases execute original actor/player construction, geometry, acknowledgement, parent journal and floor gate without original game function output replacements. A player hit without actor acknowledgement still runs the floor query.",
+    "Private original-model cases use supplied properties and static cache/floor state. They do not establish natural activation, complete natural encounters or reciprocal player movement.",
+    "Soldier and Giant Turtle actions retain sound, turns or scale, context/behavior/animation clocks, forward floor correction and the subsequent contact-dependent local Y operation. Original behavior start is explicitly invoked.",
+    "Four production encounter adapter trajectories compare986 resulting states using a supplied live floor service. Direct replays additionally compare local virtual-call instrumentation.",
+    "Static cached transforms and owned or privately imported math inputs are supplied. The semantic GTE bridge does not accept hardware flags or timing. Seven development captures are unchanged.",
+    "Original model bytes, raw property rows and detailed original-model observations stay private. Public fixtures use owned inputs. Full lifetimes/residency/cache scheduling, GPU/SPU/media and full sessions remain open.",
+    "Current count34 of107 callbacks,73 pending. Whole original NPC encounters and all40 provisional feature groups remain unaccepted. C remains paused. Original actions make no AI model calls."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 34,
+  "remaining_pending_callbacks": 73,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

@@ -1074,6 +1074,28 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "contact_floor_and_soldier_turtle_20261014": {
+      "scope": "Full Soldier and Giant Turtle action/context/animation through original forward-floor wrapper and subsequent contact-dependent localY movement in eight owned floor graphs; explicit original behavior start and supplied target/cache/tick/trigger state. Original models/properties/math imported separately. Natural activation, whole encounters, full map lifetime and GPU/SPU/timing unaccepted.",
+      "checks": {
+        "path": "docs/contact-floor-checks.json",
+        "sha256": "205b9c22db3a199d4c0a245aeafbb2579b666e3bb64640c7c53d29c2942916c9"
+      },
+      "coupled_owned_cases": 1280,
+      "coupled_original_model_cases": 48,
+      "owned_scenarios": 144,
+      "owned_states": 3172,
+      "canonical_scenarios": 144,
+      "canonical_states": 3172,
+      "encounter_adapter_scenarios": 4,
+      "encounter_adapter_states": 986,
+      "original_named_callbacks_implemented_before": 32,
+      "original_named_callbacks_implemented_after": 34,
+      "remaining_pending_callbacks": 73,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

@@ -186,7 +186,7 @@ Player clock comparisons cover callback clearing, retained camera updates and
 input locking. See [player-interacting NPCs](PLAYER_NPCS.md). That checkpoint
 implemented 19 actions. The newer
 [sound, motion and event work](ACTION_PHASES.md), followed by [actor floor recovery](ACTOR_FLOOR.md),
-raises the current total to 32 among 107 distinct callbacks, leaving 75 pending. Natural
+raises the current total to 34 among 107 distinct callbacks, leaving 73 pending. Natural
 encounters and all 40 provisional whole-feature groups still need acceptance.
 
 Ferris Wheel now retains the action window, camera-preserving ride and
@@ -199,5 +199,8 @@ requests; movie playback and full natural encounters remain unfinished.
 The shared actor floor wrapper now retains contact clearing, synchronous
 movement callbacks, located-versus-miss behavior, floor correction and local
 negative signals. Horse uses it in the encounter scene, including its original
-movement burst at tick 110. See [floor actors](ACTOR_FLOOR.md). Body-contact
-bypass composition and natural cache/residency/timing still need comparison.
+movement burst at tick 110. See [floor actors](ACTOR_FLOOR.md). Soldier and
+Giant Turtle now retain their turns, scale, sound and contact-dependent extra
+movement. The player-contact floor bypass has coupled original-code comparisons;
+see [contact and floor behavior](CONTACT_FLOOR.md). Natural activation, full
+collision response and cache/residency/timing still need comparison.
