@@ -165,6 +165,13 @@ pub enum NpcScript {
     Astronaut,
     Rainbow,
     BoatBird,
+    Tennyo,
+    Bird,
+    Rocket,
+    Ufo,
+    Shark,
+    Fish,
+    Mirage,
     Pending(u32),
 }
 impl NpcScript {
@@ -212,6 +219,13 @@ impl NpcScript {
             Some(0x8005_e160) => Self::Astronaut,
             Some(0x8005_f708) => Self::Rainbow,
             Some(0x8005_f800) => Self::BoatBird,
+            Some(0x8005_f1d4) => Self::Tennyo,
+            Some(0x8005_f368) => Self::Bird,
+            Some(0x8005_f454) => Self::Rocket,
+            Some(0x8005_f608) => Self::Ufo,
+            Some(0x8005_fb6c) => Self::Shark,
+            Some(0x8005_fc58) => Self::Fish,
+            Some(0x8005_fdfc) => Self::Mirage,
             Some(at) => Self::Pending(at),
         }
     }
@@ -839,6 +853,122 @@ impl EntityBehavior {
                         if context.words[1] % 200 == 0 {
                             context.words[17] = 13;
                             context.words[18] = 1;
+                        }
+                    }
+                    NpcScript::Tennyo => {
+                        host.face_player(actor)?;
+                        if *triggered != 0 {
+                            if ticks >= 65 {
+                                *mutable_ticks = 0;
+                            }
+                            if *mutable_ticks >= 7 {
+                                actor.translate([0, -64, 0], false);
+                                move_local_with_host(actor, ActorAxis::Z, 10, host)?;
+                            } else {
+                                actor.translate([-64, 0, 0], false);
+                            }
+                        } else if ticks == 0 {
+                            actor.translate([0, -4096, 0], false);
+                        } else if ticks < 65 {
+                            actor.translate([0, 64, 0], false);
+                        } else if ticks < 71 {
+                            actor.translate([0, -64, 0], false);
+                            move_local_with_host(actor, ActorAxis::Z, -30, host)?;
+                        } else {
+                            let amount = if ticks < 256 { -ticks - 65 } else { 255 };
+                            move_local_with_host(actor, ActorAxis::Z, amount, host)?;
+                        }
+                    }
+                    NpcScript::Bird => {
+                        if context.words[1] % 15 == 0 {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 7;
+                            context.words[8] = -2;
+                        }
+                        actor
+                            .scale_packet([0x0001_0002; 3], true)
+                            .map_err(|_| BehaviorFault::Division)?;
+                        rotate_yaw(actor, 2)?;
+                        move_local_with_host(actor, ActorAxis::Z, -512, host)?;
+                    }
+                    NpcScript::Rocket => {
+                        context.words[4] = 0;
+                        if ticks < 100 {
+                            if context.words[1] % 3 == 0 {
+                                context.words[7] = 22;
+                                context.words[8] = 1;
+                            }
+                            move_local_with_host(actor, ActorAxis::Y, -64, host)?;
+                        } else if ticks < 300 {
+                            for slot in [7, 12, 17] {
+                                context.words[slot] = 12;
+                                context.words[slot + 1] = -1;
+                            }
+                            move_local_with_host(actor, ActorAxis::Y, -256, host)?;
+                        } else {
+                            actor
+                                .rotate_packet([0x0008_0001, 0x0001_0000, 0x0001_0000], false)
+                                .map_err(|_| BehaviorFault::Division)?;
+                            move_local_with_host(actor, ActorAxis::Y, -512, host)?;
+                        }
+                    }
+                    NpcScript::Ufo => {
+                        if context.words[1] % 70 == 0 {
+                            context.words[4] = 0;
+                            context.words[7] = 27;
+                        }
+                        move_local_with_host(actor, ActorAxis::Z, -128, host)?;
+                        if ticks < 100 {
+                            move_local_with_host(actor, ActorAxis::Y, 32, host)?;
+                        } else if ticks >= 301 {
+                            move_local_with_host(actor, ActorAxis::Y, -32, host)?;
+                        }
+                    }
+                    NpcScript::Shark => {
+                        if (ticks.wrapping_sub(400) as u32) < 10 {
+                            rotate_yaw(actor, 9)?;
+                        } else if (ticks.wrapping_sub(700) as u32) < 10
+                            || (ticks.wrapping_sub(830) as u32) < 4
+                        {
+                            rotate_yaw(actor, -9)?;
+                        } else if ticks >= 851 {
+                            actor.set_hidden(true);
+                            context.stop(sound);
+                            actor.animation.enabled = false;
+                            actor.animation.action_enabled = false;
+                            *active = 0;
+                            *triggered = 0;
+                            *link_enabled = 0;
+                        }
+                        let amount = if *mutable_ticks < 800 { -60 } else { -512 };
+                        move_local_with_host(actor, ActorAxis::Z, amount, host)?;
+                        host.notify_actor(actor, rng, 6)?;
+                    }
+                    NpcScript::Fish => {
+                        let vertical = if ticks % 6 < 3 { -64 } else { 64 };
+                        move_local_with_host(actor, ActorAxis::Y, vertical, host)?;
+                        let sideways = if ticks % 12 < 6 { -64 } else { 64 };
+                        move_local_with_host(actor, ActorAxis::X, sideways, host)?;
+                        let forward = if ticks % 64 < 32 { -128 } else { 128 };
+                        move_local_with_host(actor, ActorAxis::Z, forward, host)?;
+                        let remainder = ticks % 500;
+                        if remainder < 32 {
+                            actor.translate([0, -64, 0], false);
+                        } else if remainder < 64 {
+                            actor.translate([0, 64, 0], false);
+                        }
+                    }
+                    NpcScript::Mirage => {
+                        if *state == 0 {
+                            let scale = if rng.next_u15() & 1 != 0 { 2 } else { 6 };
+                            actor
+                                .scale_packet([0x0001_0000 | scale; 3], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                            *state = 11;
+                        }
+                        host.face_player(actor)?;
+                        if entity_distance(actor.pose.position, input.target) < 28672 {
+                            move_local_with_host(actor, ActorAxis::Z, 256, host)?;
                         }
                     }
                     NpcScript::Astronaut => {

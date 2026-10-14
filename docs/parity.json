@@ -1138,6 +1138,30 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "movement_npc_actions_and_complete_updates_20261014": {
+      "scope": "Complete original entity_update interaction/activation/trigger/perception then inherited action/animation for Tennyo, Bird, Rocket, UFO, Shark, Fish and Mirage. Actual original constructors and player query routines execute with supplied static identity cached player matrix, world/local position and view. Explicit behavior start and initial tick/context/trigger/state/seed supplied. Original models/properties/math imported separately. Player model is owned and meshless; full natural encounters, reciprocal collision, original MapScene transitions and GPU/SPU/timing unaccepted.",
+      "checks": {
+        "path": "docs/motion-npc-checks.json",
+        "sha256": "5ecd9fda5a580461856c47229495396c06851d7031452c0b9dfaf361525a9f3f"
+      },
+      "owned_action_scenarios": 85,
+      "owned_action_states": 2921,
+      "canonical_action_scenarios": 85,
+      "canonical_action_states": 2921,
+      "owned_complete_update_scenarios": 85,
+      "owned_complete_update_states": 2921,
+      "canonical_complete_update_scenarios": 85,
+      "canonical_complete_update_states": 2921,
+      "production_adapter_owned_states": 2836,
+      "production_adapter_canonical_states": 2836,
+      "original_named_callbacks_implemented_before": 41,
+      "original_named_callbacks_implemented_after": 48,
+      "remaining_pending_callbacks": 59,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

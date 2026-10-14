@@ -186,7 +186,7 @@ Player clock comparisons cover callback clearing, retained camera updates and
 input locking. See [player-interacting NPCs](PLAYER_NPCS.md). That checkpoint
 implemented 19 actions. The newer
 [sound, motion and event work](ACTION_PHASES.md), followed by [actor floor recovery](ACTOR_FLOOR.md),
-raises the current total to 41 among 107 distinct callbacks, leaving 66 pending. Natural
+raises the current total to 48 among 107 distinct callbacks, leaving 59 pending. Natural
 encounters and all 40 provisional whole-feature groups still need acceptance.
 
 Ferris Wheel now retains the action window, camera-preserving ride and
@@ -217,3 +217,11 @@ position to NPC actions. Astronaut, Rainbow and Boat Bird use those services in
 the shared scene, with original code and production adapter comparisons. See
 [color-dependent NPCs](COLOR_NPCS.md). Natural encounters and audiovisual parity
 remain open.
+
+
+Seven further movement actions now preserve their original motion, sound,
+RNG and shutdown order. Their complete original entity-update recordings also
+exercise activation/perception before actions, including Tennyo's proximity
+trigger. Both owned and original-model inputs match through the production
+encounter adapter. See [movement NPCs](MOTION_NPCS.md). Full natural encounters,
+reciprocal collision and audiovisual parity remain open.

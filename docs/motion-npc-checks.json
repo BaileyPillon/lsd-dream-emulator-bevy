@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "action_scope": "Complete Tennyo, Bird, Rocket, UFO, Shark, Fish and Mirage original action/context/animation with actual constructed scene/entity/player and explicit behavior start, supplied independent behavior/context ticks, triggered/state/seed and cached target. Original models/properties/math imported separately. Player model is owned and meshless; no reciprocal player collision or full natural encounter/GPU/SPU/timing acceptance.",
+  "complete_update_scope": "Complete original entity_update interaction/activation/trigger/perception then inherited action/animation for Tennyo, Bird, Rocket, UFO, Shark, Fish and Mirage. Actual original constructors and player query routines execute with supplied static identity cached player matrix, world/local position and view. Explicit behavior start and initial tick/context/trigger/state/seed supplied. Original models/properties/math imported separately. Player model is owned and meshless; full natural encounters, reciprocal collision, original MapScene transitions and GPU/SPU/timing unaccepted.",
+  "observed_owned_outcomes": {
+    "owned_scenarios_per_callback": {
+      "entity_tennyo": 22,
+      "entity_bird": 4,
+      "entity_rocket": 8,
+      "entity_ufo": 11,
+      "entity_shark": 12,
+      "entity_fish": 16,
+      "entity_mirage": 12
+    },
+    "trajectories_changed_by_full_interaction_update": 1,
+    "tennyo_proximity_trigger_and_independent_loop_clocks_observed": true,
+    "rocket_fractional_pitch_packet_quantizes_to_one_angle_unit": true,
+    "shark_shutdown_then_final_movement_notification_observed": true,
+    "fish_negative_signed_remainder_observed": true,
+    "mirage_both_scales_and_strict_distance_gate_observed": true,
+    "production_adapter_owned_scenarios": 85,
+    "production_adapter_owned_states": 2836,
+    "production_adapter_canonical_scenarios": 85,
+    "production_adapter_canonical_states": 2836,
+    "whole_natural_encounters_accepted": 0
+  },
+  "action_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/motion-npc-runtime.json",
+    "fixture_sha256": "e1ec6783bdd0e2ce47730a5b013f26dfc6b3c976c8e4a06bd375d5a7309f2668",
+    "private_fixture_sha256": "8444f179ef66f62fe5b2f51ee58b68bc0e5d70bce7709524d964178f41d9eb9b",
+    "owned_scenarios": 85,
+    "owned_states": 2921,
+    "canonical_scenarios": 85,
+    "canonical_states": 2921
+  },
+  "entity_update_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/motion-npc-encounters.json",
+    "fixture_sha256": "f3156edc85ae12f265e8934220ebd88e58ba132831b93728cff4157cf3b7527f",
+    "private_fixture_sha256": "2190fc21a56a6c7d9b539316d2a22fafeb5f09657f9603883241210b25ea0235",
+    "owned_scenarios": 85,
+    "owned_states": 2921,
+    "canonical_scenarios": 85,
+    "canonical_states": 2921
+  },
+  "canonical_bindings": {
+    "entity_tennyo": {
+      "path": "CDI/STG02/M014.LBD",
+      "offset": 38924,
+      "bytes": 23964,
+      "entity": 23,
+      "stage": 2,
+      "model_index": 0,
+      "source_sha256": "b11ec2c78680381f9b81f340a652b14634772aff6e515cbc7d9efe48b139e804",
+      "mom_sha256": "197129f2443b23aa6e304822194887e9685e828dff88b412e5b58b8199997563"
+    },
+    "entity_rocket": {
+      "path": "CDI/STG03/N1/M038.LBD",
+      "offset": 22540,
+      "bytes": 4540,
+      "entity": 25,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "f40895239b6caa40aad85dcba637edfe4cb3a1a7bebf4b844824e768d706f05d",
+      "mom_sha256": "03343bcaa69201a10fd1cb396f522fba5abc6dcc02d92405c4680285f695675f"
+    },
+    "entity_bird": {
+      "path": "CDI/STG03/N1/M038.LBD",
+      "offset": 22540,
+      "bytes": 4540,
+      "entity": 24,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "f40895239b6caa40aad85dcba637edfe4cb3a1a7bebf4b844824e768d706f05d",
+      "mom_sha256": "03343bcaa69201a10fd1cb396f522fba5abc6dcc02d92405c4680285f695675f"
+    },
+    "entity_fish": {
+      "path": "CDI/STG03/N2/M056.LBD",
+      "offset": 36876,
+      "bytes": 7216,
+      "entity": 35,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "0080227060f8d92107e23658e6f6013d7f238d902205a8022e88a33ea5565ea5",
+      "mom_sha256": "1071d34dae37017b19d172f36f79df476a1b7e948fbf5910a787412ad436adc3"
+    },
+    "entity_shark": {
+      "path": "CDI/STG03/N3/M098.LBD",
+      "offset": 26636,
+      "bytes": 1148,
+      "entity": 34,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "57ec6f2e6f328b66079b68eae59f086ee5ae9a665cbb92cc849d5faf2b1b6ea1",
+      "mom_sha256": "4003875f3bd2a55def5ae247d80bdc488825c4a566453be4d046f055e1bb2fe4"
+    },
+    "entity_mirage": {
+      "path": "CDI/STG03/N6/M164.LBD",
+      "offset": 12300,
+      "bytes": 496,
+      "entity": 36,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "0ac801c5f01442b328a7bf3bf8c7fcf042ea3e05bb5872f25f0d1b83a57f1f83",
+      "mom_sha256": "37259cc811cd676229690fec2f036afd031f4dd28e23481240f7d025143cfbd7"
+    },
+    "entity_ufo": {
+      "path": "CDI/STG03/N7/M211.LBD",
+      "offset": 14348,
+      "bytes": 4380,
+      "entity": 27,
+      "stage": 3,
+      "model_index": 0,
+      "source_sha256": "30f6bedd3b957bec7b41d9eb5a291e3ae7483a9804ed8b3b851846fbb76f1edd",
+      "mom_sha256": "23fe1155fcb4d87692c2350ba09aae452e22948e405a8f6d587d08111526a598"
+    }
+  },
+  "native_function_sha256": {
+    "entity_tennyo": "37d3c38360709b23322b5d2b0bd90e524fc33d386364017fe17d0147942a6c54",
+    "entity_bird": "89a93cbfdcaf8d25da98f263aaf407578121c0310ef37dd199590e519ce179e5",
+    "entity_rocket": "9661bca320473fa46baea213abc90e6648e873e35c1f1b4fad3662ceea9cddb6",
+    "entity_ufo": "dad1f71e4cd3ac57f6ddc02861258a4deed243b702be8c91dffe800872f39d9c",
+    "entity_shark": "7d3a92a830449e725afda7c9f8d31671883574dc3629ed9be9fe991e35bd3ff0",
+    "entity_fish": "8385538423a467f3a1b9ae8a5e7c4b528f7f3699c320e64d3d82aff26ad7a86d",
+    "entity_mirage": "180bf947fec3169417c18043bedbb45f340e2e02ce8a95fcb5872c71b5c298ce",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "entity_check_interaction": "c443fee53fb8f2d5a1b80b97ad992bc93606edc2863cd35f01b6c3f9ef1aeba4",
+    "entity_check_interaction_range": "4fa8d87fcc63c0589849513596f6c69c6f854b035ee514f8c3cfa80325e4ab90",
+    "entity_check_link_trigger": "4b035916ba18c88617af41a79fbe0fc8a4333adcee7eb8c5543d63fbfbdd551e",
+    "entity_check_link_proximity": "33f081923b1bc5ec09a8eec21baf091bccacee9dbcb15715e2531dc067d3c82d",
+    "entity_check_interaction_angle": "753ce14f43f7f3f04bfd50db01831b495ce022b46e4411db81a0f4aebd7ca424",
+    "entity_set_triggered": "a552a733f16261135c347927d25a256dbee266abca01f67fadfa3ade0ac1e8ae",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "func_8001EACC": "1ef5e1970a4cd213702b82c21aca301041b73a3f8cb241affe06f208bbcb80be",
+    "func_8005748C": "56c4b7f4e13cde1be03d9e0f549a37ad158f8194a73c986e003153ea0acfe087",
+    "func_800574C4": "29303f176ed3d04daf35423bed542cbae4fafeaff90abdf8182d51eb31613f55",
+    "func_800574FC": "e22cf1c7265259493c587b72e18fdd9cf18a600fcf0189cc6bed5784078fef66",
+    "entity_disable_link": "730e458b8fcbb0fbdd92a20f7825c109697c11b5c02e57668ba54d424df14efd",
+    "entity_stop_behaviour": "4fa7621002bfabe6bf1c105adc34415e5f321cde133ecbc8dc1a00aee60dcaf0"
+  },
+  "native_function_entries": {
+    "actions": {
+      "entity_tennyo": 972,
+      "entity_bird": 224,
+      "entity_rocket": 676,
+      "entity_ufo": 700,
+      "entity_shark": 1776,
+      "entity_fish": 1130,
+      "entity_mirage": 172,
+      "entity_set_triggered": 348,
+      "func_80065FD8": 5672,
+      "sound_entity_update": 5650,
+      "func_8001EACC": 1144,
+      "func_8005748C": 4652,
+      "func_800574C4": 1130,
+      "func_800574FC": 2076,
+      "entity_disable_link": 348,
+      "entity_stop_behaviour": 348
+    },
+    "entity_updates": {
+      "entity_tennyo": 972,
+      "entity_bird": 224,
+      "entity_rocket": 676,
+      "entity_ufo": 700,
+      "entity_shark": 1776,
+      "entity_fish": 1130,
+      "entity_mirage": 86,
+      "entity_update": 5672,
+      "entity_check_interaction": 5672,
+      "entity_check_interaction_range": 5576,
+      "entity_check_link_trigger": 5672,
+      "entity_check_link_proximity": 5564,
+      "entity_check_interaction_angle": 5672,
+      "entity_set_triggered": 362,
+      "func_80065FD8": 5672,
+      "sound_entity_update": 5564,
+      "func_8001EACC": 1058,
+      "func_8005748C": 4562,
+      "func_800574C4": 1130,
+      "func_800574FC": 2076,
+      "entity_disable_link": 360,
+      "entity_stop_behaviour": 360
+    }
+  },
+  "private_proof_sha256": {
+    "actions": "91340e46b716e8b9d290da99883d73cb3ddf02f125c31c979a2303480ffc0bd4",
+    "action_producer": "0bc0af699f66042167550d5155aa1450f59c2e28a77895d158515a16673b66eb",
+    "entity_updates": "d831c3ef32549d94bcd07af2f61802d10f1b1cd70f01ecfff01876700cadb291",
+    "entity_update_producer": "f795c76f71918ce086cba9df05c82ac409dc6461203ef209fe8416d17411c743",
+    "graph_library": "d9620f96684ec7f49956b7d170281649fb3bc33dc1cdb95aad5c7ef29d224a9b",
+    "repeat": "b9a4f5260073b6fcd3d88f5bd95acf24e0880c5bda734c78568f266458f7885a",
+    "validation": "4c9b7bdf2f9f0716eae30f7db53401cb3db080ce4d869dd196cbea05e235ad70",
+    "callback_inventory": "0d33e27ac62f07e1995b1fdbc331bd308dd8bf5f43dda2dd6635f5c09696bf65",
+    "observed_branches": "39a023fc93c0aec78f540aa902a3d71feeebc9389c6e8513c613eec4eae6a25a"
+  },
+  "validation": {
+    "workspace_counts": [
+      150,
+      0,
+      39
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 85,
+    "owned_action_states": 2921,
+    "canonical_action_scenarios": 85,
+    "canonical_action_states": 2921,
+    "owned_full_entity_update_scenarios": 85,
+    "owned_full_entity_update_states": 2921,
+    "canonical_full_entity_update_scenarios": 85,
+    "canonical_full_entity_update_states": 2921,
+    "encounter_adapter_owned_states": 2836,
+    "encounter_adapter_canonical_states": 2836,
+    "independent_clocks_signed_motion_shutdown_and_interaction_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "a27d9d90c8e906470db6d2a42ca667c3ff3962c307a6cba9a11897d94142174e",
+      "workspace": "ce1baf6059a3008189019d9c0f8db3ce3bf64f3cb18ad8bcb4da9bb6f6c651fe",
+      "original-content": "299be7842e531d15c8cdfb7a5cfa54afc7f1847bcb4b9e0d9734464a7fe1b1de",
+      "desktop-build": "93d1dc4cccbcd8f59be745c2d9fc0f406cb7a45c7091b38c727f43ec54cdbece",
+      "capture-idle": "5a62e3ba68b72a38db0a89c11ed833d56583538e4f6d36e11d2d2fdaa8b8c3b2",
+      "capture-futon": "82bf231c88decadbd1cd9373958393ba29c0d0034453f36ea4419b063e5d9300",
+      "capture-yokai": "829b079f7e2b4e3e1f5fdd1925c01db570765cc8d8800c6d1301e7ceae682c0b",
+      "capture-expiry": "515e97d3026333ed5306641faada4aeefc525cc2be459494c694c148ce4b392c",
+      "capture-gray-birth": "1cd947f9c6a77affebf51fe62f296195d9eac794ec1b83f1097e4689e678adc4",
+      "capture-gray-fade": "2f34cbc55eccf9eaf54be74e36ca00d08cda62c673c6c3039aa85bfaad34f555",
+      "capture-gray-complete": "1555ecf3a0918c24558195e8c142098516146ecdf2343930071ff6b3b390e0d9"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 48,
+    "remaining_pending_callbacks": 59,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "1b8d2c272e26dd3a4d65b8002226d8a18ad5b100cdb651122a3e6047fd9c78c6",
+    "crates/lsd-assets/tests/native_motion_npcs.rs": "84d3ff9f67a9cae2221d6ac337428c42b77a2a0f5f68558af72b41b721c7f6ca",
+    "crates/lsd-assets/tests/fixtures/motion-npc-runtime.json": "e1ec6783bdd0e2ce47730a5b013f26dfc6b3c976c8e4a06bd375d5a7309f2668",
+    "crates/lsd-assets/tests/fixtures/motion-npc-encounters.json": "f3156edc85ae12f265e8934220ebd88e58ba132831b93728cff4157cf3b7527f"
+  },
+  "scope_limits": [
+    "Seven original actions retain complete local movement, timing, sound, RNG and shutdown semantics. Direct recordings compare85owned and85original-model scenarios,2921states each.",
+    "Separate original entity_update recordings include activation/perception/triggering before action and animation. All85owned and85original-model scenarios replay through the actual EncounterScene adapter,2836resulting states each. Original model collision bindings are prepared through the production importer.",
+    "The long Tennyo path changes under the full interaction update, entering its triggered movement loop. Direct action records and complete-update records are kept separate; the adapter compares against the complete update.",
+    "Actual original constructors, query and update routines execute without game function output replacements. Explicit behavior start, independent clocks/state/seed and static cached-world/local player inputs are supplied. Complete-update cases supply identity cached player matrix and explicit view.",
+    "The receiver is an owned meshless player. Reciprocal collision with the original player mesh, full natural encounters, MapScene transitions, moving-player/cache/residency lifetimes and GPU/SPU/flags/timing remain unaccepted. Seven development captures are unchanged.",
+    "Original models, property rows and detailed original-model observations remain private; public fixtures use owned inputs.48of107 original callbacks implemented,59pending. Whole NPC encounters and all40provisional groups unaccepted. C stays paused; original actions make no AI calls, with optional AI tools/mods separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 48,
+  "remaining_pending_callbacks": 59,
+  "original_npc_behaviors_accepted": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "ai_model_calls": 0
+}
