@@ -1,7 +1,10 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 mod actor_journal;
 mod day_tables;
-pub use actor_journal::{ActorJournalBindings, ActorJournalDispatcher, ActorJournalServices};
+pub use actor_journal::{
+    ActorBodyQueryCounts, ActorJournalBindings, ActorJournalBody, ActorJournalDispatcher,
+    ActorJournalServices,
+};
 mod effect_palette;
 mod encounter_scene;
 mod encounter_tables;

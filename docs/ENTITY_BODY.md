@@ -2,8 +2,9 @@
 
 The port now retains the original entity body-notification gates and contact
 state. Bound journal acknowledgements can deliver their link, video or dream-end
-consequence before the call returns. Inherited geometry queries remain explicit
-pending requests; this does not accept complete NPC collision or encounters.
+consequence before the call returns. Prepared moving-actor clouds now query the
+player mesh in that same call. Callers without the geometry/cloud services retain
+pending requests; complete NPC collision and encounters remain unaccepted.
 
 ## Recovered routing
 
@@ -68,15 +69,13 @@ remains 0/40 provisional groups; original whole NPC encounters remain unaccepted
 
 ## Remaining requirements
 
-Execute real inherited body queries with imported model/root geometry, prepared
-collision clouds, transform ancestry and live contact feedback.
-The copied root geometry import and prepared-cloud operations now have native
-comparisons; see [actor collision geometry](ACTOR_GEOMETRY.md). Live query delivery
-and collision response remain unfinished. Implement original
+The loaded profile now executes moving-actor/player queries and synchronous
+contact feedback; see [actor/player queries](ACTOR_PLAYER_QUERIES.md). Copied
+root geometry and prepared clouds retain their earlier comparisons. Implement original
 movement correction, ground reconciliation, aim and natural scene ownership/
-lifetime/cadence. The Yokai development capture now exposes 48 pending inherited
-query requests over its 63 active ticks; its rendered motion is unchanged from
-the previous checkpoint. Request counts do not establish physics completion.
+lifetime/cadence. The earlier Yokai capture exposed 48 pending inherited queries
+over 63 active ticks. The current profile executes those queries. Execution counts
+and supplied pair comparisons do not establish complete physics or encounters.
 Compare original GPU/SPU and complete natural encounters. The remaining 95
 callbacks and the other full-game requirements remain open. The matching C
 checkout stays paused and preserved; default gameplay makes no AI model calls.

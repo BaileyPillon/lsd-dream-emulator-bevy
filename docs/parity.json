@@ -815,6 +815,29 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "actor_player_query_recovery_20261014": {
+      "scope": "Prepared actor cloud delivery through a real original parent subscription, full player geometry query, original entity OnNotify contact and recursively delivered journal consequences. Real original MOM/model/entity/SDK helpers run; initialized typed DreamSys state, isolated buffers, identity transform ancestry and cached position epoch are supplied. Native natural frame/cache timing, whole encounters, actor/player movement response and GPU/SPU remain open.",
+      "checks": {
+        "path": "docs/actor-player-query-checks.json",
+        "sha256": "ff247c05a42e57f66d434b434947b6637b69ead4a9b52dadb75d87d0e124e3c1"
+      },
+      "owned_pair_cases": 300,
+      "owned_contacts": 40,
+      "canonical_supplied_mesh_pair_cases": 20,
+      "canonical_contacts": 4,
+      "scale_matrix_cases": 10,
+      "player_geometry_identity_corrected": true,
+      "moving_actor_player_query_and_synchronous_contact_feedback_connected": true,
+      "yokai_body_queries_executed": 48,
+      "yokai_query_contacts": 0,
+      "yokai_inherited_queries_pending": 0,
+      "natural_cache_timing_ancestry_movement_response_accepted": false,
+      "original_named_callbacks_implemented": 12,
+      "remaining_pending_callbacks": 95,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

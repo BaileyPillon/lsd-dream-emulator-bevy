@@ -20,6 +20,20 @@ pub struct ActorJournalServices<'a> {
     pub events: &'a mut Vec<StageSessionEvent>,
     pub body_contact: &'a mut lsd_core::BodyContactState<lsd_core::BodyPeer>,
     source: Option<EncounterNotification>,
+    pub body_query: Option<ActorJournalBody<'a>>,
+}
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct ActorBodyQueryCounts {
+    pub queries: u64,
+    pub contacts: u64,
+}
+pub struct ActorJournalBody<'a> {
+    pub model: &'a lsd_core::CollisionModel,
+    pub position: [i32; 3],
+    pub inverse: lsd_core::FixedMatrix,
+    pub policy: lsd_core::CollisionPolicy,
+    pub math: &'a lsd_core::PsxMathTables,
+    pub counts: &'a mut ActorBodyQueryCounts,
 }
 impl<'a> ActorJournalServices<'a> {
     pub fn new(catalog: &'a LinkCatalog, bindings: ActorJournalBindings<'a>) -> Self {
@@ -36,6 +50,7 @@ impl<'a> ActorJournalServices<'a> {
             events: bindings.events,
             body_contact: bindings.body_contact,
             source: None,
+            body_query: None,
         }
     }
 }
@@ -183,9 +198,13 @@ struct BoundActorJournal<'a, 'services> {
     services: &'a mut ActorJournalServices<'services>,
     actor: &'a mut lsd_core::ModelActor,
     fields: [i8; 12],
+    query_resolved: bool,
 }
 impl ActorJournalHost for BoundActorJournal<'_, '_> {
     fn base_journal(&mut self, event: ActorJournalEvent) {
+        if self.query_resolved && matches!(event.code, 2 | 3 | 5 | 6 | 7 | 8) {
+            return;
+        }
         self.services.base_journal(event);
     }
     fn acknowledge_actor(&mut self, code: i32) -> Option<i32> {
@@ -230,7 +249,7 @@ impl EncounterEventHost for ActorJournalDispatcher<'_> {
         fields: [i8; 12],
         rng: &mut PsxRng,
     ) -> Result<(), DayFault> {
-        self.dispatch_subject(None, event, fields, rng)
+        self.dispatch_subject(None, event, fields, rng, false)
     }
     fn dispatch_actor(
         &mut self,
@@ -239,7 +258,83 @@ impl EncounterEventHost for ActorJournalDispatcher<'_> {
         fields: [i8; 12],
         rng: &mut PsxRng,
     ) -> Result<(), DayFault> {
-        self.dispatch_subject(Some(actor), event, fields, rng)
+        self.dispatch_subject(Some(actor), event, fields, rng, false)
+    }
+    fn dispatch_actor_cloud(
+        &mut self,
+        actor: &mut lsd_core::ModelActor,
+        event: EncounterNotification,
+        fields: [i8; 12],
+        cloud: lsd_core::CollisionCloud,
+        rng: &mut PsxRng,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        let EncounterNotificationKind::Notify(code @ (2 | 3 | 5 | 6 | 7 | 8)) = event.kind else {
+            return self
+                .dispatch_actor(actor, event, fields, rng)
+                .map_err(lsd_core::BehaviorFault::Journal);
+        };
+        let Some(body) = &mut self.services.body_query else {
+            return self
+                .dispatch_actor(actor, event, fields, rng)
+                .map_err(lsd_core::BehaviorFault::Journal);
+        };
+        body.counts.queries = body.counts.queries.wrapping_add(1);
+        let contact = if let Some(bounds) = body.model.bounds {
+            lsd_core::BodyGeometryQuery {
+                world_delta: std::array::from_fn(|axis| {
+                    actor.pose.position[axis].wrapping_sub(body.position[axis])
+                }),
+                inverse: body.inverse,
+                cloud,
+                ignore_low_midpoint: body.policy.ignore_low_midpoint,
+            }
+            .intersect(bounds, &body.model.faces, body.math)
+            .map_err(lsd_core::BehaviorFault::Collision)?
+            .is_some()
+        } else {
+            false
+        };
+        if contact {
+            body.counts.contacts = body.counts.contacts.wrapping_add(1);
+            // The receiver stores the sender before invoking sender.OnNotify(4).
+            self.services.body_contact.current = Some(lsd_core::BodyPeer {
+                type_id: 0x1f234,
+                identity: event.serial,
+            });
+            let body_event = lsd_core::EntityBodyEvent {
+                sender: lsd_core::BodyPeer {
+                    type_id: 0x1f34,
+                    identity: 0,
+                },
+                code: 4,
+            };
+            let plan = lsd_core::entity_body_plan(fields, body_event);
+            if plan.store_contact {
+                actor.body_contact.current = Some(body_event.sender);
+            }
+            if let Some(notification) = plan.notification {
+                self.dispatch_subject(
+                    Some(actor),
+                    EncounterNotification {
+                        kind: EncounterNotificationKind::Notify(notification),
+                        ..event
+                    },
+                    fields,
+                    rng,
+                    false,
+                )
+                .map_err(lsd_core::BehaviorFault::Journal)?;
+            }
+        }
+        self.services
+            .events
+            .push(StageSessionEvent::ActorBodyQuery {
+                entity: event.entity,
+                code,
+                contact,
+            });
+        self.dispatch_subject(Some(actor), event, fields, rng, true)
+            .map_err(lsd_core::BehaviorFault::Journal)
     }
 }
 impl ActorJournalDispatcher<'_> {
@@ -249,6 +344,7 @@ impl ActorJournalDispatcher<'_> {
         event: EncounterNotification,
         fields: [i8; 12],
         rng: &mut PsxRng,
+        query_resolved: bool,
     ) -> Result<(), DayFault> {
         let EncounterNotificationKind::Notify(code) = event.kind else {
             self.services.pending.push(event);
@@ -270,6 +366,7 @@ impl ActorJournalDispatcher<'_> {
                 services: &mut self.services,
                 actor,
                 fields,
+                query_resolved,
             };
             actor_journal(
                 journal_event,

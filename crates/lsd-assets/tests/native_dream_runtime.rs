@@ -16,7 +16,7 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
     let executable = std::fs::read(files.join("SLPS_015.56")).unwrap();
     let original = load_link_tables(&executable).unwrap();
     let content = load_day_tables(&executable).unwrap();
-    let model = Tmd::parse(&std::fs::read(files.join("CDI/ETC/DREAMER.TMD")).unwrap()).unwrap();
+    let model = Tmd::parse(&std::fs::read(files.join("CDI/ETC/DREAME5.TMD")).unwrap()).unwrap();
     let bounds = CollisionBounds::from_points(
         &model.objects[0]
             .vertices

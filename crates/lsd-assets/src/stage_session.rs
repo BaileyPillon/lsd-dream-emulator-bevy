@@ -19,6 +19,11 @@ pub enum StageSessionEvent {
         code: i32,
         applied: bool,
     },
+    ActorBodyQuery {
+        entity: u8,
+        code: i32,
+        contact: bool,
+    },
     DayServicePending(i32),
     DayFinished(i32),
     ContentSelected {
@@ -100,6 +105,8 @@ pub struct StageLinkSession {
     pub encounters: Option<EncounterScene>,
     pub encounter_audio: GenerationAudioRequests,
     pub journal_body_contact: lsd_core::BodyContactState<lsd_core::BodyPeer>,
+    pub player_collision: Option<lsd_core::CollisionModel>,
+    pub actor_body_queries: crate::ActorBodyQueryCounts,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -127,6 +134,8 @@ impl Default for StageLinkSession {
             encounters: None,
             encounter_audio: Default::default(),
             journal_body_contact: lsd_core::BodyContactState { current: None },
+            player_collision: None,
+            actor_body_queries: Default::default(),
         }
     }
 }
@@ -188,7 +197,7 @@ impl StageLinkSession {
             target: player.controls.target,
         };
         let mut pending = std::mem::take(&mut encounters.pending_notifications);
-        let services = crate::ActorJournalServices::new(
+        let mut services = crate::ActorJournalServices::new(
             &linked.tables.catalog,
             crate::ActorJournalBindings {
                 context: &mut linked.context,
@@ -203,6 +212,16 @@ impl StageLinkSession {
                 body_contact: &mut self.journal_body_contact,
             },
         );
+        if let Some(model) = &self.player_collision {
+            services.body_query = Some(crate::ActorJournalBody {
+                model,
+                position: player.position,
+                inverse: math.inverse_rotation_chain(player.controls.angles, &[]),
+                policy: lsd_core::CollisionPolicy::for_stage(linked.links.execution.stage as u8),
+                math,
+                counts: &mut self.actor_body_queries,
+            });
+        }
         let first_command = services.commands.len();
         let mut events = crate::ActorJournalDispatcher {
             day,

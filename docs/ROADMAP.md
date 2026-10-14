@@ -113,13 +113,21 @@ natural scene scheduling and original GPU/SPU output remain open; see
 Inherited entity body-message gates, contact/disable policy and synchronous
 journal acknowledgement consequences now have original CPU comparisons. The
 journal base stores contact before its sender/link-state filters, correcting an
-omission in the earlier adapter. Real inherited geometry queries and movement
-collision response remain pending, alongside complete native scene ancestry and
+omission in the earlier adapter. Moving-actor/player geometry queries now execute;
+movement collision response remains pending, alongside complete native scene ancestry and
 scheduling; see [entity body routing](ENTITY_BODY.md).
 
 Imported actor collision bindings and model bounds now have 900 original CPU
 observations across 100 canonical models. Cuboid construction, movement extension
 and cached-world matrix application have 504 owned comparisons. The encounter
-adapter retains imported collision geometry; live query/response, complete world
-cache/ancestry and movement correction remain open. See
+adapter retains imported collision geometry; complete world cache/ancestry,
+reciprocal queries and movement correction remain open. See
 [actor collision geometry](ACTOR_GEOMETRY.md).
+
+Moving actors now deliver prepared clouds to the imported player geometry and
+apply contact/link/video/end consequences before returning. The player uses
+the original `DREAME5.TMD` body, correcting the earlier flat `DREAMER.TMD` bounds.
+300 owned supplied pair scenarios include 40 contacts; 20 original Yokai/player
+mesh scenarios include four contacts. Natural cache/ancestry timing, movement
+response and complete encounters remain open. See
+[actor/player queries](ACTOR_PLAYER_QUERIES.md).

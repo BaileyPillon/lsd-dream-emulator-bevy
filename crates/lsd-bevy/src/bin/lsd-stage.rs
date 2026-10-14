@@ -356,11 +356,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         } else {
             None
         };
-        let body_path = if original_day {
-            "CDI/ETC/DREAMER.TMD"
-        } else {
-            "CDI/ETC/DREAME5.TMD"
-        };
+        let body_path = "CDI/ETC/DREAME5.TMD";
         let body = Tmd::parse(&std::fs::read(root.join(body_path))?)?;
         let bounds = CollisionBounds::from_points(
             &body.objects[0]
@@ -432,6 +428,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             None
         };
         let mut session = walk_links.then(StageLinkSession::default);
+        if let Some(session) = &mut session {
+            session.player_collision = Some(lsd_core::CollisionModel {
+                bounds: Some(bounds),
+                faces: body.objects[0].collision_faces(),
+            });
+        }
         if original_day {
             let linked = linked.as_mut().unwrap();
             let session = session.as_mut().unwrap();
@@ -631,6 +633,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .count(),
                     session.encounter_audio.requests.len(),
                     encounters.pending_notifications.len()
+                );
+                println!(
+                    "actor_body_queries_executed={} actor_body_query_contacts={}",
+                    session.actor_body_queries.queries, session.actor_body_queries.contacts
                 );
             }
             if supplied_actor_query {

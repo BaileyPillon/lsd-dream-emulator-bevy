@@ -75,6 +75,18 @@ pub trait EncounterEventHost {
     ) -> Result<(), lsd_core::DayFault> {
         self.dispatch(event, fields, rng)
     }
+    /// The cloud exists only during the original synchronous parent notification.
+    fn dispatch_actor_cloud(
+        &mut self,
+        actor: &mut ModelActor,
+        event: EncounterNotification,
+        fields: [i8; 12],
+        _cloud: lsd_core::CollisionCloud,
+        rng: &mut PsxRng,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.dispatch_actor(actor, event, fields, rng)
+            .map_err(lsd_core::BehaviorFault::Journal)
+    }
 }
 struct DeferredEvents<'a>(&'a mut Vec<EncounterNotification>);
 impl EncounterEventHost for DeferredEvents<'_> {
@@ -283,6 +295,7 @@ impl EncounterScene {
                 events,
                 error: None,
                 math,
+                collision: actor.collision.as_ref(),
             };
             actor.behavior.update_interaction(
                 &mut actor.actor,
@@ -323,6 +336,7 @@ struct InteractionHost<'a, H> {
     events: &'a mut H,
     error: Option<lsd_core::DayFault>,
     math: Option<&'a lsd_core::PsxMathTables>,
+    collision: Option<&'a lsd_core::CollisionModel>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
     fn movement_matrix(
@@ -352,6 +366,26 @@ impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
         rng: &mut PsxRng,
         code: i32,
     ) -> Result<(), lsd_core::BehaviorFault> {
+        if matches!(code, 2 | 3 | 5 | 6 | 7 | 8)
+            && let (Some(model), Some(math)) = (self.collision, self.math)
+            && let Some(cloud) = model.prepared_cloud(
+                math.rotation(actor.pose.angles).scaled(actor.pose.scale),
+                matches!(code, 6..=8).then_some((code == 7, actor.move_distance)),
+            )
+        {
+            actor.body_contact.current = None;
+            return self.events.dispatch_actor_cloud(
+                actor,
+                EncounterNotification {
+                    serial: self.serial,
+                    entity: self.entity,
+                    kind: EncounterNotificationKind::Notify(code),
+                },
+                self.fields,
+                cloud,
+                rng,
+            );
+        }
         self.events
             .dispatch_actor(
                 actor,

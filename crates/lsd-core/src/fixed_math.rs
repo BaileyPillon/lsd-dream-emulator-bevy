@@ -70,6 +70,15 @@ pub struct FixedMatrix(pub [[i16; 3]; 3]);
 impl FixedMatrix {
     pub const IDENTITY: Self = Self([[4096, 0, 0], [0, 4096, 0], [0, 0, 4096]]);
 
+    /// PsyQ ScaleMatrix scales columns with wrapping Q12 arithmetic.
+    pub fn scaled(self, scale: [i32; 3]) -> Self {
+        Self(self.0.map(|row| {
+            std::array::from_fn(|column| {
+                (i32::from(row[column]).wrapping_mul(scale[column]) >> 12) as i16
+            })
+        }))
+    }
+
     /// PsyQ ApplyMatrixLV splits signed magnitudes at bit fifteen and runs two
     /// MVMVA operations, preserving their separate shifts and 32-bit results.
     pub fn apply_long(self, vector: [i32; 3]) -> [i32; 3] {

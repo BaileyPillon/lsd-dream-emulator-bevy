@@ -85,11 +85,15 @@ proximity policy.
 Entity body-message gates and contact state now have native comparisons, and
 bound journal acknowledgements deliver their link/video/end consequences
 synchronously. See [entity body routing](docs/ENTITY_BODY.md) for the inherited
-contact correction and the geometry queries that remain pending.
+contact correction and remaining query directions/movement response.
 Imported actors now retain their original copied root collision binding, and
 model cuboid preparation, movement extension and cached-world matrix application
 have native comparisons. See [actor collision geometry](docs/ACTOR_GEOMETRY.md)
-for the import path and the remaining live query/response integration.
+for the import path. Moving actors now deliver prepared clouds to the imported
+player mesh and apply contact/link/video/end consequences in the same call.
+The day profile also corrects its player body to `DREAME5.TMD`; `DREAMER.TMD`
+belongs to scene/generated helpers. See [actor/player queries](docs/ACTOR_PLAYER_QUERIES.md)
+for comparisons and the remaining movement response and native cache timing.
 
 ## Start here
 

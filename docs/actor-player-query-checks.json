@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Prepared actor cloud delivery through a real original parent subscription, full player geometry query, original entity OnNotify contact and recursively delivered journal consequences. Real original MOM/model/entity/SDK helpers run; initialized typed DreamSys state, isolated buffers, identity transform ancestry and cached position epoch are supplied. Native natural frame/cache timing, whole encounters, actor/player movement response and GPU/SPU remain open.",
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/actor-player-query.json",
+    "sha256": "a5381984aefb93e4daba9c288183bc0c0bf50ad870d5833319d95d71be54db70",
+    "cases": 300,
+    "contacts": 40
+  },
+  "canonical_supplied_mesh_pair_cases": 20,
+  "canonical_contacts": 4,
+  "scale_matrix_cases": 10,
+  "scale_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/scale-matrix.json",
+    "sha256": "7da27d04704e0b3479b41349bcd5748e5e85f613f25bcdba2777b0f6e8c41323"
+  },
+  "native_function_entries": {
+    "func_8001D624": 320,
+    "func_8001D714": 960,
+    "func_8001D950": 256,
+    "func_8001DA28": 256,
+    "func_8001DDF4": 136,
+    "func_8001F8B8": 132,
+    "entity_notify_interaction": 44,
+    "dream_sys_on_journal_event": 347,
+    "ScaleMatrix": 10,
+    "GsGetLw": 640
+  },
+  "native_function_sha256": {
+    "func_8001D624": "a95bc9e9f844dc5121ca4c4fa72888c24259736bca4c563b313f28ddc6ab33ec",
+    "func_8001D714": "588643a9b5e959ae764b2abe491c44af44a58fc04cf5aeee62498d840bdf6961",
+    "func_8001D950": "d0653e9db5365190ad2f1fa6d716ed17554cf9177b580788cf0a771dbfc70536",
+    "func_8001DA28": "3d22831376f252fd6b67ce17385baa2d31740bf3d8c7b7c785f4bb9b91641fd4",
+    "func_8001DDF4": "e61be058229e5ecc97387ea9e246d7b578594f5d77495b56fc3f2900f2a6b193",
+    "func_8001F8B8": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513",
+    "entity_notify_interaction": "03204a8663052793a8762db2df8d47d83adc202cb2dec26c991b33f7bea161be",
+    "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec",
+    "ScaleMatrix": "6fa6bca1ebd36af6824a61f942ef870aa8600ab2b0d0bbc86ffa868c85a85629",
+    "GsGetLw": "371cb63c4853accea971f0570596d275e075b0cfaff486d9f123f2586cb4b33b"
+  },
+  "private_proof_sha256": {
+    "native_pairs": "913927df964034eeb748e943bccffe5811735deaad5b857e220d433c9f6527bb",
+    "producer": "ca80269c6f3e9a5b5ac0d102d415b678ad0c124ca0ae6287150acfeb2b1c1834",
+    "validation": "59b585aec565f4c1afc144b257a404fa436dc8265586e1dfc75fe5c25ff8a27c"
+  },
+  "validation": {
+    "workspace_counts": [
+      119,
+      0,
+      23
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_pair_query_scenarios": 300,
+    "owned_contacts": 40,
+    "canonical_supplied_pair_scenarios": 20,
+    "canonical_contacts": 4,
+    "scale_matrix_cases": 10,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48,
+        "body_contacts": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "8fc9da224ea467fa7948c46ade52de45ba0933e683c6941011bf1c5c5ec8ffb4",
+      "workspace": "81eee79f2abd72cb96f53ea3a72ddf2d8740d812c56fdf97a2e8b27567844071",
+      "original-content": "55bf92727e14fde6e3f81a960d03a218a99c210ad0f587b3de9562e106134246",
+      "desktop-build": "4bd4a56f0628711caeea44482f76bbc18741bb98c7f79c14300ba54bce334ba3",
+      "capture-idle": "720f0cf972c95ba04f27a1985c97c5f69251b12adcd3a27fc3295dbe91330940",
+      "capture-futon": "bd5a9ebc2d4edd364d352e16ff0d7545c4a78e809c6580c6d7c1b4546aba7751",
+      "capture-yokai": "a287d7504d96bde935cb742a0137040d46797ebe00184aae59e78f8a6cc9b2dc",
+      "capture-expiry": "d22fca8a0d87e106077d9c5d44c9bf20f167fd948038680ab3e160eca84bb265",
+      "capture-legacy": "a35bcb394598ac0444b48530d8dcb27f0e954508f1f52663d0db59b1b74f0a4d"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "natural_cache_timing_ancestry_movement_response_whole_game_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "a03cceb6515f6afc5341f47bed4c0fae7dce824043a6689e016163b65eaa21c3",
+    "crates/lsd-core/src/fixed_math.rs": "0591d7863d1c2183e69ad3bd9a2f23c00aeae1212eb4070ffb2d944fc97b2a23",
+    "crates/lsd-core/tests/native_scale_matrix.rs": "2b083036e5381df6beda2bf6760bad00c69559dc099153860853ebe89b62f399",
+    "crates/lsd-core/tests/fixtures/scale-matrix.json": "7da27d04704e0b3479b41349bcd5748e5e85f613f25bcdba2777b0f6e8c41323",
+    "crates/lsd-assets/src/actor_journal.rs": "50c6ecc4d0eed9f624348238cea0c7cd0c878416242cde52a6018558ab3e59d7",
+    "crates/lsd-assets/src/encounter_scene.rs": "053d427442037756f103ced39a51ea3ba47a15877b4ad4712222b56506d921e8",
+    "crates/lsd-assets/src/lib.rs": "2829ac157b3cd02a024243495754eccd89716365bb56e2a237598041825c93a6",
+    "crates/lsd-assets/src/stage_session.rs": "e9263a6bc6114892934d49b2ff6d4c92799093fe1f59768ccb1d44df4e638e88",
+    "crates/lsd-assets/tests/native_actor_journal_scene.rs": "c73cc3216bf47985de0633e3ade412266692a0ab5767bba2f5fc28f597b7b83f",
+    "crates/lsd-assets/tests/native_dream_runtime.rs": "640ca7afbcfff5b656bee003bef621247d7c29000abb02c1167661d9660bb0b3",
+    "crates/lsd-assets/tests/native_actor_player_query.rs": "48802ef1e05cf670d121574ff52204dae954d693ea69a21ffb8b5e842a176541",
+    "crates/lsd-assets/tests/fixtures/actor-player-query.json": "a5381984aefb93e4daba9c288183bc0c0bf50ad870d5833319d95d71be54db70",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "a1fd1f76cfe98497b0f0b96856e1e4f9711d6f0a20b47a08638e6c154295aeb6"
+  },
+  "scope_limits": [
+    "Original player identity follows game_flow DREAME5.TMD; DREAMER.TMD remains the scene/generated model.",
+    "The owned fixture uses valid original constructors, nonempty owned geometry and a supplied original parent graph; its positive contacts compare recursive journal consequences.",
+    "Canonical comparisons use original Yokai/player meshes with supplied positions/properties, identity ancestry and initialized cache epoch. Natural encounter ownership/cache timing is unaccepted.",
+    "The current loaded adapter derives its world pose from supplied scene/player state. Full native cache refresh/ancestry scheduling, reciprocal player/actor query delivery, collision response and ground reconciliation remain open.",
+    "The day-eight development capture executes 48 queries with zero pending notifications and zero contacts. Positive contact evidence comes from separately supplied pair scenarios.",
+    "No original model bytes, canonical geometry observations, table rows or captures are published. Whole feature groups/NPC encounters and original GPU/SPU remain unaccepted."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

@@ -10,6 +10,7 @@ pub enum BehaviorFault {
     Animation(AnimationError),
     PendingCallback,
     MissingMotionServices,
+    Collision(crate::CollisionFault),
     Journal(crate::DayFault),
 }
 impl fmt::Display for BehaviorFault {

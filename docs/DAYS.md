@@ -40,13 +40,18 @@ cargo run -p lsd-bevy --bin lsd-stage --features desktop --locked -- /path/to/ex
 ```
 
 This profile supplies a fresh day-one bootstrap and seed 1, uses the original
-`DREAMER.TMD` model for its bounds, prepares the original spawn/time limit and
+`DREAME5.TMD` player model for its bounds, prepares the original spawn/time limit and
 connects the day clock to loaded movement/link policy. It consumes chunk-mood
 requests and the end-day result. The profile supplies the camera/host schedule
 and now consumes the recovered scene texture/music choices and background color.
 The generation actor channel queues original sound requests. Original generated
 objects, the full generation RNG history, audio and final camera/render setup
 require further work; see [generation recovery](GENERATION.md).
+
+The earlier day profile selected bounds from `DREAMER.TMD` object zero. That
+object is a flat scene helper. Original `game_flow_construct` creates DreamSys
+with `DREAME5.TMD`; the dream session separately loads `DREAMER.TMD` for its map
+and generated objects. The player import now follows that distinction.
 
 `--dream-capture /path/to/new.png 32` captures the prepared first dream after idle
 host ticks. With 4000 ticks the original 3600-tick limit expires, the chart is

@@ -16,7 +16,7 @@ fn loaded_futon_trigger_immediately_updates_mood_score_and_recall_rng_once() {
     let executable = std::fs::read(files.join("SLPS_015.56")).unwrap();
     let original = load_link_tables(&executable).unwrap();
     let content = load_day_tables(&executable).unwrap();
-    let model = Tmd::parse(&std::fs::read(files.join("CDI/ETC/DREAMER.TMD")).unwrap()).unwrap();
+    let model = Tmd::parse(&std::fs::read(files.join("CDI/ETC/DREAME5.TMD")).unwrap()).unwrap();
     let bounds = CollisionBounds::from_points(
         &model.objects[0]
             .vertices
@@ -52,7 +52,13 @@ fn loaded_futon_trigger_immediately_updates_mood_score_and_recall_rng_once() {
     )
     .unwrap();
     let mut effect = MapEffect::new(load_effect_palette(&executable).unwrap());
-    let mut session = StageLinkSession::default();
+    let mut session = StageLinkSession {
+        player_collision: Some(lsd_core::CollisionModel {
+            bounds: Some(bounds),
+            faces: model.objects[0].collision_faces(),
+        }),
+        ..Default::default()
+    };
     session.enable_generation(
         load_generation_tables(&executable).unwrap(),
         load_generation_paths(&executable).unwrap(),

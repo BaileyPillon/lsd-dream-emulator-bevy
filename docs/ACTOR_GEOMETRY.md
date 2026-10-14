@@ -3,9 +3,9 @@
 Imported actors now keep the collision geometry copied from their original root
 part during construction. The geometry includes model bounds and ordered faces.
 Prepared clouds retain the original cuboid expansion, signed movement extension
-and saturated cached-world matrix application. Live collision query/response
-integration remains unfinished; whole encounters and feature groups remain
-unaccepted.
+and saturated cached-world matrix application. Prepared moving-actor clouds now
+query the imported player mesh and apply synchronous contact consequences.
+Movement response, whole encounters and feature groups remain unaccepted.
 
 ## Implementation and evidence
 
@@ -52,11 +52,12 @@ preserved.
 
 ## Remaining requirements
 
-Execute pending inherited queries against prepared actor/player clouds and real
-model faces, with original transform ancestry, cache refresh and contact callback
-feedback. Implement movement correction, ground reconciliation, natural scene
+The moving-actor/player query path now executes; see
+[actor/player queries](ACTOR_PLAYER_QUERIES.md) for its positive native contacts
+and corrected player import. Recover original transform ancestry and cache refresh,
+then implement movement correction, ground reconciliation, natural scene
 ownership/cadence and complete geometry/resource binding behavior. The Yokai
-development capture still exposes 48 pending inherited queries. This count and
-the geometry comparisons do not establish physics completion. Original GPU/SPU,
+development capture previously exposed 48 pending inherited queries. Its current
+profile executes those queries; supplied comparisons do not establish physics completion. Original GPU/SPU,
 remaining NPC callbacks and the other full-game requirements remain open; optional
 AI tools/mods stay separate.
