@@ -72,7 +72,7 @@ the remaining named NPC scripts, interaction, physics and scheduling work.
 The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
 additional callbacks now retain their original movement, scaling, visibility,
-frame-gated sound or empty action; 94 callbacks remain pending. See
+frame-gated sound or empty action; 91 callbacks remain pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch.
 Actor notifications now apply original mood/score, recall, direct dynamic-link
@@ -123,6 +123,10 @@ See [special encounters](docs/SPECIAL_ENCOUNTERS.md) for original CPU comparison
 Its original forward action, triggered color flash and flashback-count reset
 now run through the shared clock. See [Gray Man behavior](docs/GRAY_MAN.md) for
 the original CPU/packet checks and the remaining natural encounter comparisons.
+Bear, Rabbit and Peacock now run their original action scripts. Negative trigger
+distances also apply the original player-facing operation during interaction,
+including waiting signals. See [animal actions and facing](docs/PURSUIT.md) for
+state, RNG, sound and pose comparisons.
 
 ## Start here
 

@@ -14,6 +14,8 @@ pub enum BehaviorFault {
     Journal(crate::DayFault),
     Effect(crate::EffectFault),
     MissingEffectServices,
+    Aim(crate::AimFault),
+    MissingAimServices,
 }
 impl fmt::Display for BehaviorFault {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -133,6 +135,9 @@ pub enum NpcScript {
     KickingMan,
     PrincePrincess,
     GrayMan,
+    Bear,
+    Rabbit,
+    Peacock,
     Pending(u32),
 }
 impl NpcScript {
@@ -152,6 +157,9 @@ impl NpcScript {
             Some(0x8006_1c04) => Self::KickingMan,
             Some(0x8006_07f8) => Self::PrincePrincess,
             Some(0x8006_4618) => Self::GrayMan,
+            Some(0x8006_04dc) => Self::Bear,
+            Some(0x8006_05d0) => Self::Rabbit,
+            Some(0x8005_f1a8) => Self::Peacock,
             Some(at) => Self::Pending(at),
         }
     }
@@ -172,6 +180,9 @@ pub trait EntityInteractionHost {
     fn proximity(&mut self, position: [i32; 3], forward: i32, radius: i32) -> bool;
     fn facing_target(&mut self, position: [i32; 3], distance: i32) -> bool;
     fn aim_at_target(&mut self, rng: &mut PsxRng);
+    fn aim_at_target_actor(&mut self, _actor: &mut ModelActor, rng: &mut PsxRng) {
+        self.aim_at_target(rng);
+    }
     fn notify(&mut self, rng: &mut PsxRng, code: i32);
     fn notify_actor(&mut self, _actor: &mut ModelActor, rng: &mut PsxRng, code: i32) {
         self.notify(rng, code);
@@ -179,6 +190,9 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn face_player(&mut self, _actor: &mut ModelActor) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingAimServices)
+    }
     fn movement_matrix(&mut self, angles: [i16; 3]) -> Result<FixedMatrix, BehaviorFault>;
     fn notify(&mut self, rng: &mut PsxRng, code: i32) -> Result<(), BehaviorFault>;
     fn notify_actor(
@@ -445,7 +459,7 @@ impl EntityBehavior {
                 self.triggered = 1;
             }
             if fields[6] < 0 {
-                host.aim_at_target(rng);
+                host.aim_at_target_actor(actor, rng);
             }
         }
     }
@@ -479,6 +493,7 @@ impl EntityBehavior {
             let link_enabled = &mut self.link_enabled;
             let active = &mut self.active;
             let effect = &mut self.effect;
+            let state = &mut self.state;
             self.context.update_with_sound(sound, |context, sound| {
                 match script {
                     NpcScript::None | NpcScript::PrincePrincess => {}
@@ -563,6 +578,74 @@ impl EntityBehavior {
                         let matrix = host.movement_matrix(actor.pose.angles)?;
                         actor.move_local(ActorAxis::Z, -30, matrix);
                         host.notify_actor(actor, rng, 6)?;
+                    }
+                    NpcScript::Peacock => host.face_player(actor)?,
+                    NpcScript::Bear | NpcScript::Rabbit => {
+                        if ticks == 0 {
+                            let roll = rng.next_u15() % 10;
+                            if roll >= 8 {
+                                actor
+                                    .scale_packet([0x0001_0003, 0x0001_0001, 0x0001_0001], true)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            } else if roll >= 5 {
+                                *state = 10;
+                            }
+                        }
+                        if *state == 10 && ticks >= 201 {
+                            actor.translate([0, 0, -256], false);
+                        }
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        let frame = actor.animation.frame_index;
+                        if script == NpcScript::Bear {
+                            if frame == 0 || frame == 15 {
+                                context.words[7] = 18;
+                                context.words[12] = 18;
+                            }
+                            if ticks >= 321 {
+                                let amount = if rng.next_u15() & 1 != 0 { -60 } else { 60 };
+                                let matrix = host.movement_matrix(actor.pose.angles)?;
+                                actor.move_local(ActorAxis::X, amount, matrix);
+                                let yaw = if rng.next_u15() & 3 != 0 { -9_i16 } else { 9 };
+                                actor
+                                    .rotate_packet(
+                                        [
+                                            0x0001_0000,
+                                            0x0001_0000 | u32::from(yaw as u16),
+                                            0x0001_0000,
+                                        ],
+                                        false,
+                                    )
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            }
+                        } else {
+                            if frame == 7 || frame == 22 {
+                                context.words[7] = 3;
+                            }
+                            if (ticks.wrapping_sub(300) as u32) < 20 {
+                                let matrix = host.movement_matrix(actor.pose.angles)?;
+                                actor.move_local(ActorAxis::Z, -60, matrix);
+                            } else if (ticks.wrapping_sub(321) as u32) < 19 {
+                                actor
+                                    .rotate_packet([0x0001_0000, 0x0001_fff7, 0x0001_0000], false)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            } else if ticks >= 321 {
+                                let amount = if rng.next_u15() & 1 != 0 { 128 } else { -128 };
+                                let matrix = host.movement_matrix(actor.pose.angles)?;
+                                actor.move_local(ActorAxis::X, amount, matrix);
+                                host.notify_actor(actor, rng, 7)?;
+                                let yaw = if rng.next_u15() & 3 != 0 { -9_i16 } else { 9 };
+                                actor
+                                    .rotate_packet(
+                                        [
+                                            0x0001_0000,
+                                            0x0001_0000 | u32::from(yaw as u16),
+                                            0x0001_0000,
+                                        ],
+                                        false,
+                                    )
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            }
+                        }
                     }
                     NpcScript::Pending(_) => return Err(BehaviorFault::PendingCallback),
                 }

@@ -3,7 +3,10 @@
 The Gray Man action is now connected with its owned color effect, shared-clock
 lifetime and flashback-count reset. See [Gray Man behavior](GRAY_MAN.md) for the
 full callback and retained-effect comparisons. The implemented callback count
-is 13 of 107; 94 remain pending. Whole natural encounters still need acceptance.
+is 16 of 107; 91 remain pending. Whole natural encounters still need acceptance.
+Bear, Rabbit and Peacock also have full action comparisons, and negative
+interaction distances now update original facing in the scene adapter. See
+[animal actions and facing](PURSUIT.md).
 
 The day profile now runs the original interaction policy against imported actors
 and the player's integer pose/view. The shared lifecycle and three-slot sound

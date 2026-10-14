@@ -145,6 +145,7 @@ pub struct EncounterScene {
     pub teleports_initialization: Option<bool>,
     pub pending_notifications: Vec<EncounterNotification>,
     pub entity_effect_definition: Option<lsd_core::EntityEffectDefinition>,
+    pub aim_tables: Option<lsd_core::PsxAimTables>,
     effect_notifications: Vec<(u64, i32)>,
     special: Option<crate::special_encounter::SpecialEncounter>,
     seen: [Option<(u8, u16)>; 7],
@@ -170,6 +171,7 @@ impl EncounterScene {
             teleports_initialization: None,
             pending_notifications: Vec::new(),
             entity_effect_definition: None,
+            aim_tables: None,
             effect_notifications: Vec::new(),
             special: None,
             seen: [None; 7],
@@ -213,12 +215,16 @@ impl EncounterScene {
         }
     }
     pub fn enable_special_encounter(&mut self, assets: crate::SpecialEncounterAssets) {
+        self.aim_tables = Some(assets.aim.clone());
         self.special = Some(crate::special_encounter::SpecialEncounter {
             assets,
             serial: None,
             player_position: [0; 3],
             player_matrix: lsd_core::FixedMatrix::IDENTITY,
         });
+    }
+    pub fn enable_aim(&mut self, tables: lsd_core::PsxAimTables) {
+        self.aim_tables = Some(tables);
     }
     pub fn enable_entity_effects(&mut self, definition: lsd_core::EntityEffectDefinition) {
         self.entity_effect_definition = Some(definition);
@@ -583,6 +589,8 @@ impl EncounterScene {
             }),
             effect_definition: self.entity_effect_definition.as_ref(),
             frame_changes: &mut self.frame_changes,
+            aim: self.aim_tables.as_ref(),
+            script_fault: None,
         };
         actor.behavior.update_interaction(
             &mut actor.actor,
@@ -593,6 +601,9 @@ impl EncounterScene {
         );
         if let Some(error) = host.error {
             return Err(lsd_core::BehaviorFault::Journal(error));
+        }
+        if let Some(error) = host.script_fault {
+            return Err(error);
         }
         actor.behavior_active = actor.behavior.active != 0;
         if signal == lsd_core::FrameSignal::Finished {
@@ -679,8 +690,20 @@ struct InteractionHost<'a, H> {
     body_world: Option<lsd_core::BodyWorldFrame>,
     effect_definition: Option<&'a lsd_core::EntityEffectDefinition>,
     frame_changes: &'a mut Vec<EncounterSubscription>,
+    aim: Option<&'a lsd_core::PsxAimTables>,
+    script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn face_player(&mut self, actor: &mut ModelActor) -> Result<(), lsd_core::BehaviorFault> {
+        let aim = self
+            .aim
+            .ok_or(lsd_core::BehaviorFault::MissingAimServices)?;
+        actor.pose.angles = aim
+            .object_angles(actor.pose.position, self.target.position, true, false)
+            .map_err(lsd_core::BehaviorFault::Aim)?;
+        actor.animation.actor_coordinate_cache = 0;
+        Ok(())
+    }
     fn start_entity_effect(
         &mut self,
         effect: &mut Option<lsd_core::EntityEffect>,
@@ -778,6 +801,13 @@ impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
     }
 }
 impl<H: EncounterEventHost> EntityInteractionHost for InteractionHost<'_, H> {
+    fn aim_at_target_actor(&mut self, actor: &mut ModelActor, rng: &mut PsxRng) {
+        if self.aim.is_some() {
+            self.script_fault = EntityScriptHost::face_player(self, actor).err();
+        } else {
+            self.aim_at_target(rng);
+        }
+    }
     fn proximity(&mut self, position: [i32; 3], forward: i32, radius: i32) -> bool {
         self.target
             .proximity(position, forward, radius)

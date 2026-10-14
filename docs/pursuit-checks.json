@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Original Bear/Rabbit/Peacock full action updates and negative-distance facing policy in real constructed MOM/entity/player graphs; target/view/cache, owned math or local canonical assets and external sound are supplied. Natural encounters, collision response and native GPU/SPU remain unaccepted.",
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/pursuit-runtime.json",
+    "sha256": "87b4cac1b4cda331d37c0ad6458a43d9815417f5ce2310a09700312543197ff1",
+    "owned_action_scenarios": 60,
+    "owned_action_states": 3380,
+    "aim_policy_cases": 48
+  },
+  "canonical_comparison": {
+    "scenarios": 6,
+    "states": 1570,
+    "bindings": {
+      "entity_peacock": {
+        "path": "CDI/STG02/N1/M032.LBD",
+        "offset": 28684,
+        "bytes": 13264,
+        "entity": 22,
+        "fields": [
+          1,
+          4,
+          -20,
+          0,
+          0,
+          0,
+          2,
+          -5,
+          2,
+          1,
+          0,
+          1
+        ],
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "8201950d2b3182649be3c2d33b4e98801fdfa81853fb393fd8f257e839d57e3d",
+        "mom_sha256": "e40a96a5350c254930ef7e9ff05b91dea1d4a78bb9807612022320f42d057a4a"
+      },
+      "entity_bear": {
+        "path": "CDI/STG04/M013.LBD",
+        "offset": 12304,
+        "bytes": 8048,
+        "entity": 43,
+        "fields": [
+          -3,
+          0,
+          20,
+          1,
+          -76,
+          6,
+          6,
+          -4,
+          2,
+          2,
+          10,
+          6
+        ],
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "93ef4ed036252fbb83a0e87df945d2b4f0c64a6f481a6408d791fff896bb3b5a",
+        "mom_sha256": "e3a0447ca8f1766f4098436ccbc61f84cf9349dad9e2f4a5eab842ff799df152"
+      },
+      "entity_rabbit": {
+        "path": "CDI/STG04/M013.LBD",
+        "offset": 20352,
+        "bytes": 8252,
+        "entity": 44,
+        "fields": [
+          0,
+          -2,
+          -20,
+          1,
+          -76,
+          6,
+          6,
+          -7,
+          2,
+          2,
+          10,
+          6
+        ],
+        "stage": 4,
+        "model_index": 1,
+        "source_sha256": "93ef4ed036252fbb83a0e87df945d2b4f0c64a6f481a6408d791fff896bb3b5a",
+        "mom_sha256": "2cf6c103f7ef3e1e599842b8a8d4d2fbafebcb85c05bac321be858a0a5d4047f"
+      }
+    },
+    "private_fixture_sha256": "5f6f5cd9ffeb2dc613f1bcf76a41300f3e00f2ab8efbf4db5a2b6f1fb18a1f48"
+  },
+  "native_function_entries": {
+    "entity_bear": 2322,
+    "entity_rabbit": 2322,
+    "entity_peacock": 240,
+    "entity_bear_rabbit_common": 4644,
+    "entity_check_interaction_angle": 48,
+    "func_8001EACC": 252,
+    "ratan2": 504,
+    "rand": 1092,
+    "func_800574C4": 538,
+    "func_8005748C": 136,
+    "sound_entity_update": 4884,
+    "func_80065FD8": 4884
+  },
+  "native_function_sha256": {
+    "entity_bear": "2c4d027adb56b921f8c0f0b02ab18ffc6aa6ef8c024256588254432316dbaa52",
+    "entity_rabbit": "d695dc4080c67b5c35a7765b78b767797152a68510d94acfc456d5913104558f",
+    "entity_peacock": "b3d39f7912aa0bf72f7e5a019f4b9cacaa46a9a278f405834b9b042c61aee945",
+    "entity_bear_rabbit_common": "f00c51f6f9d5144ee34f71ed100e58e234c63cf91bb20d6bf35dbb91cd39e40c",
+    "entity_check_interaction_angle": "753ce14f43f7f3f04bfd50db01831b495ce022b46e4411db81a0f4aebd7ca424",
+    "func_8001EACC": "1ef5e1970a4cd213702b82c21aca301041b73a3f8cb241affe06f208bbcb80be",
+    "ratan2": "1290409d02187ac280bfc64265ca18e6bf990f6d1f997c3ef40635ddd3c518a1",
+    "rand": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c",
+    "func_800574C4": "29303f176ed3d04daf35423bed542cbae4fafeaff90abdf8182d51eb31613f55",
+    "func_8005748C": "56c4b7f4e13cde1be03d9e0f549a37ad158f8194a73c986e003153ea0acfe087",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c"
+  },
+  "private_proof_sha256": {
+    "native": "f628952a83b0099b6bd9be628e16777735e9def021ba39d4275df70e3033a7e0",
+    "producer": "b86ce6bb076fddfc2bb24a4d90dbfe4a9e607181fb4376d432d993c84e14bc89",
+    "repeat": "89c7a2cf7470924d8ac4c2f62f55dd6d5f2d0db86590acae51893a3f0ed487c1",
+    "repeat_native": "f628952a83b0099b6bd9be628e16777735e9def021ba39d4275df70e3033a7e0",
+    "validation": "73146f4ab5d4063f0115d26e83d2d9350d097063323eb6440d5117941c276d7a"
+  },
+  "validation": {
+    "workspace_counts": [
+      131,
+      0,
+      30
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 60,
+    "owned_action_states": 3380,
+    "canonical_action_scenarios": 6,
+    "canonical_action_states": 1570,
+    "aim_policy_cases": 48,
+    "encounter_aim_adapter_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e"
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25"
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "a8933199e7b3dd3ed422466e3fe50256106bea2f53998930c41f3089c443a28c",
+      "workspace": "6d5372d6d2abe4a2fc360bc3b6ae91fc5fb5ecd06ba6ce1c34c0f0d96395da74",
+      "original-content": "4bb2f9128fa2cb8eaf190d2ad073dd06cb8f9cf0b6be25c69cdd56091e3fbd70",
+      "desktop-build": "5ef64d10945fdc904288e0739fcd4c3c1e901eaa3dc539e63ff005993aecc4c9",
+      "capture-idle": "8031e7b984161a842d7d77994ce8ab8f0589e2a666dd54b6588b3dcb81e2334d",
+      "capture-futon": "a96557308092ce20b4be41630c894fc81d240d667d4a2e3a40733ce0d1ea32f8",
+      "capture-yokai": "001332e06ff819d79b6e0df504216c894d2549f2688134ea454256ea0d454c40",
+      "capture-expiry": "c9b641ee5aa3a054a2f5137bfcd4014a8e68be53cca8abdf52af245ab8d6aec5",
+      "capture-gray-birth": "1d35ef1c6432edd81d57dc1f4a2891b8375c5982de1d08b5a13afa9140933588",
+      "capture-gray-fade": "8cc5c3f98682d68b07c747b09dd9ef5f233d099b15d6f05cdcf8688a4db5d56c",
+      "capture-gray-complete": "a351fdf4ff7676334f8d1474c235f411cb2a4eafc4abf427b83b27c251cd3ccd"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 16,
+    "remaining_pending_callbacks": 91,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "7b2e23cd1a41e38a073c0de0b4a1242429fb9cbda454609c3a02a5af162979aa",
+    "crates/lsd-assets/src/encounter_scene.rs": "b7e382e98f07688eb3417cb8f838b20af3b11be1a4f401eb0b53b36cba829b81",
+    "crates/lsd-assets/tests/native_pursuit.rs": "9ba9af1e588753a276261c1e40702c5e85a811ede9c436f182f680f9be177c85",
+    "crates/lsd-assets/tests/fixtures/pursuit-runtime.json": "87b4cac1b4cda331d37c0ad6458a43d9815417f5ce2310a09700312543197ff1"
+  },
+  "scope_limits": [
+    "Bear/Rabbit/Peacock full action updates preserve sound/context/animation ordering, RNG order, movement/rotation/scale, signed tick boundaries and overflow in the recorded graphs.",
+    "Negative interaction distance applies original object facing to the actor before action, including waiting signals. The scene-adapter result matches original policy/action observations; its native call instrumentation is not exposed.",
+    "Owned public model/math inputs are independent of game files. Canonical model/property/asset/math observations remain private and identified by hashes.",
+    "Targets, camera/cache, valid transform parent, already initialized CD and external sound are supplied; original game function outputs are not replaced. Natural encounter, collision response, complete hierarchy/cache timing and native GPU/SPU remain unaccepted.",
+    "All seven saved development captures are unchanged; they do not accept newly implemented animal rendering or a natural encounter.",
+    "There are16 implemented callbacks among107 distinct original actions,91 pending,0 accepted whole NPC encounters and0 accepted whole groups among40 provisional groups. C remains paused and optional AI scope stays separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 16,
+  "remaining_pending_callbacks": 91,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

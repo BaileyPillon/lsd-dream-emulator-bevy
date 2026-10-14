@@ -985,6 +985,28 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "animal_actions_and_continuous_facing_20261014": {
+      "scope": "Original Bear/Rabbit/Peacock full action updates and negative-distance facing policy in real constructed MOM/entity/player graphs; target/view/cache, owned math or local canonical assets and external sound are supplied. Natural encounters, collision response and native GPU/SPU remain unaccepted.",
+      "checks": {
+        "path": "docs/pursuit-checks.json",
+        "sha256": "dabfe0e36237ceb7793221e7de20e1cd5106002e834145cc9b33bbd19f246614"
+      },
+      "owned_action_scenarios": 60,
+      "owned_action_states": 3380,
+      "aim_policy_cases": 48,
+      "canonical_action_scenarios": 6,
+      "canonical_action_states": 1570,
+      "continuous_interaction_facing_connected": true,
+      "bear_rabbit_peacock_actions_connected": true,
+      "scene_aim_adapter_compared": true,
+      "original_named_callbacks_implemented_before": 13,
+      "original_named_callbacks_implemented_after": 16,
+      "remaining_pending_callbacks": 91,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

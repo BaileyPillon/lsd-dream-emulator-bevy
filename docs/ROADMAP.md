@@ -104,8 +104,11 @@ Actor journal type/state gates, mood/score, recall capture, direct dynamic links
 and video/end-clock effects now have 336 owned original CPU comparisons. The day
 profile delivers these notifications immediately with the shared RNG, and a
 loaded Futon scenario verifies a single mood/score contribution. Inherited body
-acknowledgement, aim rotation, cinematic playback and full original scene order
+acknowledgement, cinematic playback and full original scene order
 remain open; see [actor journal recovery](ACTOR_JOURNAL.md).
+Original continuous facing now applies during interaction, and Bear, Rabbit
+and Peacock actions preserve their original movement, sound and RNG rules.
+See [animal actions and facing](PURSUIT.md); full natural encounters remain open.
 
 Local-axis movement and pose setters now have original CPU comparisons, and nine
 additional callbacks are connected. Eight have controlled comparisons using
