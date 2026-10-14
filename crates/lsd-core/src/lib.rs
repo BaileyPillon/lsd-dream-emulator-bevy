@@ -15,6 +15,7 @@ mod effect;
 mod fixed_math;
 mod generation;
 mod generation_effects;
+mod generation_layers;
 mod generation_objects;
 mod link_runtime;
 mod linked_player;
@@ -52,12 +53,17 @@ pub use dream_day::{
 pub use dream_session::{DreamSession, DreamSessionHost};
 pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
+pub use generation::GenerationFrame;
 pub use generation::{
     DreamGeneration, GeneratedActor, GenerationActorEntry, GenerationEntry, GenerationFault,
     GenerationSound, GenerationSpawn, GenerationStyle, GenerationTables, choose_music,
     choose_texture, shift_generation_color,
 };
 pub use generation_effects::generation_effect;
+pub use generation_layers::{
+    GenerationEffectTables, GenerationLayer, GenerationLayers, VramMove, VramRectangle,
+    generation_border_moves,
+};
 pub use generation_objects::{
     GenerationChild, GenerationObjectTables, GenerationPose, GenerationSprite, GenerationStructure,
 };

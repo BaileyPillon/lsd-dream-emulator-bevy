@@ -55,6 +55,11 @@ Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining
 renderer, effects, lifetime and scheduling work.
+Dream gradient/environment layer state and palette rotation are now connected
+to the day profile. A combined generation-frame comparison checks object RNG,
+layer updates, palette commands and sound-request order together. See
+[generation layers](docs/GENERATION_LAYERS.md) for the evidence and remaining
+original GPU and audio comparisons.
 
 ## Start here
 

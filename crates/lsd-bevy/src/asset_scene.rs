@@ -91,6 +91,14 @@ pub struct AssetSceneBuilder<'a> {
 }
 
 impl<'a> AssetSceneBuilder<'a> {
+    /// Retain bindings so a palette update can refresh image data while keeping
+    /// resident meshes and materials. Each builder owns its texture cache.
+    pub fn take_texture_bindings(&mut self) -> Vec<(u16, u16, Handle<Image>)> {
+        std::mem::take(&mut self.textures)
+            .into_iter()
+            .map(|((page, clut), image)| (page, clut, image))
+            .collect()
+    }
     pub fn new(
         vram: &'a Vram,
         meshes: &'a mut Assets<Mesh>,

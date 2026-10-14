@@ -8,7 +8,8 @@ pub use generation_assets::GenerationAssets;
 pub mod formats;
 pub use effect_palette::load_effect_palette;
 pub use generation_tables::{
-    GenerationPaths, load_generation_object_tables, load_generation_paths, load_generation_tables,
+    GenerationPaths, load_generation_effect_tables, load_generation_object_tables,
+    load_generation_paths, load_generation_tables,
 };
 mod link_tables;
 mod math_tables;

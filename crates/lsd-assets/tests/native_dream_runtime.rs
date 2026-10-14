@@ -58,6 +58,8 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
         load_generation_paths(&executable).unwrap(),
     );
     session.enable_generated_objects(load_generation_object_tables(&executable).unwrap());
+    session
+        .enable_generation_layers(lsd_assets::load_generation_effect_tables(&executable).unwrap());
     session.begin_original_day(&mut linked, content);
     assert!(
         session

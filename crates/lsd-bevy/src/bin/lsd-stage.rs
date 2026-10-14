@@ -1,7 +1,7 @@
 //! Inspect original stage assets while gameplay and the PS1 renderer are ported.
 use bevy::{
     app::{AppExit, ScheduleRunnerPlugin},
-    camera::RenderTarget,
+    camera::{RenderTarget, ScalingMode, visibility::RenderLayers},
     core_pipeline::tonemapping::{DebandDither, Tonemapping},
     prelude::*,
     render::{
@@ -14,9 +14,9 @@ use bevy::{
 use lsd_assets::{
     GenerationAssets, StageLinkSession, StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
-    is_canonical_reference, load_day_tables, load_effect_palette, load_generation_object_tables,
-    load_generation_paths, load_generation_tables, load_layered_stage, load_link_tables,
-    load_math_tables, sha256_hex, stage_map_path,
+    is_canonical_reference, load_day_tables, load_effect_palette, load_generation_effect_tables,
+    load_generation_object_tables, load_generation_paths, load_generation_tables,
+    load_layered_stage, load_link_tables, load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
@@ -33,6 +33,7 @@ struct StageAssets {
     stage: u8,
     map_number: u16,
     texture_variant: char,
+    palette_revision: u64,
 }
 
 #[derive(Resource)]
@@ -62,6 +63,8 @@ struct StreamVisuals {
     rebuild_epoch: u64,
     entities: Vec<Entity>,
     models: std::collections::BTreeMap<u16, ModelMeshes>,
+    textures: Vec<(u16, u16, Handle<Image>)>,
+    palette_revision: u64,
 }
 
 #[derive(Resource)]
@@ -83,6 +86,16 @@ struct GeneratedVisuals {
     count: usize,
     entities: Vec<Entity>,
     models: Vec<Vec<(Handle<Mesh>, Handle<StandardMaterial>)>>,
+}
+
+#[derive(Component)]
+struct GenerationLayerCamera;
+#[derive(Component)]
+struct GenerationLayerItem(usize);
+#[derive(Resource, Default)]
+struct GenerationLayerVisuals {
+    entities: Vec<Entity>,
+    count: usize,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -222,6 +235,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let tix = Tix::parse(&texture_bytes)?;
     let mut vram = Vram::default();
     let mut display_stage = stage;
+    let mut loaded_texture = texture.chars().next().unwrap();
     for bank in &tix.banks {
         for image in &bank.images {
             vram.upload(image)?;
@@ -373,6 +387,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 load_generation_paths(&executable)?,
             );
             session.enable_generated_objects(load_generation_object_tables(&executable)?);
+            session.enable_generation_layers(load_generation_effect_tables(&executable)?);
             session.begin_original_day(linked, load_day_tables(&executable)?);
             session.tick(
                 streamed.as_mut().unwrap(),
@@ -416,6 +431,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             0x1000
                         },
                     )?;
+                    let selected = session
+                        .as_ref()
+                        .and_then(|session| session.content_choice.as_ref())
+                        .map_or(loaded_texture, |choice| choice.texture);
+                    if display_stage != streamed.stage_id() || loaded_texture != selected {
+                        display_stage = streamed.stage_id();
+                        loaded_texture = selected;
+                        vram = streamed.load_texture_variant(selected)?;
+                    }
+                    if let Some(session) = &mut session {
+                        for command in session.take_generation_vram_moves() {
+                            vram.copy_rectangle(command)?;
+                        }
+                    }
                 } else if let Some(layered) = &layered {
                     player.step_in_scene(0x1000, &layered.collision, &tables)?;
                 } else {
@@ -429,7 +458,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .as_ref()
                 .and_then(|session| session.content_choice.as_ref())
                 .map_or(texture.chars().next().unwrap(), |choice| choice.texture);
-            if streamed.stage_id() != stage || original_day {
+            if streamed.stage_id() != display_stage || selected_texture != loaded_texture {
                 display_stage = streamed.stage_id();
                 vram = streamed.load_texture_variant(selected_texture)?;
             }
@@ -494,7 +523,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             if let (Some(generation), Some(choice)) = (&session.generation, &session.content_choice)
             {
                 println!(
-                    "generation_kind={} original_scene_style={:?} selected_texture={} selected_music={} generation_tick={} active_generation_actors={} generation_objects={} generation_object_preview_connected=true original_gpu_precision_and_audio_playback_pending=true",
+                    "generation_kind={} original_scene_style={:?} selected_texture={} selected_music={} generation_tick={} active_generation_actors={} generation_objects={} generation_gradient_layers={} generation_environment_layer={} generation_object_preview_connected=true generation_layer_preview_connected=true palette_copy_channel_connected=true original_gpu_precision_and_audio_playback_pending=true",
                     generation.generation_type,
                     generation.style,
                     choice.texture,
@@ -505,7 +534,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .iter()
                         .filter(|actor| actor.active)
                         .count(),
-                    generation.structures.len()
+                    generation.structures.len(),
+                    generation.layers.gradient.len(),
+                    generation.layers.environment.is_some()
                 );
             }
         }
@@ -564,7 +595,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             entities: Vec::new(),
             models: Vec::new(),
         })
-        .add_systems(Update, generated_objects.after(walking_camera));
+        .insert_resource(GenerationLayerVisuals::default())
+        .add_systems(Update, generated_objects.after(walking_camera))
+        .add_systems(Update, generation_layers);
     }
     if walk_stream {
         app.insert_resource(StreamVisuals {
@@ -572,6 +605,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             rebuild_epoch: u64::MAX,
             entities: Vec::new(),
             models: Default::default(),
+            textures: Vec::new(),
+            palette_revision: u64::MAX,
         })
         .add_systems(Update, stream_meshes);
     }
@@ -590,6 +625,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         stage: display_stage,
         map_number,
         texture_variant: selected_texture,
+        palette_revision: 0,
     });
     let plugins = DefaultPlugins
         .set(ImagePlugin::default_nearest())
@@ -698,6 +734,18 @@ fn walking_controls(
             source.vram = streamed
                 .load_texture_variant(source.texture_variant)
                 .expect("validated original destination texture");
+        }
+        if let Some(session) = session {
+            let moves = session.take_generation_vram_moves();
+            if !moves.is_empty() {
+                for command in moves {
+                    source
+                        .vram
+                        .copy_rectangle(command)
+                        .expect("bounded original palette strip copy");
+                }
+                source.palette_revision = source.palette_revision.wrapping_add(1);
+            }
         }
     } else if let Some(layered) = layered_collision {
         player
@@ -832,13 +880,103 @@ fn generation_environment(scene: Res<WalkingScene>, mut clear: ResMut<ClearColor
         .and_then(|session| session.generation.as_ref())
         .and_then(|generation| generation.style)
     {
-        let [r, g, b] = style.scene_color;
+        let [r, g, b] = scene
+            .session
+            .as_ref()
+            .and_then(|s| s.generation.as_ref())
+            .and_then(|g| g.layers.stage_color)
+            .unwrap_or(style.scene_color);
         clear.0 = Color::srgb_u8(r, g, b);
     }
 }
 
 // Presentation adapter. Original PS1 projection, draw order and GPU precision
 // remain separate requirements; the logical poses above are native-checked.
+fn generation_layers(
+    mut commands: Commands,
+    scene: Res<WalkingScene>,
+    mut visuals: ResMut<GenerationLayerVisuals>,
+    assets: (ResMut<Assets<Mesh>>, ResMut<Assets<StandardMaterial>>),
+    mut nodes: Query<(
+        &GenerationLayerItem,
+        &mut Transform,
+        &MeshMaterial3d<StandardMaterial>,
+    )>,
+) {
+    let Some(generation) = scene
+        .session
+        .as_ref()
+        .and_then(|session| session.generation.as_ref())
+    else {
+        return;
+    };
+    let mut layers = generation.layers.gradient.clone();
+    let environment_index = layers.len();
+    layers.extend(generation.layers.environment);
+    let (mut meshes, mut materials) = assets;
+    if visuals.count != layers.len() {
+        for entity in visuals.entities.drain(..) {
+            commands.entity(entity).despawn();
+        }
+        for (index, layer) in layers.iter().enumerate() {
+            let [r, g, b] = layer.color;
+            let environment = index == environment_index;
+            let material = materials.add(StandardMaterial {
+                base_color: Color::srgba_u8(r, g, b, if environment { 128 } else { 255 }),
+                unlit: true,
+                cull_mode: None,
+                alpha_mode: if environment {
+                    AlphaMode::Blend
+                } else {
+                    AlphaMode::Opaque
+                },
+                ..default()
+            });
+            visuals.entities.push(
+                commands
+                    .spawn((
+                        GenerationLayerItem(index),
+                        RenderLayers::layer(if environment { 2 } else { 1 }),
+                        Mesh3d(meshes.add(Rectangle::new(1.0, 1.0))),
+                        MeshMaterial3d(material),
+                        generation_layer_transform(*layer, index),
+                    ))
+                    .id(),
+            );
+        }
+        visuals.count = layers.len();
+    } else {
+        for (item, mut transform, binding) in &mut nodes {
+            if let Some(layer) = layers.get(item.0) {
+                *transform = generation_layer_transform(*layer, item.0);
+                if let Some(mut material) = materials.get_mut(&binding.0) {
+                    let [r, g, b] = layer.color;
+                    material.base_color = Color::srgba_u8(
+                        r,
+                        g,
+                        b,
+                        if item.0 == environment_index {
+                            128
+                        } else {
+                            255
+                        },
+                    );
+                }
+            }
+        }
+    }
+}
+
+fn generation_layer_transform(layer: lsd_core::GenerationLayer, index: usize) -> Transform {
+    let [x, y, width, height] = layer.screen_rectangle([320, 240]);
+    Transform::from_xyz(
+        x as f32 + width as f32 * 0.5 - 160.0,
+        120.0 - y as f32 - height as f32 * 0.5,
+        index as f32 * 0.01,
+    )
+    .with_scale(Vec3::new(width as f32, height as f32, 1.0))
+}
+
 fn generated_pose(pose: GenerationPose) -> Transform {
     let [x, y, z] = pose.position.map(|v| v as f32 / 2048.0);
     let [rx, ry, rz] = pose
@@ -860,7 +998,11 @@ type GeneratedCameras<'w, 's> = Query<
     'w,
     's,
     (&'static Transform, &'static Projection),
-    (With<Camera3d>, Without<GeneratedItem>),
+    (
+        With<Camera3d>,
+        Without<GeneratedItem>,
+        Without<GenerationLayerCamera>,
+    ),
 >;
 
 fn generated_objects(
@@ -1053,6 +1195,21 @@ fn stream_meshes(
         return;
     };
     let epoch = scene.session.as_ref().map_or(0, |session| session.rebuilds);
+    if visuals.palette_revision != source.palette_revision {
+        for (page, clut, handle) in &visuals.textures {
+            if (clut >> 6) & 511 >= 496
+                && let Some(mut image) = images.get_mut(handle)
+            {
+                image.data = Some(
+                    source
+                        .vram
+                        .texture_rgba(*page, *clut)
+                        .expect("validated palette texture"),
+                );
+            }
+        }
+        visuals.palette_revision = source.palette_revision;
+    }
     if visuals.revision == stage.revision && visuals.rebuild_epoch == epoch {
         return;
     }
@@ -1061,6 +1218,7 @@ fn stream_meshes(
     }
     if visuals.rebuild_epoch != epoch {
         visuals.models.clear();
+        visuals.textures.clear();
     }
     let resident: std::collections::BTreeSet<_> = stage
         .collision
@@ -1125,11 +1283,15 @@ fn stream_meshes(
             }
         }
     }
+    visuals.textures.extend(builder.take_texture_bindings());
     visuals.revision = stage.revision;
     visuals.rebuild_epoch = epoch;
 }
 
-fn walking_camera(scene: Res<WalkingScene>, mut cameras: Query<&mut Transform, With<Camera3d>>) {
+fn walking_camera(
+    scene: Res<WalkingScene>,
+    mut cameras: Query<&mut Transform, (With<Camera3d>, Without<GenerationLayerCamera>)>,
+) {
     let player = &scene.player;
     let rotation = scene.tables.rotation(player.controls.angles);
     let eye = rotation.apply_short(player.controls.eye.map(|value| value as i16));
@@ -1231,8 +1393,50 @@ fn setup(
     } else {
         RenderTarget::default()
     };
+    let layers_enabled = walking
+        .as_ref()
+        .and_then(|scene| scene.session.as_ref())
+        .is_some_and(|session| session.generation_effect_tables.is_some());
+    if layers_enabled {
+        for (layer, order) in [(1, -1), (2, 1)] {
+            commands.spawn((
+                GenerationLayerCamera,
+                Camera3d::default(),
+                Camera {
+                    order,
+                    clear_color: if order < 0 {
+                        ClearColorConfig::Default
+                    } else {
+                        ClearColorConfig::None
+                    },
+                    ..default()
+                },
+                Projection::Orthographic(OrthographicProjection {
+                    scaling_mode: ScalingMode::Fixed {
+                        width: 320.0,
+                        height: 240.0,
+                    },
+                    ..OrthographicProjection::default_3d()
+                }),
+                RenderLayers::layer(layer),
+                Msaa::Off,
+                Tonemapping::None,
+                DebandDither::Disabled,
+                target.clone(),
+                Transform::from_xyz(0.0, 0.0, 100.0),
+            ));
+        }
+    }
     commands.spawn((
         Camera3d::default(),
+        Camera {
+            clear_color: if layers_enabled {
+                ClearColorConfig::None
+            } else {
+                ClearColorConfig::Default
+            },
+            ..default()
+        },
         Msaa::Off,
         Tonemapping::None,
         DebandDither::Disabled,
@@ -1262,7 +1466,7 @@ fn capture_frame(mut commands: Commands, time: Res<Time<Real>>, mut capture: Res
 fn camera_controls(
     keys: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
-    mut cameras: Query<&mut Transform, With<Camera3d>>,
+    mut cameras: Query<&mut Transform, (With<Camera3d>, Without<GenerationLayerCamera>)>,
 ) {
     let dt = time.delta_secs().min(0.1);
     let pressed = |key| f32::from(u8::from(keys.pressed(key)));

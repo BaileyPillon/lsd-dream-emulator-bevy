@@ -61,3 +61,11 @@ original CPU execution. The day profile loads the original generation model
 and texture and presents these objects. Gradient/border composition, complete
 allocation/lifetime cases, original GPU projection/ordering and global/native
 session comparisons remain open; see [generated objects](GENERATION_OBJECTS.md).
+
+Gradient/environment layer allocation state, parent relationships, offsets,
+color shifts and teardown now have original CPU comparisons. Combined generation
+frames preserve layer/object/palette/sound order and RNG history in supplied
+graphs. The day profile composes development background/foreground layers and
+rotates palette strips in VRAM. Original framebuffer/raster, masking, complete
+global scheduling and audio output remain open; see
+[generation layers](GENERATION_LAYERS.md).

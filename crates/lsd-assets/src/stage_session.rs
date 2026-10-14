@@ -1,9 +1,9 @@
 use crate::{GenerationPaths, StreamedStage};
 use lsd_core::{
     ChunkPlayer, DayStartInputs, DayTables, DreamDay, DreamDayEffects, DreamGeneration, DreamLinks,
-    DreamSession, DreamSessionHost, GenerationObjectTables, GenerationSound, GenerationTables,
-    LinkedPlayer, MapEffect, PlayerControls, SceneMotionReset, SpawnLocation, choose_music,
-    choose_texture,
+    DreamSession, DreamSessionHost, GenerationEffectTables, GenerationFrame,
+    GenerationObjectTables, GenerationSound, GenerationTables, LinkedPlayer, MapEffect,
+    PlayerControls, SceneMotionReset, SpawnLocation, VramMove, choose_music, choose_texture,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -83,6 +83,8 @@ pub struct StageLinkSession {
     pub generation: Option<DreamGeneration>,
     pub generation_tables: Option<GenerationTables>,
     pub generation_object_tables: Option<GenerationObjectTables>,
+    pub generation_effect_tables: Option<GenerationEffectTables>,
+    pub generation_vram_moves: Vec<VramMove>,
     pub generation_paths: Option<GenerationPaths>,
     pub content_choice: Option<SceneContentChoice>,
     pub music_override: i32,
@@ -105,6 +107,8 @@ impl Default for StageLinkSession {
             generation: None,
             generation_tables: None,
             generation_object_tables: None,
+            generation_effect_tables: None,
+            generation_vram_moves: Vec::new(),
             generation_paths: None,
             content_choice: None,
             music_override: 0,
@@ -121,9 +125,16 @@ impl StageLinkSession {
     pub fn enable_generated_objects(&mut self, tables: GenerationObjectTables) {
         self.generation_object_tables = Some(tables);
     }
+    pub fn enable_generation_layers(&mut self, tables: GenerationEffectTables) {
+        self.generation_effect_tables = Some(tables);
+    }
+    pub fn take_generation_vram_moves(&mut self) -> Vec<VramMove> {
+        std::mem::take(&mut self.generation_vram_moves)
+    }
 
     /// Original generated-object channel precedes the two proximity sound slots.
-    /// Gradient composition and original global scheduling require further work.
+    /// The recovered layer and palette channels precede sound when enabled.
+    /// Original global scheduling and GPU presentation require further work.
     pub fn tick_generation_actors(
         &mut self,
         stage: &StreamedStage,
@@ -145,13 +156,27 @@ impl StageLinkSession {
             if let Some(objects) = &self.generation_object_tables {
                 // Original Renderer + 0x18 is eye Y; constructor/update uses
                 // its change from the initial eye Y, rather than the style height.
-                generation.tick_structures(
-                    tables,
-                    objects,
-                    &mut linked.rng,
-                    position,
-                    controls.eye[1],
-                )?;
+                if let Some(geometry) = &self.generation_effect_tables {
+                    self.generation_vram_moves
+                        .extend(generation.tick_objects_and_layers(
+                            tables,
+                            objects,
+                            geometry,
+                            &mut linked.rng,
+                            GenerationFrame {
+                                position,
+                                view: [controls.eye[1], controls.target[1]],
+                            },
+                        )?);
+                } else {
+                    generation.tick_structures(
+                        tables,
+                        objects,
+                        &mut linked.rng,
+                        position,
+                        controls.eye[1],
+                    )?;
+                }
             } else {
                 generation.timer = generation.timer.wrapping_add(1);
             }

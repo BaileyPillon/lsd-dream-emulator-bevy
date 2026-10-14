@@ -57,7 +57,9 @@ comparisons and 17 supplied permanent-link destinations remain regression checks
 Desktop captures exercise the prepared object channel at 32 and 4,000 supplied
 idle host ticks. Captures establish development output, not whole-session parity.
 
-Gradient and environmental effects, border composition, original renderer/global
+Gradient/environment state and palette-copy commands now have a separate
+[generation layer comparison](GENERATION_LAYERS.md), including combined frames
+with generated objects. Original GPU composition, original renderer/global
 ordering, natural NPC encounters, audio/SPU output, menus, media and persistence
 remain required. No complete original feature group is accepted by this change;
 the whole-game tracker remains 0/40 provisional groups. Optional AI tools/mods

@@ -63,8 +63,11 @@ idle host ticks. Their images establish the Bevy integration output only.
 Generated model/sprite construction, child updates and their additional RNG calls
 now run in the core and day profile, with native constructor/build comparisons
 and imported-model/sprite presentation. See [generated objects](GENERATION_OBJECTS.md).
-Gradient effects, borders, complete rendering/lifetimes and original global
-ordering still require implementation and comparison. The earlier unverified
+Gradient/environment layer state and palette-copy commands now run in the core
+and day profile, with original CPU and combined-frame comparisons. The Bevy
+adapter composes background and foreground layers and refreshes palette textures.
+See [generation layers](GENERATION_LAYERS.md). Original framebuffer output,
+complete lifetimes and global ordering still require comparison. The earlier unverified
 structure-planning draft remains preserved privately; the runtime uses the
 verified constructor/update implementation.
 

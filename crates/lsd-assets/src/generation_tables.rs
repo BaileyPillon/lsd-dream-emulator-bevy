@@ -1,5 +1,8 @@
 use crate::{PsxExeHeader, is_canonical_reference};
-use lsd_core::{GenerationActorEntry, GenerationEntry, GenerationObjectTables, GenerationTables};
+use lsd_core::{
+    GenerationActorEntry, GenerationEffectTables, GenerationEntry, GenerationObjectTables,
+    GenerationTables, VramRectangle,
+};
 
 /// Read generation content from the user's canonical executable. No game tables
 /// are embedded in this crate or distributed with the port.
@@ -165,6 +168,34 @@ pub fn load_generation_object_tables(
         sprite_random_scales: reader.packets(0x8008_788C)?,
         sprite_rectangles: rectangles,
         sprite_cluts: cluts,
+    })
+}
+
+pub fn load_generation_effect_tables(
+    executable: &[u8],
+) -> Result<GenerationEffectTables, &'static str> {
+    let reader = Reader::new(executable)?;
+    let mut borders = [VramRectangle {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    }; 4];
+    for (index, rect) in borders.iter_mut().enumerate() {
+        let bytes = reader.bytes(0x8008_7444 + index as u32 * 12, 12)?;
+        *rect = VramRectangle {
+            x: i16::from_le_bytes(bytes[..2].try_into().unwrap()),
+            y: i16::from_le_bytes(bytes[2..4].try_into().unwrap()),
+            width: i32::from_le_bytes(bytes[4..8].try_into().unwrap()),
+            height: i32::from_le_bytes(bytes[8..12].try_into().unwrap()),
+        };
+    }
+    Ok(GenerationEffectTables {
+        environment_origin: reader.words(0x8008_AB58)?,
+        environment_size: reader.words(0x8008_AB60)?,
+        gradient_origin: reader.words(0x8008_AB68)?,
+        gradient_size: reader.words(0x8008_AB70)?,
+        borders,
     })
 }
 impl<'a> Reader<'a> {

@@ -208,9 +208,9 @@
       "id": "F024",
       "title": "Procedural dream structures and palette seeding",
       "requirement": "Preserve day/location modes, structure placement, colors, updates and cleanup.",
-      "port_status": "partial_native_checked_construction_and_updates",
+      "port_status": "partial_native_checked_construction_updates_and_layers",
       "whole_feature_accepted": false,
-      "evidence": "docs/GENERATION_OBJECTS.md"
+      "evidence": "docs/GENERATION_LAYERS.md"
     },
     {
       "id": "F025",
@@ -637,6 +637,28 @@
       "bevy_object_channel_and_presentation_connected": true,
       "full_native_global_rng_history_accepted": false,
       "original_gpu_rendering_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "generation_layers_recovery_20261014": {
+      "scope": "Original environment/gradient construction, parent setup, update colors/offsets, cleanup, palette-copy command order and combined layer/object/sound frames in supplied successful-allocation graphs. Canonical geometry/palettes load privately. Bevy layer and bounded unmasked VRAM integration added; original GPU/SPU, allocation failures, natural lifetimes and full native session/global scheduling remain unaccepted.",
+      "checks": {
+        "path": "docs/generation-layer-checks.json",
+        "sha256": "2abafafa7f94e6589a73460130ddfbe470c5f77590f3dac45a2b71270aef4f97"
+      },
+      "owned_layer_constructions": 12,
+      "owned_layer_update_states": 132,
+      "owned_border_command_cases": 12,
+      "owned_combined_generation_sequences": 72,
+      "owned_combined_generation_frames": 288,
+      "private_original_layer_constructions": 12,
+      "private_original_layer_update_states": 132,
+      "private_original_border_command_cases": 12,
+      "palette_rotation_regression_ticks": 40,
+      "bevy_layer_and_palette_channel_connected": true,
+      "captures_contain_active_gradient_or_environment": false,
+      "original_gpu_or_full_session_parity_accepted": false,
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

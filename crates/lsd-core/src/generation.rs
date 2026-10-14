@@ -1,5 +1,15 @@
-use crate::{GenerationObjectTables, GenerationStructure, PsxRng, SceneGrid, SpawnLocation};
+use crate::{
+    GenerationEffectTables, GenerationLayers, GenerationObjectTables, GenerationStructure, PsxRng,
+    SceneGrid, SpawnLocation, VramMove, generation_border_moves,
+};
 use std::fmt;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct GenerationFrame {
+    pub position: [i32; 3],
+    /// Original renderer eye Y and target Y, before presentation conversion.
+    pub view: [i32; 2],
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GenerationFault {
@@ -97,6 +107,7 @@ pub struct DreamGeneration {
     pub structures: Vec<GenerationStructure>,
     pub structure_count: i32,
     pub structure_view_origin: i32,
+    pub layers: GenerationLayers,
 }
 impl Default for DreamGeneration {
     fn default() -> Self {
@@ -120,6 +131,7 @@ impl Default for DreamGeneration {
             structures: Vec::new(),
             structure_count: 0,
             structure_view_origin: 0,
+            layers: GenerationLayers::default(),
         }
     }
 }
@@ -144,6 +156,7 @@ impl DreamGeneration {
         self.submode = submode;
         self.generation_type = -1;
         self.timer = 0;
+        self.layers.stage_color = None;
         for actor in &mut self.actors {
             actor.active = false;
         }
@@ -336,6 +349,51 @@ impl DreamGeneration {
         if previous == 0 {
             self.build_structures(tables, objects, rng, base, view_height)?;
         }
+        self.update_structures(objects, rng, base, view_height)
+    }
+
+    /// First-frame layers are allocated before structures. Every frame then
+    /// updates the gradient, structures and palette copies, in native order.
+    /// Proximity sound slots follow this call, using the same RNG and timer.
+    pub fn tick_objects_and_layers(
+        &mut self,
+        tables: &GenerationTables,
+        objects: &GenerationObjectTables,
+        geometry: &GenerationEffectTables,
+        rng: &mut PsxRng,
+        frame: GenerationFrame,
+    ) -> Result<Vec<VramMove>, GenerationFault> {
+        let previous = self.timer;
+        self.timer = self.timer.wrapping_add(1);
+        if previous == 0 {
+            self.layers.create(
+                tables,
+                geometry,
+                self.environment_effect,
+                self.flags,
+                self.effect_palette,
+            );
+            self.build_structures(tables, objects, rng, frame.position, frame.view[0])?;
+        }
+        self.layers.update(
+            tables,
+            geometry,
+            self.flags,
+            self.effect_palette,
+            self.effect_data_color,
+            frame.view,
+        );
+        self.update_structures(objects, rng, frame.position, frame.view[0])?;
+        Ok(generation_border_moves(self.location, geometry))
+    }
+
+    fn update_structures(
+        &mut self,
+        objects: &GenerationObjectTables,
+        rng: &mut PsxRng,
+        base: [i32; 3],
+        view_height: i32,
+    ) -> Result<(), GenerationFault> {
         let delta = view_height.wrapping_sub(self.structure_view_origin);
         for object in &mut self.structures {
             object.update(objects, base, delta, rng)?;
@@ -391,6 +449,7 @@ impl DreamGeneration {
     pub fn stop_with_sound(&mut self, sound: &mut impl GenerationSound) {
         self.environment_effect = None;
         self.flags = 0;
+        self.layers.stop();
         if self.generation_type >= 0 {
             self.structures.clear();
         }

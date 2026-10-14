@@ -202,6 +202,54 @@ impl Vram {
         &self.words
     }
 
+    /// Bounded, unmasked VRAM copy used by the recovered palette strips.
+    /// Horizontal overlap copies from the right when the destination is right
+    /// of the source. Vertical rows retain top-to-bottom command order.
+    /// Mask state, wrapped and zero-size GPU transfers remain unsupported.
+    pub fn copy_rectangle(&mut self, command: lsd_core::VramMove) -> Result<(), DecodeError> {
+        let source = command.source;
+        let dimensions = [
+            i32::from(source.x),
+            i32::from(source.y),
+            command.destination[0],
+            command.destination[1],
+            source.width,
+            source.height,
+        ];
+        let [sx, sy, dx, dy, width, height] = dimensions;
+        if sx < 0
+            || sy < 0
+            || dx < 0
+            || dy < 0
+            || width <= 0
+            || height <= 0
+            || width > 1024
+            || height > 512
+            || sx > 1024 - width
+            || dx > 1024 - width
+            || sy > 512 - height
+            || dy > 512 - height
+        {
+            return Err(DecodeError::new(
+                0,
+                "VRAM copy requires unsupported wrapped or empty transfer",
+            ));
+        }
+        for row in 0..height as usize {
+            for column in 0..width as usize {
+                let col = if sx < dx {
+                    width as usize - column - 1
+                } else {
+                    column
+                };
+                let from = (sy as usize + row) * 1024 + sx as usize + col;
+                let to = (dy as usize + row) * 1024 + dx as usize + col;
+                self.words[to] = self.words[from];
+            }
+        }
+        Ok(())
+    }
+
     pub fn upload_block(&mut self, block: &TimBlock<'_>) -> Result<(), DecodeError> {
         let (x, y, width, height) = (
             usize::from(block.x),
