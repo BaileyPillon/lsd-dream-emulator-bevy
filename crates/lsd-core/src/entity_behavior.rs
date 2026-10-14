@@ -158,6 +158,10 @@ pub enum NpcScript {
     Horse,
     Soldier,
     GiantTurtle,
+    GiantMaiko,
+    Fox,
+    StandingPenguin,
+    SlidingPenguin,
     Pending(u32),
 }
 impl NpcScript {
@@ -198,6 +202,10 @@ impl NpcScript {
             Some(0x8005_f544) => Self::Horse,
             Some(0x8006_0148) => Self::Soldier,
             Some(0x8005_fa94) => Self::GiantTurtle,
+            Some(0x8005_e7f8) => Self::GiantMaiko,
+            Some(0x8005_ed30) => Self::Fox,
+            Some(0x8006_0d80) => Self::StandingPenguin,
+            Some(0x8006_0f38) => Self::SlidingPenguin,
             Some(at) => Self::Pending(at),
         }
     }
@@ -314,6 +322,18 @@ fn trigger_ratio(
                 .ok_or(BehaviorFault::Division)?,
         )
         .ok_or(BehaviorFault::Division)
+}
+fn rotate_yaw(actor: &mut ModelActor, yaw: i16) -> Result<(), BehaviorFault> {
+    actor
+        .rotate_packet(
+            [
+                0x0001_0000,
+                0x0001_0000 | u32::from(yaw as u16),
+                0x0001_0000,
+            ],
+            false,
+        )
+        .map_err(|_| BehaviorFault::Division)
 }
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EntityBehavior {
@@ -798,6 +818,155 @@ impl EntityBehavior {
                             context.words[17] = 13;
                             context.words[18] = 1;
                         }
+                    }
+                    NpcScript::GiantMaiko => {
+                        actor.move_distance = -20;
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        let duration = animation_duration(actor, clips)? as u32;
+                        let half = (duration.wrapping_add(duration >> 31) as i32) >> 1;
+                        if context.words[1]
+                            .checked_rem(half)
+                            .ok_or(BehaviorFault::Division)?
+                            == 0
+                        {
+                            context.words[7] = 10;
+                            context.words[8] = 1;
+                        }
+                        let mut turn = None;
+                        match *state {
+                            11 => {
+                                turn = match ticks {
+                                    2700 | 3600 => Some(-90),
+                                    3180 => Some(90),
+                                    _ => None,
+                                };
+                                if (ticks.wrapping_sub(3421) as u32) < 120
+                                    && host.player_action_pressed()?
+                                {
+                                    *mutable_ticks = 0;
+                                    *state = 13;
+                                }
+                            }
+                            12 if ticks == 1980 => turn = Some(-90),
+                            13 => {
+                                actor.move_distance = -120;
+                                host.face_player(actor)?;
+                                actor
+                                    .scale_packet([0x0002_0001; 3], true)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                                if entity_distance(actor.pose.position, input.target) < 1024 {
+                                    host.notify_actor(actor, rng, 11)?;
+                                }
+                            }
+                            _ => {}
+                        }
+                        if *mutable_ticks == 1560 {
+                            if rng.next_u15() & 1 != 0 {
+                                turn = Some(90);
+                                *state = 11;
+                            } else {
+                                turn = Some(-90);
+                                *state = 12;
+                            }
+                        }
+                        if let Some(yaw) = turn {
+                            rotate_yaw(actor, yaw)?;
+                        }
+                        let movement = i32::from(actor.move_distance);
+                        crate::move_actor_on_floor(
+                            actor,
+                            ActorAxis::Z,
+                            movement,
+                            false,
+                            rng,
+                            host,
+                        )?;
+                        if *state != 12 && actor.body_contact.current.is_some() {
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Y, -200, matrix);
+                        }
+                    }
+                    NpcScript::Fox => {
+                        if ticks == 0 && rng.next_u15() & 1 != 0 {
+                            *state = 11;
+                        }
+                        if *state == 0 {
+                            if ticks < 64 {
+                                let matrix = host.movement_matrix(actor.pose.angles)?;
+                                actor.move_local(ActorAxis::Z, -90, matrix);
+                            } else if ticks == 64 {
+                                let yaw = if rng.next_u15() & 1 != 0 { 90 } else { -90 };
+                                rotate_yaw(actor, yaw)?;
+                                actor.translate([0, 256, 0], false);
+                            } else {
+                                let notify = !rng.next_u15().is_multiple_of(2);
+                                crate::move_actor_on_floor(
+                                    actor,
+                                    ActorAxis::Z,
+                                    -374,
+                                    notify,
+                                    rng,
+                                    host,
+                                )?;
+                            }
+                        } else if *state == 11 {
+                            if ticks % 5 == 0 {
+                                rotate_yaw(actor, 90)?;
+                            }
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Z, -2048, matrix);
+                            actor.set_hidden(!rng.next_u15().is_multiple_of(7));
+                        }
+                    }
+                    NpcScript::StandingPenguin => {
+                        if ticks == 0 && rng.next_u15().is_multiple_of(5) && *state == 0 {
+                            actor
+                                .scale_packet([0x0001_0006; 3], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Y, 800, matrix);
+                            *state = 11;
+                        }
+                        if context.words[1] % 5 == 0 {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 8;
+                        }
+                        let yaw = match ticks {
+                            90 => Some(-90),
+                            160 => Some(90),
+                            220 if rng.next_u15() & 1 != 0 => Some(180),
+                            _ => None,
+                        };
+                        if let Some(yaw) = yaw {
+                            rotate_yaw(actor, yaw)?;
+                        }
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(ActorAxis::Z, -80, matrix);
+                        host.notify_actor(actor, rng, 6)?;
+                    }
+                    NpcScript::SlidingPenguin => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if ticks < 188 {
+                            if ticks == 84 {
+                                rotate_yaw(actor, 180)?;
+                            }
+                            if context.words[1] % 20 == 0 {
+                                context.words[7] = 9;
+                            }
+                        } else if ticks < 200 {
+                            rotate_yaw(actor, 9)?;
+                        } else {
+                            actor.set_hidden(true);
+                            context.stop(sound);
+                            actor.animation.enabled = false;
+                            actor.animation.action_enabled = false;
+                            *active = 0;
+                            *triggered = 0;
+                            *link_enabled = 0;
+                            context.words[12] = 30;
+                            *state = 1;
+                        }
+                        crate::move_actor_on_floor(actor, ActorAxis::Z, -512, false, rng, host)?;
                     }
                     NpcScript::Soldier | NpcScript::GiantTurtle => {
                         if script == NpcScript::Soldier {

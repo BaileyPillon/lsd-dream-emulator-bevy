@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Giant Maiko, Fox, Standing Penguin and Sliding Penguin full original action/context/animation through supplied live floor graphs, static cached target, player action flag, initial state/tick/seed and explicit original behavior start. Original model/property/math cases imported separately. Natural activation, complete encounters, reciprocal player response, map lifetime, GPU/SPU/timing unaccepted.",
+  "observed_owned_outcomes": {
+    "owned_scenarios_per_callback": {
+      "entity_maiko_giant": 128,
+      "entity_fox": 72,
+      "entity_standing_penguin": 128,
+      "entity_sliding_penguin": 56
+    },
+    "maiko_both_random_routes_observed": true,
+    "maiko_action_window_start_end_and_after_observed": true,
+    "maiko_pursuit_facing_and_video_requests_observed": true,
+    "fox_both_routes_and_visibility_states_observed": true,
+    "standing_penguin_initial_sixfold_scale_observed": true,
+    "sliding_penguin_shutdown_and_final_note_request_observed": true,
+    "whole_natural_encounters_accepted": 0
+  },
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/branch-floor-runtime.json",
+    "fixture_sha256": "2d58281dde7918ce4097745a1fb73082cbb168fa70b7e6e014a756b605a7e58e",
+    "private_fixture_sha256": "864c3b5fc8b9203944fc9f328f7ca47ea002d023adca2273b5f0ca06edd405b5",
+    "owned_scenarios": 384,
+    "owned_states": 3204,
+    "canonical_scenarios": 384,
+    "canonical_states": 3204,
+    "canonical_bindings": {
+      "entity_fox": {
+        "path": "CDI/STG02/M013.LBD",
+        "offset": 43020,
+        "bytes": 7708,
+        "entity": 16,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "707b3c797abacd14cb8ac28e70d978ed8c93ad6d34180a42f24cf24a31bc5bd3",
+        "mom_sha256": "bcdbb7906d7631e6c24766c2970116d3b5b1ade5c161df38fbc5bfa292ddd4a7"
+      },
+      "entity_maiko_giant": {
+        "path": "CDI/STG02/N1/M022.LBD",
+        "offset": 43020,
+        "bytes": 9532,
+        "entity": 11,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "800ee6882253453ac0105f18b3a2d5a8f3fbde152c913058b4671df803bfb75e",
+        "mom_sha256": "f023d2ccb6381c687f28f964e7890f9c55acd07bdd5f5404d7e96707ece9a39c"
+      },
+      "entity_standing_penguin": {
+        "path": "CDI/STG04/N1/M024.LBD",
+        "offset": 28688,
+        "bytes": 3052,
+        "entity": 51,
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "f41b8e9dd7151906d2e2488c04af8c11edb0dd8a63c78788f5a21121cbd5f033",
+        "mom_sha256": "6c8989758844349a878d2ae251fb6cd1416b727648352f3dfd8bf31f149c610f"
+      },
+      "entity_sliding_penguin": {
+        "path": "CDI/STG04/N1/M025.LBD",
+        "offset": 18444,
+        "bytes": 1536,
+        "entity": 52,
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "4b927639b06c82a1beb8a663ddf9281fca55fb33b0d1911db8ee88cc63dd905a",
+        "mom_sha256": "f65b44b07a46c2cb1652edc19c7abc4fbdce9ce1a5a6faaf1594a3d30458d2af"
+      }
+    },
+    "encounter_adapter_scenarios": 11,
+    "encounter_adapter_states": 1048
+  },
+  "native_function_sha256": {
+    "entity_maiko_giant": "04b1dd4511fdbdc195a4ca982d61c1e53bfaa8a6b08d891073e8da02210b496a",
+    "entity_fox": "5d093d83b5c5d680d73399d3a207b20cfb4cb12ce032f32327c298c2fd2bd3d7",
+    "entity_standing_penguin": "12f10f7501e6c945c84304f0bea5131e75bdc306caa30586b7045f82bb0be930",
+    "entity_sliding_penguin": "fd5692f78aa28f1d1606b04f7bdcd900b315d900c30b12c81505f1187a8f7bdb",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "func_800575B0": "44a71bba6d7de19ba1bae29cd06592439cbb2ca2e100b66c4c0c0070cb5382f8",
+    "func_80057618": "ef60e801e3fc8b996abf317a07ea00cb8e51b4375269d28d46e9453cdbf9286e",
+    "func_80057668": "8976835b3b01ef8b9c796e38d720fe8d0ccb0711fca311f1e73c06625ec6d39e",
+    "func_8001EACC": "1ef5e1970a4cd213702b82c21aca301041b73a3f8cb241affe06f208bbcb80be",
+    "dream_sys_get_action_pressed": "bc9d9a4597fc5c324c34fb0acc7dc1596cd1a7b617fc46f0fd1b7f63d9bf4061"
+  },
+  "native_function_entries": {
+    "entity_maiko_giant": 1072,
+    "entity_fox": 1064,
+    "entity_standing_penguin": 2530,
+    "entity_sliding_penguin": 790,
+    "func_80065FD8": 5640,
+    "sound_entity_update": 5456,
+    "func_800575B0": 2144,
+    "func_80057618": 2144,
+    "func_80057668": 2144,
+    "func_8001EACC": 288,
+    "dream_sys_get_action_pressed": 96
+  },
+  "private_proof_sha256": {
+    "native": "80230126da161f9d6940aa39ef15d90c88fbdad9d736f14a3c1b0c6cd9890c7f",
+    "producer": "c32297c9d5dd8b491dc9c41df7ef23f9edd6ddb21287eae32b641bd7efb41351",
+    "graph_library": "d9620f96684ec7f49956b7d170281649fb3bc33dc1cdb95aad5c7ef29d224a9b",
+    "repeat": "d9aeed7541440ffae07e61398ef3c2351c9e4ff256de597be103f6dc83c3fc79",
+    "validation": "5f77ec0e12026c69765e2a639e27c28c905ea10880f552f5269ed4f78e58ec61",
+    "callback_inventory": "c4f6904842caea4012c9085ad731db42baae5915b36bd7c6be7083d5a175da26",
+    "observed_branches": "908d4142d259f98648ec4ea730b3ae8c4f7f3956158533a53b5ee3bddd2994fb"
+  },
+  "validation": {
+    "workspace_counts": [
+      145,
+      0,
+      36
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 384,
+    "owned_action_states": 3204,
+    "canonical_action_scenarios": 384,
+    "canonical_action_states": 3204,
+    "encounter_adapter_scenarios": 11,
+    "encounter_adapter_states": 1048,
+    "original_branching_actions_and_floor_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "fad0353f1be2368978768b91eba7772fb8b5c77896911ad166eb2d6f1b8aaf96",
+      "workspace": "b45ef7deab08e9342d3aeb0c0f2bc7cf83db87ea812e715e52401ad25f4a1a9f",
+      "original-content": "59f42e37a613c47c48fbedf726ecff7f51678cdc23a6bfa9f39a5a72ee38e42b",
+      "desktop-build": "316416b2107e3dac056402e31dd307e543bae6298aa0b5e6f608a666fdbace93",
+      "capture-idle": "d77e8589f27e8ad5f3ac0c572487e8c8a4690b4c4464945c17caa70a2c8e8023",
+      "capture-futon": "d6e080a4e939401597c2698cb1455bf966a9edc0c6d43ad790e130518b9cab0a",
+      "capture-yokai": "62903472c8a5acfa289ffd8f42e2304145439ab52e76ef4acd1ea64eed876255",
+      "capture-expiry": "7d176b268ed1ab9c35b3f6a2efc36711ac0302b8edb4d8766a3ba03e91ffcb35",
+      "capture-gray-birth": "65c49e84781d9b0b2aea18377d02fbb115e88251dd2e4b4f7352402a51939d00",
+      "capture-gray-fade": "6352d44359805f731565097b5cd9583f42089c6086531538fd773912838f6ef8",
+      "capture-gray-complete": "150cdd0790c15c49686a6acec818515386cdac314f801252fe17f63dce52ee6a"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 38,
+    "remaining_pending_callbacks": 69,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "6fba93f9b87386ef48dff5fb69d9c72c311b880087dbf79af1f0feb7c0141c79",
+    "crates/lsd-assets/tests/native_branch_floor.rs": "910d8d1f69bf9e0b8733f4e13fb5eb0d5519e4f509479698843c8cd779fe1f8e",
+    "crates/lsd-assets/tests/fixtures/branch-floor-runtime.json": "2d58281dde7918ce4097745a1fb73082cbb168fa70b7e6e014a756b605a7e58e"
+  },
+  "scope_limits": [
+    "Giant Maiko retains branch RNG, state/tick routes, player-action window, pursuit facing/scale/video request and state-dependent floor/contact Y movement.",
+    "Fox retains route RNG, local translation, random notifications and visibility. Standing Penguin retains random scale/Y movement and turns; Sliding Penguin retains sound, shutdown and final movement order.",
+    "Recordings compare full action, context, animation, pose, cache, contact, floor local signals, journal order, RNG, sound requests and action/facing service calls.11 production adapter trajectories compare1048 resulting states without private local/service-call instrumentation.",
+    "Original construction and routines execute without original game function output replacements. Initial state/tick/seed, explicit behavior start, cached targets, player action and static floor readiness are supplied.",
+    "Original asset bytes, raw properties and detailed original-model observations stay private. Public inputs are owned. Seven development captures are unchanged. Semantic GTE and recorded sound services do not establish hardware flags/timing or GPU/SPU output.",
+    "Natural activation, full spawn-to-contact encounters, reciprocal player movement, full map/cache/residency lifetimes, media and full sessions remain open.38 of107 action callbacks are implemented,69 pending.0 whole NPC encounters and0 of40 provisional groups accepted. C stays paused; original actions make no AI calls."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 38,
+  "remaining_pending_callbacks": 69,
+  "original_npc_behaviors_accepted": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "ai_model_calls": 0
+}

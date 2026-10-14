@@ -1096,6 +1096,26 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "branching_floor_actions_20261014": {
+      "scope": "Giant Maiko, Fox, Standing Penguin and Sliding Penguin full original action/context/animation through supplied live floor graphs, static cached target, player action flag, initial state/tick/seed and explicit original behavior start. Original model/property/math cases imported separately. Natural activation, complete encounters, reciprocal player response, map lifetime, GPU/SPU/timing unaccepted.",
+      "checks": {
+        "path": "docs/branch-floor-checks.json",
+        "sha256": "2425eac1f2665a39df228224cfe72a1e087ff258d394bb4205fead003ef256c8"
+      },
+      "owned_scenarios": 384,
+      "owned_states": 3204,
+      "canonical_scenarios": 384,
+      "canonical_states": 3204,
+      "encounter_adapter_scenarios": 11,
+      "encounter_adapter_states": 1048,
+      "original_named_callbacks_implemented_before": 34,
+      "original_named_callbacks_implemented_after": 38,
+      "remaining_pending_callbacks": 69,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }
