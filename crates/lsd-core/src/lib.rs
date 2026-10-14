@@ -9,10 +9,12 @@ mod chunk_player;
 mod collision;
 mod collision_cloud;
 mod contact_links;
+mod effect;
 mod fixed_math;
 mod link_runtime;
 mod linked_player;
 mod links;
+mod map_effect;
 mod map_links;
 mod pad;
 mod player_controls;
@@ -37,6 +39,7 @@ pub use collision_cloud::{CollisionBounds, CollisionCloud};
 pub use contact_links::{
     DreamContactEffects, FloorLinkRequest, FloorLinkResponse, LinkTransformState, WallLinkRequest,
 };
+pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
 pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
 pub use linked_player::{LinkedPlayer, SceneLinkTables};
@@ -45,7 +48,8 @@ pub use links::{
     LinkSet, LinkTransforms, LinkTrigger, SpawnEntry, SpawnLocation, is_facing_link_angle,
     trigger_link_action,
 };
-pub use map_links::{LinkPalette, MapLinkCommand, MapLinkPolicy};
+pub use map_effect::MapEffect;
+pub use map_links::{LinkPalette, MapCompletionCommand, MapLinkCommand, MapLinkPolicy};
 pub use pad::{PAD_MASKS, PadState};
 pub use player_controls::{
     FloorEffectStep, MotionAxis, MotionRequest, MovementIntent, MovementStep, PlayerControls,

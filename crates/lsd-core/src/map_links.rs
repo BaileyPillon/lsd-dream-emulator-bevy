@@ -1,4 +1,4 @@
-use crate::{DreamLinks, LinkError, PlayerControls};
+use crate::{DreamLinks, EffectFault, EffectPalette, EffectState, LinkError, PlayerControls};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct LinkPalette {
@@ -16,6 +16,13 @@ pub enum MapLinkCommand {
     Notify(i32),
     MoveCallback(i32),
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MapCompletionCommand {
+    DetachEffect,
+    SetStageColor([u8; 3]),
+    StopEntitySound,
+    Notify(i32),
+}
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct MapLinkPolicy {
     pub state: i32,
@@ -26,6 +33,40 @@ pub struct MapLinkPolicy {
     pub view_active: bool,
 }
 impl MapLinkPolicy {
+    /// Original effect notifications 5/6, including the state-10 view restoration.
+    pub fn complete_effect(
+        &mut self,
+        controls: &mut PlayerControls,
+        effect: &EffectState,
+        palette: &EffectPalette,
+        code: i32,
+    ) -> Result<Vec<MapCompletionCommand>, EffectFault> {
+        let mut commands = Vec::new();
+        match code {
+            5 => {
+                commands.push(MapCompletionCommand::DetachEffect);
+                controls.paused = 0;
+                self.state = 0;
+            }
+            6 => {
+                commands.push(MapCompletionCommand::DetachEffect);
+                commands.push(MapCompletionCommand::SetStageColor(
+                    effect.completion_color(palette)?,
+                ));
+                if self.state == 10 {
+                    self.reset_view_pending = false;
+                    self.view_active = true;
+                    commands.push(MapCompletionCommand::StopEntitySound);
+                    controls.paused = 0;
+                    self.state = 4;
+                }
+                commands.push(MapCompletionCommand::Notify(self.state));
+            }
+            _ => {}
+        }
+        Ok(commands)
+    }
+
     /// Port of the map-scene link notification and its original start handlers.
     pub fn notify(
         &mut self,

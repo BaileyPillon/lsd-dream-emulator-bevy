@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T02:49:35.987152+00:00",
+  "base_commit": "f8a405f948cdb91ae9002a3579b3bd6cf268a5fd",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "scope": "Original effect activation/tick/deactivation and map completion compared with original CPU execution, actual inherited bit/color setters and supplied parent/stage/audio boundaries. The Bevy inspector consumes effect requests using locally imported palettes. GPU composition, natural actor parents, full scheduling, scene reconstruction, audio and whole-game parity remain open.",
+  "sequence_cases": 128,
+  "sequence_states": 3600,
+  "tick_cases": 24,
+  "reset_cases": 3,
+  "deactivation_cases": 12,
+  "map_completion_cases": 84,
+  "color_getter": "effect_get_color_impl",
+  "native_function_entries": {
+    "effect_start": 64,
+    "effect_activate": 128,
+    "func_80040714": 202,
+    "func_8001EDAC": 498,
+    "func_80040740": 128,
+    "func_800406E4": 168,
+    "func_8004076C": 105,
+    "func_80040790": 105,
+    "effect_tick": 3496,
+    "effect_deactivate": 149,
+    "effect_start_attached": 64,
+    "effect_reset": 3,
+    "func_80053F84": 84,
+    "dream_sys_set_paused": 24,
+    "effect_get_color_impl": 21,
+    "dream_sys_set_view_mode": 3
+  },
+  "supplied_boundaries": [
+    "effect_attach",
+    "effect_detach",
+    "effect_notify",
+    "scene_detach",
+    "scene_notify",
+    "stage_color",
+    "sound_stop"
+  ],
+  "ranges": [
+    {
+      "name": "effect_reset",
+      "address": "0x8003fed8",
+      "bytes": 108,
+      "sha256": "54abf73996e9d8013070c74684aeb6ba791450dfdb78122eb2783e7fe016b93b"
+    },
+    {
+      "name": "effect_tick",
+      "address": "0x8003ff44",
+      "bytes": 216,
+      "sha256": "c64b3f664dd2ec89b81739d3bf399fd3a3f15c7f1e3350b7ef0c11115cd9745b"
+    },
+    {
+      "name": "effect_set_color_step",
+      "address": "0x8004001c",
+      "bytes": 8,
+      "sha256": "dea8127e64d9c93d9a4df51d3c54e9747090fea982aea0c75be5609a7b895eef"
+    },
+    {
+      "name": "effect_start",
+      "address": "0x80040024",
+      "bytes": 140,
+      "sha256": "103995793cb7706b9b53835e04afe0c65df685a77706d6ef75f3d74ee248f50f"
+    },
+    {
+      "name": "effect_start_attached",
+      "address": "0x800400b0",
+      "bytes": 164,
+      "sha256": "ae24e1376ab1024cbc165469bc30158d3113607aac56d6331e7ca99bd7f1fe2b"
+    },
+    {
+      "name": "effect_activate",
+      "address": "0x80040154",
+      "bytes": 412,
+      "sha256": "6bed0eb29f6c97e99183d1d272234e099e1199b138f05ab43ea67ee0245b4fde"
+    },
+    {
+      "name": "effect_deactivate",
+      "address": "0x800402f0",
+      "bytes": 264,
+      "sha256": "d4a608123391b6996d77edd6a56fec625d35b15a68c3cbfb551d0e6997076a53"
+    },
+    {
+      "name": "effect_get_color_impl",
+      "address": "0x800403f8",
+      "bytes": 52,
+      "sha256": "5e014a37be13cf79ae39e19059a714e590f42117ccc793a556efc3eb45aa6456"
+    },
+    {
+      "name": "effect_set_linked",
+      "address": "0x800404b4",
+      "bytes": 12,
+      "sha256": "d3561a459a29bf7f43f651f7f6ffd82ad85d460c753a5e78d466947cb24cb359"
+    },
+    {
+      "name": "func_800406E4",
+      "address": "0x800406e4",
+      "bytes": 48,
+      "sha256": "4671776de1b365e341212036b5fa04def7aa9ce7f63df994770582798aec3c5b"
+    },
+    {
+      "name": "func_80040714",
+      "address": "0x80040714",
+      "bytes": 44,
+      "sha256": "043d7aa6fe81cde4dce2603fb708ffaceb335ce68c963c64c444d6508ce5bd68"
+    },
+    {
+      "name": "func_80040740",
+      "address": "0x80040740",
+      "bytes": 44,
+      "sha256": "616e8ad945b7f1420b1cbccacc5b45e508cf4839d27d5ae8d63e9d9aa3fad379"
+    },
+    {
+      "name": "func_8004076C",
+      "address": "0x8004076c",
+      "bytes": 36,
+      "sha256": "994f17fc9f20e7c175b804a58f5375b5291399d80558bb9ca079cedbe033a83e"
+    },
+    {
+      "name": "func_80040790",
+      "address": "0x80040790",
+      "bytes": 104,
+      "sha256": "1cc201176ef51cd291478bad1023781cd5aa7eb58387da6bbb76cff36c09919f"
+    },
+    {
+      "name": "func_8001EDAC",
+      "address": "0x8001edac",
+      "bytes": 88,
+      "sha256": "685cff5de3228050301baf2343de332f6b5d8f6e3792817177b649ff16605923"
+    },
+    {
+      "name": "func_80053F84",
+      "address": "0x80053f84",
+      "bytes": 356,
+      "sha256": "561bc2785c30a2196ec2c304d7c29ad25e0672b4dfd44f955241f7749a4e8a7b"
+    },
+    {
+      "name": "dream_sys_set_paused",
+      "address": "0x80059148",
+      "bytes": 108,
+      "sha256": "219f41a09241aaa7deb1204d018a3e9799b392811f63d059c9901558accab74b"
+    },
+    {
+      "name": "dream_sys_get_set_move_direction",
+      "address": "0x8005a168",
+      "bytes": 28,
+      "sha256": "ad48cd8da110730313787c4dda3954825830091f7aee9f3c32f711e9ffb5ede8"
+    },
+    {
+      "name": "dream_sys_set_view_mode",
+      "address": "0x8005a134",
+      "bytes": 52,
+      "sha256": "72d3ee63800701f2a93f94297d166183be0fcc9775ce13a37c19f532d7294345"
+    },
+    {
+      "name": "dream_sys_set_move_callback",
+      "address": "0x800596e8",
+      "bytes": 216,
+      "sha256": "e0911b100ce2b5e6a7ea7d27d2516f24c0bd02b0c26cd3acecebdb3925323b78"
+    },
+    {
+      "name": "func_8001CEB4",
+      "address": "0x8001ceb4",
+      "bytes": 340,
+      "sha256": "722d79cf1f8c109300d4a56aa1d421442a2b5c424a7f3f1e16ad27d281432217"
+    },
+    {
+      "name": "func_8001EC84",
+      "address": "0x8001ec84",
+      "bytes": 120,
+      "sha256": "7c14d23868ee93933886ecd2477e4e60c6200bef1982963f671e2d76e6d7caaf"
+    }
+  ],
+  "original_palette_sequence_cases": 16,
+  "original_palette_sequence_states": 536,
+  "original_palette_sha256": "a113ee6fd3e4857e76ed4211e97d7c1dbc3d887185128360ceaf1f06c549ec50",
+  "original_palette_and_numeric_colors_published": false,
+  "local_validation": {
+    "workspace_counts": [
+      88,
+      0,
+      9
+    ],
+    "clippy_all_features_passed": true,
+    "format_passed": true,
+    "desktop_build_passed": true,
+    "original_palette_native_sequences_passed": 16,
+    "original_palette_native_states_passed": 536,
+    "original_asset_teleport_scenarios_passed": 17,
+    "captures": [
+      {
+        "stage": 0,
+        "map": 0,
+        "ticks": 32,
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0",
+        "image_identical_to_prior_no_link_traversal": true
+      },
+      {
+        "stage": 3,
+        "map": 136,
+        "ticks": 120,
+        "image_sha256": "f2f9324ba40acd50f87233a5b2113ce2ad9bb7d486e446b0f393f9d94e5ab25d",
+        "image_identical_to_prior_no_link_traversal": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "b2024992686629f733a0d7ae9aff9d2aac5c3ccbde0812b2625d3bff1f3fc243",
+      "workspace": "22127bb4badcf77616faf20d15c1d348daa25cafdb1a6fed09ee3e7768fc777d",
+      "original-palette": "8dd5bbf451b41d1088bab899b4415292644449fde23c54858a76e4e912fbfaa9",
+      "original-teleports": "d5298a405a58d66ebe8240d496c3491e73c431449c83cf6691cdeb2d7dd5172e",
+      "desktop-build": "54f15cf69b758d0843aa3e8dea7c8aeb95f08a79b8ec8633021ee2af10d76d90",
+      "capture-0": "0e8a61eea0e690d3936db2cd475360cf489eb151425f79c25179803d10ddd705",
+      "capture-3": "1590337e1008db20a63261763c228288871761baacdf2eb5718fd66d8fe182c4"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "gpu_effect_composition_accepted": false,
+    "scene_replacement_and_audio_implemented": false
+  },
+  "working_source_sha256": {
+    "crates/lsd-core/src/effect.rs": "a30f59be3896a7a1bbd667057e65509cf61009288e38b86413e473a7bbceb96c",
+    "crates/lsd-core/src/map_effect.rs": "b8b20182331b8fce1e0fe8471c066b2d181578014dc75892e7ecfa66ca817277",
+    "crates/lsd-core/src/map_links.rs": "3e6b5d2fdf524cf15d3042a3320334e91ebd8e738f36961a7bf9b9e3ecad8751",
+    "crates/lsd-core/src/lib.rs": "ec3f5a566f70deef1b34d0fc455625b8bcc32293495daf65ef3362f8cbe6869e",
+    "crates/lsd-core/tests/native_effects.rs": "e53dedc14df3c49e9e7e6223b011a528a113f6d31773228fefb6fbcd41238f30",
+    "crates/lsd-core/tests/map_effect.rs": "8f21c1f091a98a691704c42ed8f8e9104e07d6bb149f3257f378517f4e39fd5c",
+    "crates/lsd-assets/src/effect_palette.rs": "bbd41040c2508043bb3cac66e380f46326ef14f76260e7f132378825279917e3",
+    "crates/lsd-assets/src/lib.rs": "ba0795635e477af971c4eff3857ba77b6878747fdd887a59389cf07898ddbe7f",
+    "crates/lsd-assets/tests/native_effect_palette.rs": "7d9118a6d7cbfe1cc3eb0cf5d3955f4727ce0a8d13723b15b5f41bf5c8f1a887",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "730012a7f1e787744650fd6dd03de03cc13d9754119acc11172f20a3f8ef1c83"
+  },
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/effect-lifecycle.json": "cdd3d6be39260637015268bfc8a93b98a97f6b251fc0caca51973d23874014a4"
+  },
+  "private_proof_sha256": {
+    "native-effect-lifecycle-proof-twelve.json": "3f958c06d3e30bb26f49dff13624450572a82421489191db2298fb8665045048",
+    "original-effect-proof-twelve.json": "1b7046f8615fe125a08d1702cc4a5c453726852a72d4e74216ccbca75cd4d05f",
+    "effect-validation-proof-twelve.json": "a80c6492aa38fc6a21aab8a43f0fa45571c86dd7399b353ba4ade90a1025694e"
+  },
+  "scalar_effect_lifecycle_implemented": true,
+  "bevy_effect_request_consumer_present": true,
+  "gpu_effect_composition_accepted": false,
+  "visible_scene_replacement_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "provisional_group_count": 40,
+  "ai_model_calls": 0
+}

@@ -529,6 +529,28 @@
       "native_numeric_observations_unchanged": true,
       "effect_lifecycle_implemented": false,
       "whole_original_feature_groups_accepted": 0
+    },
+    "effect_lifecycle_20261014": {
+      "scope": "Original effect activation/tick/deactivation and map completion compared with original CPU execution, actual inherited bit/color setters and supplied parent/stage/audio boundaries. The Bevy inspector consumes effect requests using locally imported palettes. GPU composition, natural actor parents, full scheduling, scene reconstruction, audio and whole-game parity remain open.",
+      "evidence": {
+        "path": "docs/effect-lifecycle-checks.json",
+        "sha256": "0ba05b5c3b14fa33bfa192613243197dae32a9e9b4eb7640c40b2cc78a7f5dce"
+      },
+      "synthetic_native_sequence_cases": 128,
+      "synthetic_native_sequence_states": 3600,
+      "native_tick_cases": 24,
+      "native_reset_cases": 3,
+      "native_deactivation_cases": 12,
+      "native_map_completion_cases": 84,
+      "original_palette_native_sequences": 16,
+      "original_palette_native_states": 536,
+      "scalar_effect_lifecycle_implemented": true,
+      "bevy_effect_request_consumer_present": true,
+      "gpu_effect_composition_accepted": false,
+      "visible_scene_replacement_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

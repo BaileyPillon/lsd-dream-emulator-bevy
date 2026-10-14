@@ -1,5 +1,7 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
+mod effect_palette;
 pub mod formats;
+pub use effect_palette::load_effect_palette;
 mod link_tables;
 mod math_tables;
 pub use link_tables::{OriginalLinkTables, load_link_tables};

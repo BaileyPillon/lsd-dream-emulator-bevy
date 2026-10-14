@@ -38,6 +38,9 @@ original angle/position setters in supplied graphs; see
 The streamed inspector can now run the linked player and original map-notification
 policy, including per-contact pose restoration. See
 [linked scene integration](docs/SCENE_LINKS.md) for its remaining lifecycle work.
+Original effect color cycles and map completion callbacks now also run in Rust
+and consume link requests in the inspector. See [effect recovery](docs/EFFECTS.md)
+for the native comparisons and remaining GPU/session work.
 
 ## Start here
 
@@ -79,9 +82,9 @@ linking and original scene scheduling remain separate requirements.
 
 Append `--walk-links` for the streamed link prototype, or
 `--walk-links-capture /path/to/new.png 120` for a supplied forward-input capture.
-The console records original transition and sound requests. Fade playback,
-scene replacement, original clock/input scheduling and audio still need their
-runtime consumers.
+The inspector consumes original effect requests and records completion, parent
+and sound commands. GPU fade composition, scene replacement, original clock/input
+scheduling and audio still need their runtime consumers.
 
 To inspect original model animation from a stage's streamed library:
 
@@ -103,8 +106,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 
 | Measure | Current port |
 | --- | ---: |
-| Rust primitives with original native golden observations | 3 |
-| Numeric native reference observations | 2,580 |
+| Initial foundation primitives with native golden observations | 3 |
+| Initial foundation numeric native observations | 2,580 |
 | Provisional whole-game feature groups accepted in the port | 0 / 40 |
 | Original LBD maps decoded by the asset pipeline | 418 |
 | Streamed model libraries decoded | 98 |
@@ -115,6 +118,9 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Supplied body-transform cases compared with the original hit/notification path | 120 |
 | Original link triggers loaded locally | 74 |
 | Original random spawn entries loaded locally | 239 |
+| Effect states compared using generated test colors | 3,600 |
+| Effect states compared using locally imported original colors | 536 |
+| Original map effect-completion scenarios compared | 84 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |
