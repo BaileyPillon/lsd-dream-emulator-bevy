@@ -145,6 +145,10 @@ The encounter channel now tracks clock attachment order separately from actor
 storage. Original start/stop/restart routines establish newest-first delivery;
 32 controlled three-actor clock scenarios compare 416 states, shared RNG,
 sound requests, waiting signals and finish cleanup. The phase counter/flags have
-36 original CPU comparisons. Global player/map/generation/render/CD ordering and
-dynamic births/removals during callbacks remain open. See
-[actor clock recovery](ACTOR_CLOCK.md).
+36 original CPU comparisons. A live cursor now replaces snapshot dispatch and
+finished actors retire during iteration. 88 original-clock scenarios with owned
+mutation callbacks compare 176 notifications and 698 callback observations,
+including next-member removal, restart, duplicates, self destruction and flag
+changes. Global player/map/generation/render/CD ordering and NPC-requested
+births/removals during callbacks remain open. See
+[actor clock recovery](ACTOR_CLOCK.md) and [live traversal](FRAME_CURSOR.md).

@@ -132,5 +132,10 @@ storage. New subscriptions prepend; stop removes the member; restart prepends it
 again with a supplied origin. `tick_frame` runs interaction policy on each signal,
 advances action/animation only on code two and retires registered actors on code
 four. `StageLinkSession::encounter_frame` supplies this clock to the loaded channel.
-Other original clock subscribers and dynamic changes during notification remain
-unconnected; see [actor clock recovery](ACTOR_CLOCK.md).
+`FrameSubscribers` now carries a live cursor separately from its list head.
+Removal repairs that cursor before unlinking, and new subscriptions prepend.
+`EncounterScene` uses this traversal and removes finished actors immediately.
+The list permits duplicate subscriptions to preserve the original base-list
+semantics; actor attachment still guards against duplicate registration.
+Other original clock subscribers and actor births/removals requested by callbacks
+remain unconnected; see [live clock traversal](FRAME_CURSOR.md).

@@ -103,6 +103,10 @@ reordering. Waiting signals retain interaction checks while holding action and
 animation timers; finished signals retire registered actors. See
 [actor clock recovery](docs/ACTOR_CLOCK.md) for native comparisons and the
 remaining global player/map/generation/renderer schedule.
+Clock dispatch now uses a live cursor, so removing the next subscriber skips it
+and a new subscription waits for the next notification. Actor finish cleanup
+removes each actor during dispatch. See [live clock traversal](docs/FRAME_CURSOR.md)
+for original-code comparisons and the remaining shared scene scheduling.
 
 ## Start here
 

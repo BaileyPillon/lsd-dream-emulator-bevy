@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Real original allocator, base constructors and attach/detach/destructor, frame clock advance/reset/flags/notify and live remove-parent cursor run with six owned base subscribers. Supplied MIPS callbacks call original list mutations and are observed without returning dependency outputs. Covers duplicates, removing current/next/later/already-visited/absent subscriptions, prepend/restart, self destruction, reset cancellation and latched flags. No original NPC callbacks, complete scene boot, GPU, SPU or whole-game acceptance.",
+  "fixture": {
+    "path": "crates/lsd-core/tests/fixtures/frame-cursor.json",
+    "sha256": "5dd98ee9a2ae403864c6499262c04eeb2ffba058a76b3c387a326005538f107e",
+    "cases": 88,
+    "notifications": 176,
+    "callback_observations": 698,
+    "subscribers_per_case": 6
+  },
+  "native_function_entries": {
+    "frame_phase_create": 88,
+    "frame_phase_construct": 88,
+    "frame_phase_advance": 176,
+    "frame_phase_notify": 176,
+    "frame_phase_remove_parent": 52,
+    "frame_phase_reset": 92,
+    "frame_phase_set_waiting": 4,
+    "frame_phase_set_finished": 4,
+    "base_class_construct": 704,
+    "base_class_attach": 400,
+    "base_class_detach": 52,
+    "base_class_destructor": 4,
+    "linked_list_prepend": 800,
+    "linked_list_remove": 104,
+    "linked_list_next": 886,
+    "memory_allocate_mem": 1680,
+    "memory_free_mem": 76
+  },
+  "native_function_sha256": {
+    "frame_phase_create": "ec3ccb2a3181ed2896610ef960ff18d8717ea45a2c5de1de48514fad7f21f0fc",
+    "frame_phase_construct": "12b8259c57974a739c9d9131558c2c3d569cd62bd6535f0143133b96bb637ad6",
+    "frame_phase_advance": "3e6693cb32496a0c48b1c1fa6407ee0e135d2cc3dde0feb23b207b7ed0a6c3ab",
+    "frame_phase_notify": "9c28952751ef2a11fb75c2b3cdf01b3f0a3687c16cef8bd178ce9b5b35debc0e",
+    "frame_phase_remove_parent": "ea35fd49eeee1ebbcae0a6278933ffa75c6e13be0c72ce6f129a6c04d223150f",
+    "frame_phase_reset": "dc0d18848bdfc871686ed9b06f2fc93a8fa2f3a4cd6bfc476ff70313486fb65d",
+    "frame_phase_set_waiting": "0346e2079ba1fc6867e83afe0514d2f197f2de4df586b519d4f8ea6788101d93",
+    "frame_phase_set_finished": "4afd589e5be4eab1d525f3ed3978ed7e4ec2a017e59d4f25c7d378b78e5dbb31",
+    "base_class_construct": "fae5807aa21be9790538a8efd442eae9fbfa4ea250f96d35c4b6167dac374859",
+    "base_class_attach": "9d7d8917f3ea126b15d78a9593aa1fbab39aef267d052e2b941bf8b3b6c61c29",
+    "base_class_detach": "5bc709e17eaa0655b2f408ab2ae939a7617eb129279dae52fa178979050fc2c3",
+    "base_class_destructor": "fd5282c0412fa43d662ba2cba64b4f45ca230658938d657a58c04e0789bb86d6",
+    "linked_list_prepend": "45e27fd763628db43f06a3b52e66fc38e3ee733b40e79b2b45827c4b81cadf7c",
+    "linked_list_remove": "c9ac7224f5b11a36315d9685d43afe33d243aa4dd5a13cbbcd028440854a2952",
+    "linked_list_next": "034754e625b4fc389accea2200d19a117d17dadd5bb3401a406390d356fcbd73",
+    "memory_allocate_mem": "a55ec79ff9c1252fd41968bf5abca2a74f3658b6c400df80289d51d943fc5ef9",
+    "memory_free_mem": "590fb6e594883e9fcaa7105de18de7b9a9c0df2322e07feb5e081f66da15a052"
+  },
+  "private_proof_sha256": {
+    "native": "d744694987a129f8a1bdc929402b3794650661d31e50f311652f66381f57fd65",
+    "producer": "f90e73993e0b72c6f22afe4d8e7a64491656750c3b5363d92b60080a60e13378",
+    "validation": "8059ef3c7e5ba14587f07397c0f076d4f8dd7a332d96771e8a38a168480de080"
+  },
+  "validation": {
+    "workspace_counts": [
+      125,
+      0,
+      24
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "live_cursor_cases": 88,
+    "live_cursor_notifications": 176,
+    "live_cursor_callback_observations": 698,
+    "owned_actor_clock_scenarios": 32,
+    "clock_state_observations": 416,
+    "real_clock_entities_constructed": 96,
+    "scalar_clock_cases": 36,
+    "full_owned_movement_wrapper_cases": 270,
+    "full_owned_pair_cases": 32,
+    "full_owned_pair_contacts": 20,
+    "canonical_full_pair_cases": 16,
+    "canonical_full_pair_contacts": 12,
+    "wrong_fresh_position_owned_contact_mismatches": 20,
+    "wrong_fresh_position_canonical_contact_mismatches": 8,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48,
+        "body_contacts": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "bac0a9c45042de3864952ba7b61d19ecc8bbdcb896a16c2264f4449cdd8c77c6",
+      "workspace": "0ef286b6d6ba63385eb7a35f572936bb3ae99b57b66d1bd139fd28f8a3be01d3",
+      "owned-contact-counters": "569cbdec09908f3aac7614860581d1590fcfe2dc14ff1dce24bda49d2bb841a0",
+      "original-content": "cdcd5a6ec89acf01ee16ed8550f701689e7507b9796c1510cd862538aa833bd4",
+      "desktop-build": "d49a8029bfd59b5347b9bcd8d881ea232a9c2d6bb804e4f691bcbb76e9f59e1c",
+      "capture-idle": "a8a4213ac07ab8dd7944443ad951f945d1abc91104edd47ecf0906aafc060853",
+      "capture-futon": "9176f93b22b5489c03d4cc208f9a1b9bb60f2a2195c0c14f13bb107ff15f0153",
+      "capture-yokai": "88d74b24b53e3e19926c9c0e0be5df6aff8febbdec592cca2995bbbfd98bc495",
+      "capture-expiry": "89cebb2b55887336837f9a42f62bc84d88e134fa06850821e258a28a7fa7c32f",
+      "capture-legacy": "c3297bd6c1d3b898f6e94ae14d50e53cd931ec254ce64b52b462743e48a585e0"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "natural_frame_cache_ancestry_response_whole_game_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/frame_subscribers.rs": "b6fcd9fa47883d5f22d23a8a629d573061029efa57155e459fc96157b116c02d",
+    "crates/lsd-core/src/lib.rs": "a6aff10ecb5a7ec0cb713dfcc803198ce1417cf6831c898841a7e4b23d491ea0",
+    "crates/lsd-core/tests/native_frame_cursor.rs": "a543b332ec258c2ae12c2daa7c96c230eef935fb5b756991240c5541b34147dd",
+    "crates/lsd-core/tests/fixtures/frame-cursor.json": "5dd98ee9a2ae403864c6499262c04eeb2ffba058a76b3c387a326005538f107e",
+    "crates/lsd-assets/src/encounter_scene.rs": "b1e1e78baf386113df0330fd6b702ba615a3ebe89e24242861f3097ce203d301"
+  },
+  "scope_limits": [
+    "Original clock/list/allocator routines run; the six subscriber objects and callback programs are owned inputs. No original NPC script is replaced or accepted by this suite.",
+    "Public fixture observations contain scalar ids, codes, cursors, flags and orders. Original executable bytes and native captured buffers stay private.",
+    "EncounterScene now uses live traversal and immediate per-actor finish retirement. Other-actor lifetime mutations requested by original callbacks remain unconnected.",
+    "Original player/map/generation/renderer/CD attachment and execution order, waiting synchronization, cache ancestry and full resource destruction remain open.",
+    "Clear-all during dispatch, allocation failure and nested notifications are outside these comparisons.",
+    "Five development captures remain unchanged. This is not original GPU/SPU, natural encounter or whole-game acceptance."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

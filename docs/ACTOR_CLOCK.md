@@ -62,10 +62,12 @@ pending notifications; its position produces zero contacts.
 
 The port's clock currently covers the encounter slice. Recover and connect the
 actual relative order of player, map, generation, renderer and CD subscribers,
-their attach timing and global phase ownership. The adapter snapshots actor
-membership at dispatch entry. Dynamic births, detach/restart or destruction of
-other subscribers during callbacks require a full cursor/lifetime implementation.
-Do not treat the controlled finish cleanup as acceptance of that general case.
+their attach timing and global phase ownership. The later
+[live traversal recovery](FRAME_CURSOR.md) replaces the initial membership
+snapshot with a cursor and retires finished actors during iteration. Supplied
+mutation callbacks compare list behavior separately. Original NPC-requested
+births, detach/restart and destruction of other actors still need connection to
+the scene graph and full resource lifetimes.
 
 Recover natural transform/cache scheduling and parent graphs, reciprocal body
 delivery, movement correction and ground reconciliation. Complete the remaining

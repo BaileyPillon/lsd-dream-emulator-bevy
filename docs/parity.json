@@ -879,6 +879,25 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "live_frame_cursor_recovery_20261014": {
+      "scope": "Real original allocator, base constructors and attach/detach/destructor, frame clock advance/reset/flags/notify and live remove-parent cursor run with six owned base subscribers. Supplied MIPS callbacks call original list mutations and are observed without returning dependency outputs. Covers duplicates, removing current/next/later/already-visited/absent subscriptions, prepend/restart, self destruction, reset cancellation and latched flags. No original NPC callbacks, complete scene boot, GPU, SPU or whole-game acceptance.",
+      "checks": {
+        "path": "docs/frame-cursor-checks.json",
+        "sha256": "8961d4935c9b14cd37a49906248917f83e19518025c4c5a229280add14c0d8af"
+      },
+      "owned_mutation_callback_cases": 88,
+      "notifications": 176,
+      "callback_observations": 698,
+      "live_actor_clock_cursor_connected": true,
+      "per_actor_finish_retirement_connected": true,
+      "original_npc_requested_other_actor_lifetime_changes_connected": false,
+      "global_player_map_generation_renderer_cd_schedule_accepted": false,
+      "original_named_callbacks_implemented": 12,
+      "remaining_pending_callbacks": 95,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }
