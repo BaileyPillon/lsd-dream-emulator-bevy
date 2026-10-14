@@ -60,6 +60,10 @@ to the day profile. A combined generation-frame comparison checks object RNG,
 layer updates, palette commands and sound-request order together. See
 [generation layers](docs/GENERATION_LAYERS.md) for the evidence and remaining
 original GPU and audio comparisons.
+Screen boxes now use the original SDK packet fields and draw order. Background
+composition and foreground blending use five-bit integer color arithmetic;
+see [box rendering](docs/BOX_RENDERING.md) for native packet checks, shader pixel
+comparisons and the remaining full-renderer requirements.
 
 ## Start here
 

@@ -69,3 +69,10 @@ graphs. The day profile composes development background/foreground layers and
 rotates palette strips in VRAM. Original framebuffer/raster, masking, complete
 global scheduling and audio output remain open; see
 [generation layers](GENERATION_LAYERS.md).
+
+Original recursive box sort, SDK packet construction and ordering-table draw
+order now have native comparisons. The day profile composes gradients in RGB555
+and blends foreground boxes in an integer shader. Owned pixel plates and three
+captured Bevy scenes match the integer model. Original GPU framebuffers, model
+projection/lighting, textured rasterization, mask/interlace behavior and complete
+draw ordering remain open; see [box rendering](BOX_RENDERING.md).

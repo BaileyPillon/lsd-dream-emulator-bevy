@@ -54,6 +54,7 @@ pub use dream_session::{DreamSession, DreamSessionHost};
 pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
 pub use generation::GenerationFrame;
+mod gpu_boxes;
 pub use generation::{
     DreamGeneration, GeneratedActor, GenerationActorEntry, GenerationEntry, GenerationFault,
     GenerationSound, GenerationSpawn, GenerationStyle, GenerationTables, choose_music,
@@ -67,6 +68,7 @@ pub use generation_layers::{
 pub use generation_objects::{
     GenerationChild, GenerationObjectTables, GenerationPose, GenerationSprite, GenerationStructure,
 };
+pub use gpu_boxes::{BoxFramebuffer, GpuBoxPacket, blend_rgb555, rgb555, rgb555_rgba};
 pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
 pub use linked_player::{LinkedPlayer, SceneLinkTables};
 pub use links::{

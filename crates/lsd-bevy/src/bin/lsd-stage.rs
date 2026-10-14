@@ -19,10 +19,11 @@ use lsd_assets::{
     load_layered_stage, load_link_tables, load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
+use lsd_bevy::box_material::{BoxMaterial, BoxMaterialPlugin, BoxUniform};
 use lsd_core::{
-    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, GenerationChild, GenerationPose,
-    LinkedPlayer, MapCompletionCommand, MapEffect, PadState, PlayerControls, PsxMathTables,
-    SceneCollision, SceneLinkTables, SpawnLocation,
+    BoxFramebuffer, ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, GenerationChild,
+    GenerationPose, LinkedPlayer, MapCompletionCommand, MapEffect, PadState, PlayerControls,
+    PsxMathTables, SceneCollision, SceneLinkTables, SpawnLocation,
 };
 use std::path::PathBuf;
 
@@ -40,6 +41,7 @@ struct StageAssets {
 struct Capture {
     path: PathBuf,
     target: Option<Handle<Image>>,
+    source: Option<Handle<Image>>,
     requested: bool,
     remaining_ticks: Option<u32>,
 }
@@ -90,12 +92,11 @@ struct GeneratedVisuals {
 
 #[derive(Component)]
 struct GenerationLayerCamera;
-#[derive(Component)]
-struct GenerationLayerItem(usize);
 #[derive(Resource, Default)]
 struct GenerationLayerVisuals {
-    entities: Vec<Entity>,
-    count: usize,
+    background: Option<Handle<Image>>,
+    composite: Option<Handle<BoxMaterial>>,
+    last_background: Vec<u8>,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -117,6 +118,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut supplied_wall = None;
     let mut live_capture = false;
     let mut original_day = false;
+    let mut supplied_day = 1;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -140,12 +142,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             walk_links = true;
             (false, None)
         }
-        Some(value) if matches!(value.as_str(), "--dream" | "--dream-capture") => {
+        Some(value)
+            if matches!(
+                value.as_str(),
+                "--dream" | "--dream-capture" | "--dream-scenario-capture"
+            ) =>
+        {
             original_day = true;
             walk = true;
             walk_stream = true;
             walk_links = true;
-            if value == "--dream-capture" {
+            if value != "--dream" {
                 let path =
                     PathBuf::from(args.next().ok_or("--dream-capture needs a new PNG path")?);
                 walk_steps = Some(
@@ -153,6 +160,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .ok_or("--dream-capture needs a tick count")?
                         .parse::<u32>()?,
                 );
+                if value == "--dream-scenario-capture" {
+                    supplied_day = args
+                        .next()
+                        .ok_or("--dream-scenario-capture needs a one-based calendar day")?
+                        .parse::<i32>()?;
+                    if !(1..=365).contains(&supplied_day) {
+                        return Err("Supplied calendar day must be 1-365".into());
+                    }
+                }
                 (false, Some(path))
             } else {
                 (false, None)
@@ -389,6 +405,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             session.enable_generated_objects(load_generation_object_tables(&executable)?);
             session.enable_generation_layers(load_generation_effect_tables(&executable)?);
             session.begin_original_day(linked, load_day_tables(&executable)?);
+            session.day.as_mut().unwrap().day = supplied_day - 1;
             session.tick(
                 streamed.as_mut().unwrap(),
                 &mut player,
@@ -396,7 +413,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 effect.as_mut().unwrap(),
             )?;
             println!(
-                "profile=original_day_preparation_prototype supplied_bootstrap_day=1 supplied_seed=1 original_generation_choices_and_actor_sound_schedule=true generated_object_channel_connected=true original_menus_gpu_audio_pending=true"
+                "profile=original_day_preparation_prototype supplied_bootstrap_day={supplied_day} supplied_seed=1 supplied_prior_history=new_game original_generation_choices_and_actor_sound_schedule=true generated_object_channel_connected=true original_menus_gpu_audio_pending=true"
             );
         }
         if let Some(index) = supplied_wall {
@@ -538,6 +555,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     generation.layers.gradient.len(),
                     generation.layers.environment.is_some()
                 );
+                println!(
+                    "generation_foreground_box_packets={:?}",
+                    generation
+                        .layers
+                        .environment
+                        .and_then(|layer| layer.gpu_box_packet([320, 240]))
+                        .map(|packet| packet.words())
+                        .into_iter()
+                        .collect::<Vec<_>>()
+                );
             }
         }
         if let Some(effect) = &effect {
@@ -645,12 +672,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             ..default()
         });
     if let Some(path) = capture {
-        if path.exists() {
+        if path.exists() || original_day && path.with_extension("source.png").exists() {
             return Err("Capture output already exists".into());
         }
         app.insert_resource(Capture {
             path,
             target: None,
+            source: None,
             requested: false,
             remaining_ticks: if live_capture { walk_steps } else { None },
         })
@@ -661,6 +689,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .add_systems(Update, capture_frame);
     } else {
         app.add_plugins(plugins);
+    }
+    if original_day {
+        app.add_plugins(BoxMaterialPlugin);
     }
     app.add_systems(Startup, setup)
         .add_systems(
@@ -893,15 +924,10 @@ fn generation_environment(scene: Res<WalkingScene>, mut clear: ResMut<ClearColor
 // Presentation adapter. Original PS1 projection, draw order and GPU precision
 // remain separate requirements; the logical poses above are native-checked.
 fn generation_layers(
-    mut commands: Commands,
     scene: Res<WalkingScene>,
     mut visuals: ResMut<GenerationLayerVisuals>,
-    assets: (ResMut<Assets<Mesh>>, ResMut<Assets<StandardMaterial>>),
-    mut nodes: Query<(
-        &GenerationLayerItem,
-        &mut Transform,
-        &MeshMaterial3d<StandardMaterial>,
-    )>,
+    mut images: ResMut<Assets<Image>>,
+    mut materials: ResMut<Assets<BoxMaterial>>,
 ) {
     let Some(generation) = scene
         .session
@@ -910,71 +936,36 @@ fn generation_layers(
     else {
         return;
     };
-    let mut layers = generation.layers.gradient.clone();
-    let environment_index = layers.len();
-    layers.extend(generation.layers.environment);
-    let (mut meshes, mut materials) = assets;
-    if visuals.count != layers.len() {
-        for entity in visuals.entities.drain(..) {
-            commands.entity(entity).despawn();
-        }
-        for (index, layer) in layers.iter().enumerate() {
-            let [r, g, b] = layer.color;
-            let environment = index == environment_index;
-            let material = materials.add(StandardMaterial {
-                base_color: Color::srgba_u8(r, g, b, if environment { 128 } else { 255 }),
-                unlit: true,
-                cull_mode: None,
-                alpha_mode: if environment {
-                    AlphaMode::Blend
-                } else {
-                    AlphaMode::Opaque
-                },
-                ..default()
-            });
-            visuals.entities.push(
-                commands
-                    .spawn((
-                        GenerationLayerItem(index),
-                        RenderLayers::layer(if environment { 2 } else { 1 }),
-                        Mesh3d(meshes.add(Rectangle::new(1.0, 1.0))),
-                        MeshMaterial3d(material),
-                        generation_layer_transform(*layer, index),
-                    ))
-                    .id(),
-            );
-        }
-        visuals.count = layers.len();
-    } else {
-        for (item, mut transform, binding) in &mut nodes {
-            if let Some(layer) = layers.get(item.0) {
-                *transform = generation_layer_transform(*layer, item.0);
-                if let Some(mut material) = materials.get_mut(&binding.0) {
-                    let [r, g, b] = layer.color;
-                    material.base_color = Color::srgba_u8(
-                        r,
-                        g,
-                        b,
-                        if item.0 == environment_index {
-                            128
-                        } else {
-                            255
-                        },
-                    );
-                }
-            }
+    let Some(style) = generation.style else {
+        return;
+    };
+    let clear = generation.layers.stage_color.unwrap_or(style.scene_color);
+    let mut framebuffer = BoxFramebuffer::new(320, 240, clear);
+    for layer in &generation.layers.gradient {
+        if let Some(packet) = layer.gpu_box_packet([320, 240]) {
+            framebuffer.draw_box(packet);
         }
     }
-}
-
-fn generation_layer_transform(layer: lsd_core::GenerationLayer, index: usize) -> Transform {
-    let [x, y, width, height] = layer.screen_rectangle([320, 240]);
-    Transform::from_xyz(
-        x as f32 + width as f32 * 0.5 - 160.0,
-        120.0 - y as f32 - height as f32 * 0.5,
-        index as f32 * 0.01,
-    )
-    .with_scale(Vec3::new(width as f32, height as f32, 1.0))
+    let rgba = framebuffer.rgba();
+    if visuals.last_background != rgba {
+        if let Some(handle) = &visuals.background
+            && let Some(mut image) = images.get_mut(handle)
+        {
+            image.data = Some(rgba.clone());
+        }
+        visuals.last_background = rgba;
+    }
+    if let Some(handle) = &visuals.composite
+        && let Some(mut material) = materials.get_mut(handle)
+    {
+        let packets: Vec<_> = generation
+            .layers
+            .environment
+            .and_then(|layer| layer.gpu_box_packet([320, 240]))
+            .into_iter()
+            .collect();
+        material.boxes.set_packets(&packets);
+    }
 }
 
 fn generated_pose(pose: GenerationPose) -> Transform {
@@ -1314,11 +1305,15 @@ fn setup(
     mut commands: Commands,
     source: Res<StageAssets>,
     scene: (Option<Res<LayeredAssets>>, Option<Res<WalkingScene>>),
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    mut images: ResMut<Assets<Image>>,
+    assets: GeneratedAssetStores<'_>,
     capture: Option<ResMut<Capture>>,
+    layer_assets: (
+        Option<ResMut<GenerationLayerVisuals>>,
+        Option<ResMut<Assets<BoxMaterial>>>,
+    ),
 ) {
+    let (mut meshes, mut materials, mut images) = assets;
+    let (mut layer_visuals, mut box_materials) = layer_assets;
     let (layered, walking) = scene;
     let mut builder =
         AssetSceneBuilder::new(&source.vram, &mut meshes, &mut materials, &mut images);
@@ -1384,7 +1379,8 @@ fn setup(
         },
         Transform::from_rotation(Quat::from_euler(EulerRot::YXZ, -0.4, -0.8, 0.0)),
     ));
-    let target = if let Some(mut capture) = capture {
+    let mut capture = capture;
+    let target = if let Some(capture) = capture.as_mut() {
         let mut image = Image::new_target_texture(320, 240, TextureFormat::Rgba8UnormSrgb, None);
         image.texture_descriptor.usage |= TextureUsages::COPY_SRC;
         let handle = images.add(image);
@@ -1397,20 +1393,62 @@ fn setup(
         .as_ref()
         .and_then(|scene| scene.session.as_ref())
         .is_some_and(|session| session.generation_effect_tables.is_some());
-    if layers_enabled {
-        for (layer, order) in [(1, -1), (2, 1)] {
+    let world_target = if layers_enabled {
+        let mut image = Image::new_target_texture(320, 240, TextureFormat::Rgba8UnormSrgb, None);
+        image.texture_descriptor.usage |= TextureUsages::COPY_SRC;
+        let world = images.add(image);
+        if let Some(capture) = capture.as_mut() {
+            capture.source = Some(world.clone());
+        }
+        let framebuffer = BoxFramebuffer::new(320, 240, [0; 3]);
+        let mut background_image = Image::new(
+            bevy::render::render_resource::Extent3d {
+                width: 320,
+                height: 240,
+                depth_or_array_layers: 1,
+            },
+            bevy::render::render_resource::TextureDimension::D2,
+            framebuffer.rgba(),
+            TextureFormat::Rgba8UnormSrgb,
+            bevy::asset::RenderAssetUsages::default(),
+        );
+        background_image.sampler = bevy::image::ImageSampler::nearest();
+        let background = images.add(background_image);
+        let material = materials.add(StandardMaterial {
+            base_color_texture: Some(background.clone()),
+            unlit: true,
+            ..default()
+        });
+        commands.spawn((
+            RenderLayers::layer(1),
+            Mesh3d(meshes.add(Rectangle::new(320.0, 240.0))),
+            MeshMaterial3d(material),
+            Transform::default(),
+        ));
+        let composite = box_materials
+            .as_mut()
+            .expect("box material plugin")
+            .add(BoxMaterial {
+                boxes: BoxUniform::default(),
+                scene: world.clone(),
+            });
+        commands.spawn((
+            RenderLayers::layer(2),
+            Mesh3d(meshes.add(Rectangle::new(320.0, 240.0))),
+            MeshMaterial3d(composite.clone()),
+            Transform::default(),
+        ));
+        let visuals = layer_visuals.as_mut().expect("generation layer resources");
+        visuals.background = Some(background);
+        visuals.composite = Some(composite);
+        for (layer, order, camera_target) in [
+            (1, -1, RenderTarget::Image(world.clone().into())),
+            (2, 1, target.clone()),
+        ] {
             commands.spawn((
                 GenerationLayerCamera,
                 Camera3d::default(),
-                Camera {
-                    order,
-                    clear_color: if order < 0 {
-                        ClearColorConfig::Default
-                    } else {
-                        ClearColorConfig::None
-                    },
-                    ..default()
-                },
+                Camera { order, ..default() },
                 Projection::Orthographic(OrthographicProjection {
                     scaling_mode: ScalingMode::Fixed {
                         width: 320.0,
@@ -1422,11 +1460,14 @@ fn setup(
                 Msaa::Off,
                 Tonemapping::None,
                 DebandDither::Disabled,
-                target.clone(),
+                camera_target,
                 Transform::from_xyz(0.0, 0.0, 100.0),
             ));
         }
-    }
+        RenderTarget::Image(world.into())
+    } else {
+        target
+    };
     commands.spawn((
         Camera3d::default(),
         Camera {
@@ -1440,7 +1481,7 @@ fn setup(
         Msaa::Off,
         Tonemapping::None,
         DebandDither::Disabled,
-        target,
+        world_target,
         Transform::from_xyz(16.0, 13.0, 4.0).looking_at(Vec3::new(7.0, 0.8, -6.0), Vec3::Y),
     ));
 }
@@ -1451,6 +1492,11 @@ fn capture_frame(mut commands: Commands, time: Res<Time<Real>>, mut capture: Res
         && time.elapsed_secs_f64() > 5.0
         && let Some(target) = &capture.target
     {
+        if let Some(source) = &capture.source {
+            commands
+                .spawn(Screenshot::image(source.clone()))
+                .observe(save_to_disk(capture.path.with_extension("source.png")));
+        }
         commands
             .spawn(Screenshot::image(target.clone()))
             .observe(save_to_disk(capture.path.clone()))

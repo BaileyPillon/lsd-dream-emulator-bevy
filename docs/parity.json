@@ -282,8 +282,9 @@
       "id": "F034",
       "title": "Color overlays, flashes, borders and shake",
       "requirement": "Run original attachment/lifetime, channel color steps, border presets and shake option.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_box_packets_and_integer_composition",
+      "whole_feature_accepted": false,
+      "evidence": "docs/BOX_RENDERING.md"
     },
     {
       "id": "F035",
@@ -659,6 +660,25 @@
       "bevy_layer_and_palette_channel_connected": true,
       "captures_contain_active_gradient_or_environment": false,
       "original_gpu_or_full_session_parity_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
+    },
+    "box_rendering_recovery_20261014": {
+      "scope": "Original recursive box sort, SDK packet fields and ordering-table order in supplied identity-coordinate graphs. Bevy background RGB555 composition and foreground integer shader added. Owned color plates and captured Bevy inputs match the documented rectangle model; original GPU framebuffer, full GTE/model/sprite raster/order, masks/interlacing, timing and complete session parity remain unaccepted.",
+      "checks": {
+        "path": "docs/box-rendering-checks.json",
+        "sha256": "1b6d3ca3ed2fd403ba1b6b91ddba53cc08cba8733b929ab1b37bdab0cabf49e7"
+      },
+      "owned_layer_packet_cases": 144,
+      "owned_single_box_packet_cases": 72,
+      "owned_hidden_box_cases": 72,
+      "owned_gpu_pixels_compared": 153600,
+      "captured_bevy_scene_pixels_compared": 230400,
+      "pixel_model_mismatches": 0,
+      "active_gradient_scenario_day": 8,
+      "active_environment_scenario_day": 17,
+      "original_gpu_framebuffer_parity_accepted": false,
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0

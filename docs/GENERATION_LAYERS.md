@@ -34,9 +34,10 @@ describes transfer coordinates, dimensions and mask state.
 The `--dream` inspector consumes the copy commands and updates retained texture
 image bindings without reconstructing resident geometry on every palette tick.
 Background gradient boxes and the foreground environment box have separate
-camera passes. The adapter uses Bevy rectangles, color conversion, alpha blending
-and projection. Original ordering-table traversal, blend arithmetic, raster
-coverage and framebuffer output still require comparison.
+camera passes. The later [box rendering implementation](BOX_RENDERING.md) replaces
+ordinary rectangle alpha blending with integer RGB555 composition and adds
+original SDK packet/draw-order comparisons. Complete ordering with models,
+original GPU framebuffer output and the rest of the renderer remain open.
 
 ## Evidence
 
@@ -63,6 +64,9 @@ Development captures cover the first day at 32 supplied idle ticks and after
 expiry at 4,000 ticks. This first-day scene has no active gradient/environment
 boxes, so these captures confirm the running integration and cleanup path only.
 They do not establish visible gradient output or an original framebuffer match.
+The later box-rendering campaign also captures active layers on supplied
+calendar days eight and seventeen and compares the Bevy compositor with its
+integer reference. It still does not accept an original GPU framebuffer match.
 The legacy linked-scene capture remains byte-identical to the prior checkpoint.
 
 Whole-game acceptance remains **0/40 provisional feature groups**. The feature
