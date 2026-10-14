@@ -21,7 +21,9 @@ relationships. It processes effect ticks before the inspector's movement step;
 this host order is a development choice pending full original-session scheduling
 comparisons. Parent notifications are emitted for the future session consumer.
 The controller does not invent scene reconstruction or clear input locks at fade
-completion. Original stage replacement and sound playback remain unfinished.
+completion. The inspector now consumes rebuild notifications with the session
+policy and loads destination geometry/textures. Full original stage construction,
+GPU composition and sound playback remain unfinished; see [session recovery](SESSION.md).
 
 The palette loader requires the canonical local `SLPS_015.56`. Original palettes,
 images, private traces and game assets are excluded from this repository. Public

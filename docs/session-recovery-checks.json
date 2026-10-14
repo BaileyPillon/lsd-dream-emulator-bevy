@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T03:19:38.108712+00:00",
+  "base_commit": "8f7af580c7a42b3ef48ae3ed2b5a5906ebc470dd",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "scope": "Original session routing/link/tick/open-map and motion reset compared with original CPU execution in supplied graphs. Loaded-scene consumer rebuilds 17 supplied original permanent-link destinations and renders two replacements while Bevy is active. Original day/cinematic/mood services, generation-driven origin and textures, actor/parent construction, CD/global scheduling, GPU fades, audio and whole-game parity remain unaccepted.",
+  "native_session_link_cases": 756,
+  "native_session_tick_cases": 252,
+  "native_sender_routing_cases": 40,
+  "native_scene_motion_reset_cases": 160,
+  "original_permanent_link_rebuild_scenarios": 17,
+  "session_function_entries": {
+    "dream_session_on_link_code": 766,
+    "dream_session_tick": 252,
+    "scene_get_vtable": 292,
+    "dream_sys_get_current_map": 24,
+    "open_map": 26,
+    "dream_session_on_tick": 40,
+    "dream_session_noop2": 10
+  },
+  "reset_function_entries": {
+    "reset_motion_for_link": 160,
+    "dream_sys_set_view_callback": 160,
+    "dream_sys_set_move_callback": 160,
+    "dream_sys_get_set_move_direction": 160,
+    "dream_sys_set_link_params": 160,
+    "dream_sys_set_link_interval": 160,
+    "object_get_rotation_360": 160,
+    "func_8001CEB4": 160,
+    "func_8001EC84": 480,
+    "dream_sys_set_view_mode": 40
+  },
+  "session_function_ranges": [
+    {
+      "name": "dream_session_tick",
+      "address": "0x80049ca8",
+      "bytes": 376,
+      "sha256": "63d9c8553ee267f435990246817a118bb78adfb66a3d1f4a87b4c58a9bb5e791"
+    },
+    {
+      "name": "open_map",
+      "address": "0x80049e20",
+      "bytes": 132,
+      "sha256": "f23a1c553b1c089ec531a072e792272c2f798add219653c59b5cc4292650b4fe"
+    },
+    {
+      "name": "dream_session_on_link_code",
+      "address": "0x80049eb4",
+      "bytes": 428,
+      "sha256": "4fe12298945c9c85751e8b54fe77bac76371989f8c2305fd90b76d63ac22f26c"
+    },
+    {
+      "name": "dream_session_on_tick",
+      "address": "0x80049958",
+      "bytes": 188,
+      "sha256": "3b406926ba4da2acae2a443158a9104d427b69c1bdaba114b0b978b9db681b14"
+    },
+    {
+      "name": "dream_session_noop2",
+      "address": "0x80049eac",
+      "bytes": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1"
+    },
+    {
+      "name": "dream_sys_get_current_map",
+      "address": "0x8005afd0",
+      "bytes": 12,
+      "sha256": "6fb3fe5c2c9e90dd17350248f091a46f529d7ac2b2c0edb2fbf0dd17e108ff21"
+    },
+    {
+      "name": "scene_get_vtable",
+      "address": "0x8004a4b8",
+      "bytes": 16,
+      "sha256": "bd9809ac33faf7cb659781a37285dda148d92c2a6c36f42276d4cff48f74602c"
+    }
+  ],
+  "reset_function_ranges": [
+    {
+      "name": "reset_motion_for_link",
+      "address": "0x800591b4",
+      "bytes": 348,
+      "sha256": "97cdf99e975296cb366cb4986f7f28965de3317d6d3da69a318670fe964e07aa"
+    },
+    {
+      "name": "dream_sys_set_view_callback",
+      "address": "0x8005966c",
+      "bytes": 124,
+      "sha256": "8c1ddc757452838059838a6a588c8b41d57dcd14ce20c3f85e024e4112fd3a1f"
+    },
+    {
+      "name": "dream_sys_set_move_callback",
+      "address": "0x800596e8",
+      "bytes": 216,
+      "sha256": "e0911b100ce2b5e6a7ea7d27d2516f24c0bd02b0c26cd3acecebdb3925323b78"
+    },
+    {
+      "name": "dream_sys_set_view_mode",
+      "address": "0x8005a134",
+      "bytes": 52,
+      "sha256": "72d3ee63800701f2a93f94297d166183be0fcc9775ce13a37c19f532d7294345"
+    },
+    {
+      "name": "dream_sys_get_set_move_direction",
+      "address": "0x8005a168",
+      "bytes": 28,
+      "sha256": "ad48cd8da110730313787c4dda3954825830091f7aee9f3c32f711e9ffb5ede8"
+    },
+    {
+      "name": "dream_sys_set_link_params",
+      "address": "0x8005a1b0",
+      "bytes": 60,
+      "sha256": "3609469508928b18fede1ca9f5bb0abc6bcbb1f58fb8ad08372cf6b6818f6389"
+    },
+    {
+      "name": "dream_sys_set_link_interval",
+      "address": "0x8005a1ec",
+      "bytes": 8,
+      "sha256": "2afdf2932584bd7a83996167c7ce3ec671d05a617e8239e02bee89965a297198"
+    },
+    {
+      "name": "object_get_rotation_360",
+      "address": "0x8001e6f8",
+      "bytes": 120,
+      "sha256": "23c2fb3758d91943a99790ac39b908aa493a47a802e9316e1261febfa36dd50f"
+    },
+    {
+      "name": "func_8001CEB4",
+      "address": "0x8001ceb4",
+      "bytes": 340,
+      "sha256": "722d79cf1f8c109300d4a56aa1d421442a2b5c424a7f3f1e16ad27d281432217"
+    },
+    {
+      "name": "func_8001EC84",
+      "address": "0x8001ec84",
+      "bytes": 120,
+      "sha256": "7c14d23868ee93933886ecd2477e4e60c6200bef1982963f671e2d76e6d7caaf"
+    }
+  ],
+  "session_supplied_boundaries": [
+    "base_tick",
+    "base_notify",
+    "start_day",
+    "end_day",
+    "cinematic",
+    "stop_map",
+    "stop_map_source",
+    "destroy_map",
+    "create_map",
+    "attach_map",
+    "run_map",
+    "finish"
+  ],
+  "reset_supplied_boundary": "chunk mood accounting",
+  "local_validation": {
+    "workspace_counts": [
+      90,
+      0,
+      10
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "original_permanent_link_rebuild_scenarios_passed": 17,
+    "original_teleport_scenarios_passed": 17,
+    "desktop_build_passed": true,
+    "captures": [
+      {
+        "source_stage": 0,
+        "source_map": 0,
+        "target_stage": 10,
+        "ticks": 24,
+        "supplied_wall_index": 0,
+        "image_sha256": "dc92bb6fa205f1de5e0a4314c217860297e4aff6ef1f1f17e0baff79aad9bb45",
+        "rebuilds": 1,
+        "native_collision_encounter_supplied": true
+      },
+      {
+        "source_stage": 3,
+        "source_map": 136,
+        "target_stage": 0,
+        "ticks": 24,
+        "supplied_wall_index": 0,
+        "image_sha256": "eab6bb1c9d2e825478109cb79af8736c88e0433aff572bf2efb2347ac7db9dd5",
+        "rebuilds": 1,
+        "native_collision_encounter_supplied": true
+      }
+    ],
+    "no_link_traversal_capture_unchanged": true,
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "d784f9ed3b2866074af2b9825a5b5c1d90f2c6dec181c0d665ea97a2398a36a5",
+      "workspace": "ffb983cd1c5331eafb7404416394c10f3a1d258f04f027d5ca942ba4da58f9da",
+      "original-destinations": "30fe6df4a310f5156f667318ba4837675c212ff30c9827dc36ad3ebfcffd2411",
+      "original-teleports": "081620e2b0eada43f302abf8052c32668a220185b5a4e7363bdf1016b5e8ce44",
+      "desktop-build": "6bcb9243b4f51954f0fe892d333ee473927a5b271d48edd0e83980f6caff3d5c",
+      "rebuild-capture-0": "91a70a76f8a0dc0fb8de678fa6cf10a44bfadc3488a9b33dea1cecfd6bfdc4d9",
+      "rebuild-capture-3": "ddffebb4f8e77010263529caa99b3f7dc74f4b02536c856befa7dba197f4aac9",
+      "legacy-capture": "ebf0e42719b248e825fa6bee7fcd1931fc9201a848a8eaa30a0df81e1a2621fe"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "whole_visible_transition_parity_accepted": false,
+    "original_gpu_effect_composition_accepted": false,
+    "original_day_generation_audio_and_cd_scheduling_accepted": false,
+    "live_captures": [
+      {
+        "source_stage": 0,
+        "source_map": 0,
+        "target_stage": 10,
+        "ticks": 24,
+        "image_sha256": "dc92bb6fa205f1de5e0a4314c217860297e4aff6ef1f1f17e0baff79aad9bb45",
+        "bevy_live_scene_replacement_executed": true,
+        "identical_to_pre_render_final_snapshot": true
+      },
+      {
+        "source_stage": 3,
+        "source_map": 136,
+        "target_stage": 0,
+        "ticks": 24,
+        "image_sha256": "eab6bb1c9d2e825478109cb79af8736c88e0433aff572bf2efb2347ac7db9dd5",
+        "bevy_live_scene_replacement_executed": true,
+        "identical_to_pre_render_final_snapshot": true
+      }
+    ],
+    "live_validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "e12eeff59a3da6298ce2c26ffe9ffec695c1e3f96172594b274340a2806c9283",
+      "build": "575a6fed8181e33ca1fa3e7adc6bcc2617ab5a307d1fee0fe73b54491416e0a0",
+      "capture-0": "15b042ef4860c6c20391baba81176ad698badbf862b2a965f35117ff9b28be8b",
+      "capture-3": "65d3a97f6ffafa6226dbccb46819e113a823ba5d3d8ad608265947e160fce187"
+    },
+    "live_bevy_scene_and_texture_cache_replacement_executed": true,
+    "original_gpu_fade_or_full_transition_parity_accepted": false
+  },
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/session-policy.json": "159ad85ab136dfd8936e6fa954ce0393b8b3b0bb665779f72b6bd8245de5d2c7",
+    "crates/lsd-core/tests/fixtures/scene-motion-reset.json": "7830cdcd57301f1d3916fef2453ef29828ca04e34150ec5e8903cd3d443c9f7c"
+  },
+  "working_source_sha256": {
+    "crates/lsd-core/src/dream_session.rs": "030cc30768449e6e2e082e284d09c453a8e2c065a8830efb071625f05ba5161c",
+    "crates/lsd-core/src/scene_motion.rs": "1838d57e75aab781ab44b6c25a1a230ff1c8ffafb93e850d68a646c3e20c3e66",
+    "crates/lsd-core/src/linked_player.rs": "8609cde8d68b5e9a54c87f6e702652f74ea5f1f432429f478aebe87165446197",
+    "crates/lsd-core/src/map_effect.rs": "2b676bb65f325c39c06a943bae6a0f86bddbbbfae69fe88a145672adc84d1844",
+    "crates/lsd-core/src/lib.rs": "d16eeb81e1dfe200540cf0af31ec4db11b74a6ff5621394d4b8905edebaa0c5a",
+    "crates/lsd-core/tests/native_session.rs": "1afc2b1d26acd05f3178cbe7ed7f8aa3fcd1cea569383eb08b4dff8d2a77d70c",
+    "crates/lsd-core/tests/native_scene_reset.rs": "fb70e27befa53bdfb808e68b386b98e88377440be94ba72c5f52df979b43b680",
+    "crates/lsd-assets/src/stage_session.rs": "0f477b94766eab2d471c6a103be2c30984900038f8c2ed4229e6f70dd1fbf407",
+    "crates/lsd-assets/src/streamed_stage.rs": "4de817abc3187a3f7182f9e88ab315f6d7e08fb20b049b604695b092ea42e589",
+    "crates/lsd-assets/src/lib.rs": "93cf16d5d98388f4808febbbabcd0644c3e2800d07d12be038258edca0a17402",
+    "crates/lsd-assets/tests/native_stage_session.rs": "a65811fb8beca5224206b164474bb1434489d4d2a7def324b759ce9926a20ec4",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "45471e13446b70d9790731523d327f5a73cd27a4491b9b5ce3c92322026f6f37"
+  },
+  "private_proof_sha256": {
+    "native-session-proof-thirteen.json": "dd679fde3946c22e6a54f3ac916b2ee5941af44d21f66ed1017473999193da05",
+    "native-scene-reset-proof-thirteen.json": "38ec17b211af3e369f7a00ebb6cb6f134e066d547e17c12ebb50c986f4a1fd9f",
+    "session-final-proof-thirteen.json": "d080dffe8a7ec723a6a3e4dfae208f63d210e98f057f3508f6ec00ac36d0467a"
+  },
+  "original_session_scalar_policy_implemented": true,
+  "loaded_scene_rebuild_consumer_present": true,
+  "live_bevy_destination_mesh_and_texture_replacement_observed": true,
+  "whole_visible_transition_parity_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0,
+  "c_decompilation_paused_and_preserved": true
+}

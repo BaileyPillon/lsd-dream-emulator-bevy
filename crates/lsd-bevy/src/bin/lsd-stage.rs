@@ -12,15 +12,16 @@ use bevy::{
     winit::WinitPlugin,
 };
 use lsd_assets::{
-    StreamedStage,
+    StageLinkSession, StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
     is_canonical_reference, load_effect_palette, load_layered_stage, load_link_tables,
     load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
-    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, LinkedPlayer, MapEffect,
-    PadState, PlayerControls, PsxMathTables, SceneCollision, SceneLinkTables,
+    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, LinkedPlayer,
+    MapCompletionCommand, MapEffect, PadState, PlayerControls, PsxMathTables, SceneCollision,
+    SceneLinkTables, SpawnLocation,
 };
 use std::path::PathBuf;
 
@@ -30,6 +31,7 @@ struct StageAssets {
     vram: Vram,
     stage: u8,
     map_number: u16,
+    texture_variant: char,
 }
 
 #[derive(Resource)]
@@ -37,6 +39,7 @@ struct Capture {
     path: PathBuf,
     target: Option<Handle<Image>>,
     requested: bool,
+    remaining_ticks: Option<u32>,
 }
 
 #[derive(Resource)]
@@ -48,12 +51,14 @@ struct WalkingScene {
     streamed: Option<StreamedStage>,
     linked: Option<LinkedPlayer>,
     effect: Option<MapEffect>,
+    session: Option<StageLinkSession>,
 }
 
 type ModelMeshes = Vec<Vec<Vec<(Handle<Mesh>, Handle<StandardMaterial>)>>>;
 #[derive(Resource)]
 struct StreamVisuals {
     revision: u64,
+    rebuild_epoch: u64,
     entities: Vec<Entity>,
     models: std::collections::BTreeMap<u16, ModelMeshes>,
 }
@@ -80,6 +85,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut walk_stream = false;
     let mut walk_links = false;
     let mut walk_steps = None;
+    let mut supplied_wall = None;
+    let mut live_capture = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -102,6 +109,32 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             walk_stream = true;
             walk_links = true;
             (false, None)
+        }
+        Some(value)
+            if matches!(
+                value.as_str(),
+                "--link-rebuild-capture" | "--link-rebuild-live-capture"
+            ) =>
+        {
+            live_capture = value == "--link-rebuild-live-capture";
+            walk = true;
+            walk_stream = true;
+            walk_links = true;
+            let path = PathBuf::from(
+                args.next()
+                    .ok_or("--link-rebuild-capture needs a PNG path")?,
+            );
+            supplied_wall = Some(
+                args.next()
+                    .ok_or("--link-rebuild-capture needs a wall-trigger index")?
+                    .parse::<usize>()?,
+            );
+            walk_steps = Some(
+                args.next()
+                    .ok_or("--link-rebuild-capture needs a tick count")?
+                    .parse::<u32>()?,
+            );
+            (false, Some(path))
         }
         Some(value)
             if matches!(
@@ -153,6 +186,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let tix = Tix::parse(&texture_bytes)?;
     let mut vram = Vram::default();
+    let mut display_stage = stage;
     for bank in &tix.banks {
         for image in &bank.images {
             vram.upload(image)?;
@@ -290,7 +324,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         } else {
             None
         };
-        if let Some(steps) = walk_steps {
+        let mut session = walk_links.then(StageLinkSession::default);
+        if let Some(index) = supplied_wall {
+            let linked = linked.as_mut().unwrap();
+            let trigger = *linked.tables.catalog.wall.triggers[usize::from(stage)]
+                .get(index)
+                .ok_or("Wall-trigger index is outside the original stage table")?;
+            linked.keys.contact = SpawnLocation {
+                chunk: trigger.chunk,
+                tile: trigger.tile.max(0),
+                position: [0; 3],
+            };
+            linked.wall_contact(&mut player, &streamed.as_ref().unwrap().collision, 4)?;
+            for command in linked.commands.clone() {
+                effect.as_mut().unwrap().consume(command)?;
+            }
+            println!("profile=supplied_wall_link original_collision_encounter_supplied=true");
+        }
+        if let Some(steps) = walk_steps.filter(|_| !live_capture) {
             for _ in 0..steps {
                 if let Some(streamed) = &mut streamed {
                     streamed_step(
@@ -299,7 +350,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         &tables,
                         linked.as_mut(),
                         effect.as_mut(),
-                        0x1000,
+                        session.as_mut(),
+                        if supplied_wall.is_some() { 0 } else { 0x1000 },
                     )?;
                 } else if let Some(layered) = &layered {
                     player.step_in_scene(0x1000, &layered.collision, &tables)?;
@@ -310,6 +362,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         if let Some(streamed) = &mut streamed {
             streamed.complete_frame()?;
+            if streamed.stage_id() != stage {
+                display_stage = streamed.stage_id();
+                vram = streamed.load_texture_variant(texture.chars().next().unwrap())?;
+            }
         }
         println!(
             "profile={} position={:?} heading={} original_link_npc_callbacks_pending=true",
@@ -342,13 +398,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         if let Some(linked) = &linked {
             println!(
-                "link_event={} map_state={} destination={} spawn={:?} dream_tick={} rng_state={} effect_controller_active=true gpu_effect_audio_scene_lifecycle_pending=true",
+                "link_event={} map_state={} destination={} spawn={:?} dream_tick={} rng_state={} effect_controller_active=true original_gpu_audio_day_scheduling_pending=true",
                 linked.links.execution.state,
                 linked.map.state,
                 linked.links.execution.stage,
                 linked.links.spawn,
                 linked.links.execution.dream_timer,
                 linked.rng.state()
+            );
+        }
+        if let Some(session) = &session {
+            println!(
+                "session_state={} rebuilds={} loaded_stage={} pending_day_event={:?}",
+                session.policy.state, session.rebuilds, display_stage, session.pending_day_event
             );
         }
         if let Some(effect) = &effect {
@@ -387,6 +449,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             streamed,
             linked,
             effect,
+            session,
         })
     } else {
         None
@@ -395,6 +458,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if walk_stream {
         app.insert_resource(StreamVisuals {
             revision: u64::MAX,
+            rebuild_epoch: u64::MAX,
             entities: Vec::new(),
             models: Default::default(),
         })
@@ -412,8 +476,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     app.insert_resource(StageAssets {
         map,
         vram,
-        stage,
+        stage: display_stage,
         map_number,
+        texture_variant: texture.chars().next().unwrap(),
     });
     let plugins = DefaultPlugins
         .set(ImagePlugin::default_nearest())
@@ -440,6 +505,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             path,
             target: None,
             requested: false,
+            remaining_ticks: if live_capture { walk_steps } else { None },
         })
         .add_plugins(plugins.disable::<WinitPlugin>())
         .add_plugins(ScheduleRunnerPlugin::run_loop(
@@ -461,9 +527,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn walking_controls(
     keys: Res<ButtonInput<KeyCode>>,
     mut scene: ResMut<WalkingScene>,
-    capture: Option<Res<Capture>>,
+    mut source: ResMut<StageAssets>,
+    capture: Option<ResMut<Capture>>,
 ) {
-    if capture.is_some() {
+    if capture
+        .as_ref()
+        .is_some_and(|capture| capture.remaining_ticks.is_none_or(|ticks| ticks == 0))
+    {
         return;
     }
     let mut buttons = 0;
@@ -483,6 +553,9 @@ fn walking_controls(
             buttons |= mask;
         }
     }
+    if capture.is_some() {
+        buttons = 0;
+    }
     let WalkingScene {
         player,
         collision,
@@ -491,6 +564,7 @@ fn walking_controls(
         streamed,
         linked,
         effect,
+        session,
     } = &mut *scene;
     if let Some(streamed) = streamed {
         streamed_step(
@@ -499,9 +573,16 @@ fn walking_controls(
             tables,
             linked.as_mut(),
             effect.as_mut(),
+            session.as_mut(),
             buttons,
         )
         .expect("decoded streamed movement query");
+        if source.stage != streamed.stage_id() {
+            source.stage = streamed.stage_id();
+            source.vram = streamed
+                .load_texture_variant(source.texture_variant)
+                .expect("validated original destination texture");
+        }
     } else if let Some(layered) = layered_collision {
         player
             .step_in_scene(buttons, layered, tables)
@@ -511,6 +592,30 @@ fn walking_controls(
             .step(buttons, collision, tables)
             .expect("decoded chunk movement query");
     }
+    if let Some(mut capture) = capture
+        && let Some(ticks) = &mut capture.remaining_ticks
+    {
+        *ticks -= 1;
+        if *ticks == 0
+            && let (Some(session), Some(linked), Some(effect), Some(streamed)) = (
+                session.as_ref(),
+                linked.as_ref(),
+                effect.as_ref(),
+                streamed.as_ref(),
+            )
+        {
+            println!(
+                "live_session_state={} rebuilds={} loaded_stage={} map_state={} effect_state={} rng_state={} dream_tick={}",
+                session.policy.state,
+                session.rebuilds,
+                streamed.stage_id(),
+                linked.map.state,
+                effect.effect.state,
+                linked.rng.state(),
+                linked.links.execution.dream_timer
+            );
+        }
+    }
 }
 
 fn streamed_step(
@@ -519,15 +624,35 @@ fn streamed_step(
     tables: &PsxMathTables,
     linked: Option<&mut LinkedPlayer>,
     effect: Option<&mut MapEffect>,
+    session: Option<&mut StageLinkSession>,
     buttons: u32,
 ) -> Result<(), Box<dyn std::error::Error>> {
     stage.complete_frame()?;
     if let Some(linked) = linked {
         let mut effect = effect;
+        let mut session = session;
+        if let (Some(session), Some(effect)) = (session.as_deref_mut(), effect.as_deref_mut()) {
+            session.tick(stage, player, linked, effect)?;
+            for event in &session.events {
+                println!("session_command={event:?}");
+            }
+        }
         if let Some(effect) = effect.as_deref_mut() {
             for command in effect.tick(&mut linked.map, &mut player.controls)? {
                 println!("effect_completion_command={command:?}");
+                if let (MapCompletionCommand::Notify(code), Some(session)) =
+                    (command, session.as_deref_mut())
+                {
+                    session.receive(code);
+                }
             }
+        }
+        if session
+            .as_deref()
+            .is_some_and(|session| session.pending_day_event.is_some())
+        {
+            player.controls.input_locked = true;
+            return Ok(());
         }
         let ready = std::array::from_fn(|i| stage.protocol.slots[i].ready);
         linked.step(player, &stage.collision, tables, ready, buttons)?;
@@ -536,6 +661,11 @@ fn streamed_step(
             if let Some(effect) = effect.as_deref_mut() {
                 for signal in effect.consume(*command)? {
                     println!("map_parent_command={signal:?}");
+                    if let (MapCompletionCommand::Notify(code), Some(session)) =
+                        (signal, session.as_deref_mut())
+                    {
+                        session.receive(code);
+                    }
                 }
             }
         }
@@ -563,11 +693,15 @@ fn stream_meshes(
     let Some(stage) = &scene.streamed else {
         return;
     };
-    if visuals.revision == stage.revision {
+    let epoch = scene.session.as_ref().map_or(0, |session| session.rebuilds);
+    if visuals.revision == stage.revision && visuals.rebuild_epoch == epoch {
         return;
     }
     for entity in visuals.entities.drain(..) {
         commands.entity(entity).despawn();
+    }
+    if visuals.rebuild_epoch != epoch {
+        visuals.models.clear();
     }
     let resident: std::collections::BTreeSet<_> = stage
         .collision
@@ -633,6 +767,7 @@ fn stream_meshes(
         }
     }
     visuals.revision = stage.revision;
+    visuals.rebuild_epoch = epoch;
 }
 
 fn walking_camera(scene: Res<WalkingScene>, mut cameras: Query<&mut Transform, With<Camera3d>>) {
@@ -749,6 +884,7 @@ fn setup(
 
 fn capture_frame(mut commands: Commands, time: Res<Time<Real>>, mut capture: ResMut<Capture>) {
     if !capture.requested
+        && capture.remaining_ticks.is_none_or(|ticks| ticks == 0)
         && time.elapsed_secs_f64() > 5.0
         && let Some(target) = &capture.target
     {

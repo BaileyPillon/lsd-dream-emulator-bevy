@@ -41,6 +41,9 @@ policy, including per-contact pose restoration. See
 Original effect color cycles and map completion callbacks now also run in Rust
 and consume link requests in the inspector. See [effect recovery](docs/EFFECTS.md)
 for the native comparisons and remaining GPU/session work.
+The inspector now replaces resident maps and textures after a completed link,
+preserves RNG/timer state and runs the original player-motion reset. See
+[session recovery](docs/SESSION.md) for its construction and day-service limits.
 
 ## Start here
 
@@ -82,9 +85,14 @@ linking and original scene scheduling remain separate requirements.
 
 Append `--walk-links` for the streamed link prototype, or
 `--walk-links-capture /path/to/new.png 120` for a supplied forward-input capture.
-The inspector consumes original effect requests and records completion, parent
-and sound commands. GPU fade composition, scene replacement, original clock/input
-scheduling and audio still need their runtime consumers.
+The inspector consumes original effect requests and rebuild notifications, then
+loads the destination scene. GPU fades, original construction/clock scheduling,
+day generation and audio remain open.
+
+For a supplied permanent-wall contact followed by scene replacement, append
+`--link-rebuild-capture /path/to/new.png 0 24`. The final numbers select the
+stage's wall-trigger index and host tick count. This development scenario
+supplies the collision contact and keeps the chosen texture variant across stages.
 
 To inspect original model animation from a stage's streamed library:
 
@@ -121,6 +129,9 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Effect states compared using generated test colors | 3,600 |
 | Effect states compared using locally imported original colors | 536 |
 | Original map effect-completion scenarios compared | 84 |
+| Original session routing/tick/link-policy scenarios compared | 1,048 |
+| Original scene-motion reset scenarios compared | 160 |
+| Supplied original permanent-link destinations rebuilt locally | 17 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |

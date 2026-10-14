@@ -40,6 +40,75 @@ pub struct LinkedPlayer {
     base: [i32; 3],
 }
 impl LinkedPlayer {
+    /// Dispatch a contact using the current cached body key and previously saved pose.
+    pub fn wall_contact(
+        &mut self,
+        player: &mut ChunkPlayer,
+        scene: &SceneCollision,
+        code: i32,
+    ) -> Result<(), SceneCollisionError> {
+        let mut effects = Effects {
+            position: &mut player.position,
+            map: &mut self.map,
+            commands: &mut self.commands,
+            sounds: &mut self.sounds,
+            saved: self.saved,
+            grid: scene.slots.grid,
+            base: self.base,
+            palette: self.palette,
+            error: None,
+        };
+        self.links.wall_at(
+            &mut player.controls,
+            &self.tables.catalog,
+            &mut self.context,
+            WallLinkRequest {
+                code,
+                contact: self.keys.contact,
+                can_dynamic: self.can_dynamic,
+            },
+            &mut self.rng,
+            &mut effects,
+        )?;
+        if let Some(error) = effects.error {
+            return Err(error.into());
+        }
+        Ok(())
+    }
+
+    /// Scene host has already placed the actor and applied its target rotation.
+    pub fn prepare_link_scene(
+        &mut self,
+        player: &mut ChunkPlayer,
+        scene: &SceneCollision,
+        stage: u8,
+    ) -> Result<crate::SceneMotionReset, SceneCollisionError> {
+        let reset = crate::reset_scene_motion(
+            &mut player.controls,
+            &mut self.links,
+            &mut self.map,
+            if stage == 0 { 2 } else { 3 },
+            16,
+        )?;
+        self.floor_surface = reset.floor_surface;
+        self.floor_effect = None;
+        self.interval = reset.interval;
+        self.can_dynamic = reset.can_dynamic != 0;
+        self.body_contact = None;
+        self.floor_contact = None;
+        self.map.state = 5;
+        self.map.location = i32::from(stage);
+        self.map.tick = 0;
+        self.commands.clear();
+        self.sounds.clear();
+        self.saved = SavedPlayerPose {
+            position: player.position,
+            angles: player.controls.angles,
+        };
+        self.refresh_key(scene, player.position)?;
+        Ok(reset)
+    }
+
     pub fn new(
         stage: u8,
         player: &ChunkPlayer,
@@ -297,34 +366,7 @@ impl MovementHost<'_> {
         }
     }
     fn wall(&mut self, code: i32) -> Result<(), SceneCollisionError> {
-        let state = &mut *self.state;
-        let mut effects = Effects {
-            position: &mut self.player.position,
-            map: &mut state.map,
-            commands: &mut state.commands,
-            sounds: &mut state.sounds,
-            saved: state.saved,
-            grid: self.scene.slots.grid,
-            base: state.base,
-            palette: state.palette,
-            error: None,
-        };
-        state.links.wall_at(
-            &mut self.player.controls,
-            &state.tables.catalog,
-            &mut state.context,
-            WallLinkRequest {
-                code,
-                contact: state.keys.contact,
-                can_dynamic: state.can_dynamic,
-            },
-            &mut state.rng,
-            &mut effects,
-        )?;
-        if let Some(error) = effects.error {
-            return Err(error.into());
-        }
-        Ok(())
+        self.state.wall_contact(self.player, self.scene, code)
     }
     fn motion(&mut self, request: MotionRequest) -> Result<(), SceneCollisionError> {
         let local = if request.axis == MotionAxis::Forward {

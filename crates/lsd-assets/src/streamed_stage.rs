@@ -20,6 +20,44 @@ pub struct StreamedStage {
 }
 
 impl StreamedStage {
+    pub fn stage_id(&self) -> u8 {
+        self.stage
+    }
+
+    pub fn load_destination(
+        &self,
+        stage: u8,
+        spawn: lsd_core::SpawnLocation,
+    ) -> Result<(Self, [i32; 3]), Box<dyn std::error::Error>> {
+        let grid = load_scene_grid(&self.executable, stage)?;
+        let placement = grid.place_spawn([0; 3], spawn);
+        let map =
+            u16::try_from(placement.index).map_err(|_| "Destination map index is negative")?;
+        let loaded = Self::load(&self.files, &self.executable, stage, map, [0; 3])?;
+        Ok((loaded, placement.position))
+    }
+
+    pub fn load_texture_variant(
+        &self,
+        variant: char,
+    ) -> Result<crate::formats::Vram, Box<dyn std::error::Error>> {
+        if !matches!(variant, 'A' | 'B' | 'C' | 'D') {
+            return Err("Texture variant must be A-D".into());
+        }
+        let bytes = std::fs::read(
+            self.files
+                .join(format!("CDI/STG{:02}/TEX{variant}.TIX", self.stage)),
+        )?;
+        let tix = crate::formats::Tix::parse(&bytes)?;
+        let mut vram = crate::formats::Vram::default();
+        for bank in &tix.banks {
+            for image in &bank.images {
+                vram.upload(image)?;
+            }
+        }
+        Ok(vram)
+    }
+
     pub fn load(
         files: &Path,
         executable: &[u8],

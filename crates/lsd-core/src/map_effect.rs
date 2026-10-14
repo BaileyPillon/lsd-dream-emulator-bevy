@@ -14,6 +14,21 @@ pub struct MapEffect {
     pub stage_color: [u8; 3],
 }
 impl MapEffect {
+    /// Original map-start uses the decreasing cycle with variant reuse outside flashbacks.
+    pub fn start_scene(&mut self, flashback: bool, variant: i32) -> Result<(), EffectFault> {
+        self.map_attached = true;
+        self.effect.linked = i32::from(flashback);
+        self.effect.linked_divisor = if flashback { 3 } else { 0 };
+        let events = self.effect.start(
+            &self.palette,
+            false,
+            if flashback { variant } else { -1 },
+            0,
+        )?;
+        self.render_attached |= events.contains(&EffectEvent::Attach);
+        Ok(())
+    }
+
     pub fn new(palette: EffectPalette) -> Self {
         Self {
             effect: EffectState::new(palette.attached[0], 8191, 0),

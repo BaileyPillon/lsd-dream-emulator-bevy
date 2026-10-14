@@ -9,6 +9,7 @@ mod chunk_player;
 mod collision;
 mod collision_cloud;
 mod contact_links;
+mod dream_session;
 mod effect;
 mod fixed_math;
 mod link_runtime;
@@ -22,6 +23,7 @@ mod rng;
 mod scene_collision;
 mod scene_grid;
 mod scene_keys;
+mod scene_motion;
 mod stream_grid;
 mod stream_protocol;
 mod streaming;
@@ -39,6 +41,7 @@ pub use collision_cloud::{CollisionBounds, CollisionCloud};
 pub use contact_links::{
     DreamContactEffects, FloorLinkRequest, FloorLinkResponse, LinkTransformState, WallLinkRequest,
 };
+pub use dream_session::{DreamSession, DreamSessionHost};
 pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
 pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
@@ -63,6 +66,7 @@ pub use scene_grid::{
     SceneSlots,
 };
 pub use scene_keys::SceneActorKeys;
+pub use scene_motion::{SceneMotionReset, reset_scene_motion};
 pub use stream_grid::{MapRequest, SlotChoice, SlotSelection, StreamGridTables, StreamRebind};
 pub use stream_protocol::{StreamEvent, StreamProtocol, StreamSlotState};
 pub use streaming::{CellBounds, InvalidLayer, StreamSelection, select_stream_layers};

@@ -37,6 +37,8 @@ original CPU comparisons. Their scene/notification interfaces still need
 connection to the running Bevy session and its full transition lifecycle.
 The `--walk-links` streamed inspector now connects movement, contacts and original
 link/map-notification policies. The original scalar effect lifecycle and map
-completion callbacks now consume those requests. GPU composition, natural parent
-lifetimes, scene replacement and original scheduling remain open; see
-[linked scene integration](SCENE_LINKS.md) and [effect recovery](EFFECTS.md).
+completion callbacks now consume those requests. Session parent policy and
+player-motion reset also have original CPU comparisons; the inspector rebuilds
+destination geometry/textures after completion. Original day generation,
+asynchronous scene construction, GPU composition, natural parent lifetimes and
+scheduling remain open; see [session recovery](SESSION.md).

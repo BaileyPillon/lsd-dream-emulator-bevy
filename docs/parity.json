@@ -551,6 +551,25 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "session_recovery_20261014": {
+      "scope": "Original session routing/link/tick/open-map and motion reset compared with original CPU execution in supplied graphs. Loaded-scene consumer rebuilds 17 supplied original permanent-link destinations and renders two replacements while Bevy is active. Original day/cinematic/mood services, generation-driven origin and textures, actor/parent construction, CD/global scheduling, GPU fades, audio and whole-game parity remain unaccepted.",
+      "evidence": {
+        "path": "docs/session-recovery-checks.json",
+        "sha256": "3749a78f763eeb3db34cf6b3d752032ef3656e15fd6759b010f65c3ff8198cba"
+      },
+      "native_session_link_cases": 756,
+      "native_session_tick_cases": 252,
+      "native_sender_routing_cases": 40,
+      "native_scene_motion_reset_cases": 160,
+      "original_permanent_link_rebuild_scenarios": 17,
+      "live_bevy_replacement_scenarios_observed": 2,
+      "original_session_scalar_policy_implemented": true,
+      "loaded_scene_rebuild_consumer_present": true,
+      "whole_visible_transition_parity_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

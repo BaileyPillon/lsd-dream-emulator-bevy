@@ -16,8 +16,10 @@ The original map-notification policy now accepts or cancels the transition. It
 preserves the original fade requests, color steps, input locks, pause modes, movement
 callback selection and source rotation. The inspector now consumes effect
 requests with the original scalar lifecycle and map completion callbacks.
-GPU fade composition, sound playback and scene replacement still require
-their runtime consumers; see [effect recovery](EFFECTS.md).
+The original session policy now receives completion notifications, and the
+inspector reloads destination maps/textures with the original motion reset.
+GPU fade composition, sound playback and full original scene construction remain
+open; see [effect recovery](EFFECTS.md) and [session recovery](SESSION.md).
 
 ```sh
 cargo run -p lsd-bevy --bin lsd-stage --features desktop --locked -- /path/to/extracted/files 3 136 A --walk-links
