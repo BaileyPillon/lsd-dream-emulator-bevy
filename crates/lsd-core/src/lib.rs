@@ -2,6 +2,7 @@
 
 mod animation;
 mod animation_player;
+mod body_dispatch;
 mod chunk_collision;
 mod chunk_player;
 mod collision;
@@ -18,8 +19,9 @@ mod streaming;
 
 pub use animation::{AnimationClip, AnimationFrame, AnimationRecord, AnimationWord};
 pub use animation_player::{AnimationError, AnimationParent, AnimationPart, AnimationPlayer};
+pub use body_dispatch::{BodyContactState, BodyNotification};
 pub use chunk_collision::{
-    CollisionChunk, CollisionModel, CollisionPolicy, CollisionTile, WorldContact,
+    BodyQueryState, CollisionChunk, CollisionModel, CollisionPolicy, CollisionTile, WorldContact,
 };
 pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
 pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
@@ -30,7 +32,7 @@ pub use player_controls::{
     FloorEffectStep, MotionAxis, MotionRequest, MovementStep, PlayerControls,
 };
 pub use rng::PsxRng;
-pub use scene_collision::{SceneCollision, SceneCollisionError, SceneContact};
+pub use scene_collision::{BodyCandidate, SceneCollision, SceneCollisionError, SceneContact};
 pub use scene_grid::{
     CellRectangle, SceneGrid, SceneGridError, SceneLocation, ScenePlacement, SceneQuery, SceneSlot,
     SceneSlots,

@@ -30,6 +30,8 @@ fn input_motion_and_body_contacts_preserve_callback_handoff_order() {
         model: 0,
         translation: [1024, 0, 1024],
         heading: 0,
+        category: 0,
+        flags: 0x80,
     });
     let chunk = CollisionChunk {
         policy: CollisionPolicy::default(),
@@ -81,6 +83,8 @@ fn stage_policy_reaches_body_queries_for_low_obstacles() {
         model: 0,
         translation: [1024, 0, 1024],
         heading: 0,
+        category: 0,
+        flags: 0x80,
     });
     let mut chunk = CollisionChunk {
         policy: CollisionPolicy::default(),

@@ -22,6 +22,9 @@ neighbor selection and slot reuse through the recovered protocol; see
 [stream recovery](docs/STREAMING_RECOVERY.md). Original CD timing and actor
 callbacks still need implementation.
 
+Surrounding body queries now preserve the original rectangle/chain order and
+tile attribute gate; see [body dispatch recovery](docs/BODY_DISPATCH_RECOVERY.md).
+
 ## Start here
 
 The workspace pins Rust **1.97.1**, Bevy **0.20.0** and its Cargo lockfile.

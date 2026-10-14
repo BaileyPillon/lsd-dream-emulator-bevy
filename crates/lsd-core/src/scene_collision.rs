@@ -1,6 +1,6 @@
 use crate::{
-    CollisionBounds, CollisionChunk, CollisionFault, MotionRequest, PsxMathTables, SceneGridError,
-    SceneSlots, WorldContact,
+    BodyContactState, BodyQueryState, CollisionBounds, CollisionChunk, CollisionFault,
+    MotionRequest, PsxMathTables, SceneGridError, SceneLocation, SceneSlots, WorldContact,
 };
 use std::fmt;
 
@@ -15,6 +15,13 @@ pub struct SceneContact {
     pub slot: usize,
     pub map_index: i16,
     pub geometry: WorldContact,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct BodyCandidate {
+    pub slot: usize,
+    pub cell: usize,
+    pub tile: usize,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -41,6 +48,37 @@ impl fmt::Display for SceneCollisionError {
 impl std::error::Error for SceneCollisionError {}
 
 impl SceneCollision {
+    pub fn body_candidates(
+        &self,
+        location: SceneLocation,
+    ) -> Result<Vec<BodyCandidate>, SceneCollisionError> {
+        let mut result = Vec::new();
+        for query in self.slots.body_queries(location)? {
+            let Some(chunk) = self.ready_chunk(query.slot)? else {
+                continue;
+            };
+            for dz in 0..query.cells.rows {
+                for dx in 0..query.cells.columns {
+                    let x = i32::from(query.cells.x) + dx;
+                    let z = i32::from(query.cells.z) + dz;
+                    if !(0..20).contains(&x) || !(0..20).contains(&z) {
+                        return Err(SceneGridError::InvalidSlot.into());
+                    }
+                    let cell = z as usize * 20 + x as usize;
+                    for (tile, entry) in chunk.cells[cell].iter().enumerate() {
+                        if entry.flags & 0x80 != 0 {
+                            result.push(BodyCandidate {
+                                slot: query.slot,
+                                cell,
+                                tile,
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        Ok(result)
+    }
     fn ready_chunk(&self, index: usize) -> Result<Option<&CollisionChunk>, SceneCollisionError> {
         if !self.slots.slots[index].ready {
             return Ok(None);
@@ -89,7 +127,8 @@ impl SceneCollision {
         Ok(None)
     }
 
-    /// Current-owner body prototype. Original surrounding-cell/body notification traversal is pending.
+    /// Preserves rectangle/chain order and the last successful geometry contact.
+    /// Original actor callback side effects remain separate.
     pub fn body(
         &self,
         position: [i32; 3],
@@ -101,13 +140,28 @@ impl SceneCollision {
         let Some(location) = self.slots.locate(position)? else {
             return Ok(None);
         };
-        let Some(chunk) = self.ready_chunk(location.slot)? else {
+        if !self.slots.slots[location.slot].ready {
             return Ok(None);
-        };
-        let origin = self.slots.slots[location.slot].origin;
-        let local = std::array::from_fn(|axis| position[axis].wrapping_sub(origin[axis]));
-        Ok(chunk
-            .body(local, heading, bounds, motion, tables)?
-            .map(|hit| self.world_contact(location.slot, hit)))
+        }
+        let mut contact = BodyContactState { current: None };
+        for candidate in self.body_candidates(location)? {
+            let chunk = self.ready_chunk(candidate.slot)?.unwrap();
+            let origin = self.slots.slots[candidate.slot].origin;
+            let local = std::array::from_fn(|axis| position[axis].wrapping_sub(origin[axis]));
+            if let Some(hit) = chunk.body_tile(
+                BodyQueryState {
+                    position: local,
+                    heading,
+                    bounds,
+                    motion,
+                },
+                candidate.cell,
+                candidate.tile,
+                tables,
+            )? {
+                contact.notify(self.world_contact(candidate.slot, hit), 4);
+            }
+        }
+        Ok(contact.current)
     }
 }

@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T00:13:30.805210+00:00",
+  "base_commit": "3575127f6f024eea3c974c2909ed0a457e4c5719",
+  "scope": "Original tile reader and native body selection/dispatch in supplied graphs, scalar contact assignment and Rust neighbor-body geometry integration. Full natural binding, native transform/actor callback chains and game parity remain open.",
+  "original_body_selection_cases": 144,
+  "original_eligible_node_dispatches": 740,
+  "original_contact_assignment_sequences": 3,
+  "original_tile_reader_cases": 168,
+  "native_body_scope": "Original rectangle selection, ready-slot traversal, attribute gate, chained dispatch ordering and notification arguments in supplied graphs; separate original scalar code-4 contact assignment. Full tile binding, transforms, geometry-to-actor callback and original stage scenarios remain open.",
+  "native_tile_reader_scope": "Original tile-record selection, chain continuation, absence/termination behavior and pose/attribute output; native model allocation/binding and actor effects remain open.",
+  "body_captured_boundary": "tile virtual notification; supplied sink records sender/code without geometry or actor side effects",
+  "tile_reader_captured_boundary": "Primitive lookup receives model index, original cell index and tile payload; supplies synthetic primitive tokens.",
+  "body_function_entries": {
+    "spatial": 72,
+    "rectangles": 72,
+    "label_slot": 128,
+    "split": 72,
+    "walk": 144,
+    "dispatch": 1294,
+    "layered": 72,
+    "ready_map_slot": 72,
+    "contact": 11
+  },
+  "body_function_ranges": [
+    {
+      "name": "spatial",
+      "address": "0x8004afe0",
+      "bytes": 80,
+      "sha256": "39a74425f8ada7e712d29e6344871b6084d4d5704c35634436781493b258b782"
+    },
+    {
+      "name": "layered",
+      "address": "0x8004b030",
+      "bytes": 208,
+      "sha256": "14c67b227c35920e2297287012ed536ef75303be08f6875dc1b6c6cb6aa6838a"
+    },
+    {
+      "name": "walk",
+      "address": "0x8004b100",
+      "bytes": 468,
+      "sha256": "d983073d2a9c7bdf05b56cf13e17368158e1a3ebbc30386c2cf7524df8c8b387"
+    },
+    {
+      "name": "dispatch",
+      "address": "0x8004b2d4",
+      "bytes": 72,
+      "sha256": "4fa38188d3c45f4139d3cbe997efea6262da0237ec05a1e523f8ba29ad3e766e"
+    },
+    {
+      "name": "rectangles",
+      "address": "0x8004c93c",
+      "bytes": 436,
+      "sha256": "b2ae8adf614d7d9cbbc54f0c421116d413b0d1ec83b589ef627f68bf496807e9"
+    },
+    {
+      "name": "split",
+      "address": "0x8004caf0",
+      "bytes": 388,
+      "sha256": "db0aef3b0fd26e35a931cc0a7becce405b0e7cf3269a275448f8f39b4bdc5497"
+    },
+    {
+      "name": "label_slot",
+      "address": "0x8004c588",
+      "bytes": 72,
+      "sha256": "e180bd8b0901df8378e5dd68e131ebae4d12ce6693f3ff82923f4a4b9d8fbdac"
+    },
+    {
+      "name": "ready_map_slot",
+      "address": "0x8004c5d0",
+      "bytes": 80,
+      "sha256": "3a47475cad6b9d5185039eb491da54f106f2f48986937533fe06d156db984540"
+    },
+    {
+      "name": "contact",
+      "address": "0x8001d6b4",
+      "bytes": 96,
+      "sha256": "64dad369cdfde0f14d187d39f7924a9c3dc40cf4afd70753f739156bab3ecb6d"
+    }
+  ],
+  "tile_reader_function_range": {
+    "address": "0x8002c278",
+    "bytes": 304,
+    "sha256": "e817208e1f6094ee52a48ee0bc57ef2e6a339e320139c731e4add62981be5ab1"
+  },
+  "verified_node_attribute_offset": "0x36",
+  "body_attribute_mask": "0x80",
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/body-dispatch.json": "f4ea632b91293cdc7c3a437a5df85c87e104db4c4083eb9c07b1051fdd211c9b",
+    "crates/lsd-assets/tests/fixtures/tile-reader.json": "a7e9f458a4c0aea576f1d5c9e24d4191c82b8e57a6d7ee014215bbc15edb5938"
+  },
+  "local_validation": {
+    "workspace_tests_passed": 63,
+    "private_original_tests_ignored": 6,
+    "original_stage_stream_integration_passed": true,
+    "clippy_all_targets_all_features_locked_passed": true
+  },
+  "captures": [
+    {
+      "stage": 3,
+      "map": 136,
+      "ticks": 1800,
+      "image_sha256": "1716acfe47a32e18306ff828af4c04271114902530bdaef2d6f1249ec516e298",
+      "log_sha256": "7867b034c2ef84c5cb727d778ec29338c018782d47a3ca2346f4ea1bcd337efe",
+      "previous_capture_identical": true
+    },
+    {
+      "stage": 0,
+      "map": 0,
+      "ticks": 32,
+      "image_sha256": "65be73b8f5c37a28f74f09c4ebca21f56ea73efaaab4152db7df3c9bf7173553",
+      "log_sha256": "4a52ab3d1e98fac18dd881af848ba7dd68ac0c8c3d423ae3f042135a0ac8bad5",
+      "previous_capture_identical": true
+    }
+  ],
+  "binary_sha256": "c1531f9bfd06cf5235dd765ed7016f2786247b681f54d08a8564b0524d4891ed",
+  "working_source_sha256": {
+    "crates/lsd-core/src/body_dispatch.rs": "50aade873f92627174269226de1ef1c683bbf37b40664adc47fe0b002407f810",
+    "crates/lsd-core/src/chunk_collision.rs": "6bd9cddbd2552789a6ec49bc4acaf2171d13a1109ee0bc49fb49cb8ae8cea6b3",
+    "crates/lsd-core/src/scene_collision.rs": "09cacbc14554749d7b164fa9304dba096630041c11c1830f7b0e021d9d66de3b",
+    "crates/lsd-core/src/lib.rs": "4cd8da26dcb5eac568c1a26c145c7882c0cfa9834f80938189ba46357aa742f9",
+    "crates/lsd-core/tests/chunk_player.rs": "4d62ed5bf306b6b6763151ae2ab6cf3be6a5ceed9d024e82f35b52dad4bceb21",
+    "crates/lsd-core/tests/scene_collision.rs": "a600402b8737c0cfa7314f35085fd4135a5013dedfdab107ddbb2e45a57baca2",
+    "crates/lsd-core/tests/native_body_dispatch.rs": "73e48601d9f61ff82dd60e7e815e8915174a5af8bba3c899b943b97f2b305795",
+    "crates/lsd-core/tests/surrounding_body.rs": "234f00ba4e2ad6724229598d80515106afa51442de50750ecafaa8f717a00b3e",
+    "crates/lsd-assets/src/formats/lbd.rs": "f9c74c16c2f38388955f0c9e386c0ccf2c6a7f7d81aca98baef9a8612334a2e8",
+    "crates/lsd-assets/tests/native_tile_reader.rs": "536f01487228d0c06bee256055002cd215db9b3df180673739dde78673c9e9c8"
+  },
+  "private_proof_sha256": {
+    "native-body-dispatch-proof-seventh.json": "109ff23e4ccb10027f6a1832e793a7c2bc4f928693a239ee1058808cec19c1a4",
+    "native-tile-reader-proof-seventh.json": "fd6fe36494fb875ca31ed5193e677ade2b9575546d77f877910cf086373132b8",
+    "body-validation-proof-seventh.json": "66b2fd5f1334ca52314141fa2dc599c08889b6ad31e2f66b110652f659c7b219"
+  },
+  "c_decompilation_paused_and_preserved": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

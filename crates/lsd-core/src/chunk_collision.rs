@@ -14,6 +14,16 @@ pub struct CollisionTile {
     pub model: usize,
     pub translation: [i32; 3],
     pub heading: i16,
+    pub category: u8,
+    pub flags: u8,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct BodyQueryState {
+    pub position: [i32; 3],
+    pub heading: i16,
+    pub bounds: CollisionBounds,
+    pub motion: MotionRequest,
 }
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
@@ -99,7 +109,7 @@ impl CollisionChunk {
         Ok(None)
     }
 
-    /// Body query in one loaded chunk. Streaming/actor callback dispatch remains separate.
+    /// Legacy one-chunk traversal. Streamed queries use the original selected rectangles.
     pub fn body(
         &self,
         position: [i32; 3],
@@ -108,50 +118,78 @@ impl CollisionChunk {
         motion: MotionRequest,
         tables: &PsxMathTables,
     ) -> Result<Option<WorldContact>, CollisionFault> {
-        let mut cloud = bounds.cloud();
-        cloud.extend(motion.axis == MotionAxis::Strafe, motion.amount as i16);
-        let rotation = tables.rotation([0, heading, 0]);
-        cloud.0 = cloud.0.map(|point| rotation.apply_saturated(point));
+        let query = BodyQueryState {
+            position,
+            heading,
+            bounds,
+            motion,
+        };
+        let mut contact = None;
         for (cell, tiles) in self.cells.iter().enumerate() {
-            for (index, tile) in tiles.iter().enumerate() {
-                let model = &self.models[tile.model];
-                let Some(model_bounds) = model.bounds else {
-                    continue;
-                };
-                let delta: [i32; 3] =
-                    std::array::from_fn(|axis| position[axis].wrapping_sub(tile.translation[axis]));
-                if delta.iter().any(|value| value.wrapping_abs() > 16384) {
-                    continue;
-                }
-                let inverse = tables.rotation([0, tile.heading.wrapping_neg(), 0]);
-                let offset = inverse.apply_saturated(delta.map(|value| value as i16));
-                let local = CollisionCloud(cloud.0.map(|point| {
-                    let rotated = inverse.apply_saturated(point);
-                    std::array::from_fn(|axis| rotated[axis].wrapping_add(offset[axis]))
-                }));
-                if !model_bounds.overlaps(CollisionBounds::from_points(&local.0).unwrap()) {
-                    continue;
-                }
-                if let Some(hit) = local.intersection(
-                    model_bounds,
-                    &model.faces,
-                    self.policy.ignore_low_midpoint,
-                    tables,
-                )? {
-                    let rotated = tables
-                        .rotation([0, tile.heading, 0])
-                        .apply_saturated(hit.position);
-                    return Ok(Some(WorldContact {
-                        cell,
-                        tile: index,
-                        model: tile.model,
-                        position: std::array::from_fn(|axis| {
-                            tile.translation[axis].wrapping_add(i32::from(rotated[axis]))
-                        }),
-                    }));
+            for index in 0..tiles.len() {
+                if let Some(hit) = self.body_tile(query, cell, index, tables)? {
+                    contact = Some(hit);
                 }
             }
         }
-        Ok(None)
+        Ok(contact)
+    }
+
+    pub fn body_tile(
+        &self,
+        query: BodyQueryState,
+        cell: usize,
+        index: usize,
+        tables: &PsxMathTables,
+    ) -> Result<Option<WorldContact>, CollisionFault> {
+        let tile = &self.cells[cell][index];
+        if tile.flags & 0x80 == 0 {
+            return Ok(None);
+        }
+        let model = &self.models[tile.model];
+        let Some(model_bounds) = model.bounds else {
+            return Ok(None);
+        };
+        let delta: [i32; 3] =
+            std::array::from_fn(|axis| query.position[axis].wrapping_sub(tile.translation[axis]));
+        if delta.iter().any(|value| value.wrapping_abs() > 16384) {
+            return Ok(None);
+        }
+        let mut cloud = query.bounds.cloud();
+        cloud.extend(
+            query.motion.axis == MotionAxis::Strafe,
+            query.motion.amount as i16,
+        );
+        let rotation = tables.rotation([0, query.heading, 0]);
+        cloud.0 = cloud.0.map(|point| rotation.apply_saturated(point));
+        let inverse = tables.rotation([0, tile.heading.wrapping_neg(), 0]);
+        let offset = inverse.apply_saturated(delta.map(|value| value as i16));
+        let local = CollisionCloud(cloud.0.map(|point| {
+            let rotated = inverse.apply_saturated(point);
+            std::array::from_fn(|axis| rotated[axis].wrapping_add(offset[axis]))
+        }));
+        if !model_bounds.overlaps(CollisionBounds::from_points(&local.0).unwrap()) {
+            return Ok(None);
+        }
+        Ok(local
+            .intersection(
+                model_bounds,
+                &model.faces,
+                self.policy.ignore_low_midpoint,
+                tables,
+            )?
+            .map(|hit| {
+                let rotated = tables
+                    .rotation([0, tile.heading, 0])
+                    .apply_saturated(hit.position);
+                WorldContact {
+                    cell,
+                    tile: index,
+                    model: tile.model,
+                    position: std::array::from_fn(|axis| {
+                        tile.translation[axis].wrapping_add(i32::from(rotated[axis]))
+                    }),
+                }
+            }))
     }
 }

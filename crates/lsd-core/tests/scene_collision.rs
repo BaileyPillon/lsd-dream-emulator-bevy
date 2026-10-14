@@ -27,6 +27,8 @@ fn floor(y: i16) -> CollisionChunk {
         model: 0,
         translation: [1024, 0, 1024],
         heading: 0,
+        category: 0,
+        flags: 0x80,
     });
     CollisionChunk {
         policy: CollisionPolicy::for_stage(0),

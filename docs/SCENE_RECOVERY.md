@@ -30,8 +30,9 @@ single-chunk prototype and uses the same keyboard controls. Starting positions,
 camera rest points and host timing remain development settings. The loader
 currently marks imported maps ready synchronously; it does not implement the
 original asynchronous stream lifecycle. Body collision still queries the current
-owner's chunk; surrounding-body traversal and original hit notifications remain
-open. [Streamed inspection](STREAMING_RECOVERY.md) now adds spatial neighbor
+owner's chunk in the earlier snapshot. [Body dispatch recovery](BODY_DISPATCH_RECOVERY.md)
+now adds surrounding rectangles, tile flags and ordered contact selection;
+original actor side effects remain open. [Streamed inspection](STREAMING_RECOVERY.md) now adds spatial neighbor
 selection and slot reuse with host-file completion; original CD timing and
 complete stream/actor lifetime callbacks remain requirements.
 

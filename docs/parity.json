@@ -432,6 +432,20 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "body_dispatch_20261013": {
+      "scope": "Original tile reader and native body selection/dispatch in supplied graphs, scalar contact assignment and Rust neighbor-body geometry integration. Full natural binding, native transform/actor callback chains and game parity remain open.",
+      "evidence": {
+        "path": "docs/body-dispatch-checks.json",
+        "sha256": "be9dd5db90e4c0d11c4f0f207af72668c552631a3e625671a083a1f223d57af3"
+      },
+      "native_body_selection_cases": 144,
+      "native_eligible_dispatches": 740,
+      "native_tile_reader_cases": 168,
+      "surrounding_body_geometry_integrated": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

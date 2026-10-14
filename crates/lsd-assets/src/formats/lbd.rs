@@ -71,6 +71,8 @@ impl Lbd {
                             model: usize::from(tile.model),
                             translation: tile.native_position(cell),
                             heading: tile.native_heading(),
+                            category: tile.category,
+                            flags: tile.flags,
                         })
                         .collect()
                 })

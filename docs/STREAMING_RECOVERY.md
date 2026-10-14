@@ -30,7 +30,9 @@ host step. It builds collision geometry and Bevy meshes when a bind event
 arrives. This completion schedule is a development setting. Original CD timing,
 scene notifications, actor/MML lifetime callbacks, original input suspension
 and full session scheduling still need implementation. Body collision still
-uses the current owner's chunk; surrounding-body dispatch remains open.
+uses the recovered surrounding rectangles and attribute gate; see
+[body dispatch](BODY_DISPATCH_RECOVERY.md). Complete actor callback behavior
+remains open.
 
 ## Evidence and limits
 
