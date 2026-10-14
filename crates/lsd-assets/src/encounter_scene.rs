@@ -61,6 +61,9 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn day_number(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
     fn dream_color(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
         Err(lsd_core::BehaviorFault::MissingPlayerServices)
     }
@@ -720,6 +723,19 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn day_number(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
+        self.events.day_number()
+    }
+    fn actor_proximity(
+        &mut self,
+        actor: &ModelActor,
+        forward: i32,
+        radius: i32,
+    ) -> Result<bool, lsd_core::BehaviorFault> {
+        let (position, forward, radius) =
+            lsd_core::entity_proximity_args(self.fields, actor.pose.position, forward, radius);
+        self.target.proximity(position, forward, radius)
+    }
     fn dream_color(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
         self.events.dream_color()
     }

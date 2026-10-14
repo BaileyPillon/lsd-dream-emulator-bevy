@@ -43,7 +43,7 @@ pub use entity_effect::{EntityEffect, EntityEffectDefinition};
 mod entity_body;
 pub use entity_behavior::{
     BehaviorContext, BehaviorFault, BehaviorTick, EntityBehavior, EntityInteractionHost,
-    EntityScriptHost, EntityTarget, NpcScript, entity_distance,
+    EntityScriptHost, EntityTarget, NpcScript, entity_distance, entity_proximity_args,
 };
 pub use entity_body::{
     BodyPeer, EntityBodyEvent, EntityBodyHost, EntityBodyPlan, entity_body_plan,

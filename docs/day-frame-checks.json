@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "action_scope": "Direct original Gargoyle Pit, Mushroom, Human Face Flower, Giant Lips, Whale, Hopscotch Girl and Corpse action/context/animation, day query and proximity query through actual original constructors and owned meshless player. Supplied day/year, independent clocks, seed, animation seek/freeze, cached target/view and explicit behavior start; imported original models/properties/math separate. Natural encounters, reciprocal collision, global timing/GPU/SPU unaccepted.",
+  "complete_update_scope": "Complete original entity_update with activation/perception before Gargoyle Pit, Mushroom, Human Face Flower, Giant Lips, Whale, Hopscotch Girl and Corpse action/context/animation, day query and proximity query through actual original constructors and owned meshless player. Supplied day/year, independent clocks, seed, animation seek/freeze, cached target/view and explicit behavior start; imported original models/properties/math separate. Natural encounters, reciprocal collision, global timing/GPU/SPU unaccepted.",
+  "observed_owned_outcomes": {
+    "owned_scenarios_per_callback": {
+      "entity_gargoyle_pit": 18,
+      "entity_mushroom": 32,
+      "entity_human_face_flower": 30,
+      "entity_lips_giant": 10,
+      "entity_whale": 11,
+      "entity_hopscotch_girl": 20,
+      "entity_corpse": 4
+    },
+    "signed_day_wrap_and_year_separation_observed": true,
+    "mushroom_pause_resume_keeps_action_and_rng_running": true,
+    "gargoyle_proximity_height_boundary_inclusive_then_miss_observed": true,
+    "whale_duration_based_shutdown_observed": true,
+    "hopscotch_single_frame_subtraction_preserved": true,
+    "corpse_one_tick_movement_observed": true,
+    "production_adapter_owned_scenarios": 125,
+    "production_adapter_owned_states": 2864,
+    "production_adapter_canonical_scenarios": 120,
+    "production_adapter_canonical_states": 3074,
+    "whole_natural_encounters_accepted": 0
+  },
+  "action_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/day-frame-npc-runtime.json",
+    "fixture_sha256": "39293baffa8f13ec43de21f5a41b86c28ac019cea81fd70c1ffb594a6db95bda",
+    "private_fixture_sha256": "3d8c27acfcc2d4a28cab7458098d69e0413c21a8b3822adfeef2ff295d3cc2fd",
+    "owned_scenarios": 125,
+    "owned_states": 2989,
+    "canonical_scenarios": 120,
+    "canonical_states": 3194,
+    "day_query_cases": 27
+  },
+  "entity_update_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/day-frame-npc-encounters.json",
+    "fixture_sha256": "f68aad6e21fd9ccd293ce8ad363e51f374bca9ff31d66ade5aaf9b28136361b5",
+    "private_fixture_sha256": "fe1bebaa70ee62b24b0c0b09a7c9c09dd27758c047516253166674a69e171389",
+    "owned_scenarios": 125,
+    "owned_states": 2989,
+    "canonical_scenarios": 120,
+    "canonical_states": 3194,
+    "day_query_cases": 27
+  },
+  "canonical_bindings": {
+    "entity_gargoyle_pit": {
+      "path": "CDI/STG01/M001.LBD",
+      "offset": 16396,
+      "bytes": 8516,
+      "entity": 7,
+      "stage": 1,
+      "model_index": 0,
+      "source_sha256": "7e8272e4bed81b7fbf55de814e127be4ca7609114ac44ad5938d89671c6cb419",
+      "mom_sha256": "6dea80a64ea4551d4a12512a1536a89b9abdbbd9ab09855f4273c31d9bf1a180"
+    },
+    "entity_mushroom": {
+      "path": "CDI/STG04/M004.LBD",
+      "offset": 32780,
+      "bytes": 3680,
+      "entity": 39,
+      "stage": 4,
+      "model_index": 0,
+      "source_sha256": "1b814364d790cf5ec2a46521b5d538851ced4f276b756f3a00064255efc662f9",
+      "mom_sha256": "caf36ccca8a0ce79772d74c4d39551f58ca4bfa7e3e17dd88813124f696ada32"
+    },
+    "entity_human_face_flower": {
+      "path": "CDI/STG04/M015.LBD",
+      "offset": 16396,
+      "bytes": 8984,
+      "entity": 46,
+      "stage": 4,
+      "model_index": 0,
+      "source_sha256": "2b9785192835bf3b8b99993a8691125985c6e40d5cdaae254ce1a0f733b3f40d",
+      "mom_sha256": "936d194678ebcd6f81a01a2d06c98a53920d8333858fee0c63272030202167dd"
+    },
+    "entity_lips_giant": {
+      "path": "CDI/STG04/M018.LBD",
+      "offset": 16396,
+      "bytes": 6764,
+      "entity": 48,
+      "stage": 4,
+      "model_index": 0,
+      "source_sha256": "c288352c725ca93f7ff4c8540f3d174395dc27311c10d66c794482d19e74eef5",
+      "mom_sha256": "9d6ca918ffc521cc39c6200685f502689602d1b18eb485316d3976a68af52279"
+    },
+    "entity_whale": {
+      "path": "CDI/STG04/N1/M026.LBD",
+      "offset": 16396,
+      "bytes": 13768,
+      "entity": 50,
+      "stage": 4,
+      "model_index": 0,
+      "source_sha256": "d0d9c956aaffbec941ffa1c9f048bf8e26855e3823614266d3616f3823473c6a",
+      "mom_sha256": "bc37467a76f3aa7346ea1637dc449a3f97803fe33ac7dedea6dc24230c0f3e55"
+    },
+    "entity_hopscotch_girl": {
+      "path": "CDI/STG05/M007.LBD",
+      "offset": 20492,
+      "bytes": 11840,
+      "entity": 55,
+      "stage": 5,
+      "model_index": 0,
+      "source_sha256": "6508f46301a69a6e50c24eee54ef1a366401262b7d56c2a7e5d9daf734f89460",
+      "mom_sha256": "328d92d6b83e39c5388222d38f1e67df4c87a24beac0e73a52b612a765c48207"
+    },
+    "entity_corpse": {
+      "path": "CDI/STG05/M008.LBD",
+      "offset": 22540,
+      "bytes": 2720,
+      "entity": 56,
+      "stage": 5,
+      "model_index": 0,
+      "source_sha256": "84d951247117d845898b35deeda1f7a81b49e60fe0746321c91fa492e2d153be",
+      "mom_sha256": "8b23c3fdd182d5eccc082b62b7e461b0bf2c3abfbb3fb51816260d7f23ca725d"
+    }
+  },
+  "native_function_sha256": {
+    "entity_gargoyle_pit": "1a4995386d0c117a453df4b75c683b90db6bfd3ccfbbd9667c8b3f1daa9ef8f5",
+    "entity_mushroom": "77d6adcf5a778bb2e048d0b85553e3e19434702d45e204c390560f3e1f74317d",
+    "entity_human_face_flower": "744506e3ce9b36621d3b11aee1f5af1d8d723159ddd1d98cbfb35eaccce34a1f",
+    "entity_lips_giant": "f3ee43a2071ce88848434682820b42dd85131431cb1d0622899fac6ac66d7fb8",
+    "entity_whale": "492b544dd65c1d62d8e08570a7b02f10852b3dca88c1fe557c8997ed1c619b48",
+    "entity_hopscotch_girl": "3959c309309f0be296c38ff7a840fdac8f8fe10ca6d74f6e5892c94d5d889d63",
+    "entity_corpse": "b76170e6be60c4f185cd65dc537ff2099f0b7eea877b0cb77683e5ad052bd15c",
+    "get_day_number": "cfc9b018d71226b3c4c0d5d96c72e10937b717d1a4eb63d63091fe8ecf13920f",
+    "entity_check_proximity": "1e5a692e980e31613cf83f6b33fa8b7b8c4f11df51831449192646cc492d2fc9",
+    "dream_sys_resolve_target_position": "0117904df01b465c174d189362308034ba18ce6c760fc21a75030a343ca718bd",
+    "transform_local_to_world": "720529d7f67d74acdcb49dea9bebb9c90ecf2df0d18dc62be20336b53a34ad33",
+    "lerp_position": "f78ab4afeefd15e2b72f733e9f71b9c60d45ae8fc47fe219371a804ec068ffa5",
+    "is_point_within_radius": "387384c474b754a9c6d9a3eda67c1789e7169788c8890d75412dc3fad8dd0a62",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "entity_disable_link": "730e458b8fcbb0fbdd92a20f7825c109697c11b5c02e57668ba54d424df14efd",
+    "entity_stop_behaviour": "4fa7621002bfabe6bf1c105adc34415e5f321cde133ecbc8dc1a00aee60dcaf0",
+    "func_800662A8": "6c0fd7bd7af3e46186f01ef889ddcf38378eac84bdf2a34797ff4cc5eb546d8d",
+    "func_800662B4": "9551f2e22426c0ef38657b0ae7289d100e7d495c6f17cd81cbc78cddb68f81ee"
+  },
+  "native_function_entries": {
+    "actions": {
+      "entity_gargoyle_pit": 398,
+      "entity_mushroom": 3344,
+      "entity_human_face_flower": 294,
+      "entity_lips_giant": 232,
+      "entity_whale": 1020,
+      "entity_hopscotch_girl": 556,
+      "entity_corpse": 64,
+      "get_day_number": 139,
+      "entity_check_proximity": 218,
+      "dream_sys_resolve_target_position": 218,
+      "transform_local_to_world": 218,
+      "lerp_position": 218,
+      "is_point_within_radius": 218,
+      "func_80065FD8": 8431,
+      "sound_entity_update": 5908,
+      "entity_disable_link": 530,
+      "entity_stop_behaviour": 530,
+      "func_800662A8": 1170,
+      "func_800662B4": 1388
+    },
+    "entity_updates": {
+      "entity_gargoyle_pit": 398,
+      "entity_mushroom": 3344,
+      "entity_human_face_flower": 294,
+      "entity_lips_giant": 232,
+      "entity_whale": 1020,
+      "entity_hopscotch_girl": 556,
+      "entity_corpse": 64,
+      "get_day_number": 139,
+      "entity_check_proximity": 6021,
+      "dream_sys_resolve_target_position": 6021,
+      "transform_local_to_world": 6021,
+      "lerp_position": 6021,
+      "is_point_within_radius": 6021,
+      "entity_update": 5938,
+      "func_80065FD8": 8431,
+      "sound_entity_update": 5908,
+      "entity_disable_link": 530,
+      "entity_stop_behaviour": 530,
+      "func_800662A8": 1170,
+      "func_800662B4": 1388
+    }
+  },
+  "private_proof_sha256": {
+    "actions": "cd27874e9a688373a8167353d35fc0ffe2695bfcd4eea99d4b753ce89fa28025",
+    "action_producer": "1dfe6ce96905914663679d1ce49a1b6b6e2b5f0ad44eb246ce691564ebf742d4",
+    "entity_updates": "e0f19c990352353660fab7ffad69c9bb4b120e4256c147accc20a8a97cd858ab",
+    "entity_update_producer": "33c05a8a92317bb66798ee13b52ccd58c663dcea63b367fd6ad0a07732865ca4",
+    "graph_library": "d9620f96684ec7f49956b7d170281649fb3bc33dc1cdb95aad5c7ef29d224a9b",
+    "repeat": "8f2f103ecc39024b5df765f97891710eeb16456d2dfca939f2ecc018e354052c",
+    "validation": "6371550573603a2db954da0245e147ac434a66b261213453b1efd36a378a1779",
+    "callback_inventory": "420852128fdc0b1df6effb4248ea1cdfd7ca5002e132b00da72b14609d1ed943",
+    "observed_branches": "eae055a7db39a7f6fc137dc49e4a2a62b037eaadf926f9de8b704b03b935fb67"
+  },
+  "validation": {
+    "workspace_counts": [
+      153,
+      0,
+      41
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 125,
+    "owned_action_states": 2989,
+    "canonical_action_scenarios": 120,
+    "canonical_action_states": 3194,
+    "owned_full_entity_update_scenarios": 125,
+    "owned_full_entity_update_states": 2989,
+    "canonical_full_entity_update_scenarios": 120,
+    "canonical_full_entity_update_states": 3194,
+    "encounter_adapter_owned_states": 2864,
+    "encounter_adapter_canonical_states": 3074,
+    "day_query_cases": 27,
+    "day_script_proximity_rng_and_animation_seeking_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "7f7b2f10ee9995bafa6952320c7790e052511bf03051b031c51b423aa7edf3ce",
+      "workspace": "8d61aec3b4cf2e8a664a84ac4b6ede5446e1f65e2ebcc8fbc4b63ff2bf21d22d",
+      "original-content": "633a583814aca1b042b33e1a7353d0fc86bf22bc583572dd60b1f12238a3a6a4",
+      "desktop-build": "b00e5c72c490d3db00303f204da3a9b54d33b7897559dab0251cba6e25cf1da7",
+      "capture-idle": "3420a4dcfb1a4f461fdf3eb9a05ee58f607c39ef474b435123f9ece686db6aee",
+      "capture-futon": "e2591a99a4be8986c403d841e75c35f9098e888478848cc306e3910b791aee97",
+      "capture-yokai": "a50d775ef64f1b134ca6e1b324250ab5cab5537e13609dfbc1a8dfbbc6f21f0c",
+      "capture-expiry": "bc39423b40422f4156485d3ec720e7e7f89ff39dd7e2aee41b643106b4c507e3",
+      "capture-gray-birth": "ac8d1c4808beffc7eb03723f67f7d7955c734933f5708e7990627b62cc4cb60a",
+      "capture-gray-fade": "abfbe5536411b85c9c4e5ce11f1bc1887aeac5cc00f3d90b429c7b00d5c3c3c6",
+      "capture-gray-complete": "f366d21ee8c296681b1fcb7d96cc49133b3947742d876baf4ae64e1e866f7a65"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 55,
+    "remaining_pending_callbacks": 52,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "3cf31e0f271c7336f0a607c2a485f1a7f99dd25d7317a1b85399a3358bdf7ad6",
+    "crates/lsd-assets/tests/native_day_frame_npcs.rs": "0d8411d8a3f6d624997e3258666eec4e38fd0c3cbd270f384fcde9138299aede",
+    "crates/lsd-assets/tests/fixtures/day-frame-npc-runtime.json": "39293baffa8f13ec43de21f5a41b86c28ac019cea81fd70c1ffb594a6db95bda",
+    "crates/lsd-assets/tests/fixtures/day-frame-npc-encounters.json": "f68aad6e21fd9ccd293ce8ad363e51f374bca9ff31d66ade5aaf9b28136361b5",
+    "crates/lsd-core/src/lib.rs": "624ebce3fe9d0737adf257081e26a137e7a9bd521d257cdc8df1ad25d6603169",
+    "crates/lsd-assets/src/actor_journal.rs": "2a3e6a8907d8c278e876ffa1dc2df18270adfd058c9fe0103630a1d199e48773",
+    "crates/lsd-assets/src/encounter_scene.rs": "40b611e2e3b41efda1b0abb6d6aef59369571745407874f58c595a583cbfab6a",
+    "crates/lsd-assets/tests/native_color_npcs.rs": "a1254679510e28deb55e3e64b69f4a0a27b870611ee386ea1cb9a6dca23eb0d7",
+    "crates/lsd-assets/tests/support/day_runtime.rs": "f3adf14fbc9f9e822d48553c27a49a42c6f834dc91b232f386a59c6b92caea60"
+  },
+  "scope_limits": [
+    "The live day query returns signed day-of-year plus1, independent of year, preserving wrapping and unchanged state.27original query inputs pass through ActorJournalDispatcher. Shared script/interaction proximity arguments retain unlock height and range/radius conversions.",
+    "Seven actions preserve day/frame/animation-dependent sound, scale, conditional RNG, pause/resume and shutdown. Direct recordings compare125owned and120original-model scenarios,2989and3194states. Five owned scenarios add unlock variants; canonical property rows remain unchanged.",
+    "Separate complete entity_update recordings include original activation/perception before actions. All125owned and120original-model scenarios replay through actual EncounterScene,2864and3074resulting states. Direct replay additionally compares day/proximity/facing calls.",
+    "Animation seek uses the original interpreter with action disabled, then restores the declared initial clocks/pose/animation state. Owned model72frames covers frame gates; original trajectory lengths use actual imported clip durations. Behavior start, day/year, seed and static world/local/view inputs are supplied.",
+    "Actual original constructors and routines execute without game function output replacements. Receiver player is owned and meshless. Original model/property bytes and detailed observations remain private. Seven development captures unchanged; semantic GTE and recorded sound services do not accept hardware flags/timing or GPU/SPU output.",
+    "Scene scale effects, reciprocal original-player collision, full natural activation, cache/residency lifetimes, media and full sessions remain open.55of107 callbacks implemented,52pending. Whole NPC encounters and all40provisional groups unaccepted. C stays paused; original actions make no AI calls, with optional AI tools/mods separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 55,
+  "remaining_pending_callbacks": 52,
+  "original_npc_behaviors_accepted": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "ai_model_calls": 0
+}

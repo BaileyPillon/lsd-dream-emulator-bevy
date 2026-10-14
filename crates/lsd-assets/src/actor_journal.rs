@@ -254,6 +254,9 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn day_number(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
+        Ok(self.day.day.wrapping_add(1))
+    }
     fn dream_color(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
         Ok(self
             .tables

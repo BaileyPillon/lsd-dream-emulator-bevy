@@ -1,8 +1,8 @@
 # Movement actions and complete entity updates
 
 Tennyo, Bird, Rocket, UFO, Shark, Fish and Mirage now run in the shared encounter
-scene. There are 48 implemented callbacks among 107 distinct original actions,
-with 59 pending. Complete natural encounters and whole-game parity remain
+scene. There are 55 implemented callbacks among 107 distinct original actions,
+with 52 pending. Complete natural encounters and whole-game parity remain
 unaccepted.
 
 ## Original actions

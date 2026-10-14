@@ -172,6 +172,13 @@ pub enum NpcScript {
     Shark,
     Fish,
     Mirage,
+    GargoylePit,
+    Mushroom,
+    HumanFaceFlower,
+    GiantLips,
+    Whale,
+    HopscotchGirl,
+    Corpse,
     Pending(u32),
 }
 impl NpcScript {
@@ -226,6 +233,13 @@ impl NpcScript {
             Some(0x8005_fb6c) => Self::Shark,
             Some(0x8005_fc58) => Self::Fish,
             Some(0x8005_fdfc) => Self::Mirage,
+            Some(0x8005_e4d0) => Self::GargoylePit,
+            Some(0x8005_ff7c) => Self::Mushroom,
+            Some(0x8006_0800) => Self::HumanFaceFlower,
+            Some(0x8006_0a4c) => Self::GiantLips,
+            Some(0x8006_0cf0) => Self::Whale,
+            Some(0x8006_1070) => Self::HopscotchGirl,
+            Some(0x8006_1158) => Self::Corpse,
             Some(at) => Self::Pending(at),
         }
     }
@@ -267,6 +281,17 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn day_number(&mut self) -> Result<i32, BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
+    fn actor_proximity(
+        &mut self,
+        _actor: &ModelActor,
+        _forward: i32,
+        _radius: i32,
+    ) -> Result<bool, BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
     fn dream_color(&mut self) -> Result<i32, BehaviorFault> {
         Err(BehaviorFault::MissingPlayerServices)
     }
@@ -348,6 +373,23 @@ fn trigger_ratio(
                 .ok_or(BehaviorFault::Division)?,
         )
         .ok_or(BehaviorFault::Division)
+}
+/// Original unlock-height adjustment and proximity argument widths.
+pub fn entity_proximity_args(
+    fields: [i8; 12],
+    mut position: [i32; 3],
+    forward: i32,
+    radius: i32,
+) -> ([i32; 3], i32, i32) {
+    if (fields[2] as u8).wrapping_add(9) < 9 {
+        position[1] = position[1].wrapping_add(i32::from(fields[2]).wrapping_shl(10));
+    }
+    let radius = if radius < 0 {
+        2048 / radius.wrapping_neg()
+    } else {
+        radius.wrapping_shl(11)
+    };
+    (position, forward.wrapping_shl(11), radius)
 }
 fn move_local_with_host(
     actor: &mut ModelActor,
@@ -468,16 +510,8 @@ impl EntityBehavior {
         radius: i32,
         host: &mut impl EntityInteractionHost,
     ) -> bool {
-        let mut position = position;
-        if (fields[2] as u8).wrapping_add(9) < 9 {
-            position[1] = position[1].wrapping_add(i32::from(fields[2]).wrapping_shl(10));
-        }
-        let radius = if radius < 0 {
-            2048 / radius.wrapping_neg()
-        } else {
-            radius.wrapping_shl(11)
-        };
-        host.proximity(position, range.wrapping_shl(11), radius)
+        let (position, forward, radius) = entity_proximity_args(fields, position, range, radius);
+        host.proximity(position, forward, radius)
     }
     /// Entity-update policy before the inherited actor/body update.
     pub fn update_interaction(
@@ -853,6 +887,119 @@ impl EntityBehavior {
                         if context.words[1] % 200 == 0 {
                             context.words[17] = 13;
                             context.words[18] = 1;
+                        }
+                    }
+                    NpcScript::GargoylePit => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if actor.animation.frame_index as i32
+                            == animation_duration(actor, clips)? / 2
+                        {
+                            context.words[7] = 7;
+                            context.words[8] = -2;
+                            context.words[12] = 3;
+                            context.words[13] = -2;
+                        }
+                        if context.words[1] % 90 < 3 {
+                            context.words[17] = 6;
+                            context.words[18] = -1;
+                        }
+                        if ticks >= 121 {
+                            rotate_yaw(actor, 2)?;
+                            move_local_with_host(actor, ActorAxis::Z, -320, host)?;
+                        } else if ticks >= 56 || host.actor_proximity(actor, 1, 1)? {
+                            actor.translate([0, -64, 0], false);
+                        } else {
+                            host.face_player(actor)?;
+                            if ticks >= 10 {
+                                move_local_with_host(actor, ActorAxis::Z, -256, host)?;
+                            }
+                        }
+                    }
+                    NpcScript::Mushroom => {
+                        if ticks == 0 {
+                            let day = host.day_number()? % 3;
+                            if day == 2 || day == 0 && rng.next_u15().is_multiple_of(3) {
+                                actor
+                                    .scale_packet([0x0001_0001, 0x0001_0004, 0x0001_0001], true)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            }
+                        }
+                        if context.words[1] % 22 == 0 {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 2;
+                        }
+                        if rng.next_u15().is_multiple_of(12) {
+                            actor.animation.enabled = false;
+                        } else if rng.next_u15().is_multiple_of(6) {
+                            actor.animation.enabled = true;
+                        }
+                    }
+                    NpcScript::HumanFaceFlower => {
+                        if ticks == 0 {
+                            let day = host.day_number()? % 3;
+                            if day == 1 || day == 0 && rng.next_u15().is_multiple_of(3) {
+                                actor
+                                    .scale_packet([0x0001_0006; 3], true)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                            }
+                        }
+                        if context.words[1] == 0 {
+                            context.words[4] = 0;
+                            context.words[7] = 18;
+                        }
+                        host.face_player(actor)?;
+                    }
+                    NpcScript::GiantLips => {
+                        if actor.animation.frame_index == 38 {
+                            host.face_player(actor)?;
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 6;
+                        }
+                        let vertical = if ticks % 10 < 5 { -30 } else { 30 };
+                        move_local_with_host(actor, ActorAxis::Y, vertical, host)?;
+                        move_local_with_host(actor, ActorAxis::Z, -30, host)?;
+                        host.notify_actor(actor, rng, 6)?;
+                    }
+                    NpcScript::Whale => {
+                        if ticks < animation_duration(actor, clips)?.wrapping_mul(5) {
+                            if matches!(actor.animation.frame_index, 15 | 70) {
+                                context.words[4] = 0;
+                                context.words[7] = 7;
+                                context.words[12] = 7;
+                                context.words[17] = 7;
+                            }
+                        } else {
+                            actor.set_hidden(true);
+                            context.stop(sound);
+                            actor.animation.enabled = false;
+                            actor.animation.action_enabled = false;
+                            *active = 0;
+                            *triggered = 0;
+                            *link_enabled = 0;
+                            *state = 1;
+                        }
+                    }
+                    NpcScript::HopscotchGirl => {
+                        let mut frame = actor.animation.frame_index;
+                        if ticks == 0 && rng.next_u15().is_multiple_of(3) {
+                            actor
+                                .scale_packet([0x0001_0001, 0x0001_0002, 0x0001_0001], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                        }
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if frame >= 32 {
+                            frame -= 32;
+                        }
+                        if matches!(frame, 9 | 17 | 23) {
+                            context.words[7] = 19;
+                            if frame == 23 {
+                                context.words[12] = 19;
+                            }
+                        }
+                    }
+                    NpcScript::Corpse => {
+                        if ticks == 0 {
+                            move_local_with_host(actor, ActorAxis::Y, -200, host)?;
                         }
                     }
                     NpcScript::Tennyo => {

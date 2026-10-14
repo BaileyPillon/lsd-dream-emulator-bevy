@@ -1162,6 +1162,31 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "day_proximity_and_frame_actions_20261014": {
+      "scope": "Complete original entity_update with activation/perception before Gargoyle Pit, Mushroom, Human Face Flower, Giant Lips, Whale, Hopscotch Girl and Corpse action/context/animation, day query and proximity query through actual original constructors and owned meshless player. Supplied day/year, independent clocks, seed, animation seek/freeze, cached target/view and explicit behavior start; imported original models/properties/math separate. Natural encounters, reciprocal collision, global timing/GPU/SPU unaccepted.",
+      "checks": {
+        "path": "docs/day-frame-checks.json",
+        "sha256": "8d21afb44227039d5e4cf7deba8d8f10e2c6ef6c125801bbc335c516e4616209"
+      },
+      "owned_action_scenarios": 125,
+      "owned_action_states": 2989,
+      "canonical_action_scenarios": 120,
+      "canonical_action_states": 3194,
+      "owned_complete_update_scenarios": 125,
+      "owned_complete_update_states": 2989,
+      "canonical_complete_update_scenarios": 120,
+      "canonical_complete_update_states": 3194,
+      "day_query_cases": 27,
+      "production_adapter_owned_states": 2864,
+      "production_adapter_canonical_states": 3074,
+      "original_named_callbacks_implemented_before": 48,
+      "original_named_callbacks_implemented_after": 55,
+      "remaining_pending_callbacks": 52,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

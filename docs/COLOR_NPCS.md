@@ -1,8 +1,8 @@
 # Live dream color and color-dependent NPCs
 
 Astronaut, Rainbow and Boat Bird now run in the shared Rust encounter scene.
-The current count is 48 implemented callbacks among 107 distinct original
-actions, with 59 pending. Whole natural encounters and game parity remain
+The current count is 55 implemented callbacks among 107 distinct original
+actions, with 52 pending. Whole natural encounters and game parity remain
 unaccepted.
 
 ## Live services
