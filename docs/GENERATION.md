@@ -31,7 +31,7 @@ loads the chosen original texture variant. It uses the recovered scene color
 for the development view's background. Texture changes invalidate the resident
 mesh/material cache even when the stage number stays the same.
 
-The actor channel runs after the inspector refreshes the cached player key.
+The object and actor channels run after the inspector refreshes the cached player key.
 It queues original sound requests for a future audio backend; requests currently
 receive the original failed-voice handle (-1). Selecting a music path and queuing
 sound requests do not establish audible playback. Height and environment-effect
@@ -60,12 +60,13 @@ idle host ticks. Their images establish the Bevy integration output only.
 
 ## Remaining work
 
-Generated model/sprite construction, child updates, gradient effects, border
-composition and cleanup still need their complete native graph and rendering
-implementation. In particular, structure construction and updates consume
-additional random results. The current actor/choice integration does not yet
-reproduce the full generation subsystem's RNG history. An earlier unverified
-structure-planning draft was preserved privately and is not part of the runtime.
+Generated model/sprite construction, child updates and their additional RNG calls
+now run in the core and day profile, with native constructor/build comparisons
+and imported-model/sprite presentation. See [generated objects](GENERATION_OBJECTS.md).
+Gradient effects, borders, complete rendering/lifetimes and original global
+ordering still require implementation and comparison. The earlier unverified
+structure-planning draft remains preserved privately; the runtime uses the
+verified constructor/update implementation.
 
 Natural original NPC encounters, audio/SPU output, PS1 GPU/camera precision,
 CD scheduling and full session replay remain unaccepted. These checks do not

@@ -1,5 +1,5 @@
 use crate::{PsxExeHeader, is_canonical_reference};
-use lsd_core::{GenerationActorEntry, GenerationEntry, GenerationTables};
+use lsd_core::{GenerationActorEntry, GenerationEntry, GenerationObjectTables, GenerationTables};
 
 /// Read generation content from the user's canonical executable. No game tables
 /// are embedded in this crate or distributed with the port.
@@ -115,6 +115,57 @@ pub fn load_generation_paths(executable: &[u8]) -> Result<GenerationPaths, &'sta
 struct Reader<'a> {
     executable: &'a [u8],
     load: u32,
+}
+
+pub fn load_generation_object_tables(
+    executable: &[u8],
+) -> Result<GenerationObjectTables, &'static str> {
+    let reader = Reader::new(executable)?;
+    let shorts = |address: u32, count: usize| -> Result<Vec<i16>, &'static str> {
+        Ok(reader
+            .bytes(address, count * 2)?
+            .chunks_exact(2)
+            .map(|v| i16::from_le_bytes(v.try_into().unwrap()))
+            .collect())
+    };
+    let rectangles = reader
+        .bytes(0x8008_7A8C, 24)?
+        .chunks_exact(12)
+        .map(|v| {
+            std::array::from_fn(|i| u16::from_le_bytes(v[i * 2..i * 2 + 2].try_into().unwrap()))
+        })
+        .collect::<Vec<_>>()
+        .try_into()
+        .unwrap();
+    let cluts = reader
+        .bytes(0x8008_7AA4, 8)?
+        .chunks_exact(4)
+        .map(|v| {
+            [
+                i16::from_le_bytes(v[..2].try_into().unwrap()),
+                i16::from_le_bytes(v[2..].try_into().unwrap()),
+            ]
+        })
+        .collect::<Vec<_>>()
+        .try_into()
+        .unwrap();
+    Ok(GenerationObjectTables {
+        model_indices: reader.words(0x8008_AB98)?,
+        palette_coordinates: shorts(0x8008_AB94, 2)?.try_into().unwrap(),
+        child_origin: reader.words(0x8008_77EC)?,
+        child_spacing: reader.words(0x8008_77F8)?,
+        child_motion: reader.words(0x8008_780C)?,
+        motion_translation: reader.words(0x8008_782C)?,
+        motion_rotation: reader.words(0x8008_7838)?,
+        sprite_x_offsets: reader.words(0x8008_7844)?,
+        sprite_scale_odd: reader.words(0x8008_785C)?,
+        sprite_scale_even: reader.words(0x8008_7868)?,
+        sprite_scale_low: reader.words(0x8008_7874)?,
+        sprite_translation: reader.words(0x8008_7880)?,
+        sprite_random_scales: reader.packets(0x8008_788C)?,
+        sprite_rectangles: rectangles,
+        sprite_cluts: cluts,
+    })
 }
 impl<'a> Reader<'a> {
     fn new(executable: &'a [u8]) -> Result<Self, &'static str> {

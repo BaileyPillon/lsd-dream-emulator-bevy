@@ -15,6 +15,7 @@ mod effect;
 mod fixed_math;
 mod generation;
 mod generation_effects;
+mod generation_objects;
 mod link_runtime;
 mod linked_player;
 mod links;
@@ -57,6 +58,9 @@ pub use generation::{
     choose_texture, shift_generation_color,
 };
 pub use generation_effects::generation_effect;
+pub use generation_objects::{
+    GenerationChild, GenerationObjectTables, GenerationPose, GenerationSprite, GenerationStructure,
+};
 pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
 pub use linked_player::{LinkedPlayer, SceneLinkTables};
 pub use links::{

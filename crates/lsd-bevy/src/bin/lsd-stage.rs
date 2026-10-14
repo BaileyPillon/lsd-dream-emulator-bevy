@@ -12,17 +12,17 @@ use bevy::{
     winit::WinitPlugin,
 };
 use lsd_assets::{
-    StageLinkSession, StreamedStage,
+    GenerationAssets, StageLinkSession, StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
-    is_canonical_reference, load_day_tables, load_effect_palette, load_generation_paths,
-    load_generation_tables, load_layered_stage, load_link_tables, load_math_tables, sha256_hex,
-    stage_map_path,
+    is_canonical_reference, load_day_tables, load_effect_palette, load_generation_object_tables,
+    load_generation_paths, load_generation_tables, load_layered_stage, load_link_tables,
+    load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
-    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, LinkedPlayer,
-    MapCompletionCommand, MapEffect, PadState, PlayerControls, PsxMathTables, SceneCollision,
-    SceneLinkTables, SpawnLocation,
+    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, GenerationChild, GenerationPose,
+    LinkedPlayer, MapCompletionCommand, MapEffect, PadState, PlayerControls, PsxMathTables,
+    SceneCollision, SceneLinkTables, SpawnLocation,
 };
 use std::path::PathBuf;
 
@@ -68,6 +68,21 @@ struct StreamVisuals {
 struct LayeredAssets {
     maps: Vec<Lbd>,
     origin: [i32; 3],
+}
+
+#[derive(Component)]
+struct GeneratedItem {
+    object: usize,
+    child: Option<usize>,
+    sprite: bool,
+}
+#[derive(Resource)]
+struct GeneratedVisuals {
+    assets: GenerationAssets,
+    epoch: u64,
+    count: usize,
+    entities: Vec<Entity>,
+    models: Vec<Vec<(Handle<Mesh>, Handle<StandardMaterial>)>>,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -357,6 +372,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 load_generation_tables(&executable)?,
                 load_generation_paths(&executable)?,
             );
+            session.enable_generated_objects(load_generation_object_tables(&executable)?);
             session.begin_original_day(linked, load_day_tables(&executable)?);
             session.tick(
                 streamed.as_mut().unwrap(),
@@ -365,7 +381,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 effect.as_mut().unwrap(),
             )?;
             println!(
-                "profile=original_day_preparation_prototype supplied_bootstrap_day=1 supplied_seed=1 original_generation_choices_and_actor_sound_schedule=true original_menus_generated_objects_gpu_audio_pending=true"
+                "profile=original_day_preparation_prototype supplied_bootstrap_day=1 supplied_seed=1 original_generation_choices_and_actor_sound_schedule=true generated_object_channel_connected=true original_menus_gpu_audio_pending=true"
             );
         }
         if let Some(index) = supplied_wall {
@@ -478,7 +494,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             if let (Some(generation), Some(choice)) = (&session.generation, &session.content_choice)
             {
                 println!(
-                    "generation_kind={} original_scene_style={:?} selected_texture={} selected_music={} generation_tick={} active_generation_actors={} original_generated_objects_and_audio_playback_pending=true",
+                    "generation_kind={} original_scene_style={:?} selected_texture={} selected_music={} generation_tick={} active_generation_actors={} generation_objects={} generation_object_preview_connected=true original_gpu_precision_and_audio_playback_pending=true",
                     generation.generation_type,
                     generation.style,
                     choice.texture,
@@ -488,7 +504,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .actors
                         .iter()
                         .filter(|actor| actor.active)
-                        .count()
+                        .count(),
+                    generation.structures.len()
                 );
             }
         }
@@ -539,6 +556,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .and_then(|session| session.content_choice.as_ref())
         .map_or(texture.chars().next().unwrap(), |choice| choice.texture);
     let mut app = App::new();
+    if original_day {
+        app.insert_resource(GeneratedVisuals {
+            assets: GenerationAssets::load(&root, &executable)?,
+            epoch: u64::MAX,
+            count: usize::MAX,
+            entities: Vec::new(),
+            models: Vec::new(),
+        })
+        .add_systems(Update, generated_objects.after(walking_camera));
+    }
     if walk_stream {
         app.insert_resource(StreamVisuals {
             revision: u64::MAX,
@@ -789,7 +816,7 @@ fn streamed_step(
             session.log_current_chunk(linked)?;
         }
         if let Some(session) = session {
-            session.tick_generation_actors(stage, linked)?;
+            session.tick_generation_actors(stage, linked, &player.controls)?;
         }
     } else {
         player.step_in_scene(buttons, &stage.collision, tables)?;
@@ -807,6 +834,209 @@ fn generation_environment(scene: Res<WalkingScene>, mut clear: ResMut<ClearColor
     {
         let [r, g, b] = style.scene_color;
         clear.0 = Color::srgb_u8(r, g, b);
+    }
+}
+
+// Presentation adapter. Original PS1 projection, draw order and GPU precision
+// remain separate requirements; the logical poses above are native-checked.
+fn generated_pose(pose: GenerationPose) -> Transform {
+    let [x, y, z] = pose.position.map(|v| v as f32 / 2048.0);
+    let [rx, ry, rz] = pose
+        .angles
+        .map(|v| f32::from(v) * std::f32::consts::TAU / 4096.0);
+    Transform {
+        translation: Vec3::new(x, -y, -z),
+        rotation: Quat::from_euler(EulerRot::XYZ, rx, -ry, -rz),
+        scale: Vec3::from_array(pose.scale.map(|v| v as f32 / 4096.0)),
+    }
+}
+
+type GeneratedAssetStores<'w> = (
+    ResMut<'w, Assets<Mesh>>,
+    ResMut<'w, Assets<StandardMaterial>>,
+    ResMut<'w, Assets<Image>>,
+);
+type GeneratedCameras<'w, 's> = Query<
+    'w,
+    's,
+    (&'static Transform, &'static Projection),
+    (With<Camera3d>, Without<GeneratedItem>),
+>;
+
+fn generated_objects(
+    mut commands: Commands,
+    scene: Res<WalkingScene>,
+    mut visuals: ResMut<GeneratedVisuals>,
+    assets: GeneratedAssetStores<'_>,
+    mut nodes: Query<(&GeneratedItem, &mut Transform, &mut Visibility)>,
+    cameras: GeneratedCameras<'_, '_>,
+) {
+    let Some(session) = &scene.session else {
+        return;
+    };
+    let Some(generation) = &session.generation else {
+        return;
+    };
+    let (mut meshes, mut materials, mut images) = assets;
+    if visuals.epoch != session.rebuilds || visuals.count != generation.structures.len() {
+        for entity in visuals.entities.drain(..) {
+            commands.entity(entity).despawn();
+        }
+        if visuals.models.is_empty() {
+            let GeneratedVisuals { assets, models, .. } = &mut *visuals;
+            let mut builder =
+                AssetSceneBuilder::new(&assets.vram, &mut meshes, &mut materials, &mut images);
+            *models = assets
+                .model
+                .objects
+                .iter()
+                .map(|object| builder.build_object(object, 0))
+                .collect();
+        }
+        for (index, object) in generation.structures.iter().enumerate() {
+            if let Some(model) = object.model_index {
+                for (mesh, material) in visuals.models[model as usize].clone() {
+                    let entity = commands
+                        .spawn((
+                            Mesh3d(mesh),
+                            MeshMaterial3d(material),
+                            generated_pose(object.pose),
+                            Visibility::Inherited,
+                            GeneratedItem {
+                                object: index,
+                                child: None,
+                                sprite: false,
+                            },
+                            Name::new(format!("Original generation model {index}")),
+                        ))
+                        .id();
+                    visuals.entities.push(entity);
+                }
+            }
+            for (child_index, child) in object.children.iter().enumerate() {
+                match child {
+                    GenerationChild::Model { pose, model_index } => {
+                        let transform = Transform::from_matrix(
+                            generated_pose(object.pose).to_matrix()
+                                * generated_pose(*pose).to_matrix(),
+                        );
+                        for (mesh, material) in visuals.models[*model_index as usize].clone() {
+                            let entity = commands
+                                .spawn((
+                                    Mesh3d(mesh),
+                                    MeshMaterial3d(material),
+                                    transform,
+                                    Visibility::Inherited,
+                                    GeneratedItem {
+                                        object: index,
+                                        child: Some(child_index),
+                                        sprite: false,
+                                    },
+                                    Name::new(format!(
+                                        "Original generation child {index}/{child_index}"
+                                    )),
+                                ))
+                                .id();
+                            visuals.entities.push(entity);
+                        }
+                    }
+                    GenerationChild::Sprite(sprite) => {
+                        let (width, height, rgba) = visuals
+                            .assets
+                            .sprite_rgba(sprite)
+                            .expect("Canonical generation sprite texture");
+                        let mut image = Image::new(
+                            bevy::render::render_resource::Extent3d {
+                                width,
+                                height,
+                                depth_or_array_layers: 1,
+                            },
+                            bevy::render::render_resource::TextureDimension::D2,
+                            rgba,
+                            TextureFormat::Rgba8UnormSrgb,
+                            default(),
+                        );
+                        image.sampler = bevy::image::ImageSampler::nearest();
+                        let texture = images.add(image);
+                        let material = materials.add(StandardMaterial {
+                            base_color_texture: Some(texture),
+                            unlit: true,
+                            alpha_mode: AlphaMode::Blend,
+                            cull_mode: None,
+                            ..default()
+                        });
+                        let entity = commands
+                            .spawn((
+                                Mesh3d(meshes.add(Rectangle::new(1.0, 1.0))),
+                                MeshMaterial3d(material),
+                                Transform::default(),
+                                Visibility::Hidden,
+                                GeneratedItem {
+                                    object: index,
+                                    child: Some(child_index),
+                                    sprite: true,
+                                },
+                                Name::new(format!(
+                                    "Original generation sprite {index}/{child_index}"
+                                )),
+                            ))
+                            .id();
+                        visuals.entities.push(entity);
+                    }
+                }
+            }
+        }
+        visuals.epoch = session.rebuilds;
+        visuals.count = generation.structures.len();
+    }
+    let camera = cameras.iter().next();
+    for (node, mut transform, mut visibility) in &mut nodes {
+        let Some(object) = generation.structures.get(node.object) else {
+            *visibility = Visibility::Hidden;
+            continue;
+        };
+        let root = generated_pose(object.pose).to_matrix();
+        if node.sprite {
+            let Some(GenerationChild::Sprite(sprite)) =
+                node.child.and_then(|i| object.children.get(i))
+            else {
+                continue;
+            };
+            let Some((camera, Projection::Perspective(projection))) = camera else {
+                continue;
+            };
+            let position = root.transform_point3(generated_pose(sprite.pose).translation);
+            let depth = -camera
+                .compute_affine()
+                .inverse()
+                .transform_point3(position)
+                .z;
+            if depth <= 0.0 || sprite.flags & (1 << 31) != 0 {
+                *visibility = Visibility::Hidden;
+                continue;
+            }
+            let pixel = 2.0 * depth * (projection.fov * 0.5).tan() / 240.0;
+            *transform = Transform {
+                translation: position,
+                rotation: camera.rotation
+                    * Quat::from_rotation_z(-(sprite.rotation as f32 / 4096.0).to_radians()),
+                scale: Vec3::new(
+                    f32::from(sprite.rectangle[2]) * f32::from(sprite.scale[0]) / 4096.0 * pixel,
+                    f32::from(sprite.rectangle[4]) * f32::from(sprite.scale[1]) / 4096.0 * pixel,
+                    1.0,
+                ),
+            };
+            *visibility = Visibility::Inherited;
+        } else {
+            *transform = if let Some(GenerationChild::Model { pose, .. }) =
+                node.child.and_then(|i| object.children.get(i))
+            {
+                Transform::from_matrix(root * generated_pose(*pose).to_matrix())
+            } else {
+                generated_pose(object.pose)
+            };
+            *visibility = Visibility::Inherited;
+        }
     }
 }
 

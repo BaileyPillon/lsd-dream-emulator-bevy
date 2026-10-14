@@ -1,8 +1,9 @@
 use crate::{GenerationPaths, StreamedStage};
 use lsd_core::{
     ChunkPlayer, DayStartInputs, DayTables, DreamDay, DreamDayEffects, DreamGeneration, DreamLinks,
-    DreamSession, DreamSessionHost, GenerationSound, GenerationTables, LinkedPlayer, MapEffect,
-    PlayerControls, SceneMotionReset, SpawnLocation, choose_music, choose_texture,
+    DreamSession, DreamSessionHost, GenerationObjectTables, GenerationSound, GenerationTables,
+    LinkedPlayer, MapEffect, PlayerControls, SceneMotionReset, SpawnLocation, choose_music,
+    choose_texture,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -81,6 +82,7 @@ pub struct StageLinkSession {
     pub finished: Option<i32>,
     pub generation: Option<DreamGeneration>,
     pub generation_tables: Option<GenerationTables>,
+    pub generation_object_tables: Option<GenerationObjectTables>,
     pub generation_paths: Option<GenerationPaths>,
     pub content_choice: Option<SceneContentChoice>,
     pub music_override: i32,
@@ -102,6 +104,7 @@ impl Default for StageLinkSession {
             finished: None,
             generation: None,
             generation_tables: None,
+            generation_object_tables: None,
             generation_paths: None,
             content_choice: None,
             music_override: 0,
@@ -115,13 +118,17 @@ impl StageLinkSession {
         self.generation_tables = Some(tables);
         self.generation_paths = Some(paths);
     }
+    pub fn enable_generated_objects(&mut self, tables: GenerationObjectTables) {
+        self.generation_object_tables = Some(tables);
+    }
 
-    /// Actor channel only. The original generated model/sprite construction and
-    /// gradient passes still need integration before whole-generation RNG is accepted.
+    /// Original generated-object channel precedes the two proximity sound slots.
+    /// Gradient composition and original global scheduling require further work.
     pub fn tick_generation_actors(
         &mut self,
         stage: &StreamedStage,
-        linked: &LinkedPlayer,
+        linked: &mut LinkedPlayer,
+        controls: &PlayerControls,
     ) -> Result<(), lsd_core::GenerationFault> {
         if self.finished.is_some() {
             return Ok(());
@@ -129,13 +136,25 @@ impl StageLinkSession {
         if let (Some(generation), Some(tables)) = (&mut self.generation, &self.generation_tables)
             && generation.owner_active
         {
-            generation.timer = generation.timer.wrapping_add(1);
             let position = stage
                 .collision
                 .slots
                 .grid
                 .place_spawn([0; 3], linked.keys.current)
                 .position;
+            if let Some(objects) = &self.generation_object_tables {
+                // Original Renderer + 0x18 is eye Y; constructor/update uses
+                // its change from the initial eye Y, rather than the style height.
+                generation.tick_structures(
+                    tables,
+                    objects,
+                    &mut linked.rng,
+                    position,
+                    controls.eye[1],
+                )?;
+            } else {
+                generation.timer = generation.timer.wrapping_add(1);
+            }
             generation.tick_actors(
                 tables,
                 stage.collision.slots.grid,

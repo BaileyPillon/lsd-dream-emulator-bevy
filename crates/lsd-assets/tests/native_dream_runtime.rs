@@ -1,6 +1,7 @@
 use lsd_assets::{
     StageLinkSession, StreamedStage, formats::Tmd, load_day_tables, load_effect_palette,
-    load_generation_paths, load_generation_tables, load_link_tables, load_math_tables,
+    load_generation_object_tables, load_generation_paths, load_generation_tables, load_link_tables,
+    load_math_tables,
 };
 use lsd_core::{
     ChunkPlayer, CollisionBounds, LinkedPlayer, MapCompletionCommand, MapEffect, PadState,
@@ -56,6 +57,7 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
         load_generation_tables(&executable).unwrap(),
         load_generation_paths(&executable).unwrap(),
     );
+    session.enable_generated_objects(load_generation_object_tables(&executable).unwrap());
     session.begin_original_day(&mut linked, content);
     assert!(
         session
@@ -113,7 +115,9 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
                 }
             }
         }
-        session.tick_generation_actors(&stage, &linked).unwrap();
+        session
+            .tick_generation_actors(&stage, &mut linked, &player.controls)
+            .unwrap();
         if linked.map.state == 4 && timeout_at.is_none() {
             timeout_at = Some(tick);
         }

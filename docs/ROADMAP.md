@@ -54,3 +54,10 @@ profile consumes selected textures/background colors and queues audio requests.
 Generated model/sprite construction and updates, gradient layers, full generation
 RNG history, original audio output and complete native scheduling remain open;
 see [generation recovery](GENERATION.md).
+
+Generated model/sprite construction, child motion, unsigned ticks, the alternate
+color alias and constructor/update RNG are now implemented and compared with
+original CPU execution. The day profile loads the original generation model
+and texture and presents these objects. Gradient/border composition, complete
+allocation/lifetime cases, original GPU projection/ordering and global/native
+session comparisons remain open; see [generated objects](GENERATION_OBJECTS.md).

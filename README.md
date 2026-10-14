@@ -51,6 +51,10 @@ Original scene style, texture/music choices, generation-trigger proximity and
 all 14 sound callbacks now run in Rust. The `--dream` profile consumes the
 selected textures and queues sound requests; see [generation recovery](docs/GENERATION.md)
 for the constructor, full RNG history, rendering and audio work still required.
+Generated model/sprite construction and updates now also run in the day profile,
+including their original RNG calls and imported object presentation. See
+[generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining
+renderer, effects, lifetime and scheduling work.
 
 ## Start here
 
@@ -150,6 +154,9 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Generation scenarios compared with owned-content original CPU execution | 2,082 |
 | Original-content generation style starts compared | 5,110 |
 | Original-content music-then-texture choices compared | 10,220 |
+| Native generated-object constructor cases compared with owned content | 108 |
+| Native generation-build cases compared with owned content | 432 |
+| Private original-content generation builds compared | 168 |
 | Supplied original permanent-link destinations rebuilt locally | 17 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |

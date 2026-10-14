@@ -208,9 +208,9 @@
       "id": "F024",
       "title": "Procedural dream structures and palette seeding",
       "requirement": "Preserve day/location modes, structure placement, colors, updates and cleanup.",
-      "port_status": "partial_native_checked_generation_channels",
+      "port_status": "partial_native_checked_construction_and_updates",
       "whole_feature_accepted": false,
-      "evidence": "docs/GENERATION.md"
+      "evidence": "docs/GENERATION_OBJECTS.md"
     },
     {
       "id": "F025",
@@ -620,6 +620,26 @@
         "F030",
         "F031"
       ]
+    },
+    "generation_objects_recovery_20261014": {
+      "scope": "Original successful allocation, generated model/sprite constructors, parent/child state, four update modes, build order, alternate-color alias, immediate first update and RNG compared in owned empty-TMD graphs and 168 private original-table builds. Imported TMD palette mutation and object presentation added. Original GPU/actor lifetimes, allocation failures, global scheduling, effects, audio and whole-session parity remain unaccepted.",
+      "checks": {
+        "path": "docs/generation-object-checks.json",
+        "sha256": "f8d7fa13c08af88c6615468ceed6dbcfb5a57c3409badc1af2258d67690a0aa0"
+      },
+      "owned_constructor_cases": 108,
+      "owned_object_update_states": 864,
+      "owned_build_cases": 432,
+      "owned_build_update_passes": 1296,
+      "private_original_content_build_cases": 168,
+      "private_original_content_update_passes": 504,
+      "original_model_palette_mutation_verified": true,
+      "bevy_object_channel_and_presentation_connected": true,
+      "full_native_global_rng_history_accepted": false,
+      "original_gpu_rendering_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

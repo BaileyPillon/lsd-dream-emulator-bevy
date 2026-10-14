@@ -1,11 +1,15 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 mod day_tables;
 mod effect_palette;
+mod generation_assets;
 mod generation_tables;
 pub use day_tables::load_day_tables;
+pub use generation_assets::GenerationAssets;
 pub mod formats;
 pub use effect_palette::load_effect_palette;
-pub use generation_tables::{GenerationPaths, load_generation_paths, load_generation_tables};
+pub use generation_tables::{
+    GenerationPaths, load_generation_object_tables, load_generation_paths, load_generation_tables,
+};
 mod link_tables;
 mod math_tables;
 pub use link_tables::{OriginalLinkTables, load_link_tables};

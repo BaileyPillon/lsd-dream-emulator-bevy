@@ -1,4 +1,4 @@
-use crate::{PsxRng, SceneGrid, SpawnLocation};
+use crate::{GenerationObjectTables, GenerationStructure, PsxRng, SceneGrid, SpawnLocation};
 use std::fmt;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -74,7 +74,7 @@ pub struct GenerationSpawn {
     pub index: i32,
     pub random: i32,
     pub color: [u8; 3],
-    pub alternate: i32,
+    pub alternate_color: Option<[u8; 3]>,
 }
 #[derive(Debug, Clone)]
 pub struct DreamGeneration {
@@ -94,6 +94,9 @@ pub struct DreamGeneration {
     pub entry_index: i32,
     pub actor_entries: Vec<GenerationActorEntry>,
     pub actors: [GeneratedActor; 2],
+    pub structures: Vec<GenerationStructure>,
+    pub structure_count: i32,
+    pub structure_view_origin: i32,
 }
 impl Default for DreamGeneration {
     fn default() -> Self {
@@ -114,6 +117,9 @@ impl Default for DreamGeneration {
             entry_index: 0,
             actor_entries: Vec::new(),
             actors: [GeneratedActor::default(); 2],
+            structures: Vec::new(),
+            structure_count: 0,
+            structure_view_origin: 0,
         }
     }
 }
@@ -222,6 +228,120 @@ impl DreamGeneration {
         self.spawn.rotation = tables.rotations[(rng.next_u15() % 7) as usize];
         self.spawn.index = i32::from(rng.next_u15() % 5);
     }
+
+    pub fn build_structures(
+        &mut self,
+        tables: &GenerationTables,
+        objects: &GenerationObjectTables,
+        rng: &mut PsxRng,
+        base: [i32; 3],
+        view_height: i32,
+    ) -> Result<(), GenerationFault> {
+        if self.generation_type < 0 {
+            return Ok(());
+        }
+        let count = i32::from(tables.heights[6].to_le_bytes()[(rng.next_u15() & 3) as usize] as i8);
+        let extra = if self.generation_type == 2 {
+            16_i32.wrapping_sub(count)
+        } else {
+            0
+        };
+        self.structure_count = count.wrapping_add(extra);
+        self.structures.clear();
+        self.spawn.random = i32::from(rng.next_u15() % 7);
+        self.spawn.scale = tables.scales[(rng.next_u15() % 5) as usize];
+        let sample_index = usize::from(rng.next_u15() % 5);
+        let sample = if sample_index == 0 {
+            0
+        } else {
+            tables.sample_offsets[sample_index]
+        };
+        for _ in 0..count.max(0) {
+            if self.day % 7 == 0 {
+                self.seed_daily(tables, rng);
+            } else {
+                self.seed_random(tables, rng, sample);
+            }
+            self.structures.push(GenerationStructure::construct(
+                0, self.spawn, objects, base, rng,
+            )?);
+        }
+        // This assignment occurs even when no extra structures are created.
+        self.spawn.scale = tables.fixed_scale;
+        for _ in 0..extra.max(0) {
+            self.seed_random(tables, rng, tables.sample_offsets[2]);
+            self.structures.push(GenerationStructure::construct(
+                1, self.spawn, objects, base, rng,
+            )?);
+        }
+        match self.generation_type {
+            0 => {
+                self.seed_random(tables, rng, tables.sample_offsets[2]);
+                if self.flags != 0 && self.effect_palette == 1 {
+                    self.spawn.position = [-0xb000, -0x2000, 0];
+                    self.spawn.color = tables.colors_a[1];
+                } else {
+                    if self.spawn.position[2] > 0 {
+                        self.spawn.position[2] = self.spawn.position[2].wrapping_neg();
+                    }
+                    self.spawn.position[2] = self.spawn.position[2].max(-0x7800);
+                    self.spawn.color = tables.colors_a[(rng.next_u15() % 3) as usize];
+                }
+                self.spawn.rotation = tables.rotations[0];
+                self.structures.push(GenerationStructure::construct(
+                    3, self.spawn, objects, base, rng,
+                )?);
+                self.structure_count = self.structure_count.wrapping_add(1);
+            }
+            2 => {
+                self.spawn.color = tables.colors_b[(rng.next_u15() % 3) as usize];
+                // apply_entry aliases GenerationInfo + 0xc with the first word
+                // of EntityParamsAlt. It contains the current scene-color pointer.
+                self.spawn.alternate_color = if self.day % 20 == 0 {
+                    None
+                } else {
+                    Some(
+                        self.style
+                            .ok_or(GenerationFault::InvalidContext)?
+                            .scene_color,
+                    )
+                };
+                self.seed_random(tables, rng, tables.sample_offsets[2]);
+                self.spawn.rotation = tables.rotations[0];
+                self.spawn.random = i32::from(rng.next_u15() % 6);
+                self.structures.push(GenerationStructure::construct(
+                    2, self.spawn, objects, base, rng,
+                )?);
+                self.structure_count = self.structure_count.wrapping_add(1);
+            }
+            _ => {}
+        }
+        if !self.structures.is_empty() {
+            self.structure_view_origin = view_height;
+        }
+        Ok(())
+    }
+
+    /// The first update constructs objects and then updates them immediately.
+    pub fn tick_structures(
+        &mut self,
+        tables: &GenerationTables,
+        objects: &GenerationObjectTables,
+        rng: &mut PsxRng,
+        base: [i32; 3],
+        view_height: i32,
+    ) -> Result<(), GenerationFault> {
+        let previous = self.timer;
+        self.timer = self.timer.wrapping_add(1);
+        if previous == 0 {
+            self.build_structures(tables, objects, rng, base, view_height)?;
+        }
+        let delta = view_height.wrapping_sub(self.structure_view_origin);
+        for object in &mut self.structures {
+            object.update(objects, base, delta, rng)?;
+        }
+        Ok(())
+    }
     pub fn find_actor(
         &mut self,
         tables: &GenerationTables,
@@ -271,6 +391,9 @@ impl DreamGeneration {
     pub fn stop_with_sound(&mut self, sound: &mut impl GenerationSound) {
         self.environment_effect = None;
         self.flags = 0;
+        if self.generation_type >= 0 {
+            self.structures.clear();
+        }
         for actor in &mut self.actors {
             if actor.active {
                 actor.stop(sound);
