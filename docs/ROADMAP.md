@@ -28,5 +28,7 @@ Body geometry also has fixed-point parent rotations compared with the original
 hit/notification path in supplied graphs; natural actor hierarchies remain open.
 The streamed viewer now uses recovered neighbor, slot-reuse and completion
 rules. Original CD timing, complete binding/actor callbacks and session
-scheduling remain open. All 40 provisional whole-game groups require acceptance; use
+scheduling remain open. Link lookup, random destinations, facing gates and
+transition policy now have original CPU checks; natural link callbacks and
+visible transitions still need integration. All 40 provisional whole-game groups require acceptance; use
 [parity.json](parity.json) for the frozen initial baseline and dated progress.

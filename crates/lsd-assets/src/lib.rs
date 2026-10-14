@@ -1,6 +1,8 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 pub mod formats;
+mod link_tables;
 mod math_tables;
+pub use link_tables::{OriginalLinkTables, load_link_tables};
 pub use math_tables::load_math_tables;
 mod scene_config;
 mod streamed_stage;

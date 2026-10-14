@@ -27,6 +27,10 @@ tile attribute gate; see [body dispatch recovery](docs/BODY_DISPATCH_RECOVERY.md
 The shared geometry path also retains fixed-point parent rotation and matrix
 saturation, compared with the original hit and actor notification chain in
 supplied graphs; see [body transform recovery](docs/BODY_TRANSFORMS.md).
+Original link tables and destination rules now have a local loader and native
+CPU comparisons. Transition policy preserves notification cancellation and
+callback order; see [link recovery](docs/LINKS.md). Wiring these rules into
+natural actors and visible dream transitions remains open.
 
 ## Start here
 
@@ -96,6 +100,8 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Matching native animation state observations | 10,228 |
 | Reference control steps compared in supplied graphs | 960 |
 | Supplied body-transform cases compared with the original hit/notification path | 120 |
+| Original link triggers loaded locally | 74 |
+| Original random spawn entries loaded locally | 239 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |
 | AI model calls | 0 |

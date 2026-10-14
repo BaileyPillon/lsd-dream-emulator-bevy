@@ -9,6 +9,7 @@ mod chunk_player;
 mod collision;
 mod collision_cloud;
 mod fixed_math;
+mod links;
 mod pad;
 mod player_controls;
 mod rng;
@@ -29,6 +30,11 @@ pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
 pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
 pub use collision_cloud::{CollisionBounds, CollisionCloud};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
+pub use links::{
+    LinkActionHost, LinkCatalog, LinkContext, LinkError, LinkExecution, LinkKind, LinkMotionRules,
+    LinkSet, LinkTransforms, LinkTrigger, SpawnEntry, SpawnLocation, is_facing_link_angle,
+    trigger_link_action,
+};
 pub use pad::{PAD_MASKS, PadState};
 pub use player_controls::{
     FloorEffectStep, MotionAxis, MotionRequest, MovementStep, PlayerControls,

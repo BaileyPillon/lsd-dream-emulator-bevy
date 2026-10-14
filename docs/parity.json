@@ -463,6 +463,23 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "link_rules_20261013": {
+      "scope": "Original static/dynamic/random lookup and facing/transform selection CPU functions execute with owned or original tables and the original RNG. Trigger and transition policy are compared with explicitly supplied virtual callbacks; complete stair motion, natural actor/link callbacks, whole session and visual/audio parity remain open.",
+      "evidence": {
+        "path": "docs/link-recovery-checks.json",
+        "sha256": "dacfdac32bdb2dd881f00997d0cb79b4b2aa562b03b34cba90f6e79af3a1eb47"
+      },
+      "original_link_triggers": 74,
+      "original_random_spawn_entries": 239,
+      "synthetic_native_cases": 1384,
+      "original_table_lookup_cases": 148,
+      "original_table_random_cases": 102,
+      "original_link_lookup_rng_facing_and_transition_policy_implemented": true,
+      "natural_actor_and_visible_link_integration_completed": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T00:52:00.923215+00:00",
+  "base_commit": "0d2ed85d2019f8e649c2c7ca57d849de2256f5f6",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "scope": "Original static/dynamic/random lookup and facing/transform selection CPU functions execute with owned or original tables and the original RNG. Trigger and transition policy are compared with explicitly supplied virtual callbacks; complete stair motion, natural actor/link callbacks, whole session and visual/audio parity remain open.",
+  "original_trigger_counts": {
+    "wall": 17,
+    "tunnel": 32,
+    "teleport": 17,
+    "staircase": 8
+  },
+  "original_referenced_spawn_counts": {
+    "wall": 13,
+    "tunnel": 16,
+    "teleport": 20,
+    "staircase": 8
+  },
+  "original_random_spawn_entries": 239,
+  "referenced_facing_transform_records": 8,
+  "synthetic_native_cases": 1384,
+  "synthetic_case_counts": {
+    "static": 350,
+    "random": 102,
+    "dynamic": 336,
+    "facing": 136,
+    "transforms": 36,
+    "execute": 24,
+    "trigger": 400
+  },
+  "original_table_lookup_cases": 148,
+  "original_table_random_cases": 102,
+  "synthetic_native_function_entries": {
+    "wall": 70,
+    "static": 251,
+    "tunnel": 88,
+    "teleport": 140,
+    "staircase": 88,
+    "random": 196,
+    "rand": 327,
+    "dynamic": 336,
+    "facing": 172,
+    "tunnel_transforms": 18,
+    "staircase_transforms": 18,
+    "staircase_action": 18,
+    "execute": 24,
+    "trigger": 400
+  },
+  "original_native_function_entries": {
+    "wall": 34,
+    "static": 148,
+    "tunnel": 64,
+    "teleport": 34,
+    "staircase": 16,
+    "random": 102,
+    "rand": 186
+  },
+  "native_function_ranges": [
+    {
+      "name": "static",
+      "address": "0x8005c150",
+      "bytes": 316,
+      "sha256": "c383fb1474d2f601f167dcb561a6ce7da907c475448278e150361e3d7e58cc13"
+    },
+    {
+      "name": "wall",
+      "address": "0x8005bcb4",
+      "bytes": 68,
+      "sha256": "b9a5635d28631d4653e870897f83f17488b522f12314881f2366734d445439fb"
+    },
+    {
+      "name": "tunnel",
+      "address": "0x8005bcf8",
+      "bytes": 68,
+      "sha256": "172d81cb12c5b28b4d36eb28666e6454e6e06e712504725d2dfd319fb2ca545a"
+    },
+    {
+      "name": "teleport",
+      "address": "0x8005bf74",
+      "bytes": 80,
+      "sha256": "8a698f462428747b0b98dbbcb2d6803d8f44aab93a9ce419ca92ab8f22cc14f7"
+    },
+    {
+      "name": "staircase",
+      "address": "0x8005bfdc",
+      "bytes": 80,
+      "sha256": "e0438230d17d7fa7e257c11f4199984671ef695a74fa02d140268755c23d9f40"
+    },
+    {
+      "name": "facing",
+      "address": "0x8005be28",
+      "bytes": 104,
+      "sha256": "38e43381cb83051b4f67a0dbdff028afc9306b2e46e67f1b06c14ba91e4fffb7"
+    },
+    {
+      "name": "tunnel_transforms",
+      "address": "0x8005bd3c",
+      "bytes": 236,
+      "sha256": "808b3ce905291267c76247a947b481070c0221c0b88d5360ee2eaa9a25abb296"
+    },
+    {
+      "name": "staircase_transforms",
+      "address": "0x8005c02c",
+      "bytes": 236,
+      "sha256": "a22837dfccf10a826a1b31d52b6cb59cdc06bef737af229a5a52a3bd7a14c693"
+    },
+    {
+      "name": "staircase_action",
+      "address": "0x8005c118",
+      "bytes": 56,
+      "sha256": "51f9529abd620dbae74d0387cc49fe1c30c4b12702d229186d847c98003800f2"
+    },
+    {
+      "name": "random",
+      "address": "0x8005bb30",
+      "bytes": 388,
+      "sha256": "8c3328af4df34b9baa95865545f441a7bff3edfd1f117c0553a14fc71e298a90"
+    },
+    {
+      "name": "dynamic",
+      "address": "0x8005be90",
+      "bytes": 184,
+      "sha256": "727e777767f6d6c5be4c63f968062c57a004e098264906ab5763cb5bf4acb648"
+    },
+    {
+      "name": "rand",
+      "address": "0x80049480",
+      "bytes": 40,
+      "sha256": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+    },
+    {
+      "name": "execute",
+      "address": "0x8005a928",
+      "bytes": 164,
+      "sha256": "fb76d9ee481365efdb3acbecd851e00d5b2b5ef52e1223dacbc72c6add3b7361"
+    },
+    {
+      "name": "trigger",
+      "address": "0x80059e98",
+      "bytes": 440,
+      "sha256": "7a108d0290b3fc58b5a4ce62cb8cdb029060f95b86cb0e298e2e99eac3b4d04c"
+    }
+  ],
+  "captured_trigger_boundaries": [
+    "hook",
+    "key",
+    "staircase",
+    "teleport",
+    "tunnel",
+    "save",
+    "forward",
+    "strafe",
+    "wall"
+  ],
+  "captured_execution_boundaries": [
+    "notification",
+    "sound"
+  ],
+  "lookup_rng_facing_function_result_stubs": 0,
+  "public_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/links.json",
+    "sha256": "206efdd655a3ab3bbc378cae5ad852384c6baf6365f0e48a70cf389da63081f1"
+  },
+  "local_validation": {
+    "workspace_tests_passed": 71,
+    "workspace_failed": 0,
+    "private_original_tests_ignored": 7,
+    "format_passed": true,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "original_link_catalogue_and_cpu_cases_passed": true,
+    "headless_bevy_probe_passed": true,
+    "desktop_check_passed": true,
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "0b269e56ceb7d2798571598b7f9ddc5aa9041075f7001b65b50da4b4c15b38ea",
+      "workspace": "91e64abff85e459a7167f97b579d32d42c931e123846b46aa68727525827e392",
+      "original-links": "ee73348faca552706d0866a85060bf0aed65697d7547ff1483a0591d7dc2a730",
+      "probe": "bfe548758096dd576784644bb2b9d183e849e38aa970af027fab1d63227b4a19",
+      "desktop": "5480df39808541d50a81bf685873d5eecd74026e3d22a2c15c84fdd2dead7609"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "runtime_link_integration_completed": false
+  },
+  "working_source_sha256": {
+    "crates/lsd-core/src/links.rs": "c3af98d33b7cf64b4acfce5a82d778c33a872a40c40dbf77d567cc6542fe936b",
+    "crates/lsd-core/src/lib.rs": "186d9f4a91caf1b0cd7d1d6842702ca6634619ae6e57df037de46c4426382490",
+    "crates/lsd-assets/src/link_tables.rs": "48928c616c2567639b3a82bba63f401f21b9d58441fb4b559a361290e27c7f77",
+    "crates/lsd-assets/src/lib.rs": "146ae955a78f81c12dafee42ff2047232062d33028b9ddc717dce6b33462289f",
+    "crates/lsd-core/tests/native_links.rs": "ec9f9a9b5a7a2744c02610eb3815dad9240f455718cc92fff68e51b386c0467b",
+    "crates/lsd-core/tests/support/links.rs": "443e06c91f63fed57d29fc7fddabcdcf3607392964ffd4230a397862b2b975da",
+    "crates/lsd-assets/tests/native_links.rs": "2380d0191fd79d77c2f53532d8b890100fc7d4bb3e0ea17d9a8ef296c3c26e25"
+  },
+  "private_proof_sha256": {
+    "native-links-proof-ninth.json": "44144b5402f3023f41f8d791e8c42a4b073df5ae25a5030e84d779193a6cfb68",
+    "link-validation-proof-ninth.json": "8e3f84099fc679faf9a42adec4a773c967eff7068d2c351f6b1d4fcaa6270810",
+    "original-link-catalog-ninth.json": "392942f2dd2c35dbf6778660cd37d5c41b2f50a4593f5bcacd31bb516e83c6e3",
+    "original-link-cases-ninth.json": "5a289664ead85e115ed6849667d11debcc56b578b03c68dc27607c1f7e780fc4"
+  },
+  "runtime_link_integration_completed": false,
+  "c_decompilation_paused_and_preserved": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}
