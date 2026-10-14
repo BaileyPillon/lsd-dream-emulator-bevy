@@ -56,3 +56,11 @@ do not automatically establish PlayStation visual parity.
 AI-assisted analysis and mod creation will produce reviewable artifacts. They
 will not run inside the default compatibility logic. Original NPC scripts and
 new AI-driven NPC mods have separate implementation and acceptance tracks.
+
+`DreamGeneration` owns the recovered generation selector and two persistent
+proximity sound slots. `GenerationTables` and `GenerationPaths` import canonical
+local content. The original sound scheduler targets a backend interface;
+`GenerationAudioRequests` queues commands without claiming playback. The day
+profile consumes scene choices and selected textures, while generated structures,
+gradient rendering and the full generation RNG history remain incomplete. See
+[generation recovery](GENERATION.md).

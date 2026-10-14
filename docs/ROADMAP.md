@@ -47,3 +47,10 @@ flashback records and timer expiry now have original CPU comparisons. The new
 `--dream` profile connects an imported first day through timeout and day commit;
 original generation, UI/media and full native-session comparisons remain open.
 See [day recovery](DAYS.md).
+
+Generation style, texture/music choice, placement seeds, trigger selection and
+all 14 proximity sound callbacks now have original CPU comparisons. The day
+profile consumes selected textures/background colors and queues audio requests.
+Generated model/sprite construction and updates, gradient layers, full generation
+RNG history, original audio output and complete native scheduling remain open;
+see [generation recovery](GENERATION.md).

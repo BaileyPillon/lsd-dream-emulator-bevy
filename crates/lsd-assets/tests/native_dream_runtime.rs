@@ -1,6 +1,6 @@
 use lsd_assets::{
     StageLinkSession, StreamedStage, formats::Tmd, load_day_tables, load_effect_palette,
-    load_link_tables, load_math_tables,
+    load_generation_paths, load_generation_tables, load_link_tables, load_math_tables,
 };
 use lsd_core::{
     ChunkPlayer, CollisionBounds, LinkedPlayer, MapCompletionCommand, MapEffect, PadState,
@@ -52,6 +52,10 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
     .unwrap();
     let mut effect = MapEffect::new(load_effect_palette(&executable).unwrap());
     let mut session = StageLinkSession::default();
+    session.enable_generation(
+        load_generation_tables(&executable).unwrap(),
+        load_generation_paths(&executable).unwrap(),
+    );
     session.begin_original_day(&mut linked, content);
     assert!(
         session
@@ -59,6 +63,14 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
             .unwrap()
     );
     let day = session.day.as_ref().unwrap();
+    assert_eq!(session.generation.as_ref().unwrap().day, 1);
+    let mut scene_rng = lsd_core::PsxRng::new(1);
+    let expected_music = lsd_core::choose_music(0, &mut 0, &mut scene_rng);
+    let expected_texture = lsd_core::choose_texture(1, &mut scene_rng).unwrap();
+    assert_eq!(linked.rng.state(), scene_rng.state());
+    let choice = session.content_choice.as_ref().unwrap();
+    assert_eq!(choice.music_index, expected_music);
+    assert_eq!(choice.texture as u8 - b'A', expected_texture as u8);
     assert_eq!(day.day, 0);
     assert_eq!(day.stored_day, 0);
     assert_eq!(day.cinematic[1], -1);
@@ -101,6 +113,7 @@ fn original_first_day_starts_at_its_spawn_expires_and_commits_the_next_day() {
                 }
             }
         }
+        session.tick_generation_actors(&stage, &linked).unwrap();
         if linked.map.state == 4 && timeout_at.is_none() {
             timeout_at = Some(tick);
         }

@@ -14,8 +14,9 @@ use bevy::{
 use lsd_assets::{
     StageLinkSession, StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
-    is_canonical_reference, load_day_tables, load_effect_palette, load_layered_stage,
-    load_link_tables, load_math_tables, sha256_hex, stage_map_path,
+    is_canonical_reference, load_day_tables, load_effect_palette, load_generation_paths,
+    load_generation_tables, load_layered_stage, load_link_tables, load_math_tables, sha256_hex,
+    stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
@@ -352,6 +353,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if original_day {
             let linked = linked.as_mut().unwrap();
             let session = session.as_mut().unwrap();
+            session.enable_generation(
+                load_generation_tables(&executable)?,
+                load_generation_paths(&executable)?,
+            );
             session.begin_original_day(linked, load_day_tables(&executable)?);
             session.tick(
                 streamed.as_mut().unwrap(),
@@ -360,7 +365,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 effect.as_mut().unwrap(),
             )?;
             println!(
-                "profile=original_day_preparation_prototype supplied_bootstrap_day=1 supplied_seed=1 original_menus_generation_gpu_audio_pending=true"
+                "profile=original_day_preparation_prototype supplied_bootstrap_day=1 supplied_seed=1 original_generation_choices_and_actor_sound_schedule=true original_menus_generated_objects_gpu_audio_pending=true"
             );
         }
         if let Some(index) = supplied_wall {
@@ -404,9 +409,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         if let Some(streamed) = &mut streamed {
             streamed.complete_frame()?;
-            if streamed.stage_id() != stage {
+            let selected_texture = session
+                .as_ref()
+                .and_then(|session| session.content_choice.as_ref())
+                .map_or(texture.chars().next().unwrap(), |choice| choice.texture);
+            if streamed.stage_id() != stage || original_day {
                 display_stage = streamed.stage_id();
-                vram = streamed.load_texture_variant(texture.chars().next().unwrap())?;
+                vram = streamed.load_texture_variant(selected_texture)?;
             }
         }
         println!(
@@ -466,6 +475,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     day.total_unlock_score
                 );
             }
+            if let (Some(generation), Some(choice)) = (&session.generation, &session.content_choice)
+            {
+                println!(
+                    "generation_kind={} original_scene_style={:?} selected_texture={} selected_music={} generation_tick={} active_generation_actors={} original_generated_objects_and_audio_playback_pending=true",
+                    generation.generation_type,
+                    generation.style,
+                    choice.texture,
+                    choice.music_index,
+                    generation.timer,
+                    generation
+                        .actors
+                        .iter()
+                        .filter(|actor| actor.active)
+                        .count()
+                );
+            }
         }
         if let Some(effect) = &effect {
             println!(
@@ -508,6 +533,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         None
     };
+    let selected_texture = walking
+        .as_ref()
+        .and_then(|scene| scene.session.as_ref())
+        .and_then(|session| session.content_choice.as_ref())
+        .map_or(texture.chars().next().unwrap(), |choice| choice.texture);
     let mut app = App::new();
     if walk_stream {
         app.insert_resource(StreamVisuals {
@@ -525,14 +555,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         app.insert_resource(walking)
             .insert_resource(Time::<Fixed>::from_hz(15.0))
             .add_systems(FixedUpdate, walking_controls)
-            .add_systems(Update, walking_camera);
+            .add_systems(Update, (walking_camera, generation_environment));
     }
     app.insert_resource(StageAssets {
         map,
         vram,
         stage: display_stage,
         map_number,
-        texture_variant: texture.chars().next().unwrap(),
+        texture_variant: selected_texture,
     });
     let plugins = DefaultPlugins
         .set(ImagePlugin::default_nearest())
@@ -631,8 +661,13 @@ fn walking_controls(
             buttons,
         )
         .expect("decoded streamed movement query");
-        if source.stage != streamed.stage_id() {
+        let selected_texture = session
+            .as_ref()
+            .and_then(|session| session.content_choice.as_ref())
+            .map_or(source.texture_variant, |choice| choice.texture);
+        if source.stage != streamed.stage_id() || source.texture_variant != selected_texture {
             source.stage = streamed.stage_id();
+            source.texture_variant = selected_texture;
             source.vram = streamed
                 .load_texture_variant(source.texture_variant)
                 .expect("validated original destination texture");
@@ -749,15 +784,30 @@ fn streamed_step(
         let previous_chunk = linked.keys.current.chunk;
         linked.refresh_key(&stage.collision, player.position)?;
         if previous_chunk != linked.keys.current.chunk
-            && let Some(session) = session
+            && let Some(session) = session.as_deref_mut()
         {
             session.log_current_chunk(linked)?;
+        }
+        if let Some(session) = session {
+            session.tick_generation_actors(stage, linked)?;
         }
     } else {
         player.step_in_scene(buttons, &stage.collision, tables)?;
         stage.update_for_position(player.position)?;
     }
     Ok(())
+}
+
+fn generation_environment(scene: Res<WalkingScene>, mut clear: ResMut<ClearColor>) {
+    if let Some(style) = scene
+        .session
+        .as_ref()
+        .and_then(|session| session.generation.as_ref())
+        .and_then(|generation| generation.style)
+    {
+        let [r, g, b] = style.scene_color;
+        clear.0 = Color::srgb_u8(r, g, b);
+    }
 }
 
 fn stream_meshes(

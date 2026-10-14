@@ -43,8 +43,10 @@ This profile supplies a fresh day-one bootstrap and seed 1, uses the original
 `DREAMER.TMD` model for its bounds, prepares the original spawn/time limit and
 connects the day clock to loaded movement/link policy. It consumes chunk-mood
 requests and the end-day result. The profile supplies the camera/host schedule
-and retains texture variant A; original scene generation and final camera/render
-setup require further work.
+and now consumes the recovered scene texture/music choices and background color.
+The generation actor channel queues original sound requests. Original generated
+objects, the full generation RNG history, audio and final camera/render setup
+require further work; see [generation recovery](GENERATION.md).
 
 `--dream-capture /path/to/new.png 32` captures the prepared first dream after idle
 host ticks. With 4000 ticks the original 3600-tick limit expires, the chart is
@@ -73,7 +75,7 @@ test, not a complete original-session replay. The no-day linked traversal captur
 and all 17 supplied permanent-link replacements continue to pass.
 
 Natural actor construction, all instance/NPC contribution and flashback callbacks,
-original global/CD timing, generation-driven origin/texture/objects, menus,
+original global/CD timing, generation-driven origin/objects, menus,
 save/load, media, audio and original GPU/camera comparisons remain incomplete.
 No whole original feature group is accepted by these checks. See
 [day-recovery-checks.json](day-recovery-checks.json) for exact fixture, source and

@@ -1,9 +1,11 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 mod day_tables;
 mod effect_palette;
+mod generation_tables;
 pub use day_tables::load_day_tables;
 pub mod formats;
 pub use effect_palette::load_effect_palette;
+pub use generation_tables::{GenerationPaths, load_generation_paths, load_generation_tables};
 mod link_tables;
 mod math_tables;
 pub use link_tables::{OriginalLinkTables, load_link_tables};
@@ -15,7 +17,10 @@ pub use scene_config::{
     LayeredStage, load_layered_stage, load_scene_grid, load_stream_grid_tables, stage_map_path,
 };
 use sha2::{Digest, Sha256};
-pub use stage_session::{StageLinkSession, StageSessionEvent};
+pub use stage_session::{
+    GenerationAudioRequest, GenerationAudioRequests, SceneContentChoice, StageLinkSession,
+    StageSessionEvent,
+};
 use std::fmt;
 pub use streamed_stage::StreamedStage;
 

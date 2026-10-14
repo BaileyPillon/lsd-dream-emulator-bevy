@@ -1,7 +1,8 @@
-use crate::StreamedStage;
+use crate::{GenerationPaths, StreamedStage};
 use lsd_core::{
-    ChunkPlayer, DayStartInputs, DayTables, DreamDay, DreamDayEffects, DreamLinks, DreamSession,
-    DreamSessionHost, LinkedPlayer, MapEffect, PlayerControls, SceneMotionReset, SpawnLocation,
+    ChunkPlayer, DayStartInputs, DayTables, DreamDay, DreamDayEffects, DreamGeneration, DreamLinks,
+    DreamSession, DreamSessionHost, GenerationSound, GenerationTables, LinkedPlayer, MapEffect,
+    PlayerControls, SceneMotionReset, SpawnLocation, choose_music, choose_texture,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -14,6 +15,56 @@ pub enum StageSessionEvent {
     MoodRequested(SpawnLocation),
     DayServicePending(i32),
     DayFinished(i32),
+    ContentSelected { texture: char, music: usize },
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SceneContentChoice {
+    pub stage: u8,
+    pub texture: char,
+    pub texture_path: String,
+    pub music_index: usize,
+    pub music_path: String,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GenerationAudioRequest {
+    Stop(i32),
+    VolumeOffset(i32),
+    Play {
+        note: i32,
+        period: i32,
+        counter: i32,
+    },
+}
+/// Requests are retained for the audio backend. A missing backend returns the
+/// original failed-voice handle (-1), rather than pretending playback occurred.
+#[derive(Debug, Clone, Default)]
+pub struct GenerationAudioRequests {
+    pub requests: Vec<GenerationAudioRequest>,
+}
+impl GenerationAudioRequests {
+    pub fn take_requests(&mut self) -> Vec<GenerationAudioRequest> {
+        std::mem::take(&mut self.requests)
+    }
+}
+impl GenerationSound for GenerationAudioRequests {
+    fn stop_note(&mut self, handle: i32) -> i32 {
+        self.requests.push(GenerationAudioRequest::Stop(handle));
+        -1
+    }
+    fn volume_offset(&mut self, offset: i32) {
+        self.requests
+            .push(GenerationAudioRequest::VolumeOffset(offset));
+    }
+    fn play_note(&mut self, note: i32, period: i32, counter: i32) -> i32 {
+        self.requests.push(GenerationAudioRequest::Play {
+            note,
+            period,
+            counter,
+        });
+        -1
+    }
 }
 
 /// Loaded-scene consumer of the original session policy.
@@ -28,6 +79,12 @@ pub struct StageLinkSession {
     pub day: Option<DreamDay>,
     pub day_tables: Option<DayTables>,
     pub finished: Option<i32>,
+    pub generation: Option<DreamGeneration>,
+    pub generation_tables: Option<GenerationTables>,
+    pub generation_paths: Option<GenerationPaths>,
+    pub content_choice: Option<SceneContentChoice>,
+    pub music_override: i32,
+    pub generation_audio: GenerationAudioRequests,
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -43,10 +100,53 @@ impl Default for StageLinkSession {
             day: None,
             day_tables: None,
             finished: None,
+            generation: None,
+            generation_tables: None,
+            generation_paths: None,
+            content_choice: None,
+            music_override: 0,
+            generation_audio: Default::default(),
         }
     }
 }
 impl StageLinkSession {
+    pub fn enable_generation(&mut self, tables: GenerationTables, paths: GenerationPaths) {
+        self.generation = Some(DreamGeneration::default());
+        self.generation_tables = Some(tables);
+        self.generation_paths = Some(paths);
+    }
+
+    /// Actor channel only. The original generated model/sprite construction and
+    /// gradient passes still need integration before whole-generation RNG is accepted.
+    pub fn tick_generation_actors(
+        &mut self,
+        stage: &StreamedStage,
+        linked: &LinkedPlayer,
+    ) -> Result<(), lsd_core::GenerationFault> {
+        if self.finished.is_some() {
+            return Ok(());
+        }
+        if let (Some(generation), Some(tables)) = (&mut self.generation, &self.generation_tables)
+            && generation.owner_active
+        {
+            generation.timer = generation.timer.wrapping_add(1);
+            let position = stage
+                .collision
+                .slots
+                .grid
+                .place_spawn([0; 3], linked.keys.current)
+                .position;
+            generation.tick_actors(
+                tables,
+                stage.collision.slots.grid,
+                [0; 3],
+                Some(position),
+                0,
+                &mut self.generation_audio,
+            )?;
+        }
+        Ok(())
+    }
     /// Menu/session handoff starts another dream while retaining calendar, scores and RNG.
     pub fn begin_next_dream(&mut self) -> Result<(), &'static str> {
         if self.day.is_none() {
@@ -106,6 +206,12 @@ impl StageLinkSession {
             day: self.day.as_mut(),
             tables: self.day_tables.as_ref(),
             finished: &mut self.finished,
+            generation: self.generation.as_mut(),
+            generation_tables: self.generation_tables.as_ref(),
+            generation_paths: self.generation_paths.as_ref(),
+            content_choice: &mut self.content_choice,
+            music_override: &mut self.music_override,
+            generation_audio: &mut self.generation_audio,
         };
         if let Some(code) = self.pending_day_event.take() {
             self.policy.link_code(&mut host, 1, code)?;
@@ -136,6 +242,12 @@ struct Host<'a> {
     day: Option<&'a mut DreamDay>,
     tables: Option<&'a DayTables>,
     finished: &'a mut Option<i32>,
+    generation: Option<&'a mut DreamGeneration>,
+    generation_tables: Option<&'a GenerationTables>,
+    generation_paths: Option<&'a GenerationPaths>,
+    content_choice: &'a mut Option<SceneContentChoice>,
+    music_override: &'a mut i32,
+    generation_audio: &'a mut GenerationAudioRequests,
 }
 impl DreamSessionHost for Host<'_> {
     type Error = Box<dyn std::error::Error>;
@@ -198,6 +310,9 @@ impl DreamSessionHost for Host<'_> {
     fn stop_map(&mut self, _source: Option<u32>) -> Result<(), Self::Error> {
         self.events.push(StageSessionEvent::StopMap);
         self.player.controls.input_locked = true;
+        if let Some(generation) = self.generation.as_deref_mut() {
+            generation.stop_with_sound(self.generation_audio);
+        }
         Ok(())
     }
     fn destroy_map(&mut self) -> Result<(), Self::Error> {
@@ -223,6 +338,38 @@ impl DreamSessionHost for Host<'_> {
             .position
             .take()
             .ok_or("No prepared destination placement")?;
+        if let (Some(generation), Some(tables), Some(paths), Some(day)) = (
+            self.generation.as_deref_mut(),
+            self.generation_tables,
+            self.generation_paths,
+            self.day.as_deref(),
+        ) {
+            let stage = self.stage.stage_id();
+            let number = day.day.wrapping_add(1);
+            // Original func_80052F10 always selects music before texture,
+            // including forced-track selections and the stage-nine remapping.
+            let music = choose_music(i32::from(stage), self.music_override, &mut self.linked.rng);
+            let texture = choose_texture(number, &mut self.linked.rng)?;
+            let texture_path = paths.textures[usize::from(stage)]
+                .get(texture)
+                .ok_or("Invalid generation texture index")?
+                .clone();
+            let music_path = paths.music[usize::from(stage)]
+                .get(music)
+                .ok_or("Invalid generation music index")?
+                .clone();
+            let texture = char::from(b'A' + texture as u8);
+            generation.start(tables, i32::from(stage), number, 0)?;
+            *self.content_choice = Some(SceneContentChoice {
+                stage,
+                texture,
+                texture_path,
+                music_index: music,
+                music_path,
+            });
+            self.events
+                .push(StageSessionEvent::ContentSelected { texture, music });
+        }
         if let Some(day) = self.day.as_deref_mut() {
             day.attach_flashback(&mut self.linked.links, &mut self.player.controls)?;
         }

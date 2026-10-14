@@ -47,6 +47,10 @@ preserves RNG/timer state and runs the original player-motion reset. See
 Original day preparation, mood scoring, dream-clock expiry and flashback storage
 now also run in Rust. The `--dream` profile starts day one at its original spawn
 and commits its end-of-day result; see [day recovery](docs/DAYS.md).
+Original scene style, texture/music choices, generation-trigger proximity and
+all 14 sound callbacks now run in Rust. The `--dream` profile consumes the
+selected textures and queues sound requests; see [generation recovery](docs/GENERATION.md)
+for the constructor, full RNG history, rendering and audio work still required.
 
 ## Start here
 
@@ -94,7 +98,7 @@ day generation and audio remain open.
 
 Append `--dream` to start the original first-day state with a supplied new-game
 bootstrap and seed 1. `--dream-capture /path/to/new.png 4000` runs supplied idle
-host ticks through timeout and the next-day result. Original menus, generation,
+host ticks through timeout and the next-day result. Original menus, generated objects,
 special-day media, GPU fades and audio remain unfinished.
 
 For a supplied permanent-wall contact followed by scene replacement, append
@@ -142,6 +146,10 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Native day, mood, clock and flashback scenarios with generated content | 841 |
 | Startup scenarios with original calendar/mood/spawn content | 1,460 |
 | Calendar days covered by the original startup campaign | 365 |
+| Original generation trigger records loaded locally | 56 |
+| Generation scenarios compared with owned-content original CPU execution | 2,082 |
+| Original-content generation style starts compared | 5,110 |
+| Original-content music-then-texture choices compared | 10,220 |
 | Supplied original permanent-link destinations rebuilt locally | 17 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |

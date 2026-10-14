@@ -200,22 +200,25 @@
       "id": "F023",
       "title": "Day-dependent stage texture variants",
       "requirement": "Select/load original stage textures as days progress with correct palette/uploads.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_generation_channels",
+      "whole_feature_accepted": false,
+      "evidence": "docs/GENERATION.md"
     },
     {
       "id": "F024",
       "title": "Procedural dream structures and palette seeding",
       "requirement": "Preserve day/location modes, structure placement, colors, updates and cleanup.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_generation_channels",
+      "whole_feature_accepted": false,
+      "evidence": "docs/GENERATION.md"
     },
     {
       "id": "F025",
       "title": "Distance-driven generated ambient encounters/effects",
       "requirement": "Activate ambient entries near players, run effect/sound commands, reuse two slots and stop out-of-range entries.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_generation_channels",
+      "whole_feature_accepted": false,
+      "evidence": "docs/GENERATION.md"
     },
     {
       "id": "F026",
@@ -249,15 +252,17 @@
       "id": "F030",
       "title": "Randomized stage music and soundtrack bank",
       "requirement": "Preserve bank/track selection, volume/crescendo and pause/resume behavior.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_generation_channels",
+      "whole_feature_accepted": false,
+      "evidence": "docs/GENERATION.md"
     },
     {
       "id": "F031",
       "title": "Encounter sound effects and command scheduler",
       "requirement": "Load instruments/map programs, play/stop/mute notes and synchronize three command slots with callbacks.",
-      "port_status": "planned",
-      "whole_feature_accepted": false
+      "port_status": "partial_native_checked_generation_channels",
+      "whole_feature_accepted": false,
+      "evidence": "docs/GENERATION.md"
     },
     {
       "id": "F032",
@@ -586,6 +591,35 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "generation_recovery_20261014": {
+      "scope": "Original generation selectors, placement seeds, two proximity sound slots, 14 callbacks and sound request scheduling. Typed pointer identities; supplied sound virtual methods. Generated structure/sprite/gradient rendering, their RNG calls, actual audio and full native-session parity remain unaccepted.",
+      "checks": {
+        "path": "docs/generation-recovery-checks.json",
+        "sha256": "3b809de49154dd7d8ffd5fc6080da4644ff43370055e8556a1c2870041820b2a"
+      },
+      "native_owned_generation_cases": 2082,
+      "native_actor_update_ticks": 504,
+      "original_content_style_start_cases": 5110,
+      "original_music_then_texture_choice_cases": 10220,
+      "calendar_days": 365,
+      "stages": 14,
+      "original_generation_trigger_records": 56,
+      "bevy_scene_choices_connected": true,
+      "generation_actor_sound_requests_connected": true,
+      "generated_structure_rendering_accepted": false,
+      "full_generation_rng_history_accepted": false,
+      "original_audio_playback_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0,
+      "partially_implemented_provisional_groups": [
+        "F023",
+        "F024",
+        "F025",
+        "F030",
+        "F031"
+      ]
     }
   }
 }
