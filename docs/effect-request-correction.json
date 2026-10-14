@@ -26,7 +26,8 @@
     "target": "mode"
   },
   "source_anchors": [
-    "src/graphics/renderer.c:func_8003F99C",
+    "src/graphics/renderer.c:func_8003E628",
+    "src/graphics/renderer.c:func_8003F230",
     "src/graphics/effect.c:effect_set_color_step",
     "src/graphics/effect.c:effect_activate",
     "src/graphics/effect.c:effect_tick"

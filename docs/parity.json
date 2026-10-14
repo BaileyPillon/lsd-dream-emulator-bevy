@@ -522,7 +522,7 @@
       "scope": "Correct request field names before consuming original effect commands; numeric original map observations are unchanged.",
       "evidence": {
         "path": "docs/effect-request-correction.json",
-        "sha256": "b2d79aa38a557c324f31ab5e05eddd1a75899f339981935c652f427aa798ba6b"
+        "sha256": "c4abb64824798caa78d4116bf20cbb84ad59e87c124239c256e6f3ca2737f85f"
       },
       "effect_color_step_identified": true,
       "effect_variant_mode_identified": true,
