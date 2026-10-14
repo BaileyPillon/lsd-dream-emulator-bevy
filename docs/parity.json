@@ -499,6 +499,24 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "linked_scene_20261013": {
+      "scope": "Original wall/floor policies, raw transform save/restore, map-notification/start policy and live body callback feedback compared with original CPU functions in supplied graphs. Linked player integration runs in the streamed Bevy inspector and 17 supplied original-asset teleport scenarios. Fade/audio consumers, full clock/flashback/session order, natural actor/cache lifetimes, complete GTE pose ownership and visible scene transitions remain open.",
+      "evidence": {
+        "path": "docs/linked-scene-checks.json",
+        "sha256": "573229e7bf7abca34a3c22e8f031fa020d0de8f3c709c9f3058694d0c7fc7fa4"
+      },
+      "native_wall_cases": 240,
+      "native_floor_cases": 360,
+      "native_snapshot_cases": 8,
+      "native_map_notification_cases": 864,
+      "native_live_body_feedback_cases": 2,
+      "original_asset_teleport_trigger_scenarios": 17,
+      "initial_bevy_link_handler_integration_present": true,
+      "complete_visible_transitions_accepted": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

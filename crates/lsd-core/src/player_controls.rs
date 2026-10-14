@@ -25,6 +25,13 @@ pub struct MovementStep {
     pub motion: Option<MotionRequest>,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct MovementIntent {
+    pub floor_effect: FloorEffectStep,
+    /// None skips the link dispatcher; Some(0) invokes its original no-action path.
+    pub link_action: Option<i32>,
+}
+
 /// Original pad-driven view and movement state. World collision/link effects are executed by the host.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PlayerControls {
@@ -208,7 +215,7 @@ impl PlayerControls {
         )
     }
 
-    pub fn update_movement(&mut self) -> Option<MovementStep> {
+    pub fn update_movement_intent(&mut self) -> Option<MovementIntent> {
         if self.paused == 0 {
             if self.left_right != 0 {
                 self.rotate_y(if self.left_right == 1 { -6 } else { 6 });
@@ -224,7 +231,15 @@ impl PlayerControls {
             }
         }
         let (saved, floor_effect) = self.process_move(!self.input_locked);
-        let motion = if saved != 0 && !self.input_locked {
+        Some(MovementIntent {
+            floor_effect,
+            link_action: if self.input_locked { None } else { Some(saved) },
+        })
+    }
+
+    pub fn update_movement(&mut self) -> Option<MovementStep> {
+        let intent = self.update_movement_intent()?;
+        let motion = if let Some(saved) = intent.link_action.filter(|&action| action != 0) {
             let speeds = [0i32, 24, 64, 128, 384];
             let amount =
                 speeds[self.move_direction as usize] * if matches!(saved, 2 | 3) { -1 } else { 1 };
@@ -241,7 +256,7 @@ impl PlayerControls {
             None
         };
         Some(MovementStep {
-            floor_effect,
+            floor_effect: intent.floor_effect,
             motion,
         })
     }

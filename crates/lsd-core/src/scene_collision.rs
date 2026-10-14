@@ -1,5 +1,5 @@
 use crate::{
-    BodyContactState, BodyQueryState, CollisionBounds, CollisionChunk, CollisionFault,
+    BodyContactState, BodyQueryState, CollisionBounds, CollisionChunk, CollisionFault, LinkError,
     MotionRequest, PsxMathTables, SceneGridError, SceneLocation, SceneSlots, WorldContact,
 };
 use std::fmt;
@@ -25,10 +25,23 @@ pub struct BodyCandidate {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum BodyVisit {
+    Cell {
+        slot: usize,
+        cell: [i8; 2],
+    },
+    Hit {
+        candidate: BodyCandidate,
+        contact: SceneContact,
+    },
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SceneCollisionError {
     Grid(SceneGridError),
     Geometry(CollisionFault),
     MissingReadyChunk(usize),
+    Link(LinkError),
 }
 impl From<SceneGridError> for SceneCollisionError {
     fn from(error: SceneGridError) -> Self {
@@ -38,6 +51,11 @@ impl From<SceneGridError> for SceneCollisionError {
 impl From<CollisionFault> for SceneCollisionError {
     fn from(error: CollisionFault) -> Self {
         Self::Geometry(error)
+    }
+}
+impl From<LinkError> for SceneCollisionError {
+    fn from(error: LinkError) -> Self {
+        Self::Link(error)
     }
 }
 impl fmt::Display for SceneCollisionError {
@@ -137,29 +155,84 @@ impl SceneCollision {
         motion: MotionRequest,
         tables: &PsxMathTables,
     ) -> Result<Option<SceneContact>, SceneCollisionError> {
-        let Some(location) = self.slots.locate(position)? else {
+        self.body_with(
+            &mut BodyQueryState {
+                position,
+                heading,
+                bounds,
+                motion,
+            },
+            tables,
+            |_, _| Ok(()),
+        )
+    }
+
+    /// Rectangles are selected once; each later tile reads the live query after callbacks.
+    pub fn body_with(
+        &self,
+        query: &mut BodyQueryState,
+        tables: &PsxMathTables,
+        mut observer: impl FnMut(&mut BodyQueryState, BodyVisit) -> Result<(), SceneCollisionError>,
+    ) -> Result<Option<SceneContact>, SceneCollisionError> {
+        let Some(location) = self.slots.locate(query.position)? else {
             return Ok(None);
         };
         if !self.slots.slots[location.slot].ready {
             return Ok(None);
         }
         let mut contact = BodyContactState { current: None };
-        for candidate in self.body_candidates(location)? {
-            let chunk = self.ready_chunk(candidate.slot)?.unwrap();
-            let origin = self.slots.slots[candidate.slot].origin;
-            let local = std::array::from_fn(|axis| position[axis].wrapping_sub(origin[axis]));
-            if let Some(hit) = chunk.body_tile(
-                BodyQueryState {
-                    position: local,
-                    heading,
-                    bounds,
-                    motion,
-                },
-                candidate.cell,
-                candidate.tile,
-                tables,
-            )? {
-                contact.notify(self.world_contact(candidate.slot, hit), 4);
+        for rectangle in self.slots.body_queries(location)? {
+            let Some(chunk) = self.ready_chunk(rectangle.slot)? else {
+                continue;
+            };
+            for dz in 0..rectangle.cells.rows {
+                for dx in 0..rectangle.cells.columns {
+                    let x = i32::from(rectangle.cells.x) + dx;
+                    let z = i32::from(rectangle.cells.z) + dz;
+                    if !(0..20).contains(&x) || !(0..20).contains(&z) {
+                        return Err(SceneGridError::InvalidSlot.into());
+                    }
+                    observer(
+                        query,
+                        BodyVisit::Cell {
+                            slot: rectangle.slot,
+                            cell: [x as i8, z as i8],
+                        },
+                    )?;
+                    let cell = z as usize * 20 + x as usize;
+                    for (tile, entry) in chunk.cells[cell].iter().enumerate() {
+                        if entry.flags & 0x80 == 0 {
+                            continue;
+                        }
+                        let origin = self.slots.slots[rectangle.slot].origin;
+                        let local = std::array::from_fn(|axis| {
+                            query.position[axis].wrapping_sub(origin[axis])
+                        });
+                        if let Some(hit) = chunk.body_tile(
+                            BodyQueryState {
+                                position: local,
+                                ..*query
+                            },
+                            cell,
+                            tile,
+                            tables,
+                        )? {
+                            let hit = self.world_contact(rectangle.slot, hit);
+                            contact.notify(hit, 4);
+                            observer(
+                                query,
+                                BodyVisit::Hit {
+                                    candidate: BodyCandidate {
+                                        slot: rectangle.slot,
+                                        cell,
+                                        tile,
+                                    },
+                                    contact: hit,
+                                },
+                            )?;
+                        }
+                    }
+                }
             }
         }
         Ok(contact.current)

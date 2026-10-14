@@ -47,7 +47,9 @@ See [link-runtime-checks.json](link-runtime-checks.json) for executable/function
 identities, fixture/source hashes, counts and validation. The original C checkout
 remains paused and preserved.
 
-Bevy session wiring, natural construction and cache lifetimes, every contact
-callback, transform save/restore, original transition scheduling, content
+The subsequent [linked scene integration](SCENE_LINKS.md) connects these handlers
+to streamed movement and ports the wall/floor and map-notification policies.
+Natural construction and cache lifetimes, complete transform state ownership,
+original transition scheduling, content
 rebinding, audio and full dream encounters remain open. Original whole-game
 acceptance remains **0/40 provisional feature groups**.

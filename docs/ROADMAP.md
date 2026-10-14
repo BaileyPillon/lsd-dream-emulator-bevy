@@ -35,3 +35,6 @@ visible transitions still need integration. All 40 provisional whole-game groups
 Dream link handlers, cached actor keys and all four stair scripts now have
 original CPU comparisons. Their scene/notification interfaces still need
 connection to the running Bevy session and its full transition lifecycle.
+The `--walk-links` streamed inspector now connects movement, contacts and original
+link/map-notification policies. Fade actors, scene replacement and their original
+scheduling remain open; see [linked scene integration](SCENE_LINKS.md).

@@ -1,0 +1,815 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T02:23:21.400880+00:00",
+  "base_commit": "3b31ca1dcfaededff6406928b6bcba77d14a0081",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "scope": "Original wall/floor policies, raw transform save/restore, map-notification/start policy and live body callback feedback compared with original CPU functions in supplied graphs. Linked player integration runs in the streamed Bevy inspector and 17 supplied original-asset teleport scenarios. Fade/audio consumers, full clock/flashback/session order, natural actor/cache lifetimes, complete GTE pose ownership and visible scene transitions remain open.",
+  "native_wall_cases": 240,
+  "native_floor_cases": 360,
+  "native_full_transform_snapshot_cases": 8,
+  "native_map_notification_cases": 864,
+  "native_live_body_feedback_cases": 2,
+  "original_asset_teleport_trigger_scenarios": 17,
+  "contact_native_function_entries": {
+    "save_pose": 608,
+    "wall_handler": 240,
+    "scene_vtable": 600,
+    "base_wall": 240,
+    "transform_vtable": 600,
+    "base_notify": 240,
+    "contact_key": 24,
+    "static_wall": 24,
+    "wall_lookup": 24,
+    "lookup": 24,
+    "execute": 34,
+    "restore_pose": 68,
+    "noop": 24,
+    "dynamic_wall": 8,
+    "random": 26,
+    "rand": 34,
+    "floor_handler": 360,
+    "base_floor": 360,
+    "base_floor_notify": 360,
+    "current_key": 60,
+    "dynamic": 60,
+    "dynamic_spawn": 30,
+    "teleport_data": 18
+  },
+  "map_native_function_entries": {
+    "func_80053984": 864,
+    "func_80053ACC": 24,
+    "func_80053EB4": 141,
+    "func_80053BE8": 24,
+    "func_80053C94": 32,
+    "dream_sys_lock_input": 72,
+    "func_80053D18": 24,
+    "func_80053D9C": 24,
+    "dream_sys_set_paused": 48,
+    "dream_sys_get_set_move_direction": 48,
+    "func_8001CEB4": 48,
+    "func_8001EC84": 144,
+    "func_80053E00": 24,
+    "dream_sys_set_move_callback": 24,
+    "func_80053E84": 24
+  },
+  "body_native_function_entries": {
+    "walk": 2,
+    "dispatch": 10,
+    "notify": 7,
+    "base_vtable": 7,
+    "base_notify": 7,
+    "tile_kind": 4,
+    "tile_notify": 4,
+    "transform_vtable": 4,
+    "assign_contact": 4,
+    "hit": 4,
+    "active": 11,
+    "world": 4,
+    "matrix": 8,
+    "rot": 8,
+    "multiply": 4,
+    "vectors": 8,
+    "apply": 36,
+    "bounds": 4,
+    "refresh": 4,
+    "make_bounds": 4,
+    "get_bounds": 7,
+    "aggregate": 3,
+    "segment_box": 30,
+    "outcode": 60,
+    "intersect": 3,
+    "decode_face": 6,
+    "cross": 3,
+    "square": 6,
+    "sqrt": 6,
+    "actor_kind": 3
+  },
+  "body_software_gte_operations": {
+    "ctc2": 218,
+    "mtc2": 30,
+    "MVMVA": 48,
+    "mfc2": 146,
+    "store": 31,
+    "load": 99,
+    "cfc2": 9,
+    "OP": 3,
+    "SQR": 6
+  },
+  "contact_function_ranges": [
+    {
+      "name": "tunnel",
+      "address": "0x8005a700",
+      "bytes": 160,
+      "sha256": "113a5626cfc477e86e1cd14a916dd493a2239a9e56ec4cfd12668ee2f2ab5cd8"
+    },
+    {
+      "name": "teleport",
+      "address": "0x8005a82c",
+      "bytes": 252,
+      "sha256": "be2d39910ebb57c84089cd1be087529bf3b2f55b9a033f362904849a213cc61f"
+    },
+    {
+      "name": "stairs",
+      "address": "0x8005a9cc",
+      "bytes": 352,
+      "sha256": "bae1d47219929d28fc4a41b59044f3763dcc4f7261ee7acc92da5eaab04dd199"
+    },
+    {
+      "name": "dynamic",
+      "address": "0x8005a7a0",
+      "bytes": 140,
+      "sha256": "af52a25dd398c1139c28a42f55ebe0d11e8a262cbd7f7989a9f3b1c6789f3620"
+    },
+    {
+      "name": "execute",
+      "address": "0x8005a928",
+      "bytes": 164,
+      "sha256": "fb76d9ee481365efdb3acbecd851e00d5b2b5ef52e1223dacbc72c6add3b7361"
+    },
+    {
+      "name": "restore_direction",
+      "address": "0x8005a1a4",
+      "bytes": 12,
+      "sha256": "e678baaedc3b64faa69b5122ef71e85813b8ceb405ef8476f93923d4b3c74d8a"
+    },
+    {
+      "name": "auto0",
+      "address": "0x8005ab2c",
+      "bytes": 248,
+      "sha256": "ef5cbf5c7dd2bee00c157dfe8c87a1c084841d8dc0cbcff35debafce5ec631aa"
+    },
+    {
+      "name": "auto1",
+      "address": "0x8005ac24",
+      "bytes": 324,
+      "sha256": "41e78e272a9c9e567f340f04bb2e225660e8b59dccd621d8ae34cde24b24678e"
+    },
+    {
+      "name": "auto2",
+      "address": "0x8005ad68",
+      "bytes": 216,
+      "sha256": "8db95de47940cf08a2ef363c84260c3fff642b49042b6ea88452c53e5c989061"
+    },
+    {
+      "name": "auto3",
+      "address": "0x8005ae40",
+      "bytes": 292,
+      "sha256": "5431f36bb0a2f359df4bcd6431cdaeab2aca0d9dc9b17b4f8bda7fb4f88b3e5b"
+    },
+    {
+      "name": "toward",
+      "address": "0x8005af64",
+      "bytes": 108,
+      "sha256": "4e53a00730668adb0f057ce1b034a3c274406d6befc4246c82beb119f98bdc37"
+    },
+    {
+      "name": "get_rotation",
+      "address": "0x8001e6f8",
+      "bytes": 120,
+      "sha256": "23c2fb3758d91943a99790ac39b908aa493a47a802e9316e1261febfa36dd50f"
+    },
+    {
+      "name": "set_rotation",
+      "address": "0x8001ceb4",
+      "bytes": 340,
+      "sha256": "722d79cf1f8c109300d4a56aa1d421442a2b5c424a7f3f1e16ad27d281432217"
+    },
+    {
+      "name": "number",
+      "address": "0x8001ec84",
+      "bytes": 120,
+      "sha256": "7c14d23868ee93933886ecd2477e4e60c6200bef1982963f671e2d76e6d7caaf"
+    },
+    {
+      "name": "set_position",
+      "address": "0x80057384",
+      "bytes": 36,
+      "sha256": "209c4d51b9f0747d871ce8d9e5dde8a14d4e0235eeed3191c3723dfa3c7e2bba"
+    },
+    {
+      "name": "add_position",
+      "address": "0x800573a8",
+      "bytes": 36,
+      "sha256": "cb98f20f55e4915c70de0cd5ec85346bad6f0c06c72aa4c2ff968b5327149cda"
+    },
+    {
+      "name": "position",
+      "address": "0x800573cc",
+      "bytes": 120,
+      "sha256": "c1a99e64390fec4e8dcf12a0a17942c6c30f55d6703dc08a78cd5e1111b8ad19"
+    },
+    {
+      "name": "time_limit",
+      "address": "0x80059328",
+      "bytes": 56,
+      "sha256": "65ff9092a4a2570222bdbf88d881d9298baae729061412cecab4cb9a8d882d64"
+    },
+    {
+      "name": "elapsed",
+      "address": "0x80059360",
+      "bytes": 28,
+      "sha256": "400951d02e89f622bbb7fabfff461d0c10a09c0b95ea8629d69f0ad30666ecf5"
+    },
+    {
+      "name": "time_bonus",
+      "address": "0x8005bfc4",
+      "bytes": 24,
+      "sha256": "89ce4671871b546414fec839f6e7930203a88c25cc371fe7fb1a69c59a71474d"
+    },
+    {
+      "name": "wall_lookup",
+      "address": "0x8005bcb4",
+      "bytes": 68,
+      "sha256": "b9a5635d28631d4653e870897f83f17488b522f12314881f2366734d445439fb"
+    },
+    {
+      "name": "tunnel_lookup",
+      "address": "0x8005bcf8",
+      "bytes": 68,
+      "sha256": "172d81cb12c5b28b4d36eb28666e6454e6e06e712504725d2dfd319fb2ca545a"
+    },
+    {
+      "name": "teleport_lookup",
+      "address": "0x8005bf74",
+      "bytes": 80,
+      "sha256": "8a698f462428747b0b98dbbcb2d6803d8f44aab93a9ce419ca92ab8f22cc14f7"
+    },
+    {
+      "name": "stairs_lookup",
+      "address": "0x8005bfdc",
+      "bytes": 80,
+      "sha256": "e0438230d17d7fa7e257c11f4199984671ef695a74fa02d140268755c23d9f40"
+    },
+    {
+      "name": "lookup",
+      "address": "0x8005c150",
+      "bytes": 316,
+      "sha256": "c383fb1474d2f601f167dcb561a6ce7da907c475448278e150361e3d7e58cc13"
+    },
+    {
+      "name": "facing",
+      "address": "0x8005be28",
+      "bytes": 104,
+      "sha256": "38e43381cb83051b4f67a0dbdff028afc9306b2e46e67f1b06c14ba91e4fffb7"
+    },
+    {
+      "name": "tunnel_transforms",
+      "address": "0x8005bd3c",
+      "bytes": 236,
+      "sha256": "808b3ce905291267c76247a947b481070c0221c0b88d5360ee2eaa9a25abb296"
+    },
+    {
+      "name": "stairs_transforms",
+      "address": "0x8005c02c",
+      "bytes": 236,
+      "sha256": "a22837dfccf10a826a1b31d52b6cb59cdc06bef737af229a5a52a3bd7a14c693"
+    },
+    {
+      "name": "stairs_action",
+      "address": "0x8005c118",
+      "bytes": 56,
+      "sha256": "51f9529abd620dbae74d0387cc49fe1c30c4b12702d229186d847c98003800f2"
+    },
+    {
+      "name": "random",
+      "address": "0x8005bb30",
+      "bytes": 388,
+      "sha256": "8c3328af4df34b9baa95865545f441a7bff3edfd1f117c0553a14fc71e298a90"
+    },
+    {
+      "name": "dynamic_spawn",
+      "address": "0x8005be90",
+      "bytes": 184,
+      "sha256": "727e777767f6d6c5be4c63f968062c57a004e098264906ab5763cb5bf4acb648"
+    },
+    {
+      "name": "teleport_data",
+      "address": "0x8005bf48",
+      "bytes": 32,
+      "sha256": "288b0dec327b146d406f0f8d16e88c0ac5ac6e9725334e57dd6bd4ee100a4300"
+    },
+    {
+      "name": "rand",
+      "address": "0x80049480",
+      "bytes": 40,
+      "sha256": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+    },
+    {
+      "name": "current_key",
+      "address": "0x8004c158",
+      "bytes": 104,
+      "sha256": "ed0e88573bebaabe7193558da0ca5155fc928339b799e7ac05147d79ab2ec3ea"
+    },
+    {
+      "name": "contact_key",
+      "address": "0x8004b31c",
+      "bytes": 8,
+      "sha256": "a8b90a611dac1f4963396fb0a2639d99a5412c277c7d7a2376704443abac527a"
+    },
+    {
+      "name": "spawn_world",
+      "address": "0x8004b418",
+      "bytes": 52,
+      "sha256": "0f689e4c1155bdffabea669f166646e7aeb2242c46b6699de61f3121386e41ac"
+    },
+    {
+      "name": "placement",
+      "address": "0x8004b44c",
+      "bytes": 292,
+      "sha256": "e4cd1302002bf780ae4ab51e78be2cf9bd6230995537f81617aee313102a4551"
+    },
+    {
+      "name": "locate",
+      "address": "0x8004c1c0",
+      "bytes": 424,
+      "sha256": "d82d26562f1a91a9ae77988cfedcf3e0e41b69c558344850c56a6a1d8712933c"
+    },
+    {
+      "name": "grid_index",
+      "address": "0x8004c368",
+      "bytes": 136,
+      "sha256": "fde21abc879fe53caac48f67490e480a5b4f00661f006583abfdd99a5b9bf25a"
+    },
+    {
+      "name": "owner",
+      "address": "0x8004c470",
+      "bytes": 280,
+      "sha256": "1e8050abf24ead47a7e6009565ee0db7086026203b62b555771812c7343a368a"
+    },
+    {
+      "name": "find_slot",
+      "address": "0x8004c434",
+      "bytes": 60,
+      "sha256": "20dc014764c03db33c736936d39697ca0578fea09351941f97b1eaf2cce96596"
+    },
+    {
+      "name": "current_slot",
+      "address": "0x8004c3f0",
+      "bytes": 68,
+      "sha256": "3accc75c4f01a237291eaf896fb2ad93f7ef6d26e3bbe3fb55dee01c5d177e73"
+    },
+    {
+      "name": "wall_handler",
+      "address": "0x80058fac",
+      "bytes": 308,
+      "sha256": "21fb3eb8b260f4e1327ae6a46fd6835363a10559bd3e4486bfdb8663f3514408"
+    },
+    {
+      "name": "floor_handler",
+      "address": "0x80058b08",
+      "bytes": 336,
+      "sha256": "8572dac4a753dadeb2414f2866bfe20ba6c968e40240d7d24a41acfdfbfb7606"
+    },
+    {
+      "name": "dynamic_wall",
+      "address": "0x8005a580",
+      "bytes": 88,
+      "sha256": "5d2b1a8e49557bc361344d5a3f2d77dcb0035f6ed1f266ee22c833aaf5569d6b"
+    },
+    {
+      "name": "static_wall",
+      "address": "0x8005a5d8",
+      "bytes": 100,
+      "sha256": "bc640191089d9b019d7258f04006d506e70edabcbd94403b47253f85dc6fdc99"
+    },
+    {
+      "name": "save_pose",
+      "address": "0x8005b904",
+      "bytes": 140,
+      "sha256": "a88d27ea1aa052fe5ab838f4091b47c4c9d0eb77919d738b71b622a121d9222d"
+    },
+    {
+      "name": "restore_pose",
+      "address": "0x8005b990",
+      "bytes": 144,
+      "sha256": "0f947ddd62de858a64c824a22461c9d039da2ca6df1f4b6a36d120c4e169a3f1"
+    },
+    {
+      "name": "scene_vtable",
+      "address": "0x80057c84",
+      "bytes": 16,
+      "sha256": "93483df92632f0350f8b2394f1ffd77e3a0cb94a431df85c3e400fd8cc3c9817"
+    },
+    {
+      "name": "base_wall",
+      "address": "0x80057c14",
+      "bytes": 88,
+      "sha256": "5c1a5fa774c55ea25d8aee6e2954a8443f7a547c4ec643e2cbe0babf84bab006"
+    },
+    {
+      "name": "base_floor",
+      "address": "0x800571f8",
+      "bytes": 296,
+      "sha256": "ad0d13796e3f4d7e32fff7005062eeff57e4a0af7b9218ce81d2ffbc2d219ce0"
+    },
+    {
+      "name": "base_notify",
+      "address": "0x8001d6b4",
+      "bytes": 96,
+      "sha256": "64dad369cdfde0f14d187d39f7924a9c3dc40cf4afd70753f739156bab3ecb6d"
+    },
+    {
+      "name": "transform_vtable",
+      "address": "0x8001e57c",
+      "bytes": 16,
+      "sha256": "6b444c29202af0f323b5dfd638e1c9677848593458bdf1a70a8fc235380de21c"
+    },
+    {
+      "name": "base_floor_notify",
+      "address": "0x8001d568",
+      "bytes": 152,
+      "sha256": "b5a107f6d3b6ae59a1a01cab9f206d012b323d0aefddeb9d1b3a68f7eec12914"
+    },
+    {
+      "name": "noop",
+      "address": "0x800590e0",
+      "bytes": 8,
+      "sha256": "6d64edf91449c1b17746c1ef18afa2eb25c70bdf1322ab3df5a2630993b7e2f1"
+    }
+  ],
+  "map_function_ranges": [
+    {
+      "name": "func_80053984",
+      "address": "0x80053984",
+      "bytes": 328,
+      "sha256": "f8a409e6b23ef66770e82c6a7ace70f21f87f6afb47f1ed131ab72d89a872ef7"
+    },
+    {
+      "name": "func_80053ACC",
+      "address": "0x80053acc",
+      "bytes": 284,
+      "sha256": "029d99699123d48db4c7dcf68894cc5bcf97f21467bfc7ca243cc31c866dfacc"
+    },
+    {
+      "name": "func_80053BE8",
+      "address": "0x80053be8",
+      "bytes": 172,
+      "sha256": "88e73e04b2822e40f1ba225c04c193d74ef1d137ed0e7a5838b945d12a261eeb"
+    },
+    {
+      "name": "func_80053C94",
+      "address": "0x80053c94",
+      "bytes": 132,
+      "sha256": "f29a027f38c62ba44600c378cfa80a414d431e571b83f94d58ffc6e16a9ba702"
+    },
+    {
+      "name": "func_80053D18",
+      "address": "0x80053d18",
+      "bytes": 132,
+      "sha256": "6151f0069e9a998f19db94b5355b3cf021d6b1a634db983469ad2ed13060ec6b"
+    },
+    {
+      "name": "func_80053D9C",
+      "address": "0x80053d9c",
+      "bytes": 100,
+      "sha256": "ca633810e03cbaebbc447b3e9a2893c662659319a5e82d30344093d23adc42ef"
+    },
+    {
+      "name": "func_80053E00",
+      "address": "0x80053e00",
+      "bytes": 132,
+      "sha256": "5838bd5ce80e30d6442de30cb848f4bf9ad034f2a4fabeb2cca6e1021135271f"
+    },
+    {
+      "name": "func_80053E84",
+      "address": "0x80053e84",
+      "bytes": 48,
+      "sha256": "76b2065450d59c3f3a1cd6ddbeb663575e6e5721f4ddfa1631352e3b5ef7c736"
+    },
+    {
+      "name": "func_80053EB4",
+      "address": "0x80053eb4",
+      "bytes": 208,
+      "sha256": "9dc54eea2d2f884c2b4b0ce7c4220dfe39eae609a394799f79c75f9d877c2ea8"
+    },
+    {
+      "name": "dream_sys_lock_input",
+      "address": "0x80059310",
+      "bytes": 12,
+      "sha256": "fb10e2fc41f7df6e0d55a7827456b49fe5715c9603ed41f88062dc15750fe840"
+    },
+    {
+      "name": "dream_sys_set_paused",
+      "address": "0x80059148",
+      "bytes": 108,
+      "sha256": "219f41a09241aaa7deb1204d018a3e9799b392811f63d059c9901558accab74b"
+    },
+    {
+      "name": "dream_sys_get_set_move_direction",
+      "address": "0x8005a168",
+      "bytes": 28,
+      "sha256": "ad48cd8da110730313787c4dda3954825830091f7aee9f3c32f711e9ffb5ede8"
+    },
+    {
+      "name": "dream_sys_set_move_callback",
+      "address": "0x800596e8",
+      "bytes": 216,
+      "sha256": "e0911b100ce2b5e6a7ea7d27d2516f24c0bd02b0c26cd3acecebdb3925323b78"
+    },
+    {
+      "name": "func_8001CEB4",
+      "address": "0x8001ceb4",
+      "bytes": 340,
+      "sha256": "722d79cf1f8c109300d4a56aa1d421442a2b5c424a7f3f1e16ad27d281432217"
+    },
+    {
+      "name": "func_8001EC84",
+      "address": "0x8001ec84",
+      "bytes": 120,
+      "sha256": "7c14d23868ee93933886ecd2477e4e60c6200bef1982963f671e2d76e6d7caaf"
+    }
+  ],
+  "body_function_ranges": [
+    {
+      "name": "hit",
+      "address": "0x8001d714",
+      "bytes": 572,
+      "sha256": "588643a9b5e959ae764b2abe491c44af44a58fc04cf5aeee62498d840bdf6961"
+    },
+    {
+      "name": "world",
+      "address": "0x8001d950",
+      "bytes": 216,
+      "sha256": "d0653e9db5365190ad2f1fa6d716ed17554cf9177b580788cf0a771dbfc70536"
+    },
+    {
+      "name": "matrix",
+      "address": "0x8001d4dc",
+      "bytes": 140,
+      "sha256": "66d6016ba623639a9f3c1e4d2ad39782f05a3eedaa2d4658e9aeaa0d634f950f"
+    },
+    {
+      "name": "rot",
+      "address": "0x800160b0",
+      "bytes": 656,
+      "sha256": "0530114f1e6758601728bad4743821faba7c0a6be795ea442050a743262d0270"
+    },
+    {
+      "name": "multiply",
+      "address": "0x80015bfc",
+      "bytes": 268,
+      "sha256": "a734ee02e6512418b26dc635985184e8f31a57dbcaefcd38aaac2440d3847485"
+    },
+    {
+      "name": "vectors",
+      "address": "0x8001ee04",
+      "bytes": 148,
+      "sha256": "74b9652a0ae0931dd6eb06c82c842861520d03f232c48aa1467ffdd2336867e0"
+    },
+    {
+      "name": "apply",
+      "address": "0x80015d58",
+      "bytes": 92,
+      "sha256": "5eff75f8ee6fc6b6ac7eeddc06c53876383fb018ca6e5376e057d09dd3ec7716"
+    },
+    {
+      "name": "bounds",
+      "address": "0x8001da28",
+      "bytes": 972,
+      "sha256": "3d22831376f252fd6b67ce17385baa2d31740bf3d8c7b7c785f4bb9b91641fd4"
+    },
+    {
+      "name": "refresh",
+      "address": "0x8001f4e4",
+      "bytes": 40,
+      "sha256": "53ac0118d566d634d6de5187c748fad0e7327e8a10270c907ae38f24cc3b37da"
+    },
+    {
+      "name": "make_bounds",
+      "address": "0x8001f3b0",
+      "bytes": 308,
+      "sha256": "6ac1cdbb58c9d23f95f664b3213f167f0cb397435688b4ce9e248be8d861c291"
+    },
+    {
+      "name": "get_bounds",
+      "address": "0x8001f50c",
+      "bytes": 16,
+      "sha256": "3960bf714c3d63c777cb90c0336714cf7599f0e575ed62e305a53527258c9ea5"
+    },
+    {
+      "name": "active",
+      "address": "0x8001f3a4",
+      "bytes": 12,
+      "sha256": "1a4bb67a6e467146f4884650e603989a0a95394e10e71ce01c54c63f4f726199"
+    },
+    {
+      "name": "aggregate",
+      "address": "0x8001ddf4",
+      "bytes": 796,
+      "sha256": "e61be058229e5ecc97387ea9e246d7b578594f5d77495b56fc3f2900f2a6b193"
+    },
+    {
+      "name": "segment_box",
+      "address": "0x8001e110",
+      "bytes": 472,
+      "sha256": "c6bb20cf05899b90950c8aa14708812e200a46e305aa34d53489d0df78128530"
+    },
+    {
+      "name": "outcode",
+      "address": "0x8001ecfc",
+      "bytes": 176,
+      "sha256": "5070c8f9b60f3e51ea87f2d35887a3a097bc932f9f00a2c3e3449f10c66d8eda"
+    },
+    {
+      "name": "intersect",
+      "address": "0x8001f8b8",
+      "bytes": 1944,
+      "sha256": "c23a87535a6a4949e414266f5a298b8d0409debb8be4ef6482e627fcc6269513"
+    },
+    {
+      "name": "decode_face",
+      "address": "0x80020050",
+      "bytes": 1152,
+      "sha256": "d58160f9ae8a3adcc81dfda474988896476e823a614afd7f686896ec64677469"
+    },
+    {
+      "name": "sqrt",
+      "address": "0x800205c0",
+      "bytes": 132,
+      "sha256": "97c082d2d41751f9fccfc5cf37e8dd0b369fbc97fddd6d85c81c2fa2ca3feff7"
+    },
+    {
+      "name": "cross",
+      "address": "0x800179ac",
+      "bytes": 88,
+      "sha256": "b0df3db5528e30315b774c82d909799911f21a661fc9d23bf7ce2dbb33ef3f53"
+    },
+    {
+      "name": "square",
+      "address": "0x800178e8",
+      "bytes": 40,
+      "sha256": "99cb1c8d0c79529e8c6f1a56f640ebd7400c2eb0f57312cdc2e252c1e34f201b"
+    },
+    {
+      "name": "notify",
+      "address": "0x8001cd60",
+      "bytes": 208,
+      "sha256": "7645c1426bb416583494ee0b64a4409e90121ad9d0827cb58086f6342de08a62"
+    },
+    {
+      "name": "base_vtable",
+      "address": "0x80018390",
+      "bytes": 16,
+      "sha256": "6f3e96c03b803dbf1321407c23ea13c5f2b782f40d0be26b977088b8a0b51196"
+    },
+    {
+      "name": "base_notify",
+      "address": "0x80018358",
+      "bytes": 56,
+      "sha256": "b70d56bf5fb046b9fa5c84e2573b3cb4314b6f48e0dba812c6eb409046b7c565"
+    },
+    {
+      "name": "actor_notify",
+      "address": "0x80057b90",
+      "bytes": 132,
+      "sha256": "253912217134c61f691a28ee7313149f48be936edabbcaddf0f49017e9acbc61"
+    },
+    {
+      "name": "transform_vtable",
+      "address": "0x8001e57c",
+      "bytes": 16,
+      "sha256": "6b444c29202af0f323b5dfd638e1c9677848593458bdf1a70a8fc235380de21c"
+    },
+    {
+      "name": "assign_contact",
+      "address": "0x8001d6b4",
+      "bytes": 96,
+      "sha256": "64dad369cdfde0f14d187d39f7924a9c3dc40cf4afd70753f739156bab3ecb6d"
+    },
+    {
+      "name": "actor_kind",
+      "address": "0x80057320",
+      "bytes": 100,
+      "sha256": "e0cc1ac2cf9a9b0e8daeeb6fa0834ef6d51dd8746ea8cea659f1a70f51cda222"
+    },
+    {
+      "name": "tile_actor_notify",
+      "address": "0x80057c14",
+      "bytes": 88,
+      "sha256": "5c1a5fa774c55ea25d8aee6e2954a8443f7a547c4ec643e2cbe0babf84bab006"
+    },
+    {
+      "name": "walk",
+      "address": "0x8004b100",
+      "bytes": 468,
+      "sha256": "d983073d2a9c7bdf05b56cf13e17368158e1a3ebbc30386c2cf7524df8c8b387"
+    },
+    {
+      "name": "dispatch",
+      "address": "0x8004b2d4",
+      "bytes": 72,
+      "sha256": "4fa38188d3c45f4139d3cbe997efea6262da0237ec05a1e523f8ba29ad3e766e"
+    },
+    {
+      "name": "tile_kind",
+      "address": "0x8004d434",
+      "bytes": 72,
+      "sha256": "f004e24bb530b47aab59f2c421e36c91061b1682349d70e773c5f787c044abb5"
+    },
+    {
+      "name": "tile_notify",
+      "address": "0x8004d47c",
+      "bytes": 132,
+      "sha256": "253912217134c61f691a28ee7313149f48be936edabbcaddf0f49017e9acbc61"
+    }
+  ],
+  "contact_captured_boundaries": [
+    "transition notification accepts/cancels",
+    "sound sink",
+    "floor owner returns supplied slot/ready halfword"
+  ],
+  "map_captured_boundaries": [
+    "dream/flashback color getters",
+    "stage effect getter/duration/start",
+    "parent attach/notify",
+    "sound entity initialization"
+  ],
+  "body_captured_boundary": "actor tile-contact handler assigns sender and optionally changes supplied cached world position",
+  "contact_scope": "Original wall/floor handlers, original static/random link selection, native base contact handlers and complete 80/40-byte save/restore in owned graphs. Notifications, sound and floor owner lookup are declared supplied boundaries; natural scene/actor lifetimes and whole-game acceptance remain open.",
+  "map_scope": "Original map notification dispatch and seven link-start handlers, paused/movement state setters and real angle setters with supplied colors and effect/parent/sound boundaries. Fade execution/completion, scene lifecycle, day progression and full-game parity remain open.",
+  "body_scope": "Original ready-slot/cell/chain dispatch, full transforms/bounds/geometry and live actor position feedback between contacts in an owned two-tile graph. Contact mutation is explicitly supplied; natural actor lifetimes and full session callbacks remain open.",
+  "original_teleport_campaign_scope": "Locally imported original maps/model bounds/math/link tables with supplied trigger poses, enabled teleports, seed and palette; checks immediate destination/movement and notification, not natural day/startup or full session parity.",
+  "local_validation": {
+    "workspace_tests_passed": 81,
+    "workspace_failed": 0,
+    "private_original_tests_ignored": 8,
+    "format_passed": true,
+    "clippy_all_targets_all_features_locked_passed": true,
+    "original_link_import_and_cpu_cases_passed": true,
+    "original_stream_integration_passed": true,
+    "desktop_build_passed": true,
+    "legacy_stream_capture_unchanged": true,
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "1f881d520812f4dfbde34d2843d60545b1c994ae83c355b9f8411c83ca6100b8",
+      "workspace": "b7bb9f4e0153159772310d8604ff7d5192a98be021e8a049acaed60bb86c1bbd",
+      "original-links": "02a201e4097695beb743216b11a7735314e50ad14420e9cbc6080414f4e3e857",
+      "original-stream": "a72ea17203c38cf5ab5a90796600e7d4d114f36b3ee1fba4c12473894f86f7cd",
+      "desktop-build": "e9d7abffa5d4c1f2a03f2c802d6f3dd0c23c26657ed7cb1ba7383793040ca0d7",
+      "capture-0-0": "1bf283c3cf41c78e886b96c55692cbd3c50d29575423247a4796af824dac07c7",
+      "capture-3-136": "c58824efca08aa51414b2118a07107245da2e0f8cb4fd7def02623003511cb7d",
+      "legacy-stream-capture": "96d05e4eece2baee7a5eed8cc6b2fe3196b8c837a420060ecd0cfde0779c4cfc"
+    },
+    "binary_sha256": "90fbacd294fbb05e8e2e16c4814b9ae25b3f36145bf39f20fe0cf3125941175e",
+    "c_decompilation_paused_and_preserved": true,
+    "initial_bevy_link_handler_integration_present": true,
+    "complete_visible_transitions_accepted": false,
+    "original_asset_teleport_trigger_scenarios_passed": 17,
+    "final_validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "3a910f6d5a236781d17c8f95ac4a78bb0cc1e9cdfb26c18e7ba5857fc9f7a34c",
+      "workspace": "848bf0c21ddd9a307d02c082fc97b8acf8e4795ccb8e3bcca2c0a9afae408641",
+      "original-teleports": "ca1dfec5dc9280a49759106395df07a51aff3093a716a0cca92f1fab8b188153"
+    },
+    "initial_validation_proof_sha256": "b772903aff9a42c92e4d1fc0ebe58f455bd42261ec90f8644628aa4de558bb4e",
+    "captures_visually_inspected": true
+  },
+  "captures": [
+    {
+      "stage": 0,
+      "map": 0,
+      "ticks": 32,
+      "image_sha256": "769367a2df4e7b420576a2861490657e8506575f3872a946dd01de180ce8f8a0",
+      "log_sha256": "1bf283c3cf41c78e886b96c55692cbd3c50d29575423247a4796af824dac07c7"
+    },
+    {
+      "stage": 3,
+      "map": 136,
+      "ticks": 120,
+      "image_sha256": "f2f9324ba40acd50f87233a5b2113ce2ad9bb7d486e446b0f393f9d94e5ab25d",
+      "log_sha256": "c58824efca08aa51414b2118a07107245da2e0f8cb4fd7def02623003511cb7d"
+    }
+  ],
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/contact-links.json": "2656dd9262b46590c0c830043b0186944f0a986bd415ec21707442860ab6f7b8",
+    "crates/lsd-core/tests/fixtures/map-link-policy.json": "269086178efa2d3a1f76e7121c55a19caafd90d382170f28b58631825a8cfdfb",
+    "crates/lsd-core/tests/fixtures/live-body-callback.json": "0b137107ba8fa9b3ea1744d8cc14d6aa4cedc12e3866e9cf020cc40f6dce4497"
+  },
+  "working_source_sha256": {
+    "crates/lsd-core/src/contact_links.rs": "30ee63a4c82b0b4b953aff6a8ccccfbdb4f06abca620fa5ff9b81cdb8117474b",
+    "crates/lsd-core/src/linked_player.rs": "475a0c5504d0e7ed573f8be044b2b998de27119d210c1671f75b89a50e2bcc6a",
+    "crates/lsd-core/src/map_links.rs": "a62a5a1373d86de6a5a8caed26d61fc6c06c64e835d49c941a0c15477425e633",
+    "crates/lsd-core/src/player_controls.rs": "a0da88810ff7796291fcb0b5dd8357080b7a823f1dc0f9287f755a21ffeb3992",
+    "crates/lsd-core/src/scene_collision.rs": "ec47f57d912b247c814ebf55d2c51eb9fe44ffaeef5be66dde6048f82a22c405",
+    "crates/lsd-core/src/lib.rs": "75e5680c10841e1bcb037872867eacd50cbd74af948b037b23c5d1fed34ac069",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "ffdfd638ab04e2b8897c79669107a677fafd9df989a479cb65554cc86da8b3ca",
+    "crates/lsd-core/tests/native_contact_links.rs": "9150402d03520c62a0d3f1ad9c4e3a69af33c7f10fc97631fa010a1226247305",
+    "crates/lsd-core/tests/native_map_links.rs": "2f51b21e3918931923314d1778710c9a33c5108d7486980ac79975a13ccebc34",
+    "crates/lsd-core/tests/linked_player.rs": "83aca0e473897d628c500a9af819aeb0f5a8996466c529824421d0decd2c167f",
+    "crates/lsd-core/tests/native_link_runtime.rs": "a8d64600d937c3c327756302fb595a53d3ed34afa4ba8df061d5940da5b34d9e",
+    "crates/lsd-core/tests/support/link_state.rs": "22db7a4f81f5fdf8cd8e77bb48fe8697f80f2ef9919d14a60aacb7b4bb5613a0",
+    "crates/lsd-assets/tests/native_linked_player.rs": "643fc532b64e381c3d4006a61c24d16d08f4e35f8beb38a7007e588b0a3c9eeb"
+  },
+  "private_proof_sha256": {
+    "native-contact-links-proof-eleven.json": "0d3e97d262b1f016f622264bdcbefba55b5342694f3513013bf7919bcb989664",
+    "native-map-link-policy-proof-eleven.json": "84577e596ea25e8cc67596f56bf2fda358e46a3e88e2b5d3265814b5aef28f50",
+    "native-live-body-proof-eleven.json": "cd1bc2a1b1c410ab87004b869f1ce68d10cedeb57d9e7319a5503da2cdbd2436",
+    "linked-scene-final-proof-eleven.json": "49cf4adf9bf1b85c6a276e1a5ea3d2bfed7bb2d0f8523eb31f581a36263d5017"
+  },
+  "initial_bevy_link_handler_integration_present": true,
+  "complete_visible_transitions_accepted": false,
+  "c_decompilation_paused_and_preserved": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

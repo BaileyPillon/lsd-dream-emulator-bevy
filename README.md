@@ -35,6 +35,9 @@ Dream tunnel, teleport, dynamic-link and stair handlers now also run in Rust,
 including all four stair scripts and cached actor keys. Their checks execute
 original angle/position setters in supplied graphs; see
 [link runtime recovery](docs/LINK_RUNTIME.md).
+The streamed inspector can now run the linked player and original map-notification
+policy, including per-contact pose restoration. See
+[linked scene integration](docs/SCENE_LINKS.md) for its remaining lifecycle work.
 
 ## Start here
 
@@ -73,6 +76,12 @@ remaining rendering/gameplay requirements.
 
 Append `--walk` for the single-chunk movement prototype. Full streaming,
 linking and original scene scheduling remain separate requirements.
+
+Append `--walk-links` for the streamed link prototype, or
+`--walk-links-capture /path/to/new.png 120` for a supplied forward-input capture.
+The console records original transition and sound requests. Fade playback,
+scene replacement, original clock/input scheduling and audio still need their
+runtime consumers.
 
 To inspect original model animation from a stage's streamed library:
 

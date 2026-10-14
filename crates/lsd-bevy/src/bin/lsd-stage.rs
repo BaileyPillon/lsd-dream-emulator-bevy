@@ -14,12 +14,13 @@ use bevy::{
 use lsd_assets::{
     StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
-    is_canonical_reference, load_layered_stage, load_math_tables, sha256_hex, stage_map_path,
+    is_canonical_reference, load_layered_stage, load_link_tables, load_math_tables, sha256_hex,
+    stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
-    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, PadState, PlayerControls,
-    PsxMathTables, SceneCollision,
+    ChunkPlayer, CollisionBounds, CollisionChunk, CollisionPolicy, LinkedPlayer, PadState,
+    PlayerControls, PsxMathTables, SceneCollision, SceneLinkTables,
 };
 use std::path::PathBuf;
 
@@ -45,6 +46,7 @@ struct WalkingScene {
     tables: PsxMathTables,
     layered_collision: Option<SceneCollision>,
     streamed: Option<StreamedStage>,
+    linked: Option<LinkedPlayer>,
 }
 
 type ModelMeshes = Vec<Vec<Vec<(Handle<Mesh>, Handle<StandardMaterial>)>>>;
@@ -75,6 +77,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut walk = false;
     let mut walk_layers = false;
     let mut walk_stream = false;
+    let mut walk_links = false;
     let mut walk_steps = None;
     let (inspect, capture) = match args.next() {
         None => (false, None),
@@ -93,15 +96,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             walk_stream = true;
             (false, None)
         }
+        Some(value) if value == "--walk-links" => {
+            walk = true;
+            walk_stream = true;
+            walk_links = true;
+            (false, None)
+        }
         Some(value)
             if matches!(
                 value.as_str(),
-                "--walk-capture" | "--walk-layers-capture" | "--walk-stream-capture"
+                "--walk-capture"
+                    | "--walk-layers-capture"
+                    | "--walk-stream-capture"
+                    | "--walk-links-capture"
             ) =>
         {
             walk = true;
             walk_layers = value == "--walk-layers-capture";
-            walk_stream = value == "--walk-stream-capture";
+            walk_links = value == "--walk-links-capture";
+            walk_stream = value == "--walk-stream-capture" || walk_links;
             let path = PathBuf::from(args.next().ok_or("--walk-capture needs a new PNG path")?);
             walk_steps = Some(
                 args.next()
@@ -118,7 +131,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         ),
         _ => {
             return Err(
-                "Use --inspect, --capture, --walk, --walk-layers, --walk-stream or a walking capture after the texture variant"
+                "Use --inspect, --capture, --walk, --walk-layers, --walk-stream, --walk-links or a walking capture after the texture variant"
                     .into(),
             );
         }
@@ -252,10 +265,29 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 *position = position.wrapping_add(offset);
             }
         }
+        let mut linked = if walk_links {
+            let original = load_link_tables(&executable)?;
+            // These are the original map-scene movement defaults; this inspector supplies its own spawn/seed/palette.
+            player.controls.move_direction = if stage == 0 { 2 } else { 3 };
+            player.controls.previous_move_direction = player.controls.move_direction;
+            Some(LinkedPlayer::new(
+                stage,
+                &player,
+                &streamed.as_ref().unwrap().collision,
+                SceneLinkTables {
+                    catalog: original.catalog,
+                    motion: original.motion,
+                    auto_move: original.auto_move,
+                },
+                1,
+            )?)
+        } else {
+            None
+        };
         if let Some(steps) = walk_steps {
             for _ in 0..steps {
                 if let Some(streamed) = &mut streamed {
-                    streamed_step(&mut player, streamed, &tables, 0x1000)?;
+                    streamed_step(&mut player, streamed, &tables, linked.as_mut(), 0x1000)?;
                 } else if let Some(layered) = &layered {
                     player.step_in_scene(0x1000, &layered.collision, &tables)?;
                 } else {
@@ -268,7 +300,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         println!(
             "profile={} position={:?} heading={} original_link_npc_callbacks_pending=true",
-            if walk_stream {
+            if walk_links {
+                "linked_streamed_scene_prototype"
+            } else if walk_stream {
                 "streamed_scene_movement_prototype"
             } else if walk_layers {
                 "layered_scene_movement_prototype"
@@ -291,6 +325,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .collect::<Vec<_>>(),
                 streamed.revision,
                 streamed.protocol.pending
+            );
+        }
+        if let Some(linked) = &linked {
+            println!(
+                "link_event={} map_state={} destination={} spawn={:?} dream_tick={} rng_state={} fade_audio_scene_lifecycle_pending=true",
+                linked.links.execution.state,
+                linked.map.state,
+                linked.links.execution.stage,
+                linked.links.spawn,
+                linked.links.execution.dream_timer,
+                linked.rng.state()
             );
         }
         if let Some(layered) = &layered {
@@ -317,6 +362,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             tables,
             layered_collision,
             streamed,
+            linked,
         })
     } else {
         None
@@ -419,9 +465,11 @@ fn walking_controls(
         tables,
         layered_collision,
         streamed,
+        linked,
     } = &mut *scene;
     if let Some(streamed) = streamed {
-        streamed_step(player, streamed, tables, buttons).expect("decoded streamed movement query");
+        streamed_step(player, streamed, tables, linked.as_mut(), buttons)
+            .expect("decoded streamed movement query");
     } else if let Some(layered) = layered_collision {
         player
             .step_in_scene(buttons, layered, tables)
@@ -437,11 +485,25 @@ fn streamed_step(
     player: &mut ChunkPlayer,
     stage: &mut StreamedStage,
     tables: &PsxMathTables,
+    linked: Option<&mut LinkedPlayer>,
     buttons: u32,
 ) -> Result<(), Box<dyn std::error::Error>> {
     stage.complete_frame()?;
-    player.step_in_scene(buttons, &stage.collision, tables)?;
-    stage.update_for_position(player.position)?;
+    if let Some(linked) = linked {
+        let ready = std::array::from_fn(|i| stage.protocol.slots[i].ready);
+        linked.step(player, &stage.collision, tables, ready, buttons)?;
+        for command in &linked.commands {
+            println!("link_command={command:?}");
+        }
+        for command in &linked.sounds {
+            println!("link_sound_command={command:?}");
+        }
+        stage.update_for_position(player.position)?;
+        linked.refresh_key(&stage.collision, player.position)?;
+    } else {
+        player.step_in_scene(buttons, &stage.collision, tables)?;
+        stage.update_for_position(player.position)?;
+    }
     Ok(())
 }
 

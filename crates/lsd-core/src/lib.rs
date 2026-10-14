@@ -8,9 +8,12 @@ mod chunk_collision;
 mod chunk_player;
 mod collision;
 mod collision_cloud;
+mod contact_links;
 mod fixed_math;
 mod link_runtime;
+mod linked_player;
 mod links;
+mod map_links;
 mod pad;
 mod player_controls;
 mod rng;
@@ -31,19 +34,26 @@ pub use chunk_collision::{
 pub use chunk_player::{ChunkPlayer, ChunkPlayerStep};
 pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
 pub use collision_cloud::{CollisionBounds, CollisionCloud};
+pub use contact_links::{
+    DreamContactEffects, FloorLinkRequest, FloorLinkResponse, LinkTransformState, WallLinkRequest,
+};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
 pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
+pub use linked_player::{LinkedPlayer, SceneLinkTables};
 pub use links::{
     LinkActionHost, LinkCatalog, LinkContext, LinkError, LinkExecution, LinkKind, LinkMotionRules,
     LinkSet, LinkTransforms, LinkTrigger, SpawnEntry, SpawnLocation, is_facing_link_angle,
     trigger_link_action,
 };
+pub use map_links::{LinkPalette, MapLinkCommand, MapLinkPolicy};
 pub use pad::{PAD_MASKS, PadState};
 pub use player_controls::{
-    FloorEffectStep, MotionAxis, MotionRequest, MovementStep, PlayerControls,
+    FloorEffectStep, MotionAxis, MotionRequest, MovementIntent, MovementStep, PlayerControls,
 };
 pub use rng::PsxRng;
-pub use scene_collision::{BodyCandidate, SceneCollision, SceneCollisionError, SceneContact};
+pub use scene_collision::{
+    BodyCandidate, BodyVisit, SceneCollision, SceneCollisionError, SceneContact,
+};
 pub use scene_grid::{
     CellRectangle, SceneGrid, SceneGridError, SceneLocation, ScenePlacement, SceneQuery, SceneSlot,
     SceneSlots,

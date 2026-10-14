@@ -1,0 +1,1 @@
+{"face":[[-1024,-2048,70],[1024,-2048,70],[-1024,0,70],[1024,0,70]],"cases":[{"move_after_first":false,"hits":[0,1],"final_actor_position":[0,0,0]},{"move_after_first":true,"hits":[0],"final_actor_position":[0,0,4096]}]}
