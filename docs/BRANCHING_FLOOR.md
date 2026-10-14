@@ -2,8 +2,8 @@
 
 Giant Maiko, Fox, Standing Penguin and Sliding Penguin now run in the shared
 encounter scene. With the subsequent [color-dependent actions](COLOR_NPCS.md)
-and [movement actions](MOTION_NPCS.md), the current implementation count is 55
-of 107 distinct original action callbacks, leaving 52 pending. The count does not
+and [movement actions](MOTION_NPCS.md), the current implementation count is 58
+of 107 distinct original action callbacks, leaving 49 pending. The count does not
 measure complete encounters or whole-game parity.
 
 ## Recovered behavior

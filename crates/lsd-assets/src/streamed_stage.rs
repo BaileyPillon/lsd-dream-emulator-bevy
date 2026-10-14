@@ -24,6 +24,10 @@ impl StreamedStage {
         self.stage
     }
 
+    pub fn scene_scale_tables(&self) -> Result<lsd_core::SceneScaleTables, &'static str> {
+        crate::load_scene_scale_tables(&self.executable)
+    }
+
     pub fn load_destination(
         &self,
         stage: u8,

@@ -70,6 +70,22 @@ struct StreamVisuals {
     palette_revision: u64,
 }
 
+#[derive(Component)]
+struct StreamMapMesh;
+
+fn stream_map_scale(
+    scene: Res<WalkingScene>,
+    mut maps: Query<&mut Transform, With<StreamMapMesh>>,
+) {
+    let scale = scene
+        .session
+        .as_ref()
+        .map_or([4096; 3], |session| session.rendered_scene_scale);
+    for mut transform in &mut maps {
+        transform.scale = Vec3::from_array(scale.map(|value| value as f32 / 4096.0));
+    }
+}
+
 #[derive(Resource)]
 struct LayeredAssets {
     maps: Vec<Lbd>,
@@ -148,6 +164,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut supplied_actor_motion = false;
     let mut supplied_actor_query = false;
     let mut supplied_gray_contact = false;
+    let mut supplied_scene_scale = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -180,6 +197,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     | "--npc-behavior-capture"
                     | "--npc-motion-capture"
                     | "--gray-man-capture"
+                    | "--scene-scale-capture"
             ) =>
         {
             original_day = true;
@@ -189,6 +207,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
             supplied_actor_query = value == "--npc-behavior-capture" || supplied_actor_motion;
             supplied_gray_contact = value == "--gray-man-capture";
+            supplied_scene_scale = value == "--scene-scale-capture";
             walk = true;
             walk_stream = true;
             walk_links = true;
@@ -494,6 +513,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if let Some(steps) = walk_steps.filter(|_| !live_capture) {
             for step_index in 0..steps {
                 if let Some(streamed) = &mut streamed {
+                    if supplied_scene_scale && step_index == 0 {
+                        let controller = lsd_core::SceneScale::new(streamed.scene_scale_tables()?);
+                        let session = session
+                            .as_mut()
+                            .ok_or("Scene scale capture needs a session")?;
+                        session.scene_scale = Some(controller);
+                        session.scene_scale.as_mut().unwrap().request(1, 1);
+                        println!(
+                            "profile=supplied_scene_scale_request amount=1 mode=1 natural_npc_encounter=false original_gpu_timing_pending=true"
+                        );
+                    }
                     streamed_step(
                         &mut player,
                         streamed,
@@ -704,6 +734,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     session.frame_trace,
                     session.rendered_player.is_some()
                 );
+                if let Some(scale) = &session.scene_scale {
+                    println!(
+                        "scene_scale_remaining={} scene_scale_live={:?} scene_scale_rendered={:?}",
+                        scale.remaining, scale.scale, session.rendered_scene_scale
+                    );
+                }
             }
             if supplied_actor_query {
                 let entity = if supplied_actor_motion { 93 } else { 5 };
@@ -860,7 +896,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             textures: Vec::new(),
             palette_revision: u64::MAX,
         })
-        .add_systems(Update, stream_meshes);
+        .add_systems(Update, (stream_meshes, stream_map_scale).chain());
     }
     if let Some(layered) = layered_assets {
         app.insert_resource(layered);
@@ -1729,6 +1765,7 @@ fn stream_meshes(
                         .spawn((
                             Mesh3d(mesh.clone()),
                             MeshMaterial3d(material.clone()),
+                            StreamMapMesh,
                             Name::new(format!(
                                 "STG{:02}/M{map_number:03}/slot{physical}/cell{cell}",
                                 source.stage

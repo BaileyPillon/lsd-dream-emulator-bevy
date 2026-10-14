@@ -123,6 +123,8 @@ pub struct StageLinkSession {
     pub session_ticks: u32,
     pub rendered_player: Option<ChunkPlayer>,
     pub rendered_rebuild: u64,
+    pub scene_scale: Option<lsd_core::SceneScale>,
+    pub rendered_scene_scale: [i32; 3],
 }
 impl Default for StageLinkSession {
     fn default() -> Self {
@@ -158,6 +160,8 @@ impl Default for StageLinkSession {
             session_ticks: 0,
             rendered_player: None,
             rendered_rebuild: 0,
+            scene_scale: None,
+            rendered_scene_scale: [4096; 3],
         }
     }
 }
@@ -197,6 +201,9 @@ impl StageLinkSession {
         player: &ChunkPlayer,
         math: &lsd_core::PsxMathTables,
     ) -> Result<(), Box<dyn std::error::Error>> {
+        if self.scene_scale.is_none() {
+            self.scene_scale = Some(lsd_core::SceneScale::new(stage.scene_scale_tables()?));
+        }
         let Some(encounters) = &mut self.encounters else {
             return Ok(());
         };
@@ -309,6 +316,7 @@ impl StageLinkSession {
         }
         services.view_callback = Some(&mut linked.view_callback);
         services.floor_scene = Some(scene);
+        services.scene_scale = self.scene_scale.as_mut();
         services.player_motion = Some(crate::ActorJournalPlayerMotion {
             position: &mut player.position,
             move_distance: &mut linked.move_distance,
@@ -529,6 +537,8 @@ impl StageLinkSession {
         }
         if host.rebuilt {
             self.rebuilds = self.rebuilds.wrapping_add(1);
+            self.scene_scale = None;
+            self.rendered_scene_scale = [4096; 3];
         }
         Ok(host.rebuilt)
     }

@@ -61,6 +61,13 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn request_scene_scale(
+        &mut self,
+        _amount: i32,
+        _mode: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingMotionServices)
+    }
     fn day_number(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
         Err(lsd_core::BehaviorFault::MissingPlayerServices)
     }
@@ -723,6 +730,13 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn request_scene_scale(
+        &mut self,
+        amount: i32,
+        mode: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.events.request_scene_scale(amount, mode)
+    }
     fn day_number(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
         self.events.day_number()
     }

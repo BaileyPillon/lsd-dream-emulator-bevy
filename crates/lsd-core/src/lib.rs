@@ -80,9 +80,11 @@ pub use dream_day::{
 pub use dream_session::{DreamSession, DreamSessionHost};
 pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};
 pub use fixed_math::{FixedMatrix, PsxMathTables, transform_number};
+mod scene_scale;
 pub use frame_phase::{FramePhase, FrameSignal};
 pub use frame_subscribers::FrameSubscribers;
 pub use generation::GenerationFrame;
+pub use scene_scale::{SceneScale, SceneScaleTables};
 mod gpu_boxes;
 pub use generation::{
     DreamGeneration, GeneratedActor, GenerationActorEntry, GenerationEntry, GenerationFault,

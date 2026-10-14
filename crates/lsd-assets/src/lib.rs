@@ -31,6 +31,8 @@ pub use link_tables::{OriginalLinkTables, load_link_tables};
 pub use math_tables::load_math_tables;
 mod scene_config;
 mod scene_frame;
+mod scene_scale_tables;
+pub use scene_scale_tables::load_scene_scale_tables;
 mod special_encounter;
 pub use scene_frame::{SceneClockMember, SceneFrameVisit};
 pub use special_encounter::{SpecialEncounterAssets, load_special_encounter_assets};

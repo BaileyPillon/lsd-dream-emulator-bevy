@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T22:54:33.916849+00:00",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Supplied original Old Woman, Starship and Airship actions and complete entity-update recordings; real 7x410-node scene scale traversal; production scale/journal/encounter services and loaded-stage render phase/rebuild checks. Perception journal consequences are recorded separately from their identified-state day/recall comparisons. Natural whole encounters, reciprocal collision, original GPU/GTE flags/SPU and global cadence remain unaccepted.",
+  "original_function_sha256": {
+    "entity_old_woman": "dad01fb2a0e5e5acbf99a1a98468b6af692dd02ca222c21923892fb5e6203938",
+    "entity_starship": "574fdca10fbf7ce343e48608337552208bba717deace4314f4cf80aabd6d1806",
+    "entity_airship": "1fb2904f97e3ed39c7410421a9a77771e7599b26dd4877c9b1e7de832f0c6d37",
+    "func_8004CFB8": "24fa5319f1a9ee361b5635776a3dced227c0c27312758fe09be0e9d2b6f77342",
+    "func_8004D028": "bce17c502b74eb4bc357d91d557cee423c382a33bc506dc981bcd91d1141811d",
+    "func_8004D088": "f88ebb04aa96f979c7a5c129b31d6e6c74d4212c918b20ce81880459913d23a5",
+    "func_8004D0D0": "d79c23b18153e35fb6366085c4d7a776e2e6ef9080ec9eeaf52fafbf54d608a7",
+    "func_8004D108": "0c96486afd1cd4a8131d3d28ba2516c3bd4163ff84a36c7c79bd08b8925c20a8",
+    "func_8004D140": "1f136e6aad010ffc49d00427424578aa37c269640a9ca66bce95c78043576632",
+    "func_8004D1D0": "69ec93ec757c8a16eb0dda714e5a88a0f5b08ddf32b9fc20544bef0968708e44",
+    "func_8004D38C": "62b13978fb0fa7ebf0153a4beefc31b227e8f54fcaf62310110ec1aea51e4976",
+    "func_8004D3DC": "6715466934833c830a56fe0f93f78cc81dc57e5a57485b1dd07a20c645c8b107",
+    "func_8001D008": "225abd6608917cf20ad9aca5ad59a9a7f6f43e67f64d8372e6aeb2e9fbfe7363",
+    "func_8001D4DC": "66d6016ba623639a9f3c1e4d2ad39782f05a3eedaa2d4658e9aeaa0d634f950f",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69"
+  },
+  "callback_inventory": {
+    "distinct_original_callbacks": 107,
+    "implemented_before": 55,
+    "implemented_after": 58,
+    "pending_after": 49,
+    "whole_npc_encounters_accepted": 0
+  },
+  "comparisons": {
+    "owned_action_scenarios": 82,
+    "owned_action_states": 6492,
+    "canonical_action_scenarios": 82,
+    "canonical_action_states": 6492,
+    "owned_complete_update_scenarios": 82,
+    "owned_complete_update_states": 6492,
+    "canonical_complete_update_scenarios": 82,
+    "canonical_complete_update_states": 6492,
+    "production_adapter_owned_resulting_states": 6410,
+    "production_adapter_canonical_resulting_states": 6410,
+    "distinct_original_map_nodes_per_recording": 2870,
+    "controller_scenarios_per_input_set": 12,
+    "controller_states_per_input_set": 95,
+    "independent_repeat_outputs_byte_identical": true
+  },
+  "fixtures": [
+    {
+      "path": "crates/lsd-assets/tests/fixtures/scene-scale-npc-encounters.json",
+      "sha256": "bf4edbfe82aa1f542f34256d1faae1541b4949ade3a397a30655e815843a2589"
+    },
+    {
+      "path": "crates/lsd-assets/tests/fixtures/scene-scale-npc-runtime.json",
+      "sha256": "bb35315d7e41f8e7888e9ecc35dc9254f58aa35d36abb52e57b56780db1c73c2"
+    },
+    {
+      "path": "crates/lsd-assets/tests/fixtures/scene-scale-runtime.json",
+      "sha256": "dd4e5c3a858008346b91b59c6c52d28d5c386fdc1d66c9480e51866c1a0ad49a"
+    }
+  ],
+  "canonical_model_bindings": {
+    "entity_old_woman": {
+      "path": "CDI/STG02/N1/M028.LBD",
+      "offset": 38924,
+      "bytes": 5104,
+      "entity": 12,
+      "stage": 2,
+      "model_index": 0,
+      "source_sha256": "e2c3f83535c937ed91e15eaad3cd9bc0afa27fa587aef88f7e25de81f3617fa0",
+      "mom_sha256": "fca42051a2209a5b5230a40026c2be166f760fdb77abfb01367a23f18b77fc6d"
+    },
+    "entity_starship": {
+      "path": "CDI/STG05/M013.LBD",
+      "offset": 18444,
+      "bytes": 1760,
+      "entity": 59,
+      "stage": 5,
+      "model_index": 0,
+      "source_sha256": "b707abaf027c57ccef9d333e5dc90b2c2fb79cf62cee7e04948b95eef274a23e",
+      "mom_sha256": "8670a02fe7919270e65d45102055dec6feea216d614a13b567e2a0bee9b5416a"
+    },
+    "entity_airship": {
+      "path": "CDI/STG13/M002.LBD",
+      "offset": 14348,
+      "bytes": 7104,
+      "entity": 103,
+      "stage": 13,
+      "model_index": 0,
+      "source_sha256": "3316ef1d786859374bc4cd64895cf4a2d78070cd1b85695dd7a9893a75811f08",
+      "mom_sha256": "62b16c7d7714736da06718f257e8e3e1370be1b57be3416c7646014794a0f03a"
+    }
+  },
+  "local_validation": {
+    "workspace_passed": 156,
+    "workspace_failed": 0,
+    "workspace_ignored": 45,
+    "new_original_comparison_tests_passed": 7,
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "earlier_day_original_comparisons_passed": true,
+    "idle_capture_unchanged": true,
+    "completed_and_retained_captures_identical": true
+  },
+  "capture_hashes": [
+    {
+      "profile": "unit",
+      "ticks": 1,
+      "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+      "diagnostic": "scene_scale_remaining=3 scene_scale_live=[4096, 5120, 4096] scene_scale_rendered=[4096, 4096, 4096]"
+    },
+    {
+      "profile": "step",
+      "ticks": 2,
+      "image_sha256": "ac50f2f9d50d8cdbff9ad59dbff648fdb431d34ff8a462e70e2d7f65667b0852",
+      "diagnostic": "scene_scale_remaining=2 scene_scale_live=[4096, 6144, 4096] scene_scale_rendered=[4096, 5120, 4096]"
+    },
+    {
+      "profile": "complete",
+      "ticks": 5,
+      "image_sha256": "55bb77e752bb6f243770c1c3be729b08459433d1d83b1408664941f9f3b55034",
+      "diagnostic": "scene_scale_remaining=-1 scene_scale_live=[4096, 8192, 4096] scene_scale_rendered=[4096, 8192, 4096]"
+    },
+    {
+      "profile": "retained",
+      "ticks": 6,
+      "image_sha256": "55bb77e752bb6f243770c1c3be729b08459433d1d83b1408664941f9f3b55034",
+      "diagnostic": "scene_scale_remaining=-1 scene_scale_live=[4096, 8192, 4096] scene_scale_rendered=[4096, 8192, 4096]"
+    }
+  ],
+  "original_function_output_stubs": 0,
+  "backend_limits": "Original constructors/functions run in Unicorn with a semantic COP2 bridge; supplied external audio voices and owned controller/scene inputs are not SPU/GPU or hardware timing verification.",
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behavior_has_ai_model_calls": false,
+  "c_paused_and_preserved": true
+}

@@ -179,6 +179,9 @@ pub enum NpcScript {
     Whale,
     HopscotchGirl,
     Corpse,
+    OldWoman,
+    Starship,
+    Airship,
     Pending(u32),
 }
 impl NpcScript {
@@ -240,6 +243,9 @@ impl NpcScript {
             Some(0x8006_0cf0) => Self::Whale,
             Some(0x8006_1070) => Self::HopscotchGirl,
             Some(0x8006_1158) => Self::Corpse,
+            Some(0x8005_ea94) => Self::OldWoman,
+            Some(0x8006_1a90) => Self::Starship,
+            Some(0x8006_4928) => Self::Airship,
             Some(at) => Self::Pending(at),
         }
     }
@@ -281,6 +287,9 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn request_scene_scale(&mut self, _amount: i32, _mode: i32) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingMotionServices)
+    }
     fn day_number(&mut self) -> Result<i32, BehaviorFault> {
         Err(BehaviorFault::MissingPlayerServices)
     }
@@ -1001,6 +1010,62 @@ impl EntityBehavior {
                         if ticks == 0 {
                             move_local_with_host(actor, ActorAxis::Y, -200, host)?;
                         }
+                    }
+                    NpcScript::OldWoman => {
+                        if ticks == 0 && rng.next_u15() & 1 == 0 {
+                            *state = 11;
+                        }
+                        if actor.pose.position[1] < 2000 {
+                            host.face_player(actor)?;
+                        }
+                        if *state == 11 {
+                            if entity_distance(actor.pose.position, input.target) < 2560 {
+                                host.request_scene_scale(1, 1)?;
+                                *mutable_ticks = 1;
+                                *state = 12;
+                            }
+                        } else if *state == 12 {
+                            *mutable_ticks = mutable_ticks.wrapping_add(1);
+                            if ticks == 300 {
+                                host.notify_actor(actor, rng, 12)?;
+                            }
+                        }
+                    }
+                    NpcScript::Starship => {
+                        if ticks == 0 && rng.next_u15().is_multiple_of(10) {
+                            *state = 12;
+                        }
+                        if context.words[1] % 10 == 0 {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 12;
+                            context.words[8] = -1;
+                        }
+                        if ticks == 0 && rng.next_u15() & 1 != 0 {
+                            move_local_with_host(actor, ActorAxis::Y, 2048, host)?;
+                        }
+                        move_local_with_host(actor, ActorAxis::Z, -128, host)?;
+                        if *state == 12 && ticks == 300 {
+                            host.request_scene_scale(1, 1)?;
+                        }
+                    }
+                    NpcScript::Airship => {
+                        if ticks == 700 && rng.next_u15().is_multiple_of(3) {
+                            *state = 11;
+                        }
+                        if *state == 11 {
+                            if ticks < 1020 {
+                                actor
+                                    .rotate_packet([0x0001_0000, 0x0002_ffff, 0x0001_0000], false)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                                move_local_with_host(actor, ActorAxis::Y, 30, host)?;
+                            }
+                            if ticks == 930 {
+                                host.notify_actor(actor, rng, 10)?;
+                            }
+                        } else if matches!(ticks, 100 | 800) && rng.next_u15().is_multiple_of(5) {
+                            host.request_scene_scale(4, 0)?;
+                        }
+                        move_local_with_host(actor, ActorAxis::Z, -30, host)?;
                     }
                     NpcScript::Tennyo => {
                         host.face_player(actor)?;

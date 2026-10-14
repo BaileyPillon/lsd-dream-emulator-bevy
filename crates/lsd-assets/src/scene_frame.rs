@@ -46,6 +46,8 @@ impl StageLinkSession {
         self.session_ticks = 0;
         self.rendered_player = None;
         self.rendered_rebuild = self.rebuilds;
+        self.scene_scale = None;
+        self.rendered_scene_scale = [4096; 3];
     }
     fn sync_frame_members(&mut self, effect: &MapEffect) {
         if let Some(encounters) = &mut self.encounters {
@@ -154,6 +156,10 @@ impl StageLinkSession {
                     SceneClockMember::Renderer if signal != FrameSignal::Finished => {
                         self.rendered_player = Some(player.clone());
                         self.rendered_rebuild = self.rebuilds;
+                        if let Some(scale) = &mut self.scene_scale {
+                            self.rendered_scene_scale = scale.scale;
+                            scale.step()?;
+                        }
                     }
                     SceneClockMember::Renderer => {}
                     SceneClockMember::Session => {

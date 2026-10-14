@@ -2,8 +2,8 @@
 
 Twelve further original action callbacks now run in Rust: Ferris Wheel, Bell
 Striker, Elephant, Minotaur, Giant Minotaur, Boatman, Tea Doll, Buddha, Ox Cart,
-Opera Singer, Marching Band and Gears. With [actor floor recovery](ACTOR_FLOOR.md), 55 of
-107 distinct original action callbacks are implemented; 52 remain pending.
+Opera Singer, Marching Band and Gears. With [actor floor recovery](ACTOR_FLOOR.md), 58 of
+107 distinct original action callbacks are implemented; 49 remain pending.
 These counts measure callbacks. Whole encounters and game completion still
 require separate acceptance.
 

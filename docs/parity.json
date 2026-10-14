@@ -1187,6 +1187,34 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "scene_scale_and_requesting_actions_20261014": {
+      "scope": "Supplied original Old Woman, Starship and Airship actions and complete entity-update recordings; real 7x410-node scene scale traversal; production scale/journal/encounter services and loaded-stage render phase/rebuild checks. Perception journal consequences are recorded separately from their identified-state day/recall comparisons. Natural whole encounters, reciprocal collision, original GPU/GTE flags/SPU and global cadence remain unaccepted.",
+      "checks": {
+        "path": "docs/scene-scale-checks.json",
+        "sha256": "0fd80da4552a3514c18fdab1ac7408389b3944dc01c72ea1810942f085c70bb5"
+      },
+      "owned_action_scenarios": 82,
+      "owned_action_states": 6492,
+      "canonical_action_scenarios": 82,
+      "canonical_action_states": 6492,
+      "owned_complete_update_scenarios": 82,
+      "owned_complete_update_states": 6492,
+      "canonical_complete_update_scenarios": 82,
+      "canonical_complete_update_states": 6492,
+      "production_adapter_owned_resulting_states": 6410,
+      "production_adapter_canonical_resulting_states": 6410,
+      "distinct_original_map_nodes_per_recording": 2870,
+      "controller_scenarios_per_input_set": 12,
+      "controller_states_per_input_set": 95,
+      "independent_repeat_outputs_byte_identical": true,
+      "original_named_callbacks_implemented_before": 55,
+      "original_named_callbacks_implemented_after": 58,
+      "remaining_pending_callbacks": 49,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

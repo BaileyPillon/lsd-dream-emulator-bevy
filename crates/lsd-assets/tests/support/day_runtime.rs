@@ -7,6 +7,9 @@ use lsd_core::{
 };
 use serde_json::Value;
 pub struct DayRuntime {
+    pub scene_scale: Option<lsd_core::SceneScale>,
+    pub allow_journal: bool,
+    pub journal_audio: Vec<[i32; 3]>,
     pub day: DreamDay,
     pub tables: DayTables,
     pub local: [i32; 3],
@@ -14,6 +17,9 @@ pub struct DayRuntime {
 impl DayRuntime {
     pub fn new(colors: [i8; 9]) -> Self {
         Self {
+            scene_scale: None,
+            allow_journal: false,
+            journal_audio: vec![],
             day: DreamDay::default(),
             local: [13, 17, 19],
             tables: DayTables {
@@ -96,6 +102,7 @@ impl DayRuntime {
             move_distance: &mut distance,
             math,
         });
+        services.scene_scale = self.scene_scale.as_mut();
         let mut dispatcher = ActorJournalDispatcher {
             day: &mut self.day,
             tables: &self.tables,
@@ -104,9 +111,12 @@ impl DayRuntime {
             services,
         };
         let output = f(&mut dispatcher);
-        assert!(
-            commands.is_empty() && sounds.is_empty() && pending.is_empty() && events.is_empty()
-        );
+        if !self.allow_journal {
+            assert!(
+                commands.is_empty() && sounds.is_empty() && pending.is_empty() && events.is_empty()
+            );
+        }
+        self.journal_audio = sounds;
         output
     }
 }

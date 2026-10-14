@@ -1,8 +1,8 @@
 # Day, proximity and animation-frame actions
 
 Gargoyle Pit, Mushroom, Human Face Flower, Giant Lips, Whale, Hopscotch Girl
-and Corpse now run in the shared encounter scene. There are 55 implemented
-callbacks among 107 distinct original actions, with 52 pending. Whole natural
+and Corpse now run in the shared encounter scene. There are 58 implemented
+callbacks among 107 distinct original actions, with 49 pending. Whole natural
 encounters and game parity remain unaccepted.
 
 ## Shared services

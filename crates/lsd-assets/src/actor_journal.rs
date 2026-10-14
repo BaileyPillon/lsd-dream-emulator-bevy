@@ -8,6 +8,7 @@ use lsd_core::{
 };
 
 pub struct ActorJournalServices<'a> {
+    pub scene_scale: Option<&'a mut lsd_core::SceneScale>,
     pub catalog: &'a LinkCatalog,
     pub context: &'a mut LinkContext,
     pub map: &'a mut MapLinkPolicy,
@@ -46,6 +47,7 @@ pub struct ActorJournalBody<'a> {
 impl<'a> ActorJournalServices<'a> {
     pub fn new(catalog: &'a LinkCatalog, bindings: ActorJournalBindings<'a>) -> Self {
         Self {
+            scene_scale: None,
             catalog,
             context: bindings.context,
             map: bindings.map,
@@ -254,6 +256,18 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn request_scene_scale(
+        &mut self,
+        amount: i32,
+        mode: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.services
+            .scene_scale
+            .as_mut()
+            .ok_or(lsd_core::BehaviorFault::MissingMotionServices)?
+            .request(amount, mode);
+        Ok(())
+    }
     fn day_number(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
         Ok(self.day.day.wrapping_add(1))
     }
