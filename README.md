@@ -51,6 +51,9 @@ Original scene style, texture/music choices, generation-trigger proximity and
 all 14 sound callbacks now run in Rust. The `--dream` profile consumes the
 selected textures and queues sound requests; see [generation recovery](docs/GENERATION.md)
 for the constructor, full RNG history, rendering and audio work still required.
+Original [sound-bank and music-sequence import](docs/AUDIO_IMPORT.md) now covers
+all nine local VH/VB banks and 70 SEQ files, with original SDK attribute/delta
+comparisons. Physical voice playback and sequence scheduling remain open.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

@@ -1267,6 +1267,27 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "audio_import_20261014": {
+      "scope": "Version-seven VAB and version-one SEQ input recovery. All original bank attributes returned by SDK getters, source sample regions, original sequence initialization and every identified delta reader call are compared. Event classification uses an independent source-byte reader; original event dispatch, physical voice allocation, synthesis and playback are not accepted.",
+      "checks": {
+        "path": "docs/audio-import-checks.json",
+        "sha256": "c80eacb76000c0546f23f53ba9508d0a74187c6f57cc267d8110198d708ff28b"
+      },
+      "banks": 9,
+      "programs": 102,
+      "tones": 351,
+      "samples": 255,
+      "sequences": 70,
+      "events": 38976,
+      "zero_tempo_records": 1,
+      "audio_playback_verified": false,
+      "original_sequence_initializations_successful": 69,
+      "original_zero_tempo_initialization_faults": 1,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

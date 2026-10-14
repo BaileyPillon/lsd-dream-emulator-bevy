@@ -5,6 +5,11 @@ unmapped TMD polygon objects, LBD map records and MOM/MOS/MML model libraries.
 The public tests use synthetic data; the local corpus check uses the
 Japanese-labelled reference extraction.
 
+Sound banks and music sequences now have a separate bounded decoder and corpus
+check; see [audio import](AUDIO_IMPORT.md). The nine VH/VB pairs and 70 SEQ files
+are additional to the historical geometry/texture counts below. Playback still
+requires original audio runtime recovery.
+
 ```sh
 cargo run -p lsd-assets --bin lsd-asset-inventory --locked -- /path/to/extracted/files
 cargo run -p lsd-bevy --bin lsd-stage --features desktop --locked -- /path/to/extracted/files 0 0 A

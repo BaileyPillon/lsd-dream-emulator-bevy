@@ -60,6 +60,13 @@ Generated model/sprite construction and updates, gradient layers, full generatio
 RNG history, original audio output and complete native scheduling remain open;
 see [generation recovery](GENERATION.md).
 
+The [audio importer](AUDIO_IMPORT.md) now reads all nine local VH/VB banks and
+70 SEQ files, preserving sparse programs, sample regions and event order.
+Original SDK getters and delta reads match; one zero-tempo sequence faults in
+original initialization and is retained with an explicit timing issue. Voice
+allocation, sequence playback, SPU synthesis/mixing and audible comparisons
+remain required for presentation parity.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model
