@@ -73,14 +73,16 @@ The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
 additional callbacks now retain their original movement, scaling, visibility,
 frame-gated sound or empty action. Dog, Gargoyle and Demon King are also
-connected. Sound, motion, event and floor work brings the total to 38 of
-107 distinct callbacks implemented, with 69 pending. See
+connected. Sound, motion, event and floor work brings the total to 41 of
+107 distinct callbacks implemented, with 66 pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch. Soldier and Giant Turtle
 now use the shared floor service. See [contact and floor behavior](docs/CONTACT_FLOOR.md)
 for their original-code comparisons and the player-contact floor bypass.
 Giant Maiko, Fox, Standing Penguin and Sliding Penguin also run in the shared
 scene; see [branching movement actions](docs/BRANCHING_FLOOR.md).
+Astronaut, Rainbow and Boat Bird now query the live mood chart through the
+shared scene services. See [color-dependent NPCs](docs/COLOR_NPCS.md).
 Actor notifications now apply original mood/score, recall, direct dynamic-link
 and video/end-clock policy during the emitting actor's update. See
 [actor journal recovery](docs/ACTOR_JOURNAL.md) for native comparisons and

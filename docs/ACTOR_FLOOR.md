@@ -2,8 +2,8 @@
 
 Horse now executes its original sound, animation and forward/floor action in
 the encounter scene. The shared wrapper also provides the floor-following
-operation required by several remaining NPCs. There are 38 implemented action
-callbacks among 107 distinct original callbacks; 69 remain pending. This count
+operation required by several remaining NPCs. There are 41 implemented action
+callbacks among 107 distinct original callbacks; 66 remain pending. This count
 does not accept complete NPC encounters or whole-game parity.
 
 ## Movement and floor protocol

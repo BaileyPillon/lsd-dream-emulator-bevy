@@ -61,6 +61,12 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn dream_color(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
+    fn player_local_position(&mut self) -> Result<[i32; 3], lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
     fn actor_floor_query(
         &mut self,
         _position: [i32; 3],
@@ -714,6 +720,12 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn dream_color(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
+        self.events.dream_color()
+    }
+    fn player_local_position(&mut self) -> Result<[i32; 3], lsd_core::BehaviorFault> {
+        self.events.player_local_position()
+    }
     fn actor_floor_query(
         &mut self,
         position: [i32; 3],

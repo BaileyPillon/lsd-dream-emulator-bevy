@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Original live mood chart to dream-color query plus Astronaut, Rainbow and Boat Bird complete action/context/animation in an owned scene with actual original constructors. Explicit behavior start, initial tick/state/seed, mood contributors and distinct static cached-world versus local player position supplied. Imported original models/properties/math/color table compared separately. Full natural encounters, cache/lifetime scheduling and GPU/SPU/timing unaccepted.",
+  "observed_owned_outcomes": {
+    "owned_scenarios_per_callback": {
+      "entity_astronaut": 41,
+      "entity_rainbow": 47,
+      "entity_boat_bird": 16
+    },
+    "all_eight_color_ids_observed": true,
+    "astronaut_normal_and_pink_routes_observed": true,
+    "astronaut_animation_freeze_keeps_action_enabled": true,
+    "astronaut_normal_loop_reset_observed": true,
+    "rainbow_all_five_rng_states_and_white_scale_observed": true,
+    "boat_bird_color_routes_and_distinct_local_position_copy_observed": true,
+    "production_adapter_scenarios": 104,
+    "production_adapter_states": 4542,
+    "whole_natural_encounters_accepted": 0
+  },
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/color-npc-runtime.json",
+    "fixture_sha256": "bf35a39e34f82861f65f0700660a4bb49d1626d93910c1d2e13a512670403c1a",
+    "private_fixture_sha256": "7acfec162fed9cac0bf27d5d7f4afd736a0a1f048bccd0ec21e6db9e026029f2",
+    "owned_scenarios": 104,
+    "owned_states": 4646,
+    "canonical_scenarios": 104,
+    "canonical_states": 4646,
+    "owned_chart_queries": 484,
+    "canonical_chart_queries": 484,
+    "canonical_bindings": {
+      "entity_astronaut": {
+        "path": "CDI/STG00/M004.LBD",
+        "offset": 14352,
+        "bytes": 5360,
+        "entity": 0,
+        "stage": 0,
+        "model_index": 0,
+        "source_sha256": "b5bed3a12494f3964e8815ec46958dd21d56a0ed14fdb626894f3f5b6c5b6d2c",
+        "mom_sha256": "a045caf8b518a1bc5af16cc99151edb9b60bb5431b39ed9b6535e21f5c0f1ea8"
+      },
+      "entity_rainbow": {
+        "path": "CDI/STG03/N2/M071.LBD",
+        "offset": 36876,
+        "bytes": 640,
+        "entity": 29,
+        "stage": 3,
+        "model_index": 0,
+        "source_sha256": "989e1faf426ccfbeec150efd01996534853aa73878a885a5507759b9889f5539",
+        "mom_sha256": "eae6a1e4ea672c6eac891203ded76cc7c01e3db0b2633ff74a3fbd0da47e53ed"
+      },
+      "entity_boat_bird": {
+        "path": "CDI/STG03/N4/M107.LBD",
+        "offset": 43020,
+        "bytes": 2588,
+        "entity": 30,
+        "stage": 3,
+        "model_index": 0,
+        "source_sha256": "9c0264d7bd253f25e8fcbce01f96c63a34afdef905140da9b447999939dbf25c",
+        "mom_sha256": "8ba021c17b02c8a5b42a3d47e59cbd0854ceb6e139591203218f11de75de9c31"
+      }
+    },
+    "production_adapter_scenarios": 104,
+    "production_adapter_states": 4542
+  },
+  "native_function_sha256": {
+    "entity_astronaut": "decb7411061d0a1daf5d18dd179833fa3cd4723d796cde041e34b3983f016b8a",
+    "entity_rainbow": "db71ab1b1dcc047679509596a7178e48c5a2aba20af4569981d63f0080c63ffd",
+    "entity_boat_bird": "c442bffef1b65aa6e12df14862912a33ba09d8cc917a54b388ac98a90b6d95e8",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "dream_sys_get_dream_color": "0659f6160b44a19f6341cee66ea9d18e54c72b45a9ff90b9a43e17beaf62a20c",
+    "dream_sys_update_dream_chart": "591c42e8751cf26f45b5000174b01636877328dc334d52ef2a62e7e71cbd0a9a",
+    "dream_sys_get_mood_average": "902ddc0df776d947022e19d909a27dab5d657d2a2747b0479707a57d1c910162",
+    "calc_mood_axis": "15e18dfbad1b1dedd93c563b107c36fbfe34418af9cab5653f3f28dd3696c5c5",
+    "calc_dream_color": "5bb1be3cc5febfd1f3946d000d740df866e053555e9b8fb97330c76f20d5f3c9",
+    "func_8001EACC": "1ef5e1970a4cd213702b82c21aca301041b73a3f8cb241affe06f208bbcb80be",
+    "func_80057384": "209c4d51b9f0747d871ce8d9e5dde8a14d4e0235eeed3191c3723dfa3c7e2bba",
+    "func_800573CC": "c1a99e64390fec4e8dcf12a0a17942c6c30f55d6703dc08a78cd5e1111b8ad19",
+    "func_800662B4": "9551f2e22426c0ef38657b0ae7289d100e7d495c6f17cd81cbc78cddb68f81ee"
+  },
+  "native_function_entries": {
+    "entity_astronaut": 6306,
+    "entity_rainbow": 464,
+    "entity_boat_bird": 2314,
+    "func_80065FD8": 9084,
+    "sound_entity_update": 9084,
+    "dream_sys_get_dream_color": 1106,
+    "dream_sys_update_dream_chart": 2074,
+    "dream_sys_get_mood_average": 4148,
+    "calc_mood_axis": 5480,
+    "calc_dream_color": 1106,
+    "func_8001EACC": 300,
+    "func_80057384": 26,
+    "func_800573CC": 8610,
+    "func_800662B4": 842
+  },
+  "private_proof_sha256": {
+    "native": "8400499a9f3532061149b5625feba7fba55829304385bea0563bab034c80c465",
+    "producer": "c090cde634c5347f79730c1c373b6c190378b42d9cc1c67af6c263262a3cffad",
+    "graph_library": "d9620f96684ec7f49956b7d170281649fb3bc33dc1cdb95aad5c7ef29d224a9b",
+    "repeat": "ed24984b2f06ecbab7c3e69812f484e910b461cff2dc3441a9c5782790cff320",
+    "validation": "d816ef7260ec9bd2479fede486d3a98f83d7274e33e1e348b11069ee07d6cbc6",
+    "callback_inventory": "21b8438baccdfbd3d55700a9ce5b8b662e5945a87cde40e94c55cf1b12c24e51",
+    "observed_branches": "ccb7ea9b0a97fa467985a52487471b98ccd529f24c4130e2fce5d6b892b9941a"
+  },
+  "validation": {
+    "workspace_counts": [
+      148,
+      0,
+      37
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 104,
+    "owned_action_states": 4646,
+    "canonical_action_scenarios": 104,
+    "canonical_action_states": 4646,
+    "encounter_adapter_scenarios": 104,
+    "encounter_adapter_states": 4542,
+    "owned_live_color_queries": 484,
+    "canonical_live_color_queries": 484,
+    "live_mood_and_distinct_player_local_position_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "cbaffd414425d852fa9ec51bfc905f414b0cfb584fc5bd242ad81b91220069e9",
+      "workspace": "6a7b78401fc05efcebe90b2283f166e2f3fd3e2941aa9e63acb078063baa5688",
+      "original-content": "bf2aaf28601fc88d4ffc4bf7b1a98f3029c675128e6356a0a9216fed3abe5519",
+      "desktop-build": "ce8bbbfaf946dd5b362016b27a880e9f6abf869ccf6474265d9220bd5c941e66",
+      "capture-idle": "197e885adb9d4a0f7d14113527b7f58b5a7d33c6abffa2a1fe8bef9fdce1fa0b",
+      "capture-futon": "fb469f4dcd5672501794f827c29b292a5051e328dedd0fefb3accdf7ca23e669",
+      "capture-yokai": "a1a99b2a0c5db99c64a49ef576c45925d33ed75c4ea26b08396fc11e322e1eca",
+      "capture-expiry": "8b933cdb2a3956ca4553216b684246d419b2195e56f503b4bffb9a3b12cc64a4",
+      "capture-gray-birth": "c71717b58d228400851e1eab26ae49da0c7ba9c9be1b35d42b821b9618d845e6",
+      "capture-gray-fade": "1698d528110e80cc59e53003070dd6ac1cffee7b9e896af6653a3d25949cdbe3",
+      "capture-gray-complete": "603ba260a252464cb9274f6cd5642c0f29d2c7991f936a79a325fca6fd144a0c"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 41,
+    "remaining_pending_callbacks": 66,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "8c6051780711d7e7e6d3b935e4445eca998063202dffaae926e8ed7f8f73933b",
+    "crates/lsd-assets/src/actor_journal.rs": "1690d63925b4c495a49ac1dcdc0f240b9709d3e7d143bed0f73050edfcb5c192",
+    "crates/lsd-assets/src/encounter_scene.rs": "63745c4aff4ef5471c161df1c5b9a4e2b2a12503a72e082c4941664e090510d8",
+    "crates/lsd-assets/tests/native_color_npcs.rs": "1213ebf3785070b893daecc0a188adfd2d43a285a873a5e9bb121f283da3f84d",
+    "crates/lsd-assets/tests/fixtures/color-npc-runtime.json": "bf35a39e34f82861f65f0700660a4bb49d1626d93910c1d2e13a512670403c1a"
+  },
+  "scope_limits": [
+    "The live color service queries current chunk/instance mood averaging and the color table through ActorJournalDispatcher.484 owned and484 private original-table queries compare chart/color, signed boundaries and unchanged contributor state. A different cached display palette is supplied deliberately.",
+    "Astronaut preserves color route selection, movement loop, sound, animation freeze with continuing action and absolute pose changes. Rainbow preserves white scale/local Y movement and five-state RNG. Boat Bird preserves blue approach, ascent, facing, state change and delayed copy of distinct player-local coordinates.",
+    "All104 owned action scenarios also pass through the actual EncounterScene adapter and live dispatcher color/local-position services, comparing4542 resulting states and forwarded service counts. Direct replay additionally compares facing calls.",
+    "Original constructors, chart/color, transform, action, animation and sound contexts run without original game function output replacements. Behavior start, initial contributors/tick/state/seed and static cached-world/local inputs are supplied. Original property rows, table bytes, models and detailed observations stay private.",
+    "Seven development captures are unchanged. Semantic GTE and recorded sound services do not establish hardware flags/timing or GPU/SPU output. Natural activation, full encounters, reciprocal player response, cache/residency lifetimes, media and full sessions remain open.",
+    "41 of107 original action callbacks implemented,66 pending. Whole NPC encounters and all40 provisional whole groups remain unaccepted. C stays paused; original actions make no AI calls. Optional AI tools and mods remain separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 41,
+  "remaining_pending_callbacks": 66,
+  "original_npc_behaviors_accepted": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "ai_model_calls": 0
+}

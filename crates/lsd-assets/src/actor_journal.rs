@@ -254,6 +254,18 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn dream_color(&mut self) -> Result<i32, lsd_core::BehaviorFault> {
+        Ok(self
+            .tables
+            .color(self.day.chart().map_err(lsd_core::BehaviorFault::Journal)?))
+    }
+    fn player_local_position(&mut self) -> Result<[i32; 3], lsd_core::BehaviorFault> {
+        self.services
+            .player_motion
+            .as_ref()
+            .map(|motion| *motion.position)
+            .ok_or(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
     fn actor_floor_query(
         &mut self,
         position: [i32; 3],

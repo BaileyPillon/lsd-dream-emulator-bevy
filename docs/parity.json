@@ -1116,6 +1116,28 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "live_color_and_npc_actions_20261014": {
+      "scope": "Original live mood chart to dream-color query plus Astronaut, Rainbow and Boat Bird complete action/context/animation in an owned scene with actual original constructors. Explicit behavior start, initial tick/state/seed, mood contributors and distinct static cached-world versus local player position supplied. Imported original models/properties/math/color table compared separately. Full natural encounters, cache/lifetime scheduling and GPU/SPU/timing unaccepted.",
+      "checks": {
+        "path": "docs/color-npc-checks.json",
+        "sha256": "7f4d087174d26725167fa6e8eeac1af24ac6135a97da5770aafff1932e5c454d"
+      },
+      "owned_scenarios": 104,
+      "owned_states": 4646,
+      "canonical_scenarios": 104,
+      "canonical_states": 4646,
+      "owned_chart_queries": 484,
+      "canonical_chart_queries": 484,
+      "production_adapter_scenarios": 104,
+      "production_adapter_states": 4542,
+      "original_named_callbacks_implemented_before": 38,
+      "original_named_callbacks_implemented_after": 41,
+      "remaining_pending_callbacks": 66,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

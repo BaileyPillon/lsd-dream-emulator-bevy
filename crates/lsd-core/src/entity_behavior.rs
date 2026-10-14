@@ -162,6 +162,9 @@ pub enum NpcScript {
     Fox,
     StandingPenguin,
     SlidingPenguin,
+    Astronaut,
+    Rainbow,
+    BoatBird,
     Pending(u32),
 }
 impl NpcScript {
@@ -206,6 +209,9 @@ impl NpcScript {
             Some(0x8005_ed30) => Self::Fox,
             Some(0x8006_0d80) => Self::StandingPenguin,
             Some(0x8006_0f38) => Self::SlidingPenguin,
+            Some(0x8005_e160) => Self::Astronaut,
+            Some(0x8005_f708) => Self::Rainbow,
+            Some(0x8005_f800) => Self::BoatBird,
             Some(at) => Self::Pending(at),
         }
     }
@@ -247,6 +253,12 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn dream_color(&mut self) -> Result<i32, BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
+    fn player_local_position(&mut self) -> Result<[i32; 3], BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
     fn actor_floor_query(
         &mut self,
         _position: [i32; 3],
@@ -322,6 +334,16 @@ fn trigger_ratio(
                 .ok_or(BehaviorFault::Division)?,
         )
         .ok_or(BehaviorFault::Division)
+}
+fn move_local_with_host(
+    actor: &mut ModelActor,
+    axis: ActorAxis,
+    amount: i32,
+    host: &mut impl EntityScriptHost,
+) -> Result<(), BehaviorFault> {
+    let matrix = host.movement_matrix(actor.pose.angles)?;
+    actor.move_local(axis, amount, matrix);
+    Ok(())
 }
 fn rotate_yaw(actor: &mut ModelActor, yaw: i16) -> Result<(), BehaviorFault> {
     actor
@@ -817,6 +839,84 @@ impl EntityBehavior {
                         if context.words[1] % 200 == 0 {
                             context.words[17] = 13;
                             context.words[18] = 1;
+                        }
+                    }
+                    NpcScript::Astronaut => {
+                        if context.words[1] == 0 && host.dream_color()? == 5 {
+                            *state = 100;
+                        }
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if *state == 0 {
+                            if context.words[1] % 10 == 0 {
+                                context.words[7] = 5;
+                                context.words[8] = -2;
+                            }
+                            if ticks == 2400 {
+                                *mutable_ticks = -1;
+                            } else {
+                                let amount = if ticks < 1200 { 50 } else { -50 };
+                                move_local_with_host(actor, ActorAxis::Z, amount, host)?;
+                            }
+                        } else if ticks < 250 {
+                            if context.words[1] % 10 == 0 {
+                                context.words[7] = 5;
+                                context.words[8] = -2;
+                            }
+                            if ticks < 100 {
+                                move_local_with_host(actor, ActorAxis::Z, 50, host)?;
+                            } else {
+                                actor.translate([0, 64, -64], false);
+                            }
+                        } else if ticks == 250 {
+                            actor.animation.enabled = false;
+                            context.words[7] = -2;
+                        } else if (ticks.wrapping_sub(261) as u32) < 307 {
+                            move_local_with_host(actor, ActorAxis::Z, -50, host)?;
+                            actor
+                                .rotate_packet([0x0001_0000, 0x0001_ff88, 0x0001_0000], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                        } else if ticks >= 569 {
+                            actor
+                                .rotate_packet([0x0001_0032, 0x0001_ff88, 0x0001_001e], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                        }
+                    }
+                    NpcScript::Rainbow => {
+                        if ticks == 0 {
+                            if host.dream_color()? == 7 {
+                                actor
+                                    .scale_packet([0x0001_0003; 3], true)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                                move_local_with_host(actor, ActorAxis::Y, -30720, host)?;
+                            }
+                            *state = i32::from(rng.next_u15() % 5);
+                        }
+                        if *state == 0 {
+                            rotate_yaw(actor, 1)?;
+                        }
+                    }
+                    NpcScript::BoatBird => {
+                        if *state == 0 {
+                            *state = if host.dream_color()? == 1 { 11 } else { 12 };
+                        }
+                        if *state == 12 {
+                            actor
+                                .scale_packet([0x0001_0002; 3], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                            move_local_with_host(actor, ActorAxis::Y, -30, host)?;
+                        } else {
+                            host.face_player(actor)?;
+                            if *state == 11 {
+                                move_local_with_host(actor, ActorAxis::Z, -100, host)?;
+                                if (ticks.wrapping_sub(85) as u32) < 30 {
+                                    move_local_with_host(actor, ActorAxis::Y, 80, host)?;
+                                } else if ticks == 120 {
+                                    *state = 13;
+                                }
+                            } else if *state == 13 {
+                                actor.translate(host.player_local_position()?, true);
+                                actor.translate([0, -1500, 1024], false);
+                            }
                         }
                     }
                     NpcScript::GiantMaiko => {

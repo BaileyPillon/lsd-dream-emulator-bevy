@@ -186,7 +186,7 @@ Player clock comparisons cover callback clearing, retained camera updates and
 input locking. See [player-interacting NPCs](PLAYER_NPCS.md). That checkpoint
 implemented 19 actions. The newer
 [sound, motion and event work](ACTION_PHASES.md), followed by [actor floor recovery](ACTOR_FLOOR.md),
-raises the current total to 38 among 107 distinct callbacks, leaving 69 pending. Natural
+raises the current total to 41 among 107 distinct callbacks, leaving 66 pending. Natural
 encounters and all 40 provisional whole-feature groups still need acceptance.
 
 Ferris Wheel now retains the action window, camera-preserving ride and
@@ -210,3 +210,10 @@ Giant Maiko, Fox and both penguin actions now preserve their original branching
 movement, RNG, sound and floor consequences in the shared scene. See
 [branching movement actions](BRANCHING_FLOOR.md) for native action and production
 adapter comparisons. Natural activation and whole encounters remain open.
+
+
+The actor journal now exposes current mood-chart color and distinct player-local
+position to NPC actions. Astronaut, Rainbow and Boat Bird use those services in
+the shared scene, with original code and production adapter comparisons. See
+[color-dependent NPCs](COLOR_NPCS.md). Natural encounters and audiovisual parity
+remain open.
