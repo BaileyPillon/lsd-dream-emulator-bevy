@@ -22,6 +22,12 @@ pub struct ActorJournalServices<'a> {
     source: Option<EncounterNotification>,
     pub body_query: Option<ActorJournalBody<'a>>,
     pub view_callback: Option<&'a mut i32>,
+    pub player_motion: Option<ActorJournalPlayerMotion<'a>>,
+}
+pub struct ActorJournalPlayerMotion<'a> {
+    pub position: &'a mut [i32; 3],
+    pub move_distance: &'a mut i16,
+    pub math: &'a lsd_core::PsxMathTables,
 }
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct ActorBodyQueryCounts {
@@ -53,6 +59,7 @@ impl<'a> ActorJournalServices<'a> {
             source: None,
             body_query: None,
             view_callback: None,
+            player_motion: None,
         }
     }
 }
@@ -245,6 +252,32 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn move_player_local(
+        &mut self,
+        axis: lsd_core::ActorAxis,
+        amount: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        let motion = self
+            .services
+            .player_motion
+            .as_mut()
+            .ok_or(lsd_core::BehaviorFault::MissingPlayerServices)?;
+        *motion.move_distance = amount as i16;
+        let mut vector = [0; 3];
+        vector[match axis {
+            lsd_core::ActorAxis::X => 0,
+            lsd_core::ActorAxis::Y => 1,
+            lsd_core::ActorAxis::Z => 2,
+        }] = i32::from(*motion.move_distance);
+        let delta = motion
+            .math
+            .rotation(self.controls.angles)
+            .apply_long(vector);
+        for (position, amount) in motion.position.iter_mut().zip(delta) {
+            *position = position.wrapping_add(amount);
+        }
+        Ok(())
+    }
     fn player_action_pressed(&mut self) -> Result<bool, lsd_core::BehaviorFault> {
         Ok(self.controls.action_pressed)
     }

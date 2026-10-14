@@ -61,6 +61,13 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn move_player_local(
+        &mut self,
+        _axis: lsd_core::ActorAxis,
+        _amount: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
     fn player_action_pressed(&mut self) -> Result<bool, lsd_core::BehaviorFault> {
         Err(lsd_core::BehaviorFault::MissingPlayerServices)
     }
@@ -700,6 +707,13 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn move_player_local(
+        &mut self,
+        axis: lsd_core::ActorAxis,
+        amount: i32,
+    ) -> Result<(), lsd_core::BehaviorFault> {
+        self.events.move_player_local(axis, amount)
+    }
     fn player_action_pressed(&mut self) -> Result<bool, lsd_core::BehaviorFault> {
         self.events.player_action_pressed()
     }

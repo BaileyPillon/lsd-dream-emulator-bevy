@@ -3,8 +3,9 @@
 Dog, Gargoyle and Demon King now execute their recovered action scripts in
 the loaded day profile. They share the original player action state, integer
 facing, animation/context ordering and synchronous notification services.
-There are 19 implemented action callbacks among 107 distinct original
-callbacks; 88 remain pending. These counts do not measure whole encounters or
+Following [sound, motion and event recovery](ACTION_PHASES.md), there are 31
+implemented action callbacks among 107 distinct original callbacks; 76 remain
+pending. These counts do not measure whole encounters or
 game completion.
 
 ## Original behavior

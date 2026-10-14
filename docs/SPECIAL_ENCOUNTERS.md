@@ -63,8 +63,8 @@ further comparison.
 Activation therefore does not accept a complete Gray Man encounter, its rendered
 appearance, original GPU/SPU behavior or a whole game feature group.
 
-The implemented callback count is now 19 of 107, with 88 pending; see
-[player-interacting NPCs](PLAYER_NPCS.md) for the latest additions.
+The implemented callback count is now 31 of 107, with 76 pending; see
+[sound, motion and event actions](ACTION_PHASES.md) for the latest additions.
 All 40 provisional whole-feature groups still need acceptance. The existing
 day-profile captures remain regression evidence for their supplied scenarios;
 they do not accept the newly activated Gray Man's rendering.

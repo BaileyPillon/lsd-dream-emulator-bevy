@@ -183,6 +183,15 @@ Dog, Gargoyle and Demon King now run with the original player action getter
 and movement/view callback clearing. Direct DreamSys link requests have
 original CPU comparisons through destination selection, RNG and sound.
 Player clock comparisons cover callback clearing, retained camera updates and
-input locking. See [player-interacting NPCs](PLAYER_NPCS.md). There are now 19
-implemented actions among 107 distinct callbacks; 88 remain pending. Natural
+input locking. See [player-interacting NPCs](PLAYER_NPCS.md). That checkpoint
+implemented 19 actions. The newer
+[sound, motion and event work](ACTION_PHASES.md) raises the current total to 31
+among 107 distinct callbacks, leaving 76 pending. Natural
 encounters and all 40 provisional whole-feature groups still need acceptance.
+
+Ferris Wheel now retains the action window, camera-preserving ride and
+video/end request branches, including player local-axis movement. Eleven
+further actions add original sound loops, scaling, signed remainder and
+animation pause/resume behavior. The Ferris Wheel scene adapter also compares
+280 states against original-code observations. This connects existing event
+requests; movie playback and full natural encounters remain unfinished.

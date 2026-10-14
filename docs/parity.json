@@ -1030,6 +1030,27 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "npc_sound_motion_and_event_phases_20261014": {
+      "scope": "Twelve full original actor actions in real constructed model/entity/player graphs with supplied target/cache/action/trigger/context inputs and owned or locally imported model/property/math/link tables. Full direct DreamSys journal video/end/link consequences and player local movement are observed, with base Scene notification and external sound. Natural encounters, full MapScene/GPU/SPU/media/cache timing remain unaccepted.",
+      "checks": {
+        "path": "docs/action-phase-checks.json",
+        "sha256": "6f4acb5397698739d12980823bffa18428d221b0a79a7c9423708c51b57cff5b"
+      },
+      "owned_action_scenarios": 215,
+      "owned_action_states": 8115,
+      "canonical_action_scenarios": 215,
+      "canonical_action_states": 11616,
+      "ferris_wheel_scene_adapter_states": 280,
+      "player_local_motion_adapter_cases": 144,
+      "original_named_callbacks_implemented_before": 19,
+      "original_named_callbacks_implemented_after": 31,
+      "remaining_pending_callbacks": 76,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "movie_playback_implemented": false,
+      "ai_model_calls": 0
     }
   }
 }

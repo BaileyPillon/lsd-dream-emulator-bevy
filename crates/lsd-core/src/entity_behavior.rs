@@ -142,6 +142,18 @@ pub enum NpcScript {
     Dog,
     Gargoyle,
     DemonKing,
+    FerrisWheel,
+    BellStriker,
+    Elephant,
+    Minotaur,
+    GiantMinotaur,
+    Boatman,
+    TeaDoll,
+    Buddha,
+    OxCart,
+    OperaSinger,
+    MarchingBand,
+    Gears,
     Pending(u32),
 }
 impl NpcScript {
@@ -167,12 +179,35 @@ impl NpcScript {
             Some(0x8006_21a8) => Self::Dog,
             Some(0x8005_e3c4) => Self::Gargoyle,
             Some(0x8005_f970) => Self::DemonKing,
+            Some(0x8006_090c) => Self::FerrisWheel,
+            Some(0x8005_ebb4) => Self::BellStriker,
+            Some(0x8005_e694) => Self::Elephant,
+            Some(0x8005_e6f0) => Self::Minotaur,
+            Some(0x8005_e7a8) => Self::GiantMinotaur,
+            Some(0x8005_ec98) => Self::Boatman,
+            Some(0x8005_ef54) => Self::TeaDoll,
+            Some(0x8005_eff4) => Self::Buddha,
+            Some(0x8005_f0d8) => Self::OxCart,
+            Some(0x8005_fef8) => Self::OperaSinger,
+            Some(0x8006_03c4) => Self::MarchingBand,
+            Some(0x8006_23e8) => Self::Gears,
             Some(at) => Self::Pending(at),
         }
     }
     pub fn pending(self) -> bool {
         matches!(self, Self::Pending(_))
     }
+}
+fn animation_duration(actor: &ModelActor, clips: &[AnimationClip]) -> Result<i32, AnimationError> {
+    let index = actor
+        .animation
+        .selected_clip
+        .ok_or(AnimationError::InvalidClip)?;
+    Ok(clips
+        .get(index)
+        .ok_or(AnimationError::InvalidClip)?
+        .frames
+        .len() as i32)
 }
 pub fn entity_distance(position: [i32; 3], target: [i32; 3]) -> i32 {
     position[0]
@@ -197,6 +232,9 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn move_player_local(&mut self, _axis: ActorAxis, _amount: i32) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
     fn player_action_pressed(&mut self) -> Result<bool, BehaviorFault> {
         Err(BehaviorFault::MissingPlayerServices)
     }
@@ -594,6 +632,152 @@ impl EntityBehavior {
                         host.notify_actor(actor, rng, 6)?;
                     }
                     NpcScript::Peacock => host.face_player(actor)?,
+                    NpcScript::FerrisWheel => {
+                        if *triggered != 0 {
+                            match *state {
+                                0 => {
+                                    *state = 12;
+                                    *mutable_ticks = 0;
+                                }
+                                12 if ticks < 30 => {
+                                    if host.player_action_pressed()? {
+                                        host.clear_player_callbacks(false)?;
+                                        *mutable_ticks = 0;
+                                        *state = 11;
+                                    }
+                                }
+                                12 => {
+                                    host.notify_actor(actor, rng, 11)?;
+                                    *state = 10;
+                                }
+                                11 if ticks == 100 => host.notify_actor(actor, rng, 12)?,
+                                11 => host.move_player_local(ActorAxis::Y, -100)?,
+                                _ => {}
+                            }
+                        }
+                    }
+                    NpcScript::BellStriker => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if context.words[1] == 0 {
+                            context.words[7] = 12;
+                            *state = state.wrapping_add(1);
+                        } else if context.words[1]
+                            >= animation_duration(actor, clips)?.wrapping_sub(1)
+                        {
+                            context.words[1] = -1;
+                        }
+                        if *state == 36 && rng.next_u15().is_multiple_of(3) {
+                            host.notify_actor(actor, rng, 11)?;
+                        }
+                    }
+                    NpcScript::Elephant => {
+                        actor
+                            .scale_packet([0x0001_0002; 3], true)
+                            .map_err(|_| BehaviorFault::Division)?;
+                        actor.translate([0, -64, 0], false);
+                    }
+                    NpcScript::Minotaur | NpcScript::OxCart => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        let half = animation_duration(actor, clips)? / 2;
+                        let remainder = context.words[1]
+                            .checked_rem(half)
+                            .ok_or(BehaviorFault::Division)?;
+                        if remainder == 0 {
+                            context.words[7] = 10;
+                        } else if script == NpcScript::OxCart && remainder == 3 {
+                            context.words[12] = 13;
+                        }
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(ActorAxis::Z, -30, matrix);
+                        if script == NpcScript::OxCart {
+                            host.notify_actor(actor, rng, 6)?;
+                        }
+                    }
+                    NpcScript::GiantMinotaur => {
+                        context.words[4] = 0;
+                        if context.words[1] == 0 {
+                            for index in [7, 12, 17] {
+                                context.words[index] = 11;
+                            }
+                        }
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(ActorAxis::Z, -30, matrix);
+                    }
+                    NpcScript::Boatman | NpcScript::TeaDoll | NpcScript::Buddha => {
+                        if script == NpcScript::Buddha
+                            && ticks == 0
+                            && rng.next_u15().is_multiple_of(7)
+                        {
+                            actor
+                                .scale_packet([0x0001_0001, 0x0001_0002, 0x0001_0001], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                        }
+                        let note = match script {
+                            NpcScript::Boatman if actor.animation.frame_index == 10 => Some(13),
+                            NpcScript::TeaDoll if context.words[1] % 10 == 0 => Some(17),
+                            NpcScript::Buddha if context.words[1] & 3 == 0 => Some(28),
+                            _ => None,
+                        };
+                        // Boatman and Tea Doll update distance even on silent ticks.
+                        if script != NpcScript::Buddha || note.is_some() {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                        }
+                        if let Some(note) = note {
+                            context.words[7] = note;
+                        }
+                        let amount = match script {
+                            NpcScript::Boatman => -10,
+                            NpcScript::TeaDoll => -256,
+                            _ => -100,
+                        };
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(ActorAxis::Z, amount, matrix);
+                    }
+                    NpcScript::OperaSinger => {
+                        if context.words[1] % 120 == 0 {
+                            context.words[4] = trigger_ratio(actor, context, input)?;
+                            context.words[7] = 1;
+                        }
+                    }
+                    NpcScript::MarchingBand => {
+                        if ticks < 20 {
+                            actor.animation.enabled = false;
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Z, -30, matrix);
+                        } else if ticks == 20 {
+                            actor.animation.enabled = true;
+                            context.words[4] = 0;
+                            context.words[7] = 5;
+                        } else if ticks
+                            .checked_rem(
+                                animation_duration(actor, clips)?
+                                    .wrapping_mul(3)
+                                    .wrapping_add(20),
+                            )
+                            .ok_or(BehaviorFault::Division)?
+                            == 0
+                        {
+                            actor.animation.enabled = false;
+                            context.words[7] = -2;
+                        }
+                    }
+                    NpcScript::Gears => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if actor.animation.frame_index as i32
+                            == animation_duration(actor, clips)?.wrapping_sub(1)
+                        {
+                            context.words[7] = 25;
+                            context.words[8] = -2;
+                        }
+                        if context.words[1] & 3 == 0 {
+                            context.words[12] = 21;
+                            context.words[13] = -1;
+                        }
+                        if context.words[1] % 200 == 0 {
+                            context.words[17] = 13;
+                            context.words[18] = 1;
+                        }
+                    }
                     NpcScript::Gargoyle => {
                         context.words[4] = 0;
                         if context.words[1] == 0 {

@@ -73,7 +73,8 @@ The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
 additional callbacks now retain their original movement, scaling, visibility,
 frame-gated sound or empty action. Dog, Gargoyle and Demon King are also
-connected; 19 of 107 distinct callbacks are implemented and 88 remain pending. See
+connected. The latest sound, motion and event work brings the total to 31 of
+107 distinct callbacks implemented, with 76 pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch.
 Actor notifications now apply original mood/score, recall, direct dynamic-link
@@ -132,6 +133,11 @@ Dog now reads the player action state, and Gargoyle and Demon King clear the
 original view/movement callbacks. Their direct dream-link consequences preserve
 RNG, destination and sound order. See [player-interacting NPCs](docs/PLAYER_NPCS.md)
 for comparisons and remaining natural encounter work.
+Ferris Wheel now preserves its ride/video/end branches and original player
+movement. Bell Striker, Elephant, Minotaur, Giant Minotaur, Boatman, Tea Doll,
+Buddha, Ox Cart, Opera Singer, Marching Band and Gears also run their recovered
+actions. See [sound, motion and event actions](docs/ACTION_PHASES.md) for original
+CPU and scene-adapter comparisons. Movie playback remains unfinished.
 
 ## Start here
 
@@ -247,7 +253,7 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Loaded encounter contexts checked for bind/retire/rebuild behavior | 97 |
 | Callbacks at the initial entity-behavior checkpoint | 3 / 107 |
 | Additional callbacks compared using owned model/action graphs | 9 |
-| Total original callbacks implemented and compared in supplied graphs | 19 / 107 |
+| Total original callbacks implemented and compared in supplied graphs | 31 / 107 |
 | Local-axis motion cases compared with original CPU execution | 288 |
 | Rotation/scale packet cases compared with original CPU execution | 144 |
 | Invalid packet cases preserving transform state before a native fault | 12 |

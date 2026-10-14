@@ -3,7 +3,7 @@
 The Gray Man action is now connected with its owned color effect, shared-clock
 lifetime and flashback-count reset. See [Gray Man behavior](GRAY_MAN.md) for the
 full callback and retained-effect comparisons. The implemented callback count
-is 19 of 107; 88 remain pending. Whole natural encounters still need acceptance.
+is 31 of 107; 76 remain pending. Whole natural encounters still need acceptance.
 Bear, Rabbit and Peacock also have full action comparisons, and negative
 interaction distances now update original facing in the scene adapter. See
 [animal actions and facing](PURSUIT.md). Dog, Gargoyle and Demon King now
@@ -12,10 +12,11 @@ connect their action-input and player-callback services; see
 
 The day profile now runs the original interaction policy against imported actors
 and the player's integer pose/view. The shared lifecycle and three-slot sound
-context run in Rust. Nineteen distinct callbacks are implemented, including the
+context run in Rust. Thirty-one distinct callbacks are implemented, including the
 initial Futon, Television and Drumstick scripts, nine further callbacks in
 [actor motion](ACTOR_MOTION.md), Gray Man, Bear, Rabbit, Peacock, Dog, Gargoyle
-and Demon King. The other 88 retain an explicit pending state.
+and Demon King, followed by twelve further [sound, motion and event actions](ACTION_PHASES.md).
+The other 76 retain an explicit pending state.
 
 This is partial original-game recovery. Trigger, link, video and end notifications
 now reach the original journal policy immediately; see
@@ -78,7 +79,7 @@ interaction timer and query policy run; that state is explicitly incomplete.
 | Original distinct callback catalog | 107 |
 | Entity property records / nonzero callback records | 130 / 111 |
 | Initial named callbacks implemented and compared in supplied graphs | 3 |
-| Current total after player-interacting NPC recovery | 19 |
+| Current total after sound, motion and event recovery | 31 |
 | Whole NPC encounters accepted | 0 |
 
 Native checks execute identified original functions with the real allocator,

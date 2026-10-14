@@ -26,6 +26,8 @@ pub struct LinkedPlayer {
     pub keys: SceneActorKeys,
     pub map: MapLinkPolicy,
     pub view_callback: i32,
+    /// Original scene-node movement amount, stored as a signed halfword.
+    pub move_distance: i16,
     pub palette: LinkPalette,
     pub rng: PsxRng,
     pub interval: u32,
@@ -142,6 +144,7 @@ impl LinkedPlayer {
             },
             context: LinkContext::default(),
             view_callback: 1,
+            move_distance: 300,
             keys: SceneActorKeys {
                 current: key,
                 contact: SpawnLocation::default(),

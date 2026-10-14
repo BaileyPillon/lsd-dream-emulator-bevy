@@ -72,8 +72,9 @@ shader. See [Gray Man checks](gray-man-checks.json) for hashes and validation.
 ## Remaining parity work
 
 This implemented a thirteenth distinct original action callback. With the
-subsequent [animal action work](PURSUIT.md) and [player-interacting NPC work](PLAYER_NPCS.md),
-19 of 107 callbacks are implemented and 88 remain pending. Natural spawn-to-contact trajectories,
+subsequent [animal action work](PURSUIT.md), [player-interacting NPC work](PLAYER_NPCS.md)
+and [sound, motion and event work](ACTION_PHASES.md), 31 of 107 callbacks are
+implemented and 76 remain pending. Natural spawn-to-contact trajectories,
 reciprocal collision/movement response, full transform/parent/cache lifetimes,
 original GPU/SPU output and timing still require comparison. The effect packet
 and Bevy captures do not establish original framebuffer parity.

@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Twelve full original actor actions in real constructed model/entity/player graphs with supplied target/cache/action/trigger/context inputs and owned or locally imported model/property/math/link tables. Full direct DreamSys journal video/end/link consequences and player local movement are observed, with base Scene notification and external sound. Natural encounters, full MapScene/GPU/SPU/media/cache timing remain unaccepted.",
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/action-phase-runtime.json",
+    "sha256": "25e96ffb0c34ad1754e4a8ecd77555d9b4920cc56195f45d54029628568ef82b",
+    "owned_action_scenarios": 215,
+    "owned_action_states": 8115
+  },
+  "canonical_comparison": {
+    "scenarios": 215,
+    "states": 11616,
+    "bindings": {
+      "entity_elephant": {
+        "path": "CDI/STG01/M004.LBD",
+        "offset": 34828,
+        "bytes": 25456,
+        "entity": 8,
+        "stage": 1,
+        "model_index": 0,
+        "source_sha256": "a945bc5b37b814581f4be781c87edc3b7f6a4673cb4bead49ee060ecd829727b",
+        "mom_sha256": "1d779bb2945c78b609e1e20d188b47f65c13a8c63b7c12762236268b7f5a6d00"
+      },
+      "entity_bell_striker": {
+        "path": "CDI/STG02/M001.LBD",
+        "offset": 43020,
+        "bytes": 3136,
+        "entity": 13,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "cdc0326306f9828b1a463ea9be56882ef474279d8f6a06c62bc9f1c5ed7067c4",
+        "mom_sha256": "4f41835b295613baafa6902896c704bd0177cefc1fc92faef8c981a4d56fd35a"
+      },
+      "entity_minotaur": {
+        "path": "CDI/STG02/M001.LBD",
+        "offset": 43020,
+        "bytes": 3136,
+        "entity": 9,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "cdc0326306f9828b1a463ea9be56882ef474279d8f6a06c62bc9f1c5ed7067c4",
+        "mom_sha256": "4f41835b295613baafa6902896c704bd0177cefc1fc92faef8c981a4d56fd35a"
+      },
+      "entity_buddha": {
+        "path": "CDI/STG02/M009.LBD",
+        "offset": 36876,
+        "bytes": 4892,
+        "entity": 20,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "2fcf33b5a83bd17201445ff94ac720a121fb5e8d30ad25465fdff9527ff9db74",
+        "mom_sha256": "47493205de0e6045a53806e47c72749eb76aa6a7e80f7c83739e766abe54195f"
+      },
+      "entity_boatman": {
+        "path": "CDI/STG02/M010.LBD",
+        "offset": 36876,
+        "bytes": 5616,
+        "entity": 14,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "4d8779282b36044beeadca1d88e160f0038e5f0e2b12dec5f01e4834a2529556",
+        "mom_sha256": "2cbe059aa979ffcf93c849eec7889f3cf7845c0769c969b40dc7e4cfa4d78d9b"
+      },
+      "entity_ox_cart": {
+        "path": "CDI/STG02/M012.LBD",
+        "offset": 45068,
+        "bytes": 17660,
+        "entity": 21,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "fd7863c694cd14481b4b35b1ace8db8a820941021e240a586b6d79c2531a0d39",
+        "mom_sha256": "640c9cc76319345347989e0aabd43a5cc743619436f82e4a1e76f23ff35cb185"
+      },
+      "entity_tea_doll": {
+        "path": "CDI/STG02/M019.LBD",
+        "offset": 28684,
+        "bytes": 4128,
+        "entity": 19,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "93e8a35632f054def064c04b45d88a9507cd0e72e03d9fa994dd8d61fc5deed9",
+        "mom_sha256": "c0509ec63b51ad452d9d637d0234afeddaa2e8d9827319b5b828608018f7ba66"
+      },
+      "entity_giant_minotaur": {
+        "path": "CDI/STG02/N1/M034.LBD",
+        "offset": 10252,
+        "bytes": 15516,
+        "entity": 10,
+        "stage": 2,
+        "model_index": 0,
+        "source_sha256": "57f2afb2b40ba9a06f5e4f0d4b63fc7f2d79d85d8da671ea81581f3ed623af8e",
+        "mom_sha256": "6078725373735c45c4a3f44c1c2896a832bd84a502505529aa7065dff5968713"
+      },
+      "entity_opera_singer": {
+        "path": "CDI/STG04/M001.LBD",
+        "offset": 28684,
+        "bytes": 14260,
+        "entity": 38,
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "3730b3798597dca196b0031be674ef2289b3c27ec086393d4f6a9a099ffdea39",
+        "mom_sha256": "9cbf25b27119489eb1653c762139f220343d8f3c1cce5109acb90d9078b69622"
+      },
+      "entity_marching_band": {
+        "path": "CDI/STG04/M008.LBD",
+        "offset": 32780,
+        "bytes": 2376,
+        "entity": 42,
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "548f646d1d4ba5dd499c0cadef477117063a4b7fdd9b939aa12b2e3dc9992681",
+        "mom_sha256": "726732ea976856e006f17516f29115917c6ea4fa077a842c742567681f515f40"
+      },
+      "entity_ferris_wheel": {
+        "path": "CDI/STG04/M016.LBD",
+        "offset": 20492,
+        "bytes": 14408,
+        "entity": 47,
+        "stage": 4,
+        "model_index": 0,
+        "source_sha256": "90a7d2f4cf6d8ac7f7d3d5e4a6869a026b4675ecba0594ef2ca2dcbddc1909a9",
+        "mom_sha256": "6e3782f41cdfc507bb3c6c3a4357c3be50023cba2b5d8e0989b0dc221718434b"
+      },
+      "entity_gears": {
+        "path": "CDI/STG09/M000.LBD",
+        "offset": 38924,
+        "bytes": 20280,
+        "entity": 69,
+        "stage": 9,
+        "model_index": 0,
+        "source_sha256": "9e949e3b54bd74d3ae3ee4b8ad5fb7711434a0e98e93dcbf291e15e7c61432fe",
+        "mom_sha256": "57485e22abb947b403d3c50eaba8a25d02abde36350dabbdf4971c02854150ee"
+      }
+    },
+    "private_fixture_sha256": "bb43356f433494eb451605d2e8efcc46fc184a3079fc97f955c64b9b3390916b"
+  },
+  "production_adapter_comparisons": {
+    "ferris_wheel_scenarios": 2,
+    "ferris_wheel_states": 280,
+    "player_local_motion_cases": 144,
+    "player_local_motion_reference_checks": "docs/actor-motion-checks.json"
+  },
+  "native_function_entries": {
+    "entity_ferris_wheel": 1720,
+    "entity_bell_striker": 6370,
+    "entity_elephant": 1116,
+    "entity_minotaur": 1116,
+    "entity_giant_minotaur": 1116,
+    "entity_boatman": 1116,
+    "entity_tea_doll": 1116,
+    "entity_buddha": 1116,
+    "entity_ox_cart": 1116,
+    "entity_opera_singer": 1116,
+    "entity_marching_band": 1167,
+    "entity_gears": 1116,
+    "sound_entity_update": 19301,
+    "dream_sys_get_action_pressed": 184,
+    "dream_sys_clear_callbacks": 6,
+    "dream_sys_on_journal_event": 1244,
+    "func_800574FC": 598,
+    "func_80065FD8": 19301,
+    "rand": 302
+  },
+  "native_function_sha256": {
+    "entity_ferris_wheel": "888e86fcc6c2176567ed97c2835a741b4fad2e811ca9ea89ef0e5cd4062e3e1d",
+    "entity_bell_striker": "b8aa567436e41a6d3bab469e87c34fe6d383f06a345afdd64c0872e3be3fe916",
+    "entity_elephant": "67e919a2363f09c29188fa4a4dbb36bbe40822df8c32c4758a28e490bc72b18d",
+    "entity_minotaur": "9decdf73eb6e46ff0e0860c237cd8790f74e7971fa42aca659c659c373221e1a",
+    "entity_giant_minotaur": "c7fdcc943acee0234d79b3751f2b610abecfa863675b1579606e2bbc38d355c9",
+    "entity_boatman": "324a8ec30d2a850592881f71848f947727b32809c1ac986340ce8059bed4ffbe",
+    "entity_tea_doll": "03451ae46de03dc995fda21797611ce140373630b00208cfc27e8c255e979f2f",
+    "entity_buddha": "0df584f37e1a9ce253307a3a5310a8b59e1ed7ddded13619db86b9b01db3824a",
+    "entity_ox_cart": "20e1a6bd2877ee89a9113bfc15fc3ac84df3c4325fdb6c3a700dbc97cd766c2b",
+    "entity_opera_singer": "5ed1824a794192c7b11f887c758a3643d3016c2db0087424124395152f960008",
+    "entity_marching_band": "6feb69566c72688ed23b6253a2ff3ed8853464000f5635046012064c082f0e3d",
+    "entity_gears": "20ba9526fb968c8250676c40813332c41fa171a29814261660a4189c9e13a2bf",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "dream_sys_get_action_pressed": "bc9d9a4597fc5c324c34fb0acc7dc1596cd1a7b617fc46f0fd1b7f63d9bf4061",
+    "dream_sys_clear_callbacks": "fedcd6413050a1e563cb90214529e50b9a045b6f47e0f1dc93dd3a84f424422b",
+    "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec",
+    "func_800574FC": "e22cf1c7265259493c587b72e18fdd9cf18a600fcf0189cc6bed5784078fef66",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "rand": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+  },
+  "private_proof_sha256": {
+    "native": "812cdaad1f2178072e31640ade1fc352a41a092d98f68d6a1e703cb55655f4fd",
+    "producer": "0321e367761279861aff8cfba3396492e80d6e5e2573fb8747388a74d3ba1fe1",
+    "repeat": "4e05cba4412d8e0f9cd135a30a63628a1ae7122042a63278c7655f0b9a9c7c3f",
+    "repeat_native": "812cdaad1f2178072e31640ade1fc352a41a092d98f68d6a1e703cb55655f4fd",
+    "validation": "087d3de99e8936928b87d3c7c9bdd4815cb93b9b6f7ea5b39e9674745eea7bdb",
+    "callback_inventory": "8f03bb4fc7eb373ba6a8ac48c1c4c2dee032c51ec00e6f49a1358ea75a72d073"
+  },
+  "validation": {
+    "workspace_counts": [
+      137,
+      0,
+      32
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 215,
+    "owned_action_states": 8115,
+    "canonical_action_scenarios": 215,
+    "canonical_action_states": 11616,
+    "player_local_motion_adapter_cases": 144,
+    "ferris_wheel_scene_adapter_states": 280,
+    "direct_actor_journal_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "9f7660a994578214493d7b015d3967a6cd7ae5183f04fbbc3091cba11f074102",
+      "workspace": "bcc2898ee0706f8c72fb640eee83eac95377141872cf27721844fd3dfa3942da",
+      "original-content": "ae4ba9fc12b2214416129c3e8d9f52a9812760a31cfc8b98d06dd7a095e14433",
+      "desktop-build": "4485c5529dfdae212ab926e63d6628cf5b4bc0ec1b86dec3613516f82fd76bfb",
+      "capture-idle": "98a8e819c8f7fc8ad0bad0cf71957015bfa760f0fa084a69ccd664777fa46cc4",
+      "capture-futon": "5d5f5bfccf69bb9c1a561f7d6a2ad4d73c26cef9b45e8c6a1021bf4165c0128a",
+      "capture-yokai": "0f0835dfb79beea0e89b5fb8ac745070114b9da018dee60d986140f57cd5c3b0",
+      "capture-expiry": "2c1bcdad572de335d86662e450737b006e82090a980738e02c83c7edbd204999",
+      "capture-gray-birth": "fa4705f598eba66ee0147ea3c292e3000da5a7c5decde2f3d192349b737ec156",
+      "capture-gray-fade": "f6f95c4a6e262870341917ff7cd08cd489a78d32e0d2f1736aabf3e33034e5b6",
+      "capture-gray-complete": "90ab899670ac6ca1782f2bdd3495f9c2a135ea52579b67122f3751c46b5af113"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 31,
+    "remaining_pending_callbacks": 76,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "a2e80115c679906c24bd8cc7b271697800aff03797b1df0e34a60006dd4bd522",
+    "crates/lsd-core/src/linked_player.rs": "8d5190937f7ca5a8d53919644060c72a7befd0805e7a03c5139c2d04ab186cdd",
+    "crates/lsd-assets/src/actor_journal.rs": "f21c6b5c147d3f2ee520aaec0b0ed7d2ddec9d49edef3843a10af4676a64a820",
+    "crates/lsd-assets/src/encounter_scene.rs": "adc5db44ad9e19cc7d473e8901520435b020419aac78c7b5d0588cfc50549988",
+    "crates/lsd-assets/src/stage_session.rs": "c27aaac18ff4efbd141ad4792284721ae00719dc570d80fcc20c8bf1712ea579",
+    "crates/lsd-assets/src/lib.rs": "009a35b9acd2227e7c07f434a90af066e83ab15815786659badc2926d4b11788",
+    "crates/lsd-assets/tests/native_action_phases.rs": "146bae492ab9caae254f567bd47a045a992f934e56c61663fa07d2d47f19c735",
+    "crates/lsd-assets/tests/fixtures/action-phase-runtime.json": "25e96ffb0c34ad1754e4a8ecd77555d9b4920cc56195f45d54029628568ef82b"
+  },
+  "scope_limits": [
+    "Twelve original full actor actions preserve their state/context/animation/RNG/sound/pose behavior in the recorded constructed graphs.",
+    "Ferris Wheel compares trigger/action-window, movement-only callback clearing, consecutive player local-axis movement, event-video selection and end timer consequences. Production scene adapter matches280 original states across both recorded branches.",
+    "Bell Striker compares full context/state cycles and state36 RNG/video decisions. Other actions retain frame/context-gated sounds, scaling, direct movement, synchronous Ox Cart notifications and Marching Band animation pause/resume.",
+    "Production player local movement compares144 prior original scene-node observations, including all three axes, signed-halfword truncation and integer rotation. This service has no movement notification, as required by the Ferris Wheel call.",
+    "Owned public model/property/math/link inputs are independent of game files. Original imported model/property observations remain private and identified by hashes.",
+    "Targets/cache/action/trigger/context, valid transform parent, initialized CD and external sound services are supplied. Base Scene parent has no MapScene fade handler. Game-function outputs are not replaced; semantic GTE does not prove hardware flags/timing.",
+    "Media requests are connected; movie decoding/playback, whole cinematic transitions, natural encounters, full collision/floor/cache lifetimes and native GPU/SPU remain unaccepted.",
+    "Seven saved development captures remain unchanged; they do not accept the new NPCs as natural encounters. C remains paused and AI scope remains separate. There are31 implemented action callbacks among107,76 pending,0 accepted whole NPC encounters and0 accepted groups among40 provisional groups."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 31,
+  "remaining_pending_callbacks": 76,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

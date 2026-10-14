@@ -3,7 +3,7 @@ mod actor_journal;
 mod day_tables;
 pub use actor_journal::{
     ActorBodyQueryCounts, ActorJournalBindings, ActorJournalBody, ActorJournalDispatcher,
-    ActorJournalServices,
+    ActorJournalPlayerMotion, ActorJournalServices,
 };
 mod effect_palette;
 mod encounter_scene;

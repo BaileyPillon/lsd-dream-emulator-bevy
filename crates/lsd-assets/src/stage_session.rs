@@ -293,6 +293,11 @@ impl StageLinkSession {
             });
         }
         services.view_callback = Some(&mut linked.view_callback);
+        services.player_motion = Some(crate::ActorJournalPlayerMotion {
+            position: &mut player.position,
+            move_distance: &mut linked.move_distance,
+            math,
+        });
         let first_command = services.commands.len();
         let mut events = crate::ActorJournalDispatcher {
             day,

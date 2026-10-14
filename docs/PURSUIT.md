@@ -72,9 +72,9 @@ regressions and the current validation results.
 
 ## Remaining parity work
 
-Following [player-interacting NPC recovery](PLAYER_NPCS.md), there are now 19
-implemented callbacks among the 107 enumerated distinct original action
-callbacks; 88 remain pending. This count measures callbacks,
+Following [player-interacting NPC recovery](PLAYER_NPCS.md) and
+[sound, motion and event actions](ACTION_PHASES.md), there are now 31 implemented
+callbacks among the 107 enumerated distinct original actions; 76 remain pending. This count measures callbacks,
 not whole NPC encounters or game completion. Reciprocal collision response,
 natural transform/cache refresh, complete lifetimes, native rendering/audio and
 the remaining project-objective requirements still need implementation and
