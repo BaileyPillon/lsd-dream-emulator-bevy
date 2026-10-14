@@ -1,8 +1,8 @@
 # Original scene scale and requesting NPC actions
 
 Old Woman, Starship and Airship now run in the shared encounter scene and can
-request the original map-node scale effect. There are 59 implemented callbacks
-among 107 distinct original actions, with 48 pending. Whole natural encounters
+request the original map-node scale effect. There are 71 implemented callbacks
+among 107 distinct original actions, with 36 pending. Whole natural encounters
 and the 40 provisional whole-feature groups remain unaccepted.
 
 ## Scene ownership and clock

@@ -183,6 +183,18 @@ pub enum NpcScript {
     Starship,
     Airship,
     TriangleHead,
+    Ship,
+    PalaceMaiko,
+    Acrobats,
+    Light,
+    Ring,
+    HoopGirl,
+    GiantHoopGirl,
+    SmallElephant,
+    BridgeMaiko,
+    QuestionMarkPenguin,
+    StandingPenguinFlock,
+    GiantTriangleHead,
     Pending(u32),
 }
 impl NpcScript {
@@ -248,6 +260,18 @@ impl NpcScript {
             Some(0x8006_1a90) => Self::Starship,
             Some(0x8006_4928) => Self::Airship,
             Some(0x8006_1c2c) => Self::TriangleHead,
+            Some(0x8006_1e60) => Self::Ship,
+            Some(0x8006_1f30) => Self::PalaceMaiko,
+            Some(0x8006_204c) => Self::Acrobats,
+            Some(0x8006_20c4) => Self::Light,
+            Some(0x8006_24bc) => Self::Ring,
+            Some(0x8006_2570) => Self::HoopGirl,
+            Some(0x8006_4ca4) => Self::GiantHoopGirl,
+            Some(0x8006_4cec) => Self::SmallElephant,
+            Some(0x8006_4d48) => Self::BridgeMaiko,
+            Some(0x8006_50d4) => Self::QuestionMarkPenguin,
+            Some(0x8006_50f4) => Self::StandingPenguinFlock,
+            Some(0x8006_519c) => Self::GiantTriangleHead,
             Some(at) => Self::Pending(at),
         }
     }
@@ -724,7 +748,10 @@ impl EntityBehavior {
                         let matrix = host.movement_matrix(actor.pose.angles)?;
                         actor.move_local(axis, amount, matrix);
                     }
-                    NpcScript::FishGiant | NpcScript::SiblingsFlock | NpcScript::Halo => {
+                    NpcScript::FishGiant
+                    | NpcScript::SiblingsFlock
+                    | NpcScript::Halo
+                    | NpcScript::GiantTriangleHead => {
                         let packet = if script == NpcScript::Halo {
                             0x0002_0001
                         } else {
@@ -1015,6 +1042,123 @@ impl EntityBehavior {
                     NpcScript::Corpse => {
                         if ticks == 0 {
                             move_local_with_host(actor, ActorAxis::Y, -200, host)?;
+                        }
+                    }
+                    NpcScript::Ship => {
+                        let remainder = context.words[1] % 300;
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if remainder < 20 {
+                            context.words[7] = 5;
+                            context.words[8] = -2;
+                        } else if remainder == 22 {
+                            context.words[7] = -2;
+                        }
+                        move_local_with_host(actor, ActorAxis::Z, -10, host)?;
+                    }
+                    NpcScript::PalaceMaiko => {
+                        if ticks == 0 && rng.next_u15().is_multiple_of(3) {
+                            actor
+                                .scale_packet([0x0002_0001; 3], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                            move_local_with_host(actor, ActorAxis::Y, -300, host)?;
+                            actor
+                                .rotate_packet([0x0001_0000, 0x0001_005a, 0x0001_0000], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                            *state = 11;
+                        }
+                        if *state == 11 {
+                            if ticks == 2000 {
+                                rotate_yaw(actor, -90)?;
+                            }
+                            move_local_with_host(actor, ActorAxis::Z, -20, host)?;
+                        }
+                    }
+                    NpcScript::Acrobats => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if context.words[1] % 30 == 0 {
+                            context.words[7] = 13;
+                        }
+                    }
+                    NpcScript::Light => {
+                        if ticks == 0 && rng.next_u15().is_multiple_of(3) {
+                            *state = 11;
+                        }
+                        if *state == 11 {
+                            if ticks == 502 {
+                                move_local_with_host(actor, ActorAxis::Y, 2048, host)?;
+                                host.face_player(actor)?;
+                            }
+                            if ticks >= 501 {
+                                move_local_with_host(actor, ActorAxis::Z, -512, host)?;
+                            }
+                        }
+                    }
+                    NpcScript::Ring => {
+                        if ticks == 0 && rng.next_u15() & 1 != 0 {
+                            *state = 11;
+                        }
+                        if ticks == 300 {
+                            rotate_yaw(actor, 180)?;
+                        }
+                        if ticks < 600 {
+                            move_local_with_host(
+                                actor,
+                                ActorAxis::Z,
+                                if *state == 0 { -256 } else { 256 },
+                                host,
+                            )?;
+                        }
+                    }
+                    NpcScript::HoopGirl | NpcScript::GiantHoopGirl => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if context.words[1] == 0 {
+                            context.words[7] = 0;
+                            let amount = i32::from(rng.next_u15() % 3) * 51200;
+                            move_local_with_host(actor, ActorAxis::X, amount, host)?;
+                        }
+                        if ticks >= 2401 {
+                            host.face_player(actor)?;
+                        }
+                        move_local_with_host(actor, ActorAxis::Z, -30, host)?;
+                        if script == NpcScript::GiantHoopGirl {
+                            actor
+                                .scale_packet([0x0001_0006; 3], true)
+                                .map_err(|_| BehaviorFault::Division)?;
+                        }
+                    }
+                    NpcScript::SmallElephant => {
+                        actor
+                            .scale_packet([0x0002_0001; 3], true)
+                            .map_err(|_| BehaviorFault::Division)?;
+                        move_local_with_host(actor, ActorAxis::Z, -10, host)?;
+                    }
+                    NpcScript::BridgeMaiko => {
+                        actor
+                            .scale_packet([0x0005_0002; 3], true)
+                            .map_err(|_| BehaviorFault::Division)?;
+                        actor.animation.enabled = false;
+                        if *state == 0 && entity_distance(actor.pose.position, input.target) < 2048
+                        {
+                            *state = 10;
+                            *mutable_ticks = 0;
+                        }
+                        if *state == 10 {
+                            if *mutable_ticks < 45 {
+                                rotate_yaw(actor, 4)?;
+                            }
+                            if *mutable_ticks >= 501 {
+                                *state = 0;
+                            }
+                        }
+                    }
+                    NpcScript::StandingPenguinFlock => {
+                        if !rng.next_u15().is_multiple_of(3) {
+                            let yaw = if !rng.next_u15().is_multiple_of(3) {
+                                9
+                            } else {
+                                -9
+                            };
+                            rotate_yaw(actor, yaw)?;
                         }
                     }
                     NpcScript::TriangleHead => {
@@ -1401,7 +1545,7 @@ impl EntityBehavior {
                             actor.set_hidden(!rng.next_u15().is_multiple_of(7));
                         }
                     }
-                    NpcScript::StandingPenguin => {
+                    NpcScript::StandingPenguin | NpcScript::QuestionMarkPenguin => {
                         if ticks == 0 && rng.next_u15().is_multiple_of(5) && *state == 0 {
                             actor
                                 .scale_packet([0x0001_0006; 3], true)

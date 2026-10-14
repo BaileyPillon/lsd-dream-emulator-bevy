@@ -2,8 +2,8 @@
 
 Triangle Head now runs in the shared encounter scene with its original frame
 sounds, movement, distance gates, RNG branches, negative scene-scale request and
-video/end notifications. There are 59 implemented callbacks among 107 distinct
-original actions, with 48 pending. Whole natural encounters remain unaccepted.
+video/end notifications. There are 71 implemented callbacks among 107 distinct
+original actions, with 36 pending. Whole natural encounters remain unaccepted.
 
 ## Original action and services
 

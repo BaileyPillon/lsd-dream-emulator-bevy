@@ -186,7 +186,7 @@ Player clock comparisons cover callback clearing, retained camera updates and
 input locking. See [player-interacting NPCs](PLAYER_NPCS.md). That checkpoint
 implemented 19 actions. The newer
 [sound, motion and event work](ACTION_PHASES.md), [actor floor recovery](ACTOR_FLOOR.md)
-and subsequent actions now bring the total to 59 among 107 distinct callbacks, leaving 48 pending. Natural
+and subsequent actions now bring the total to 71 among 107 distinct callbacks, leaving 36 pending. Natural
 encounters and all 40 provisional whole-feature groups still need acceptance.
 
 Ferris Wheel now retains the action window, camera-preserving ride and
@@ -239,3 +239,10 @@ negative scene-scale request and player callback restoration. Original setter
 and subsequent player-clock comparisons include mode-two view cleanup. A loaded
 original-model test observes stopped and resumed movement in the shared clock.
 See [Triangle Head recovery](TRIANGLE_HEAD.md) for scope and remaining parity work.
+
+
+Ship, Palace Maiko, Acrobats, Light, Ring, Hoop Girl and six related actions now
+have direct and full entity-update comparisons with original resources. Loaded
+scene checks include all twelve models, signed-halfword movement and the shared
+clock. See [additional actions](ADDITIONAL_ACTIONS.md). Actual sound/music
+playback remains a separate required milestone.

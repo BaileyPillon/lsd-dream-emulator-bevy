@@ -73,8 +73,8 @@ The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
 additional callbacks now retain their original movement, scaling, visibility,
 frame-gated sound or empty action. Dog, Gargoyle and Demon King are also
-connected. Sound, motion, event and floor work brings the total to 59 of
-107 distinct callbacks implemented, with 48 pending. See
+connected. Sound, motion, event and floor work brings the total to 71 of
+107 distinct callbacks implemented, with 36 pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch. Soldier and Giant Turtle
 now use the shared floor service. See [contact and floor behavior](docs/CONTACT_FLOOR.md)
@@ -88,6 +88,7 @@ movement, sound and interaction timing; see [movement NPCs](docs/MOTION_NPCS.md)
 Map-node scale requests now retain original count/reset behavior and run after drawing.
 Old Woman, Starship and Airship use the shared controller; see [scene scale recovery](docs/SCENE_SCALE.md).
 [Triangle Head](docs/TRIANGLE_HEAD.md) now also restores player controls and requests scene shrink.
+[Twelve further actions](docs/ADDITIONAL_ACTIONS.md) now retain their original movement, sound, RNG and animation behavior.
 Seven further actions now preserve day-dependent scale, script proximity,
 frame-gated sounds and animation pause/shutdown; see [day and animation actions](docs/DAY_FRAME_NPCS.md).
 Actor notifications now apply original mood/score, recall, direct dynamic-link

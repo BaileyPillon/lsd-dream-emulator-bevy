@@ -14,6 +14,7 @@ pub struct DayRuntime {
     pub view_callback: i32,
     pub reset_view_pending: bool,
     pub view_active: bool,
+    pub links: Option<DreamLinks>,
     pub day: DreamDay,
     pub tables: DayTables,
     pub local: [i32; 3],
@@ -28,6 +29,7 @@ impl DayRuntime {
             view_callback: 1,
             reset_view_pending: false,
             view_active: false,
+            links: None,
             day: DreamDay::default(),
             local: [13, 17, 19],
             tables: DayTables {
@@ -64,7 +66,7 @@ impl DayRuntime {
             reset_view_pending: self.reset_view_pending,
             view_active: self.view_active,
         };
-        let mut links = DreamLinks {
+        let mut links = self.links.take().unwrap_or(DreamLinks {
             execution: LinkExecution {
                 state: 0,
                 stage: 0,
@@ -79,7 +81,7 @@ impl DayRuntime {
             auto_target: SpawnLocation::default(),
             time_limit: 3600,
             default_teleport_transform: false,
-        };
+        });
         let mut controls = PlayerControls::default();
         let mut commands = vec![];
         let mut sounds = vec![];
@@ -120,6 +122,7 @@ impl DayRuntime {
             services,
         };
         let output = f(&mut dispatcher);
+        self.links = Some(links);
         self.move_callback = map.move_callback;
         self.reset_view_pending = map.reset_view_pending;
         self.view_active = map.view_active;

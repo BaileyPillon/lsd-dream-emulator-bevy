@@ -1,7 +1,7 @@
 # Player contact, floor correction and two original actions
 
 Soldier and Giant Turtle now run in the shared Rust encounter scene. There are
-59 implemented callbacks among 107 distinct original actions, with 48 pending.
+71 implemented callbacks among 107 distinct original actions, with 36 pending.
 These counts measure action implementations; whole natural encounters and
 whole-game parity remain unaccepted. See [branching floor actions](BRANCHING_FLOOR.md)
 for the subsequent Giant Maiko, Fox and penguin comparisons.
@@ -26,7 +26,7 @@ uses the resulting local position.
 | Original-code comparison | Cases | Actor contact bypasses |
 | --- | ---: | ---: |
 | Owned actor/player models, supplied floor graphs | 1,280 | 80 |
-| Privately imported original actor/player models | 48 | 4 |
+| Privately imported original actor/player models | 36 | 4 |
 
 The owned cases also include 80 player hits without actor acknowledgement.
 Other cases cover a player miss, notifications disabled, two movement axes,

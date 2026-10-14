@@ -1242,6 +1242,31 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "additional_actions_20261014": {
+      "scope": "Twelve additional original action callbacks and full entity updates in supplied initial states, using owned or original models/properties/math. Production scene services, retained perception link state, ordered actor/link sound requests and controlled loaded-stage/shared-clock checks. Natural complete encounters, original GPU/GTE flags, SPU playback and global cadence remain unaccepted.",
+      "checks": {
+        "path": "docs/additional-actions-checks.json",
+        "sha256": "dde73a01671e379cab0102953c716cf214c2d5e213cbdbc4066589e9efe77ec8"
+      },
+      "owned_action_scenarios": 222,
+      "owned_action_states": 11200,
+      "canonical_action_scenarios": 222,
+      "canonical_action_states": 11200,
+      "owned_complete_update_scenarios": 222,
+      "owned_complete_update_states": 11200,
+      "canonical_complete_update_scenarios": 222,
+      "canonical_complete_update_states": 11200,
+      "production_adapter_owned_resulting_states": 10978,
+      "production_adapter_canonical_resulting_states": 10978,
+      "independent_repeat_outputs_byte_identical": true,
+      "original_named_callbacks_implemented_before": 59,
+      "original_named_callbacks_implemented_after": 71,
+      "remaining_pending_callbacks": 36,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

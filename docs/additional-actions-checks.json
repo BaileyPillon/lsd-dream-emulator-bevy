@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T23:48:34.291563+00:00",
+  "scope": "Twelve additional original action callbacks and full entity updates in supplied initial states, using owned or original models/properties/math. Production scene services, retained perception link state, ordered actor/link sound requests and controlled loaded-stage/shared-clock checks. Natural complete encounters, original GPU/GTE flags, SPU playback and global cadence remain unaccepted.",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "callback_inventory": {
+    "distinct_original_callbacks": 107,
+    "implemented_before": 59,
+    "implemented_after": 71,
+    "pending_after": 36,
+    "whole_npc_encounters_accepted": 0
+  },
+  "comparisons": {
+    "owned_action_scenarios": 222,
+    "owned_action_states": 11200,
+    "canonical_action_scenarios": 222,
+    "canonical_action_states": 11200,
+    "owned_complete_update_scenarios": 222,
+    "owned_complete_update_states": 11200,
+    "canonical_complete_update_scenarios": 222,
+    "canonical_complete_update_states": 11200,
+    "production_adapter_owned_resulting_states": 10978,
+    "production_adapter_canonical_resulting_states": 10978,
+    "independent_repeat_outputs_byte_identical": true
+  },
+  "original_function_sha256": {
+    "entity_acrobats": "f457846584e3823c93fcb7d53494bcca4aee8e9216c67fa681f4bdebb9a8d8e4",
+    "entity_elephant_small": "a3d21a60b1e97e83a1768ced70182ac11c13cc57fbaf57e0917def7fdcaa6dec",
+    "entity_get_distance": "f9aea2cd8da082454563fad7b8f4e87382786ba3dfdfe396510482cec65fd58c",
+    "entity_hoop_girl": "b71d8f338ced18b39cb34cbc32ea4663e85ad7718dfff80b7a75aa8e7b392970",
+    "entity_hoop_girl_giant": "6ae505b3418eb2055c7674f3a0f97b1e1c715239982f40a3abdddc8819b08d69",
+    "entity_light": "0543f4776837a092d7951093b10f5b91f263f35cae28696ad20df416c76019d8",
+    "entity_maiko_bridge": "ac1c8d74175cba2d2de9fd7d0457e2df722131a4c556e54b13777f821ab6676d",
+    "entity_maiko_palace": "267675b8747f660c936cef02c51f61291b12856e9c7c8efea1f08236bb7957db",
+    "entity_question_mark_penguin": "865d8d216ae731f756925b0b0fa9ced758f8d5621b2b56763ef847cbf854ab3d",
+    "entity_ring": "6bfafa03d9b8a96ce19e25ae98ac1232f863d6afdfd4e0221e6e63bde0f0bd7b",
+    "entity_ship": "ffc343d87304fb507f9307b8ee173d690487f3935de96a32e71f9144d0f95d7d",
+    "entity_standing_penguin_flock": "5e2be745d9dc87abaccd6a21f315b43873585e3801dd22ae679da81f1597de67",
+    "entity_triangle_head_giant": "7037b5ff05270e8be50b545a6b50b5f9038408967b975ba419fa922b827dc09b",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69"
+  },
+  "canonical_model_bindings": {
+    "entity_elephant_small": {
+      "path": "CDI/STG01/M004.LBD",
+      "offset": 34828,
+      "bytes": 25456,
+      "entity": 109,
+      "stage": 1,
+      "model_index": 0,
+      "source_sha256": "a945bc5b37b814581f4be781c87edc3b7f6a4673cb4bead49ee060ecd829727b",
+      "mom_sha256": "1d779bb2945c78b609e1e20d188b47f65c13a8c63b7c12762236268b7f5a6d00"
+    },
+    "entity_maiko_bridge": {
+      "path": "CDI/STG02/N1/M022.LBD",
+      "offset": 43020,
+      "bytes": 9532,
+      "entity": 110,
+      "stage": 2,
+      "model_index": 0,
+      "source_sha256": "800ee6882253453ac0105f18b3a2d5a8f3fbde152c913058b4671df803bfb75e",
+      "mom_sha256": "f023d2ccb6381c687f28f964e7890f9c55acd07bdd5f5404d7e96707ece9a39c"
+    },
+    "entity_question_mark_penguin": {
+      "path": "CDI/STG04/N1/M024.LBD",
+      "offset": 31740,
+      "bytes": 2940,
+      "entity": 113,
+      "stage": 4,
+      "model_index": 1,
+      "source_sha256": "f41b8e9dd7151906d2e2488c04af8c11edb0dd8a63c78788f5a21121cbd5f033",
+      "mom_sha256": "483d787a906a094afd5030db4563fcaad84dc41edd5de09031bc3013d2ae34a6"
+    },
+    "entity_standing_penguin_flock": {
+      "path": "CDI/STG04/N1/M024.LBD",
+      "offset": 28688,
+      "bytes": 3052,
+      "entity": 114,
+      "stage": 4,
+      "model_index": 0,
+      "source_sha256": "f41b8e9dd7151906d2e2488c04af8c11edb0dd8a63c78788f5a21121cbd5f033",
+      "mom_sha256": "6c8989758844349a878d2ae251fb6cd1416b727648352f3dfd8bf31f149c610f"
+    },
+    "entity_ship": {
+      "path": "CDI/STG05/M010.LBD",
+      "offset": 20492,
+      "bytes": 4048,
+      "entity": 64,
+      "stage": 5,
+      "model_index": 0,
+      "source_sha256": "849409c69ff13545e9b26b279e551ad4d5038c2f233b5e4f2c593c514babfe17",
+      "mom_sha256": "cfe5570fbdaa42018057dd36227a74731a930b95d52a540343d8c238e6742784"
+    },
+    "entity_triangle_head_giant": {
+      "path": "CDI/STG05/M018.LBD",
+      "offset": 40972,
+      "bytes": 9276,
+      "entity": 117,
+      "stage": 5,
+      "model_index": 0,
+      "source_sha256": "d6721b456c6bb8e5a62f0e8c9e7a4f1f63ddf65578cf7dcb65b6a1225d84cdba",
+      "mom_sha256": "cafd548119c0ccd04690c370d8da26c11e376c08545e56a808131d6aeef85162"
+    },
+    "entity_maiko_palace": {
+      "path": "CDI/STG07/M001.LBD",
+      "offset": 24588,
+      "bytes": 19960,
+      "entity": 65,
+      "stage": 7,
+      "model_index": 0,
+      "source_sha256": "b91ada5293097baa4ebe9042672c80a9d38b7142a26e84a7d0bdeb4f0113863e",
+      "mom_sha256": "dae655a416659d79ab7f337eaf6696d64f1e5f410ce9e90d384bda318861174d"
+    },
+    "entity_acrobats": {
+      "path": "CDI/STG07/M002.LBD",
+      "offset": 24588,
+      "bytes": 14828,
+      "entity": 66,
+      "stage": 7,
+      "model_index": 0,
+      "source_sha256": "35c024c9b8e83da44b43fabd889faf8632db4fb01a7c90d467bb4b23cb4e0373",
+      "mom_sha256": "5eeec47240744ec9ab9d80c49d6a7da849023fe131382cf8f76623e1b221be1a"
+    },
+    "entity_light": {
+      "path": "CDI/STG07/M004.LBD",
+      "offset": 22540,
+      "bytes": 15580,
+      "entity": 67,
+      "stage": 7,
+      "model_index": 0,
+      "source_sha256": "23e85bebfe7e4afb767ef6136e9bff086f1107f4b8c5bb1e737ff8a90d269693",
+      "mom_sha256": "3fa41a13fa153331e3c75e3c9660255c776b796ea2864dcd21ed2fc88325a6e5"
+    },
+    "entity_ring": {
+      "path": "CDI/STG11/M005.LBD",
+      "offset": 12300,
+      "bytes": 2960,
+      "entity": 70,
+      "stage": 11,
+      "model_index": 0,
+      "source_sha256": "22c4225a5350c728252a4e454d1a69bba393792f4f1e469704786a7da6a892ac",
+      "mom_sha256": "75d21f99328f85fbc8b6897c2410a2bf2396eb8b993a3ddd0b72ad478414812c"
+    },
+    "entity_hoop_girl": {
+      "path": "CDI/STG12/M009.LBD",
+      "offset": 28684,
+      "bytes": 8168,
+      "entity": 71,
+      "stage": 12,
+      "model_index": 0,
+      "source_sha256": "2cf27bbe1bae2f59e2770fdbec1fd40689940b39e8c64f50e1192a966c9e7dc6",
+      "mom_sha256": "0cca017c9ecc34b16d0a182d5d431183d43f1a8a70b063a9ce6206733fa8e628"
+    },
+    "entity_hoop_girl_giant": {
+      "path": "CDI/STG12/M009.LBD",
+      "offset": 28684,
+      "bytes": 8168,
+      "entity": 108,
+      "stage": 12,
+      "model_index": 0,
+      "source_sha256": "2cf27bbe1bae2f59e2770fdbec1fd40689940b39e8c64f50e1192a966c9e7dc6",
+      "mom_sha256": "0cca017c9ecc34b16d0a182d5d431183d43f1a8a70b063a9ce6206733fa8e628"
+    }
+  },
+  "fixtures": [
+    {
+      "path": "crates/lsd-assets/tests/fixtures/additional-actions-npc-runtime.json",
+      "sha256": "1833b62d0297b78305c02015295e585aaf0154dc5edd4714c75deffe67f91483"
+    },
+    {
+      "path": "crates/lsd-assets/tests/fixtures/additional-actions-npc-encounters.json",
+      "sha256": "cafe1400c55ed4dc5381405441c858eaba1d6e1b545581433a994fcb7db1c0f6"
+    }
+  ],
+  "local_validation": {
+    "workspace_passed": 161,
+    "workspace_failed": 0,
+    "workspace_ignored": 51,
+    "new_original_comparison_tests_passed": 5,
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "previous_original_comparisons_passed": true,
+    "loaded_original_models": 12,
+    "loaded_hoop_halfword_movement": true,
+    "loaded_ship_three_shared_steps": 30,
+    "retained_perception_link_state": true,
+    "ordered_actor_and_link_sound_requests": true,
+    "all_three_regression_captures_unchanged": true
+  },
+  "capture_hashes": [
+    {
+      "profile": "idle",
+      "sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+      "same_as_previous": true
+    },
+    {
+      "profile": "yokai",
+      "sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+      "same_as_previous": true
+    },
+    {
+      "profile": "shrink",
+      "sha256": "285feca73da8b15037e26a4edaf02e299bc7c534173ab86c308268193b249e23",
+      "same_as_previous": true
+    }
+  ],
+  "backend_limits": "Original CPU execution uses a semantic COP2 bridge and supplied external sound backend. Sound voice outputs are replayed external handles, not physical SPU playback. Loaded positions and activation are controlled inputs, not natural whole encounters.",
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behavior_has_ai_model_calls": false,
+  "c_paused_and_preserved": true
+}
