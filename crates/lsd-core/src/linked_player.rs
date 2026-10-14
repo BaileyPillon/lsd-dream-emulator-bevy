@@ -25,6 +25,7 @@ pub struct LinkedPlayer {
     pub context: LinkContext,
     pub keys: SceneActorKeys,
     pub map: MapLinkPolicy,
+    pub view_callback: i32,
     pub palette: LinkPalette,
     pub rng: PsxRng,
     pub interval: u32,
@@ -83,6 +84,7 @@ impl LinkedPlayer {
         scene: &SceneCollision,
         stage: u8,
     ) -> Result<crate::SceneMotionReset, SceneCollisionError> {
+        self.view_callback = 1;
         let reset = crate::reset_scene_motion(
             &mut player.controls,
             &mut self.links,
@@ -139,6 +141,7 @@ impl LinkedPlayer {
                 default_teleport_transform: false,
             },
             context: LinkContext::default(),
+            view_callback: 1,
             keys: SceneActorKeys {
                 current: key,
                 contact: SpawnLocation::default(),
@@ -275,7 +278,9 @@ impl LinkedPlayer {
         if !run_callbacks {
             return Ok(());
         }
-        player.controls.update_view();
+        if self.view_callback == 1 {
+            player.controls.update_view();
+        }
         if self.map.move_callback != 1 {
             return Ok(());
         }

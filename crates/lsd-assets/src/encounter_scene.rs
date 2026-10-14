@@ -61,6 +61,12 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn player_action_pressed(&mut self) -> Result<bool, lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
+    fn clear_player_callbacks(&mut self, _with_view: bool) -> Result<(), lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
     /// Base cleanup emits code one separately from gameplay journal messages.
     fn actor_destroyed(&mut self, _serial: u64, _entity: u8) -> Result<(), lsd_core::DayFault> {
         Ok(())
@@ -694,6 +700,12 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn player_action_pressed(&mut self) -> Result<bool, lsd_core::BehaviorFault> {
+        self.events.player_action_pressed()
+    }
+    fn clear_player_callbacks(&mut self, with_view: bool) -> Result<(), lsd_core::BehaviorFault> {
+        self.events.clear_player_callbacks(with_view)
+    }
     fn face_player(&mut self, actor: &mut ModelActor) -> Result<(), lsd_core::BehaviorFault> {
         let aim = self
             .aim

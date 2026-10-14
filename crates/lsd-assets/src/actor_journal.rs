@@ -21,6 +21,7 @@ pub struct ActorJournalServices<'a> {
     pub body_contact: &'a mut lsd_core::BodyContactState<lsd_core::BodyPeer>,
     source: Option<EncounterNotification>,
     pub body_query: Option<ActorJournalBody<'a>>,
+    pub view_callback: Option<&'a mut i32>,
 }
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct ActorBodyQueryCounts {
@@ -51,6 +52,7 @@ impl<'a> ActorJournalServices<'a> {
             body_contact: bindings.body_contact,
             source: None,
             body_query: None,
+            view_callback: None,
         }
     }
 }
@@ -243,6 +245,24 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn player_action_pressed(&mut self) -> Result<bool, lsd_core::BehaviorFault> {
+        Ok(self.controls.action_pressed)
+    }
+    fn clear_player_callbacks(&mut self, with_view: bool) -> Result<(), lsd_core::BehaviorFault> {
+        if with_view && self.services.view_callback.is_none() {
+            return Err(lsd_core::BehaviorFault::MissingPlayerServices);
+        }
+        if self.services.map.move_callback == 2 {
+            self.services.map.reset_view_pending = false;
+            self.services.map.view_active = false;
+        }
+        self.services.map.move_callback = 0;
+        if with_view {
+            let view = self.services.view_callback.as_mut().unwrap();
+            **view = 0;
+        }
+        Ok(())
+    }
     fn actor_destroyed(&mut self, _serial: u64, entity: u8) -> Result<(), DayFault> {
         self.services
             .events

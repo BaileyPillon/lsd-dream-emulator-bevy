@@ -95,9 +95,9 @@ The shared entity start/stop/link state, three clocks, sound context, interactio
 policy and target query math now have original CPU comparisons. Futon, Television
 and Drumstick callbacks are implemented, including canonical model/property
 comparisons for the first two. The scene adapter connects the query policy and
-queues sound/notification requests. Recover the other 95 callbacks and Gray Man
-activation, then inherited body/mood/notification/aim consequences, full scene
-scheduling and original GPU/SPU output. Whole NPC encounters remain unaccepted;
+queues sound requests. Recover the remaining callbacks and complete natural
+activation, inherited body response, full scene scheduling and original GPU/SPU
+output. Whole NPC encounters remain unaccepted;
 see [entity behavior](ENTITY_BEHAVIOR.md).
 
 Actor journal type/state gates, mood/score, recall capture, direct dynamic links
@@ -178,3 +178,11 @@ shared waiting, journal delivery and render-before-player state. Recover actual
 CD completion/wait transitions, original renderer/cache and cross-map residency,
 NPC-requested lifetime changes and the remaining fidelity requirements. See
 [shared scene frame](SHARED_FRAME.md).
+
+Dog, Gargoyle and Demon King now run with the original player action getter
+and movement/view callback clearing. Direct DreamSys link requests have
+original CPU comparisons through destination selection, RNG and sound.
+Player clock comparisons cover callback clearing, retained camera updates and
+input locking. See [player-interacting NPCs](PLAYER_NPCS.md). There are now 19
+implemented actions among 107 distinct callbacks; 88 remain pending. Natural
+encounters and all 40 provisional whole-feature groups still need acceptance.

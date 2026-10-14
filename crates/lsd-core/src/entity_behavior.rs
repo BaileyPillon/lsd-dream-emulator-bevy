@@ -16,6 +16,7 @@ pub enum BehaviorFault {
     MissingEffectServices,
     Aim(crate::AimFault),
     MissingAimServices,
+    MissingPlayerServices,
 }
 impl fmt::Display for BehaviorFault {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -138,6 +139,9 @@ pub enum NpcScript {
     Bear,
     Rabbit,
     Peacock,
+    Dog,
+    Gargoyle,
+    DemonKing,
     Pending(u32),
 }
 impl NpcScript {
@@ -160,6 +164,9 @@ impl NpcScript {
             Some(0x8006_04dc) => Self::Bear,
             Some(0x8006_05d0) => Self::Rabbit,
             Some(0x8005_f1a8) => Self::Peacock,
+            Some(0x8006_21a8) => Self::Dog,
+            Some(0x8005_e3c4) => Self::Gargoyle,
+            Some(0x8005_f970) => Self::DemonKing,
             Some(at) => Self::Pending(at),
         }
     }
@@ -190,6 +197,12 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    fn player_action_pressed(&mut self) -> Result<bool, BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
+    fn clear_player_callbacks(&mut self, _with_view: bool) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
     fn face_player(&mut self, _actor: &mut ModelActor) -> Result<(), BehaviorFault> {
         Err(BehaviorFault::MissingAimServices)
     }
@@ -494,6 +507,7 @@ impl EntityBehavior {
             let active = &mut self.active;
             let effect = &mut self.effect;
             let state = &mut self.state;
+            let mutable_ticks = &mut self.ticks;
             self.context.update_with_sound(sound, |context, sound| {
                 match script {
                     NpcScript::None | NpcScript::PrincePrincess => {}
@@ -580,6 +594,86 @@ impl EntityBehavior {
                         host.notify_actor(actor, rng, 6)?;
                     }
                     NpcScript::Peacock => host.face_player(actor)?,
+                    NpcScript::Gargoyle => {
+                        context.words[4] = 0;
+                        if context.words[1] == 0 {
+                            for index in [7, 12, 17] {
+                                context.words[index] = 20;
+                            }
+                            host.clear_player_callbacks(true)?;
+                        }
+                        host.face_player(actor)?;
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(ActorAxis::Z, -90, matrix);
+                        if ticks == 30 {
+                            host.notify_actor(actor, rng, 10)?;
+                        }
+                    }
+                    NpcScript::DemonKing => {
+                        host.face_player(actor)?;
+                        host.clear_player_callbacks(true)?;
+                        if context.words[1] % 10 < 3 {
+                            context.words[4] = 0;
+                            for index in [7, 12, 17] {
+                                context.words[index] = 13;
+                            }
+                        }
+                        let duration = actor
+                            .animation
+                            .selected_clip
+                            .and_then(|i| clips.get(i))
+                            .ok_or(AnimationError::InvalidClip)?
+                            .frames
+                            .len() as i32;
+                        if ticks == duration {
+                            actor.animation.enabled = false;
+                            host.notify_actor(actor, rng, 10)?;
+                        }
+                    }
+                    NpcScript::Dog => {
+                        context.words[4] = trigger_ratio(actor, context, input)?;
+                        if context.words[1] == 0 {
+                            actor.move_distance = if rng.next_u15() & 1 != 0 { -374 } else { -192 };
+                        }
+                        if *state == 0 {
+                            if context.words[1] % 10 == 0 {
+                                context.words[7] = 28;
+                            }
+                            if context.words[1] % 20 == 0 {
+                                context.words[12] = 23;
+                                context.words[13] = -1;
+                                context.words[17] = 23;
+                                context.words[18] = -1;
+                            } else if context.words[1] % 20 == 14 {
+                                context.words[12] = -2;
+                                context.words[17] = -2;
+                            }
+                            if ticks & 1 == 0 && host.player_action_pressed()? {
+                                *mutable_ticks = -1;
+                                *state = 10;
+                                context.words[7] = 18;
+                            }
+                            host.face_player(actor)?;
+                            let matrix = host.movement_matrix(actor.pose.angles)?;
+                            actor.move_local(ActorAxis::Z, i32::from(actor.move_distance), matrix);
+                            host.notify_actor(actor, rng, 6)?;
+                        } else if *state == 10 {
+                            if ticks < 8 {
+                                actor
+                                    .rotate_packet([0x0001_0000, 0x0001_0000, 0x0001_0009], false)
+                                    .map_err(|_| BehaviorFault::Division)?;
+                                actor.translate([0, 8, 0], false);
+                            } else {
+                                context.words[7] = 18;
+                                context.words[12] = 3;
+                                context.stop(sound);
+                                actor.animation.enabled = false;
+                                actor.animation.action_enabled = false;
+                                *active = 0;
+                                *state = i32::from(rng.next_u15().is_multiple_of(2));
+                            }
+                        }
+                    }
                     NpcScript::Bear | NpcScript::Rabbit => {
                         if ticks == 0 {
                             let roll = rng.next_u15() % 10;
@@ -651,7 +745,7 @@ impl EntityBehavior {
                 }
                 Ok(())
             })?;
-            self.ticks = self.ticks.wrapping_add(1);
+            *mutable_ticks = mutable_ticks.wrapping_add(1);
         }
         actor.animation.advance_frame(clips)?;
         Ok(())

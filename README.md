@@ -72,7 +72,8 @@ the remaining named NPC scripts, interaction, physics and scheduling work.
 The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
 additional callbacks now retain their original movement, scaling, visibility,
-frame-gated sound or empty action; 91 callbacks remain pending. See
+frame-gated sound or empty action. Dog, Gargoyle and Demon King are also
+connected; 19 of 107 distinct callbacks are implemented and 88 remain pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch.
 Actor notifications now apply original mood/score, recall, direct dynamic-link
@@ -127,6 +128,10 @@ Bear, Rabbit and Peacock now run their original action scripts. Negative trigger
 distances also apply the original player-facing operation during interaction,
 including waiting signals. See [animal actions and facing](docs/PURSUIT.md) for
 state, RNG, sound and pose comparisons.
+Dog now reads the player action state, and Gargoyle and Demon King clear the
+original view/movement callbacks. Their direct dream-link consequences preserve
+RNG, destination and sound order. See [player-interacting NPCs](docs/PLAYER_NPCS.md)
+for comparisons and remaining natural encounter work.
 
 ## Start here
 
@@ -242,7 +247,7 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Loaded encounter contexts checked for bind/retire/rebuild behavior | 97 |
 | Callbacks at the initial entity-behavior checkpoint | 3 / 107 |
 | Additional callbacks compared using owned model/action graphs | 9 |
-| Total original callbacks implemented and compared in supplied graphs | 12 / 107 |
+| Total original callbacks implemented and compared in supplied graphs | 19 / 107 |
 | Local-axis motion cases compared with original CPU execution | 288 |
 | Rotation/scale packet cases compared with original CPU execution | 144 |
 | Invalid packet cases preserving transform state before a native fault | 12 |

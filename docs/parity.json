@@ -1007,6 +1007,29 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "player_interacting_npc_actions_20261014": {
+      "scope": "Full Dog/Gargoyle/Demon King action and original player callback clearing in real constructed model/entity/player graphs, supplied targets/cache and action input, owned or locally imported math/model/properties/link tables, original direct DreamSys journal and destination selection, base Scene parent notification, external sound. Natural encounters, full map-scene effects and player callback chain, and native GPU/SPU remain unaccepted.",
+      "checks": {
+        "path": "docs/player-npcs-checks.json",
+        "sha256": "322cb62025780fa6882a0ee7bf04b108ae1c1ee675ef4d7bdd70b582c35c50b2"
+      },
+      "owned_action_scenarios": 27,
+      "owned_action_states": 1377,
+      "canonical_action_scenarios": 27,
+      "canonical_action_states": 1377,
+      "clear_callback_cases": 12,
+      "cleared_callback_clock_cases": 8,
+      "direct_actor_journal_compared": true,
+      "dog_gargoyle_demon_king_actions_connected": true,
+      "player_callback_services_connected": true,
+      "original_named_callbacks_implemented_before": 16,
+      "original_named_callbacks_implemented_after": 19,
+      "remaining_pending_callbacks": 88,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

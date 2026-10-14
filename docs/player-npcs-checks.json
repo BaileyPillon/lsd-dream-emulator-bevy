@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Full Dog/Gargoyle/Demon King action and original player callback clearing in real constructed model/entity/player graphs, supplied targets/cache and action input, owned or locally imported math/model/properties/link tables, original direct DreamSys journal and destination selection, base Scene parent notification, external sound. Natural encounters, full map-scene effects and player callback chain, and native GPU/SPU remain unaccepted.",
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/player-npc-runtime.json",
+    "sha256": "0b8501f05404d93eabc88c8e30d3942b83c89577adc4ca629119aa9a928c33e9",
+    "owned_action_scenarios": 27,
+    "owned_action_states": 1377,
+    "clear_callback_cases": 12,
+    "cleared_callback_clock_cases": 8
+  },
+  "canonical_comparison": {
+    "scenarios": 27,
+    "states": 1377,
+    "bindings": {
+      "entity_gargoyle": {
+        "path": "CDI/STG00/M003.LBD",
+        "offset": 36880,
+        "bytes": 8336,
+        "entity": 1,
+        "stage": 0,
+        "model_index": 0,
+        "source_sha256": "bb3d0e169bf5a926fbec2a8d5583f54e2c91dcd6777b5ed9bdb432a892f67ee3",
+        "mom_sha256": "450068afe59bb5ee8aae83ed9b4792f04e384920c6fb7991a6a8e333c3ba45c9"
+      },
+      "entity_demon_king": {
+        "path": "CDI/STG03/N1/M013.LBD",
+        "offset": 28684,
+        "bytes": 9584,
+        "entity": 31,
+        "stage": 3,
+        "model_index": 0,
+        "source_sha256": "4558efa4e219e93e42a09a28c17668af39fc4a5c39954cdc475aa19d6506b3ae",
+        "mom_sha256": "92b35662ff26fb18f0ead51bf8a997bc0321a11f69a230e634df4a56d2c227e3"
+      },
+      "entity_dog": {
+        "path": "CDI/STG07/M003.LBD",
+        "offset": 24588,
+        "bytes": 9452,
+        "entity": 68,
+        "stage": 7,
+        "model_index": 0,
+        "source_sha256": "b3d516cb9a4291edbe2ce99fbd69c81f814d19e32ea30b602ed5902eb598eee3",
+        "mom_sha256": "5d902ea2cdf0cc504ed8e0ccb0a40413f62b195524c3488ed75997a242c8f216"
+      }
+    },
+    "private_fixture_sha256": "e99b4f5168d2943d8acb74cfa26551fa688f516aa1572d6c41c9832a3cb3aed9"
+  },
+  "native_function_entries": {
+    "entity_dog": 514,
+    "entity_gargoyle": 900,
+    "entity_demon_king": 900,
+    "entity_stop_behaviour": 158,
+    "sound_entity_stop": 158,
+    "sound_entity_update": 2314,
+    "dream_sys_get_action_pressed": 230,
+    "dream_sys_clear_callbacks": 938,
+    "dream_sys_set_callbacks": 74,
+    "dream_sys_set_move_callback": 1012,
+    "dream_sys_set_view_callback": 1002,
+    "dream_sys_on_journal_event": 478,
+    "dream_sys_dynamic_link": 24,
+    "get_random_spawn_from_stage": 24,
+    "dream_sys_timer_tick": 8,
+    "dream_sys_update_link_timer": 8,
+    "func_80065FD8": 2700,
+    "rand": 66
+  },
+  "native_function_sha256": {
+    "entity_dog": "99dcfc0101d9f894bbf40e00a9bca541be13af0c3fd213cdc50257e95db34527",
+    "entity_gargoyle": "f2daba81723423bf331fa5431500fbdc36de6bdeaf881c24674c8e7cae9fb988",
+    "entity_demon_king": "0803408336c527b8ccdf9bdc05e7872b3c27b3218203897f6958d3ea13497559",
+    "entity_stop_behaviour": "4fa7621002bfabe6bf1c105adc34415e5f321cde133ecbc8dc1a00aee60dcaf0",
+    "sound_entity_stop": "c6f4076782c64045103290ab510c5ba5581a700a9fd0fde8b6a8cbd12538e1e1",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "dream_sys_get_action_pressed": "bc9d9a4597fc5c324c34fb0acc7dc1596cd1a7b617fc46f0fd1b7f63d9bf4061",
+    "dream_sys_clear_callbacks": "fedcd6413050a1e563cb90214529e50b9a045b6f47e0f1dc93dd3a84f424422b",
+    "dream_sys_set_callbacks": "6e4fe3abfb627f0f6c7d560deec36ccec6d26fcf01b75beeb18285741f5e0df9",
+    "dream_sys_set_move_callback": "e0911b100ce2b5e6a7ea7d27d2516f24c0bd02b0c26cd3acecebdb3925323b78",
+    "dream_sys_set_view_callback": "8c1ddc757452838059838a6a588c8b41d57dcd14ce20c3f85e024e4112fd3a1f",
+    "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec",
+    "dream_sys_dynamic_link": "5d2b1a8e49557bc361344d5a3f2d77dcb0035f6ed1f266ee22c833aaf5569d6b",
+    "get_random_spawn_from_stage": "8c3328af4df34b9baa95865545f441a7bff3edfd1f117c0553a14fc71e298a90",
+    "dream_sys_timer_tick": "37836055f8900486b4aa8cffad57c0b91e26015d5d44ad4dd0eb5bbb5c50826f",
+    "dream_sys_update_link_timer": "4f0e9f68eef6a946bf14874ffaf579a72c796442d815a6857b57613f7b3d13d3",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c",
+    "rand": "4c54a1210ed147afe9b02657c9b12bdec5bb62c5584a2a9fef212567d0e04c0c"
+  },
+  "private_proof_sha256": {
+    "native": "6686ef5da5b7c8532bdfdbb610fd6e96349034e21a0aa9b8b5e2ba283bb3198b",
+    "producer": "f5059aa77ca3b42767b0543ebce89878389b0ddc794eff8ee94f8ed3b209ad68",
+    "repeat": "8f1feaf6f4ce689eb2ffc67abfd781a84947e69480c7ef4afd1bee9b0048f3a7",
+    "repeat_native": "6686ef5da5b7c8532bdfdbb610fd6e96349034e21a0aa9b8b5e2ba283bb3198b",
+    "validation": "de5c7403cc0b16f3b21a833048d0c4cf251ab92d4ed3865dfe40d5c51b60aaa8"
+  },
+  "validation": {
+    "workspace_counts": [
+      134,
+      0,
+      31
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "owned_action_scenarios": 27,
+    "owned_action_states": 1377,
+    "canonical_action_scenarios": 27,
+    "canonical_action_states": 1377,
+    "clear_callback_cases": 12,
+    "cleared_callback_clock_cases": 8,
+    "player_callback_clear_adapter_compared": true,
+    "cleared_callback_clock_compared": true,
+    "direct_actor_journal_compared": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "yokai_diagnostic_line": "supplied_yokai_behavior_active=1 supplied_yokai_behavior_ticks=63 supplied_yokai_context_ticks=63 supplied_yokai_animation_clip=Some(1) supplied_yokai_animation_frame=3 supplied_yokai_position=[-1024, -200, -15360] supplied_yokai_movement_amount=-128",
+        "pending_notifications": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "1080398540369b1a87710d14d4bf2893204d25a5b5ac41ceee9e8a0dad0efb60",
+      "workspace": "40a34f68ac4f6a85008a2f3ac1e556f7fa0a33ae3734423fcd10e22c3e82a01e",
+      "original-content": "9ad8e77ae92842e1ea42347605faad6d95921408930b9b6ae14acc5589bd4b6a",
+      "desktop-build": "409fcbf69269011bc6ee7eeec21cd9fd67c7818e155c32ceac632de0215a5092",
+      "capture-idle": "4a7f26574ca3fe9d690086023f1654fba7b00720bd975bca6c47a7a815de3051",
+      "capture-futon": "02e8bb60ff7f95459c982fdf08275a107b9dd50515be76523b52953048b50632",
+      "capture-yokai": "d568b26695ad0f6addceecb0fb5f54967e773f7c15a23330484ff96df1d6564d",
+      "capture-expiry": "95f7badfa3357a8777881e6d550bbe792aea1090e8aa7e956262dcaae1d71057",
+      "capture-gray-birth": "4f627f65d85285e4c3b970ba9a3e0510b3b0ccd72936ed16ca58b961ab766200",
+      "capture-gray-fade": "d02842375d2019c23d3b5f74da57eeda5efa43b2533e9649129fca91a7f5d746",
+      "capture-gray-complete": "518ba426a5dfab006229d6ed0d82cdb0de245faf1a9c7c5f4775c501fb73b02a"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 19,
+    "remaining_pending_callbacks": 88,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_encounter_or_native_gpu_spu_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_behavior.rs": "4576e97752085dbae69cb8e4429afcc4500c8ab266bd0e4393de92d74a1bd853",
+    "crates/lsd-core/src/linked_player.rs": "382b07fbb2e31cb7140163ad6b7bf148c8573cf6baecdddb3cc7a425c1c81e36",
+    "crates/lsd-assets/src/actor_journal.rs": "8cc8247efb3c96f50c05fcd119c5f22390e910210f20bcc5ecb0d90cb495a17c",
+    "crates/lsd-assets/src/encounter_scene.rs": "e1cfd85a7fe364c227979dd69129f087bc2b39729d0147a4b91ceecce7878850",
+    "crates/lsd-assets/src/stage_session.rs": "47cb8b732482f6c8d0ff7d4b1f840215ebad298c0a04e3c2902e958c4801787f",
+    "crates/lsd-assets/tests/native_player_npcs.rs": "87efe2049e08c2e8a795649deffdc6456e236e9c714240aedb82a2bd681ae69e",
+    "crates/lsd-assets/tests/fixtures/player-npc-runtime.json": "0b8501f05404d93eabc88c8e30d3942b83c89577adc4ca629119aa9a928c33e9"
+  },
+  "scope_limits": [
+    "Dog/Gargoyle/Demon King full actor updates compare state, pose/cache/animation, context/sound, original direct DreamSys journal, destination RNG/spawn/timer/penalty and base Scene notifications in supplied graphs.",
+    "Production callback clearing and the linked-player clock are compared after clearing movement and optionally view. Valid original turn states and both input-lock states are covered.",
+    "The native parent is a base Scene. Its notification has no map fade handler; complete MapScene transition effects remain covered only by their separately identified existing checks, not accepted end to end.",
+    "Owned public model/property/math/link inputs are independent of game files. Original imported model/property observations remain private and identified by hashes.",
+    "Targets/cache and action input, valid transform parent, initialized CD and external sound services are supplied. Game-function outputs are not replaced. Semantic GTE does not prove hardware flags or timing.",
+    "All seven saved development captures are unchanged. They do not accept the newly implemented NPCs as natural encounters or prove original GPU/SPU output.",
+    "There are19 implemented callbacks among107 distinct original actions,88 pending,0 accepted whole NPC encounters and0 accepted whole groups among40 provisional groups. C remains paused; AI scope is separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 19,
+  "remaining_pending_callbacks": 88,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

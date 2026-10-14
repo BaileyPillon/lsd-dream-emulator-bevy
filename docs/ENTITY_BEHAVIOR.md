@@ -3,22 +3,26 @@
 The Gray Man action is now connected with its owned color effect, shared-clock
 lifetime and flashback-count reset. See [Gray Man behavior](GRAY_MAN.md) for the
 full callback and retained-effect comparisons. The implemented callback count
-is 16 of 107; 91 remain pending. Whole natural encounters still need acceptance.
+is 19 of 107; 88 remain pending. Whole natural encounters still need acceptance.
 Bear, Rabbit and Peacock also have full action comparisons, and negative
 interaction distances now update original facing in the scene adapter. See
-[animal actions and facing](PURSUIT.md).
+[animal actions and facing](PURSUIT.md). Dog, Gargoyle and Demon King now
+connect their action-input and player-callback services; see
+[player-interacting NPCs](PLAYER_NPCS.md).
 
 The day profile now runs the original interaction policy against imported actors
 and the player's integer pose/view. The shared lifecycle and three-slot sound
-context run in Rust. Twelve distinct callbacks are implemented, including the
-initial Futon, Television and Drumstick scripts and nine further callbacks in
-[actor motion](ACTOR_MOTION.md). The other 95 retain an explicit pending state.
+context run in Rust. Nineteen distinct callbacks are implemented, including the
+initial Futon, Television and Drumstick scripts, nine further callbacks in
+[actor motion](ACTOR_MOTION.md), Gray Man, Bear, Rabbit, Peacock, Dog, Gargoyle
+and Demon King. The other 88 retain an explicit pending state.
 
 This is partial original-game recovery. Trigger, link, video and end notifications
 now reach the original journal policy immediately; see
 [actor journal recovery](ACTOR_JOURNAL.md). Bound body acknowledgements now run
-synchronously; see [entity body routing](ENTITY_BODY.md). Aim requests and full
-inherited geometry queries remain queued. Complete NPC scripts, parent/camera
+synchronously; see [entity body routing](ENTITY_BODY.md). Facing now uses the
+original integer angle lookup; full inherited geometry queries still need
+acceptance. Complete NPC scripts, parent/camera
 construction, global cadence and GPU/SPU output remain unfinished. Optional AI tooling is
 separate and the default simulation makes no AI model calls.
 
@@ -74,7 +78,7 @@ interaction timer and query policy run; that state is explicitly incomplete.
 | Original distinct callback catalog | 107 |
 | Entity property records / nonzero callback records | 130 / 111 |
 | Initial named callbacks implemented and compared in supplied graphs | 3 |
-| Current total after the actor-motion checkpoint | 12 |
+| Current total after player-interacting NPC recovery | 19 |
 | Whole NPC encounters accepted | 0 |
 
 Native checks execute identified original functions with the real allocator,

@@ -292,6 +292,7 @@ impl StageLinkSession {
                 counts: &mut self.actor_body_queries,
             });
         }
+        services.view_callback = Some(&mut linked.view_callback);
         let first_command = services.commands.len();
         let mut events = crate::ActorJournalDispatcher {
             day,
