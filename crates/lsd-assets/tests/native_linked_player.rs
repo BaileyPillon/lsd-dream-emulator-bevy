@@ -82,6 +82,9 @@ fn original_teleport_triggers_reach_the_loaded_scene_link_pipeline() {
             linked
                 .step(&mut player, &streamed.collision, &math, ready, 0x1000)
                 .unwrap();
+            linked
+                .step(&mut player, &streamed.collision, &math, ready, 0x1000)
+                .unwrap();
             assert!(
                 linked.commands.contains(&MapLinkCommand::Notify(11)),
                 "teleport notification {stage}"

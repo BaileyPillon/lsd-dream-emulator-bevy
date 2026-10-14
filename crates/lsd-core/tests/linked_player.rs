@@ -173,6 +173,11 @@ fn loaded_scene_motion_runs_wall_policy_before_remaining_contacts_and_restores_p
     linked
         .step(&mut player, &scene, &math, [1; 7], 0x1000)
         .unwrap();
+    // Press is dispatched after the first clock; held input reaches the next poll.
+    assert!(linked.body_contact.is_none());
+    linked
+        .step(&mut player, &scene, &math, [1; 7], 0x1000)
+        .unwrap();
     assert!(linked.body_contact.is_some());
     assert!(linked.floor_contact.is_none());
     assert_eq!(player.position, [1024, 0, 1024]);

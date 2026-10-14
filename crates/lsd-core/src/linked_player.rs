@@ -194,15 +194,47 @@ impl LinkedPlayer {
         buttons: u32,
         clock: Option<(&mut crate::DreamDay, &crate::DayTables)>,
     ) -> Result<(), SceneCollisionError> {
-        if self.interval == 0 {
-            return Err(LinkError::InvalidMovement.into());
-        }
+        self.begin_frame();
+        self.map.tick = self.map.tick.wrapping_add(1);
+        self.tick_clock(player, scene, math, ready, clock, crate::FrameSignal::Tick)?;
+        Self::poll_pad(player, buttons);
+        Ok(())
+    }
+
+    /// Clear this adapter's per-frame reports before other clock subscribers run.
+    pub fn begin_frame(&mut self) {
         self.commands.clear();
         self.sounds.clear();
         self.body_contact = None;
         self.floor_contact = None;
         self.floor_effect = None;
-        self.map.tick = self.map.tick.wrapping_add(1);
+    }
+
+    /// The display timer polls and dispatches the pad after its clock traversal.
+    pub fn poll_pad(player: &mut ChunkPlayer, buttons: u32) {
+        player.pad.poll(buttons);
+        for code in player.pad.notifications(&PAD_MASKS) {
+            player.controls.notify_pad(code);
+        }
+    }
+
+    /// Run the player's original clock handler using input from the previous poll.
+    /// Map/generation/renderer ordering is supplied by the surrounding scene host.
+    pub fn tick_clock(
+        &mut self,
+        player: &mut ChunkPlayer,
+        scene: &SceneCollision,
+        math: &PsxMathTables,
+        ready: [i16; 7],
+        clock: Option<(&mut crate::DreamDay, &crate::DayTables)>,
+        signal: crate::FrameSignal,
+    ) -> Result<(), SceneCollisionError> {
+        if signal != crate::FrameSignal::Tick {
+            return Ok(());
+        }
+        if self.interval == 0 {
+            return Err(LinkError::InvalidMovement.into());
+        }
         let run_callbacks = if let Some((day, tables)) = clock {
             self.palette.dream = tables.color(day.chart()?);
             let index = usize::try_from(day.day)
@@ -239,10 +271,6 @@ impl LinkedPlayer {
                 .execution
                 .dream_timer
                 .is_multiple_of(self.interval);
-        }
-        player.pad.poll(buttons);
-        for code in player.pad.notifications(&PAD_MASKS) {
-            player.controls.notify_pad(code);
         }
         if !run_callbacks {
             return Ok(());

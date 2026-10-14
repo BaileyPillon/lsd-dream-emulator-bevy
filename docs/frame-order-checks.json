@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "native_scope": "Original display-timer func_8003E418 calls the real frame clock, real owned TMD/DreamSys player, view callbacks, real pad constructor/poll/dispatch and SDK PadRead/PAD_dr. Controller SDK buffer, initialized firmware reference count and external BIOS B0/16 boundary are supplied. Real allocator, SDK model/coordinate and original attach/notification functions execute. Six guard states, four move directions and five input sequences include supplied clock waiting/finished flags and display codes. Movement callback is disabled; geometry, other real subscribers, global CD/GPU/SPU/timing and whole-game parity are unaccepted. No original game function output is replaced.",
+  "fixture": {
+    "path": "crates/lsd-core/tests/fixtures/frame-pad-order.json",
+    "sha256": "b43f0e3b46c4aec3a864b838987987c3945d32182f72494c4d0bb5838fab0f16",
+    "sequences": 120,
+    "display_events": 3840
+  },
+  "native_function_entries": {
+    "func_8003E418": 3840,
+    "frame_phase_advance": 3648,
+    "frame_phase_notify": 3648,
+    "dream_sys_create": 120,
+    "dream_sys_construct": 120,
+    "dream_sys_timer_tick": 3648,
+    "dream_sys_update_link_timer": 3240,
+    "dream_sys_run_callbacks": 3240,
+    "dream_sys_update_view": 3240,
+    "set_move_from_pad": 3984,
+    "pad_create": 120,
+    "pad_construct": 120,
+    "pad_poll": 3648,
+    "func_80025D10": 3648,
+    "PadRead": 3648,
+    "PAD_dr": 3648,
+    "tmd_create": 240
+  },
+  "native_function_sha256": {
+    "func_8003E418": "2ebf1ebee0091a1755b3ce86e6994b6a5388e9ae83b678d2b348c5f5aea98aeb",
+    "frame_phase_advance": "3e6693cb32496a0c48b1c1fa6407ee0e135d2cc3dde0feb23b207b7ed0a6c3ab",
+    "frame_phase_notify": "9c28952751ef2a11fb75c2b3cdf01b3f0a3687c16cef8bd178ce9b5b35debc0e",
+    "dream_sys_create": "aa1277b8d539211bce31c5456aabf9d516893e8bdb314db71eaedee2038d9dce",
+    "dream_sys_construct": "cd8ef9e8ee2c55e94d1eea26a5864ee1850c3ef74181ebedf84bbaea91a2503e",
+    "dream_sys_timer_tick": "37836055f8900486b4aa8cffad57c0b91e26015d5d44ad4dd0eb5bbb5c50826f",
+    "dream_sys_update_link_timer": "4f0e9f68eef6a946bf14874ffaf579a72c796442d815a6857b57613f7b3d13d3",
+    "dream_sys_run_callbacks": "8400f29ee2b708e3985d9394455869ce53a50753ac078870e2e67b4a6a382bcc",
+    "dream_sys_update_view": "682607bb07932ad3bd36dac8a98d5ee123234708843456b9e833c0b7d7a8c4ed",
+    "set_move_from_pad": "93c79dd6ba8980297886051b22a5c9713f59335f543b6c3e371f98ae514ad38b",
+    "pad_create": "023b7d910dbceaeb1ece78421c028cd1c1aecfb7835bdebc5459843ba9198d2b",
+    "pad_construct": "b14cd8242bf6847780b04161d7c4f528ee8c76534e00362fdcd6804f3e228504",
+    "pad_poll": "22c69c07be3b773b7c1e6c0951c93ceec57e22d93fdda9179d6f2cd1e08aca49",
+    "func_80025D10": "493678c81760ffdf9e82c487910dd28b2d269e92dc49d92f630dd85777c77161",
+    "PadRead": "d08f84a6b2a12f7bb71028964cb75b3d4761fe5c80971058065962832efcb882",
+    "PAD_dr": "f01dcf59b84d86bb81db5485d2b22cc3b4109756b42b0b05d4945f56440fbda2",
+    "tmd_create": "509ad4237ea0a3c267ff3701eacdffa2ee1ee2389d1ec5789b40d642a9745f44"
+  },
+  "original_emulator_observation": {
+    "original_runtime": "BizHawk 2.11.1 / Nymashock, canonical Japanese disc, saved in-dream state",
+    "emulator_frames": 120,
+    "graph_samples": 121,
+    "stage": 0,
+    "clock_phases": [
+      386,
+      406
+    ],
+    "player_timers": [
+      384,
+      404
+    ],
+    "members": [
+      {
+        "role": "actor",
+        "type": 127540,
+        "clock_handler": "entity_update",
+        "entity": 91
+      },
+      {
+        "role": "actor",
+        "type": 127540,
+        "clock_handler": "entity_update",
+        "entity": 77
+      },
+      {
+        "role": "actor",
+        "type": 127540,
+        "clock_handler": "entity_update",
+        "entity": 77
+      },
+      {
+        "role": "actor",
+        "type": 127540,
+        "clock_handler": "entity_update",
+        "entity": 90
+      },
+      {
+        "role": "actor",
+        "type": 127540,
+        "clock_handler": "entity_update",
+        "entity": 5
+      },
+      {
+        "role": "map",
+        "type": 193072,
+        "clock_handler": "func_800533F0"
+      },
+      {
+        "role": "stream",
+        "type": 276,
+        "clock_handler": "func_8004AB24"
+      },
+      {
+        "role": "renderer",
+        "type": 23,
+        "clock_handler": "func_8003EE40"
+      },
+      {
+        "role": "session",
+        "type": 127536,
+        "clock_handler": "scene_update"
+      },
+      {
+        "role": "player",
+        "type": 7988,
+        "clock_handler": "dream_sys_timer_tick"
+      }
+    ],
+    "unique_member_orders": 1,
+    "cursor_next_role_samples": {
+      "session": 101,
+      "complete": 20
+    },
+    "clock_flags_observed": {
+      "waiting": [
+        0
+      ],
+      "finished": [
+        0
+      ]
+    },
+    "canonical_runtime_function_sha256": {
+      "frame_phase_advance": "3e6693cb32496a0c48b1c1fa6407ee0e135d2cc3dde0feb23b207b7ed0a6c3ab",
+      "frame_phase_notify": "9c28952751ef2a11fb75c2b3cdf01b3f0a3687c16cef8bd178ce9b5b35debc0e",
+      "frame_phase_remove_parent": "ea35fd49eeee1ebbcae0a6278933ffa75c6e13be0c72ce6f129a6c04d223150f",
+      "func_8003E418": "2ebf1ebee0091a1755b3ce86e6994b6a5388e9ae83b678d2b348c5f5aea98aeb",
+      "timer_on_notify": "e68bdabf3303ec9a6a7d5ca48c69080ec57c6475ba4f859da1dca89d78b956d3",
+      "dream_sys_timer_tick": "37836055f8900486b4aa8cffad57c0b91e26015d5d44ad4dd0eb5bbb5c50826f",
+      "dream_sys_run_callbacks": "8400f29ee2b708e3985d9394455869ce53a50753ac078870e2e67b4a6a382bcc",
+      "pad_poll": "22c69c07be3b773b7c1e6c0951c93ceec57e22d93fdda9179d6f2cd1e08aca49",
+      "func_80025D10": "493678c81760ffdf9e82c487910dd28b2d269e92dc49d92f630dd85777c77161",
+      "PadRead": "d08f84a6b2a12f7bb71028964cb75b3d4761fe5c80971058065962832efcb882",
+      "PAD_dr": "f01dcf59b84d86bb81db5485d2b22cc3b4109756b42b0b05d4945f56440fbda2",
+      "func_800533F0": "cf14e4d84d91c7e746438b7ad01f8e02946d2b1cc5d6b983fc422d290b1630d8",
+      "func_8005393C": "d956a470fd50097fab6d4c361a79fa27f218cfa128dc84fec3049829b860daf4",
+      "func_8004AB24": "f10fec5ef57cf4f357b45de0fe2783763037b89c794de5cb74bd2b56e5b344f3",
+      "func_8003EE40": "678ca628ae1899bf7bd63c09dbe7d0d8242f51a23e7a521b4cf3faf95182d7c1",
+      "func_8003E8B8": "39c8dddda5e3d6b40359cec73fcae9641631a517f0f81cd17114fb195119e2f8",
+      "scene_update": "13405a3df71c7666913fd53f67e9322b39399102a90c90e4f2bf46b14fe8ea29",
+      "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46"
+    },
+    "input_identity_manifest_sha256": "f874ec62c1407dfe78fd6f282bf759f8f45026b7409350932dc3ef2c52ae5d57",
+    "output_sha256": {
+      "clock.jsonl": "3cb943ff2469d039e5f01e88e6cdd1010024014cc7deaf4756342337084e8a1b",
+      "initial.ram": "00a271ee38724a6968352547d5319f175515b7792cf4637a47fc7b37dbe578ad",
+      "final.ram": "4758484e2fb74f95c8d807631402cc18c309706f9ca271e9ac573f73ecb4ca23",
+      "initial.png": "189a03cdc2cf5f96ea45d46e6d42fd5ced909a998cdbaa27e07c7af3d6c55f91",
+      "final.png": "189a03cdc2cf5f96ea45d46e6d42fd5ced909a998cdbaa27e07c7af3d6c55f91",
+      "completed.txt": "bf42572d986c5c6c39bbdf3f7f0cccd7b8ada6e50516d1007d241d5e9054ee0c",
+      "runtime_smoke.lua": "c901130681e9f1c06cf81fe280580dff68d7df17062066c226196ee5ff163736"
+    },
+    "scope": "Read-only original-emulator RAM observations from a saved cottage dream, no code/data patch or desktop input. Actual newest-first clock graph and canonical routine identity are observed; the native comparison suite separately executes the original display/clock/player/pad chain in owned state. The sampled clock cursor may be nonzero because GPU/wait work crosses emulator frame boundaries. These are graph observations, not per-instruction traces, portable Rust frame timing, renderer parity or whole NPC/game acceptance.",
+    "original_ram_writes": 0,
+    "whole_original_feature_groups_accepted": 0,
+    "global_port_schedule_accepted": false
+  },
+  "private_proof_sha256": {
+    "native": "12a8fbe68a274f4f91a2cc87468202f21a595ddc9c3c30f1638fc3cb821802d5",
+    "native_producer": "bf7f1b7d04eb1cc9896c290e5a220f6e002181bebcba92cfe35b951b34836f69",
+    "native_runtime": "646087e5298ee9e4670ce858b0a88baced6f753c9e78083d8606de6cd026858c",
+    "original_emulator": "3eed2e85b8f7f27718fc8164caad3635e8fe7c6049d33e85b0dd17652db26c3b",
+    "original_inputs_verification": "936b686af5c2c77b5cd2bcaa0947f335c4a16889fd55d634f61a8b0dd9e3776e",
+    "validation": "58808bfe818d92fbc218c28d14f74246df80d3f07e62b0bf9fa4a4ffcbb85deb"
+  },
+  "validation": {
+    "workspace_counts": [
+      126,
+      0,
+      24
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "display_pad_sequences": 120,
+    "display_pad_events": 3840,
+    "original_emulator_graph_samples": 121,
+    "live_cursor_cases": 88,
+    "live_cursor_notifications": 176,
+    "live_cursor_callback_observations": 698,
+    "owned_actor_clock_scenarios": 32,
+    "clock_state_observations": 416,
+    "real_clock_entities_constructed": 96,
+    "scalar_clock_cases": 36,
+    "full_owned_movement_wrapper_cases": 270,
+    "full_owned_pair_cases": 32,
+    "full_owned_pair_contacts": 20,
+    "canonical_full_pair_cases": 16,
+    "canonical_full_pair_contacts": 12,
+    "wrong_fresh_position_owned_contact_mismatches": 20,
+    "wrong_fresh_position_canonical_contact_mismatches": 8,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true,
+        "pending_notifications": 0,
+        "executed_body_queries": 48,
+        "body_contacts": 0
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "legacy",
+        "image_sha256": "b3e42bae841124252741bb332905da02ce1e07a11ae591fa2132a0ebc25870e3",
+        "same_as_previous_image": false
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "bd814b6bc7869497f63483c40fe63cfe63598b87587c49a3b22dc5098fa3bd1c",
+      "workspace": "5961856fe846fb3fc2a39abf77c7d43df4dc0517e61dc4756acc9f02d3434318",
+      "owned-contact-counters": "403bbf8ba6355c5bf91af8964e694e800aeabf77baa23ef2b3ea0aef4b9367a9",
+      "original-content": "2394303e6b8ec480621122c1e3a7c8df95fb11689d0d7fc151207c72d65be835",
+      "desktop-build": "1accf90fa94df90190e66dd6fb401952b45f0e4606d9e4ae257977f81d2f2392",
+      "capture-idle": "648d8a6b467a1dcdc152b7b616032f01b29ef8c765405a3e1be3d67c1bff3058",
+      "capture-futon": "81cd611ce163fbb4c32e19b537e998829d9206ce1acacb50e601269dd3bdf736",
+      "capture-yokai": "da6aaf51e9474a9fd52e99d66da35d5ebcfc7d68a50d3dd56308173d3fb1ca01",
+      "capture-expiry": "cca081c9a131e22c97503a58246210fa70485c2cfa07c5c56b6ffec178392f26",
+      "capture-legacy": "2b4cbeea2c28fef5103dc299ef11fde49be7d168e76102f54a5e43503915da50"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 12,
+    "remaining_pending_callbacks": 95,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "natural_frame_cache_ancestry_response_whole_game_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/linked_player.rs": "d42f389b4026922f9bca2812efd676d87e6d5366986304671db899b7cd577a56",
+    "crates/lsd-core/tests/linked_player.rs": "06e30e8061784013d08c612eecf6db4aa9bc6d87d95f5839090cd416bd5f8598",
+    "crates/lsd-core/tests/native_frame_pad_order.rs": "76ed3655da255c3509a534d8e27363887a4f26f3fd27aad09a97e4aca287b92e",
+    "crates/lsd-core/tests/fixtures/frame-pad-order.json": "b43f0e3b46c4aec3a864b838987987c3945d32182f72494c4d0bb5838fab0f16",
+    "crates/lsd-assets/tests/native_linked_player.rs": "76264b2776eaadd5bd4f58c6b3a2e90a18ceda9041abe0830e29f66c629356cf"
+  },
+  "scope_limits": [
+    "The real original display/clock/player/pad call chain executes in owned constructor/control state, with a disabled movement callback and external firmware/controller input supplied. Original game function outputs are not replaced.",
+    "The original emulator uses an unmodified canonical disc and saved in-dream state. 121 read-only graph observations and initial/final canonical code hashes identify the actual subscriber list.",
+    "RAM graphs sampled at emulator frame boundaries are not per-instruction execution traces or acceptance of frame timing, GPU output or all scenes.",
+    "The linked-player adapter now advances clock callbacks before fresh pad dispatch. Its separate APIs allow future global phase integration; the loaded inspector still places player work before actor/generation work.",
+    "Full shared clock ownership, delayed actor birth, CD waiting, natural transform caches, movement response and other lifetimes remain open.",
+    "Public fixtures contain owned control states and scalar results; original ROM, RAM, images and BIOS stay private. Whole encounters/feature groups, remaining 95 callbacks and original GPU/SPU remain unaccepted."
+  ],
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

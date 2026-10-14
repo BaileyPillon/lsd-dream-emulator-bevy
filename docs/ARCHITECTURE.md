@@ -139,3 +139,11 @@ The list permits duplicate subscriptions to preserve the original base-list
 semantics; actor attachment still guards against duplicate registration.
 Other original clock subscribers and actor births/removals requested by callbacks
 remain unconnected; see [live clock traversal](FRAME_CURSOR.md).
+
+`LinkedPlayer::tick_clock` consumes the control state left by the previous pad
+dispatch. Waiting and finished signals hold the player clock. `poll_pad` applies
+new input afterward, matching the original display timer. `begin_frame` separates
+report clearing from callbacks so the eventual shared scene host can retain
+commands emitted by earlier subscribers. The combined linked-player step now
+uses the corrected clock-before-pad order. The single-chunk movement probe remains
+a supplied-input primitive. See [frame and pad order](FRAME_ORDER.md).

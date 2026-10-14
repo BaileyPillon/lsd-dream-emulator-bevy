@@ -152,3 +152,12 @@ including next-member removal, restart, duplicates, self destruction and flag
 changes. Global player/map/generation/render/CD ordering and NPC-requested
 births/removals during callbacks remain open. See
 [actor clock recovery](ACTOR_CLOCK.md) and [live traversal](FRAME_CURSOR.md).
+
+The original emulator now supplies 121 read-only observations of the actual
+cottage clock graph: five actors, map, stream context, renderer, session counter
+and player. Original display-timer/player/pad comparisons cover 120 sequences
+and 3,840 display events. The linked-player step now advances clock callbacks
+before polling new input; its separate clock and pad APIs allow later scene
+integration. Connect the observed actor/map/generation/stream/render/player order,
+session handoff and pad phase to one shared clock, including delayed actor births,
+waiting and transform-cache refresh. See [frame and pad order](FRAME_ORDER.md).

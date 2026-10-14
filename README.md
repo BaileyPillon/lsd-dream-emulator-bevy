@@ -107,6 +107,10 @@ Clock dispatch now uses a live cursor, so removing the next subscriber skips it
 and a new subscription waits for the next notification. Actor finish cleanup
 removes each actor during dispatch. See [live clock traversal](docs/FRAME_CURSOR.md)
 for original-code comparisons and the remaining shared scene scheduling.
+Player clock callbacks now run before fresh pad dispatch, preserving the original
+input phase in the linked scene. An unmodified original-emulator run also records
+the shared clock graph. See [frame and pad order](docs/FRAME_ORDER.md) for the
+comparisons and the remaining work to connect every scene phase.
 
 ## Start here
 
