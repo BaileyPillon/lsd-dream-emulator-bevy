@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T02:30:29.461880+00:00",
+  "base_commit": "7120245825c82de645c92614b4063f4c1c9b8e5f",
+  "scope": "Correct request field names before consuming original effect commands; numeric original map observations are unchanged.",
+  "native_setter": {
+    "vtable_offset": "0xd0",
+    "address": "0x8004001c",
+    "function": "effect_set_color_step",
+    "bytes": 8,
+    "sha256": "dea8127e64d9c93d9a4df51d3c54e9747090fea982aea0c75be5609a7b895eef"
+  },
+  "native_start": {
+    "vtable_offset": "0xd8",
+    "address": "0x800400b0",
+    "function": "effect_start_attached",
+    "parameters": [
+      "parent",
+      "variant",
+      "mode"
+    ]
+  },
+  "renamed_command_fields": {
+    "ticks": "color_step",
+    "color": "variant",
+    "target": "mode"
+  },
+  "source_anchors": [
+    "src/graphics/renderer.c:func_8003F99C",
+    "src/graphics/effect.c:effect_set_color_step",
+    "src/graphics/effect.c:effect_activate",
+    "src/graphics/effect.c:effect_tick"
+  ],
+  "original_fixture_historical_label": "duration names the captured offset-0xd0 setter in the frozen numeric fixture; it is a color step",
+  "original_numeric_fixture_unchanged": true,
+  "whole_original_feature_groups_accepted": 0,
+  "clippy_all_targets_all_features_passed": true,
+  "workspace_tests_passed": true,
+  "working_source_sha256": {
+    "crates/lsd-core/src/map_links.rs": "1eac113f79d0f06e8458ba011c68b1b01c073cf9d164da9ac9245c84f213f9d5",
+    "crates/lsd-core/tests/native_map_links.rs": "c2c228d678dfae5f42087174ea4bc86ae440d253b5ed2a7a0b8e6334c0fe4ee0",
+    "crates/lsd-core/tests/linked_player.rs": "6e51873876af1bb2dacafee156a966ec5aed64e452af7bacdd0ae330efa812cb",
+    "docs/SCENE_LINKS.md": "8d5b3ed74ab0a0400e1098dd5d26b7c70626506cceefa062b2bdfe3d7048240d"
+  }
+}

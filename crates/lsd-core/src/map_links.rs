@@ -8,9 +8,9 @@ pub struct LinkPalette {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MapLinkCommand {
     Fade {
-        color: i32,
-        target: i32,
-        ticks: i32,
+        variant: i32,
+        mode: i32,
+        color_step: i32,
         attach: bool,
     },
     Notify(i32),
@@ -41,11 +41,11 @@ impl MapLinkPolicy {
             }
             return Ok(commands);
         }
-        let mut fade = |color, ticks| {
+        let mut fade = |variant, color_step| {
             commands.push(MapLinkCommand::Fade {
-                color,
-                target: 0,
-                ticks,
+                variant,
+                mode: 0,
+                color_step,
                 attach: true,
             })
         };

@@ -55,19 +55,19 @@ fn native_map_scene_notification_start_and_busy_cancellation_policy_match() {
         for command in commands {
             match command {
                 MapLinkCommand::Fade {
-                    color,
-                    target,
-                    ticks,
+                    variant,
+                    mode,
+                    color_step,
                     attach,
                 } => {
                     trace.push(json!(["get_effect"]));
-                    if ticks != 0 {
-                        trace.push(json!(["duration", ticks]));
+                    if color_step != 0 {
+                        trace.push(json!(["duration", color_step]));
                     }
                     if attach {
                         trace.push(json!(["attach"]));
                     }
-                    trace.push(json!(["start", color, target]));
+                    trace.push(json!(["start", variant, mode]));
                 }
                 MapLinkCommand::Notify(code) => trace.push(json!(["notify", code])),
                 MapLinkCommand::MoveCallback(mode) => trace.push(json!(["move_callback", mode])),

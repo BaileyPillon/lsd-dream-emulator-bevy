@@ -517,6 +517,18 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "effect_request_semantics_20261013": {
+      "scope": "Correct request field names before consuming original effect commands; numeric original map observations are unchanged.",
+      "evidence": {
+        "path": "docs/effect-request-correction.json",
+        "sha256": "b2d79aa38a557c324f31ab5e05eddd1a75899f339981935c652f427aa798ba6b"
+      },
+      "effect_color_step_identified": true,
+      "effect_variant_mode_identified": true,
+      "native_numeric_observations_unchanged": true,
+      "effect_lifecycle_implemented": false,
+      "whole_original_feature_groups_accepted": 0
     }
   }
 }

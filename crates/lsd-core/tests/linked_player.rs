@@ -188,9 +188,9 @@ fn loaded_scene_motion_runs_wall_policy_before_remaining_contacts_and_restores_p
     assert_eq!(
         linked.commands,
         vec![MapLinkCommand::Fade {
-            color: 0,
-            target: 0,
-            ticks: 30,
+            variant: 0,
+            mode: 0,
+            color_step: 30,
             attach: true
         }]
     );
