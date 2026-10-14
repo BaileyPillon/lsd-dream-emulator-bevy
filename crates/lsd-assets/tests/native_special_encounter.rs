@@ -87,10 +87,8 @@ fn activation_comparison(fixture: &Value, case: &Value, assets: SpecialEncounter
         "dormant constructor"
     );
     assert!(scene.frame_actor_order().is_empty());
-    assert!(
-        scene.actors[0].behavior_pending,
-        "Activation does not accept the pending Gray Man action"
-    );
+    assert!(!scene.actors[0].behavior_pending);
+    assert_eq!(scene.actors[0].behavior.script, NpcScript::GrayMan);
     let mut actor = marker_resource.construct_actor().unwrap();
     let behavior = EntityBehavior::construct(17, NpcScript::None, [0; 12], &mut actor, &mut sound);
     scene.add_actor(SceneActor {

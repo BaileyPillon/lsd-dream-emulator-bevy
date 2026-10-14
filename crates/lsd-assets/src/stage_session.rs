@@ -8,6 +8,16 @@ use lsd_core::{
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StageSessionEvent {
+    ActorEffectCompleted {
+        entity: u8,
+        code: i32,
+    },
+    ActorDestroyed {
+        entity: u8,
+    },
+    ActorFlashbackReset {
+        entity: u8,
+    },
     StopMap,
     DestroyMap,
     CreateMap(i32),

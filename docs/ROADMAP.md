@@ -34,7 +34,8 @@ visible transitions still need integration. All 40 provisional whole-game groups
 [parity.json](parity.json) for the frozen initial baseline and dated progress.
 The special Gray Man model now has a dormant per-scene instance and original
 activation placement/facing/restart order. The loaded original day gate is
-connected; its action callback, actor effect and flashback reset remain pending.
+connected, followed by its original forward action, triggered color flash and
+flashback-count reset. Natural encounter/render/audio parity remains open.
 See [special encounters](SPECIAL_ENCOUNTERS.md) for the comparison scope.
 Dream link handlers, cached actor keys and all four stair scripts now have
 original CPU comparisons. Their scene/notification interfaces still need

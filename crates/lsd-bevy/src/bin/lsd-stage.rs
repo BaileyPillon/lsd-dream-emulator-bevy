@@ -147,6 +147,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut supplied_day = 1;
     let mut supplied_actor_motion = false;
     let mut supplied_actor_query = false;
+    let mut supplied_gray_contact = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -178,6 +179,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     | "--dream-scenario-capture"
                     | "--npc-behavior-capture"
                     | "--npc-motion-capture"
+                    | "--gray-man-capture"
             ) =>
         {
             original_day = true;
@@ -186,6 +188,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 supplied_day = 8;
             }
             supplied_actor_query = value == "--npc-behavior-capture" || supplied_actor_motion;
+            supplied_gray_contact = value == "--gray-man-capture";
             walk = true;
             walk_stream = true;
             walk_links = true;
@@ -451,6 +454,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .encounters
                 .as_mut()
                 .unwrap()
+                .enable_entity_effects(lsd_assets::load_entity_effect_definition(&executable)?);
+            session
+                .encounters
+                .as_mut()
+                .unwrap()
                 .enable_special_encounter(lsd_assets::load_special_encounter_assets(
                     &executable,
                     &root,
@@ -534,6 +542,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             actor.actor.pose.position,
                         );
                     }
+                    if supplied_gray_contact && step_index == 0 {
+                        let target = lsd_core::EntityTarget {
+                            position: player.position,
+                            local_y: player.position[1],
+                            matrix: tables.rotation(player.controls.angles),
+                            eye: player.controls.eye,
+                            target: player.controls.target,
+                        };
+                        let position = target.resolve(2048)?;
+                        let session = session.as_mut().unwrap();
+                        session.day.as_mut().unwrap().flashback_count = 10;
+                        let encounters = session.encounters.as_mut().unwrap();
+                        encounters.set_encounter_player(player.position, target.matrix);
+                        encounters.activate_gray_man(&mut session.encounter_audio)?;
+                        encounters
+                            .actors
+                            .iter_mut()
+                            .find(|actor| actor.entity == 98)
+                            .unwrap()
+                            .actor
+                            .translate(position, true);
+                        println!(
+                            "profile=supplied_original_gray_proximity supplied_actor_position=true supplied_triggered_flag=false supplied_flashback_count=10 original_action_effect_and_reset_connected=true"
+                        );
+                    }
                     let selected = session
                         .as_ref()
                         .and_then(|session| session.content_choice.as_ref())
@@ -608,6 +641,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         if let Some(session) = &session {
             if let Some(encounters) = &session.encounters {
+                if let Some(gray) = encounters.actors.iter().find(|actor| actor.entity == 98) {
+                    println!(
+                        "gray_action_ticks={} gray_action_active={} gray_flashback_count={} gray_effect_state={} gray_effect_life={} gray_effect_color={:?}",
+                        gray.behavior.ticks,
+                        gray.behavior.active,
+                        session.day.as_ref().map_or(0, |day| day.flashback_count),
+                        gray.behavior.effect.as_ref().map_or(0, |e| e.state.state),
+                        gray.behavior.effect.as_ref().map_or(0, |e| e.state.life),
+                        gray.behavior.effect.as_ref().map(|e| e.state.color)
+                    );
+                }
                 println!(
                     "original_actor_channel_connected=true actor_instances={} actor_parts={} named_npc_callbacks_pending={} gray_man_activation_requests_pending={}",
                     encounters.actors.len(),
@@ -1153,12 +1197,19 @@ fn generation_layers(
     if let Some(handle) = &visuals.composite
         && let Some(mut material) = materials.get_mut(handle)
     {
-        let packets: Vec<_> = generation
+        let mut packets: Vec<_> = generation
             .layers
             .environment
             .and_then(|layer| layer.gpu_box_packet([320, 240]))
             .into_iter()
             .collect();
+        if let Some(encounters) = scene
+            .session
+            .as_ref()
+            .and_then(|session| session.encounters.as_ref())
+        {
+            packets.extend(encounters.entity_effect_packets([320, 240]));
+        }
         material.boxes.set_packets(&packets);
     }
 }

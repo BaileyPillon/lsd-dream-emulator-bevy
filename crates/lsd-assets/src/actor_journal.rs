@@ -243,6 +243,12 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn actor_destroyed(&mut self, _serial: u64, entity: u8) -> Result<(), DayFault> {
+        self.services
+            .events
+            .push(StageSessionEvent::ActorDestroyed { entity });
+        Ok(())
+    }
     fn dispatch(
         &mut self,
         event: EncounterNotification,
@@ -346,6 +352,15 @@ impl ActorJournalDispatcher<'_> {
         rng: &mut PsxRng,
         query_resolved: bool,
     ) -> Result<(), DayFault> {
+        if event.kind == EncounterNotificationKind::ResetFlashbackCount {
+            self.day.flashback_count = 0;
+            self.services
+                .events
+                .push(StageSessionEvent::ActorFlashbackReset {
+                    entity: event.entity,
+                });
+            return Ok(());
+        }
         let EncounterNotificationKind::Notify(code) = event.kind else {
             self.services.pending.push(event);
             return Ok(());

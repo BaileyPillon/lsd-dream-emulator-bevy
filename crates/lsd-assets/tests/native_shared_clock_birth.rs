@@ -43,6 +43,12 @@ fn sync(scene: &mut EncounterScene, members: &mut FrameSubscribers<SceneClockMem
             EncounterSubscription::Detach(serial) => {
                 members.remove(SceneClockMember::Actor(serial));
             }
+            EncounterSubscription::AttachEffect(serial) => {
+                members.subscribe(SceneClockMember::ActorEffect(serial))
+            }
+            EncounterSubscription::DetachEffect(serial) => {
+                members.remove(SceneClockMember::ActorEffect(serial));
+            }
         }
     }
 }

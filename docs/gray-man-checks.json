@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-14",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "scope": "Full original Gray Man action and real clock in constructed model/player/scene graphs, provided target/view/cache and trigger flags. SDK rectangle packets are original CPU execution; native GPU/SPU and whole natural encounters remain unaccepted.",
+  "fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/gray-man-runtime.json",
+    "sha256": "5bdffe7bf9c1a6fe0ad9fc076a0b43fc2178e2ead885389435918267f1da3278",
+    "scenarios": 10,
+    "state_observations": 350,
+    "original_gray_action_calls": 22,
+    "original_clock_advances": 312,
+    "original_sdk_rectangle_sort_calls": 316
+  },
+  "native_function_entries": {
+    "entity_gray_man": 22,
+    "entity_tick": 22,
+    "sound_entity_update": 22,
+    "entity_create_effect": 16,
+    "effect_create": 22,
+    "effect_start": 14,
+    "effect_tick": 266,
+    "effect_deactivate": 10,
+    "entity_disable_link": 40,
+    "sound_entity_stop": 40,
+    "dream_sys_reset_flashback_list": 14,
+    "func_8005748C": 22,
+    "frame_phase_advance": 312,
+    "frame_phase_notify": 312,
+    "func_80012064": 316,
+    "GsSortBoxFill": 316,
+    "memory_allocate_mem": 1061,
+    "entity_cleanup": 2
+  },
+  "native_function_sha256": {
+    "entity_gray_man": "3a8601ffa5169b93c0694e7e955036e906ec06a066569c650a51adf7e415a65a",
+    "entity_tick": "59c5b639258a4d6980458dab3b6849ad759eb7c8cd7977585c82084cb324edb1",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "entity_create_effect": "0f497b7b3419abfad4ef1524623f5645fd161a8c84af680154615202d30f6723",
+    "effect_create": "18884b503c79af2a2d759dae1d56af5f0d620e864ce6be7ec076d3262013079c",
+    "effect_start": "103995793cb7706b9b53835e04afe0c65df685a77706d6ef75f3d74ee248f50f",
+    "effect_tick": "c64b3f664dd2ec89b81739d3bf399fd3a3f15c7f1e3350b7ef0c11115cd9745b",
+    "effect_deactivate": "d4a608123391b6996d77edd6a56fec625d35b15a68c3cbfb551d0e6997076a53",
+    "entity_disable_link": "730e458b8fcbb0fbdd92a20f7825c109697c11b5c02e57668ba54d424df14efd",
+    "sound_entity_stop": "c6f4076782c64045103290ab510c5ba5581a700a9fd0fde8b6a8cbd12538e1e1",
+    "dream_sys_reset_flashback_list": "e22f7599c96cbf0062f2b24b3f9c14f8892def27d2fabf06119056de9f912bd7",
+    "func_8005748C": "56c4b7f4e13cde1be03d9e0f549a37ad158f8194a73c986e003153ea0acfe087",
+    "frame_phase_advance": "3e6693cb32496a0c48b1c1fa6407ee0e135d2cc3dde0feb23b207b7ed0a6c3ab",
+    "frame_phase_notify": "9c28952751ef2a11fb75c2b3cdf01b3f0a3687c16cef8bd178ce9b5b35debc0e",
+    "func_80012064": "34b529fdecd76b1632d3545d2cd9f59b17a4798d5a8e4b1eb532501da58e5c89",
+    "GsSortBoxFill": "55996b248085870da98694f474054267b0715ae5e3f59f15c65daa7d831ada74",
+    "memory_allocate_mem": "a55ec79ff9c1252fd41968bf5abca2a74f3658b6c400df80289d51d943fc5ef9",
+    "entity_cleanup": "404b11a3286d5e746a018650fa3d2802ad1cf057ddb57f085288bed1a4efbb10"
+  },
+  "private_proof_sha256": {
+    "native": "3f0c711199abe37f67e7d1355c6bed60de72afc53d8e06f578fe2207ae9a405c",
+    "producer": "3d7032cd7e6b9e227f1b9ce5516f879cf15501a1df4e35c3687dcbb6043058e6",
+    "validation": "06e5443f15a01a91a1753e6ecd5af97a3cdaf958f516846ce1dd312bc2fc5d34",
+    "visual": "cc8cfb7daacbbe1f97509d06a1e7d65b246081b36cf701a062255fd500791f25"
+  },
+  "validation": {
+    "workspace_counts": [
+      129,
+      0,
+      29
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "native_scenarios": 10,
+    "native_state_observations": 350,
+    "original_gray_callback_calls": 22,
+    "original_sdk_rectangle_calls": 316,
+    "local_original_gray_action_and_effect_integration_passed": true,
+    "captures": [
+      {
+        "profile": "idle",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "futon",
+        "image_sha256": "15f983732b13c8fea0914a3ea61712261b14de819b54da852cc6ceb4c9bc48e7",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "yokai",
+        "image_sha256": "020df443e724f7a80f17e78e70b6f46415e118dece6f78a28cdca5028f9cb057",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "expiry",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "same_as_previous_image": true
+      },
+      {
+        "profile": "gray-birth",
+        "image_sha256": "24e206e01fa7d2006a7348b9c91f311a509a1854089dea46ba261d3a48e2587e"
+      },
+      {
+        "profile": "gray-fade",
+        "image_sha256": "361fb03333ca7ae90b1bc49c3f6e65936c2896af9efd5419a2ed2afeb7aaae25"
+      },
+      {
+        "profile": "gray-complete",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0"
+      }
+    ],
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "a353c22723e4a947e667c00b10901d6cea8e5b2fd108db5b1ebc291c4b7c6e83",
+      "workspace": "2936bce7e1f775369173685d072b0a7f04318802d46369bf0df10d4eb4dc410a",
+      "original-content": "99438e9be15bb5797a5b113ce95ea057dc898faa5f95096ec323ffd1512b1320",
+      "desktop-build": "5ef37c67cbbb02911c72ba5cdb4820ccd15d10530be28388401b7bb64c704d1a",
+      "capture-idle": "1d7350347bfd4e5f4c44659804d50c1e97fe4d75f517acb6010f4351d6aadf67",
+      "capture-futon": "0d8df471f87d632f128d296888e31e60898629efa36ca0b2489db2984766513e",
+      "capture-yokai": "ed667196f28619095d8d34d7b7de3872da7c7a489b0c753ba8a0c59288344969",
+      "capture-expiry": "756a49b4a0dacc1b113c7881b3820958e1933072475d2fb23d4c06ae2ac8459a",
+      "capture-gray-birth": "cb977d13801b260bcd600e93032dc3b2f348d9e219b64bc3f99c64a8756e8f29",
+      "capture-gray-fade": "6bdff5832c12b710779eef4a713fb32b6b399d819aeb1c2a79e27011a25d03de",
+      "capture-gray-complete": "2967f5f4b9d9d980690beb79a67d28a554316447af45a9d5251c2e1b6d3dcc14"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "original_named_callbacks_implemented": 13,
+    "remaining_pending_callbacks": 94,
+    "whole_original_feature_groups_accepted": 0,
+    "original_npc_behaviors_accepted": 0,
+    "ai_model_calls": 0,
+    "whole_natural_gray_encounter_or_native_gpu_spu_accepted": false
+  },
+  "visual": {
+    "birth_is_full_white": true,
+    "fade_differs_from_birth": true,
+    "completion_matches_idle_image": true,
+    "observations": [
+      {
+        "profile": "gray-birth",
+        "size": [
+          320,
+          240
+        ],
+        "channel_extrema": [
+          [
+            255,
+            255
+          ],
+          [
+            255,
+            255
+          ],
+          [
+            255,
+            255
+          ]
+        ]
+      },
+      {
+        "profile": "gray-fade",
+        "size": [
+          320,
+          240
+        ],
+        "channel_extrema": [
+          [
+            132,
+            255
+          ],
+          [
+            132,
+            255
+          ],
+          [
+            132,
+            255
+          ]
+        ]
+      },
+      {
+        "profile": "gray-complete",
+        "size": [
+          320,
+          240
+        ],
+        "channel_extrema": [
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ],
+          [
+            0,
+            255
+          ]
+        ]
+      }
+    ],
+    "original_gpu_parity_accepted": false
+  },
+  "source_sha256": {
+    "crates/lsd-core/src/entity_effect.rs": "4e330eb4ab6bb1903b55baac8d2bbf8e7a436338aa343ef104b7be262df31195",
+    "crates/lsd-core/src/entity_behavior.rs": "7d8eb4185a84a72845987330d741c59e2437a20520958d85754c2164ed318766",
+    "crates/lsd-core/src/lib.rs": "9a6eb562e6398a8c70b1729d2d93e3bd9cab76b039b82392974645624f0330b0",
+    "crates/lsd-assets/src/actor_journal.rs": "7f033de9f68ea5596215ed757f63f3ee2e5aded52e95c2d9e1089bd5e97ee9bd",
+    "crates/lsd-assets/src/effect_palette.rs": "7e6ec838cb2ebf7ddf33531ed1bfdee2e5734a3167877763e5283ec0e0fecc43",
+    "crates/lsd-assets/src/encounter_scene.rs": "58f9b9c05798089723692e27b50793494eec3ef27bc3a185854085e11dabdd63",
+    "crates/lsd-assets/src/lib.rs": "a67c62721d0cbf8ffd1402d07f4ca43c1539d441208cc750963cd8e589feb375",
+    "crates/lsd-assets/src/scene_frame.rs": "7d59c7b566e8b47025f8872ffd91c5d621cce67e14ab3f909788e612892507eb",
+    "crates/lsd-assets/src/stage_session.rs": "cf005c2e39e22e1797a635d13e880fdf17dba5914e00bd8e1c39868646fe5132",
+    "crates/lsd-assets/tests/native_shared_clock_birth.rs": "002a63675f02f2cc4593df565fb20b18f11df978bdd31eac5d73fa7a64b02ed2",
+    "crates/lsd-assets/tests/native_special_encounter.rs": "2ce7cdd3730a33d80cfaadb47090b55365f283ca2935af2c29712ed60d1afd15",
+    "crates/lsd-assets/tests/shared_scene_frame.rs": "b9bb0357857d76737262a3f08d17d0f1c638e5045179a32bbae95f27d156a405",
+    "crates/lsd-assets/tests/native_gray_man.rs": "d2ebd9310796be9764511586b11c63ff90aa82828f7d1a4897113ae5c8132bc3",
+    "crates/lsd-assets/tests/loaded_gray_man.rs": "e4f6c10dc9e4fe70c79de7aa394473f41e326fe45ce06f8bc8208ff437e735f8",
+    "crates/lsd-assets/tests/fixtures/gray-man-runtime.json": "5bdffe7bf9c1a6fe0ad9fc076a0b43fc2178e2ead885389435918267f1da3278",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "78cc8e1040f816dede5ae7639a9408de9e25ef215b1981cfb066d25fa9df2e2e"
+  },
+  "scope_limits": [
+    "Original action runs in the default day profile. Movement and notification follow the successful triggered hide/stop/flashback reset in the same callback.",
+    "The owned effect persists independently on the shared clock, is reused without restarting an active cycle, emits original SDK rectangle packet fields, detaches on completion and is retired with its owner.",
+    "The native graph provides target/view/cache, trigger flags, empty allocator free list for failure, viewport and external sound. It executes original functions through the existing semantic GTE backend; game-function outputs are not replaced.",
+    "The local loaded test supplies nearby placement and uses the real interaction/journal/day/effect path. Original naturally played spawn-to-contact paths, body response, full parent/cache lifetimes and timing remain unaccepted.",
+    "Existing idle/Futon/Yokai/expiry captures are unchanged. The supplied Gray Man capture becomes full white, fades, and returns to the idle image. The image is from Bevy, not original GPU execution.",
+    "Whole original encounters, GPU/SPU/media, menus/save/load/special days/endings and all 40 provisional whole-feature groups require further work. C remains paused; optional AI tools/mods remain separate."
+  ],
+  "original_function_output_stubs": 0,
+  "original_named_callbacks_implemented": 13,
+  "remaining_pending_callbacks": 94,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0
+}

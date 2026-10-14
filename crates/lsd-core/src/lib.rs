@@ -36,6 +36,8 @@ pub use model_actor::{ActorAxis, ModelActor};
 mod object_aim;
 pub use object_aim::{AimFault, PsxAimTables};
 mod entity_behavior;
+mod entity_effect;
+pub use entity_effect::{EntityEffect, EntityEffectDefinition};
 mod entity_body;
 pub use entity_behavior::{
     BehaviorContext, BehaviorFault, BehaviorTick, EntityBehavior, EntityInteractionHost,

@@ -1,5 +1,10 @@
 # Entity lifecycle, perception and original callbacks
 
+The Gray Man action is now connected with its owned color effect, shared-clock
+lifetime and flashback-count reset. See [Gray Man behavior](GRAY_MAN.md) for the
+full callback and retained-effect comparisons. The implemented callback count
+is 13 of 107; 94 remain pending. Whole natural encounters still need acceptance.
+
 The day profile now runs the original interaction policy against imported actors
 and the player's integer pose/view. The shared lifecycle and three-slot sound
 context run in Rust. Twelve distinct callbacks are implemented, including the

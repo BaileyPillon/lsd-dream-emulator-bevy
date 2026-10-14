@@ -12,6 +12,8 @@ pub enum BehaviorFault {
     MissingMotionServices,
     Collision(crate::CollisionFault),
     Journal(crate::DayFault),
+    Effect(crate::EffectFault),
+    MissingEffectServices,
 }
 impl fmt::Display for BehaviorFault {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -58,6 +60,13 @@ impl BehaviorContext {
         sound: &mut impl GenerationSound,
         callback: impl FnOnce(&mut Self) -> Result<(), BehaviorFault>,
     ) -> Result<(), BehaviorFault> {
+        self.update_with_sound(sound, |context, _sound| callback(context))
+    }
+    pub fn update_with_sound<S: GenerationSound>(
+        &mut self,
+        sound: &mut S,
+        callback: impl FnOnce(&mut Self, &mut S) -> Result<(), BehaviorFault>,
+    ) -> Result<(), BehaviorFault> {
         if self.words[0] <= 0 {
             return Ok(());
         }
@@ -69,7 +78,7 @@ impl BehaviorContext {
         }
         self.words[4] = 0;
         if self.words[3] != 0 {
-            callback(self)?;
+            callback(self, sound)?;
         }
         let motion = self.words[4];
         if motion >= 0 {
@@ -123,6 +132,7 @@ pub enum NpcScript {
     BedBoneDead,
     KickingMan,
     PrincePrincess,
+    GrayMan,
     Pending(u32),
 }
 impl NpcScript {
@@ -141,6 +151,7 @@ impl NpcScript {
             Some(0x8006_4b14) => Self::BedBoneDead,
             Some(0x8006_1c04) => Self::KickingMan,
             Some(0x8006_07f8) => Self::PrincePrincess,
+            Some(0x8006_4618) => Self::GrayMan,
             Some(at) => Self::Pending(at),
         }
     }
@@ -177,6 +188,18 @@ pub trait EntityScriptHost {
         code: i32,
     ) -> Result<(), BehaviorFault> {
         self.notify(rng, code)
+    }
+    fn start_entity_effect(
+        &mut self,
+        _effect: &mut Option<crate::EntityEffect>,
+        _color_step: i32,
+        _variant: i32,
+        _mode: i32,
+    ) -> Result<bool, BehaviorFault> {
+        Err(BehaviorFault::MissingEffectServices)
+    }
+    fn reset_flashback_count(&mut self, _rng: &mut PsxRng) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingEffectServices)
     }
 }
 struct UnconnectedScriptHost;
@@ -216,6 +239,7 @@ pub struct EntityBehavior {
     pub triggered: i32,
     pub link_enabled: i32,
     pub active: i32,
+    pub effect: Option<crate::EntityEffect>,
 }
 impl EntityBehavior {
     pub fn construct(
@@ -246,6 +270,7 @@ impl EntityBehavior {
             triggered: 0,
             link_enabled: 0,
             active: 0,
+            effect: None,
         };
         if (fields[2] as u8).wrapping_sub(1) < 9 {
             for part in &mut actor.animation.parts {
@@ -450,7 +475,11 @@ impl EntityBehavior {
         if actor.animation.action_enabled {
             let ticks = self.ticks;
             let script = self.script;
-            self.context.update(sound, |context| {
+            let triggered = &mut self.triggered;
+            let link_enabled = &mut self.link_enabled;
+            let active = &mut self.active;
+            let effect = &mut self.effect;
+            self.context.update_with_sound(sound, |context, sound| {
                 match script {
                     NpcScript::None | NpcScript::PrincePrincess => {}
                     NpcScript::Futon | NpcScript::Television => {
@@ -519,6 +548,21 @@ impl EntityBehavior {
                             context.words[4] = 0;
                             context.words[8] = -1;
                         }
+                    }
+                    NpcScript::GrayMan => {
+                        if *triggered != 0 && host.start_entity_effect(effect, 10, 7, 0)? {
+                            actor.set_hidden(true);
+                            context.stop(sound);
+                            actor.animation.enabled = false;
+                            actor.animation.action_enabled = false;
+                            *active = 0;
+                            *triggered = 0;
+                            *link_enabled = 0;
+                            host.reset_flashback_count(rng)?;
+                        }
+                        let matrix = host.movement_matrix(actor.pose.angles)?;
+                        actor.move_local(ActorAxis::Z, -30, matrix);
+                        host.notify_actor(actor, rng, 6)?;
                     }
                     NpcScript::Pending(_) => return Err(BehaviorFault::PendingCallback),
                 }

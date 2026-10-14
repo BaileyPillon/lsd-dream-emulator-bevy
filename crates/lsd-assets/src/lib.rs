@@ -20,6 +20,7 @@ pub use day_tables::load_day_tables;
 pub use generation_assets::GenerationAssets;
 pub mod formats;
 pub use effect_palette::load_effect_palette;
+pub use effect_palette::load_entity_effect_definition;
 pub use generation_tables::{
     GenerationPaths, load_generation_effect_tables, load_generation_object_tables,
     load_generation_paths, load_generation_tables,

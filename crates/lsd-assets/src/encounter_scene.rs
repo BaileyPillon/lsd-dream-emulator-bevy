@@ -52,6 +52,7 @@ pub enum EncounterNotificationKind {
     AimAtPlayer,
     Acknowledge(i32),
     InheritedBodyQuery(i32),
+    ResetFlashbackCount,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct EncounterNotification {
@@ -60,6 +61,10 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    /// Base cleanup emits code one separately from gameplay journal messages.
+    fn actor_destroyed(&mut self, _serial: u64, _entity: u8) -> Result<(), lsd_core::DayFault> {
+        Ok(())
+    }
     fn dispatch(
         &mut self,
         event: EncounterNotification,
@@ -111,6 +116,8 @@ pub struct EncounterUpdate {
 pub enum EncounterSubscription {
     Attach(u64),
     Detach(u64),
+    AttachEffect(u64),
+    DetachEffect(u64),
 }
 #[derive(Debug, Clone, Copy)]
 pub struct ActorFrame {
@@ -137,6 +144,8 @@ pub struct EncounterScene {
     pub teleports_requested: bool,
     pub teleports_initialization: Option<bool>,
     pub pending_notifications: Vec<EncounterNotification>,
+    pub entity_effect_definition: Option<lsd_core::EntityEffectDefinition>,
+    effect_notifications: Vec<(u64, i32)>,
     special: Option<crate::special_encounter::SpecialEncounter>,
     seen: [Option<(u8, u16)>; 7],
     epoch: u64,
@@ -160,6 +169,8 @@ impl EncounterScene {
             teleports_requested: false,
             teleports_initialization: None,
             pending_notifications: Vec::new(),
+            entity_effect_definition: None,
+            effect_notifications: Vec::new(),
             special: None,
             seen: [None; 7],
             epoch: u64::MAX,
@@ -172,6 +183,17 @@ impl EncounterScene {
         self.stop_with_audio(&mut UnavailableAudio);
     }
     pub fn stop_with_audio(&mut self, sound: &mut impl GenerationSound) {
+        for actor in &self.actors {
+            if actor
+                .behavior
+                .effect
+                .as_ref()
+                .is_some_and(|v| v.clock_attached)
+            {
+                self.frame_changes
+                    .push(EncounterSubscription::DetachEffect(actor.serial));
+            }
+        }
         for serial in self.frame_members.order() {
             if let Some(actor) = self.actors.iter_mut().find(|actor| actor.serial == serial) {
                 actor.behavior.disable_link(&mut actor.actor, sound);
@@ -185,6 +207,7 @@ impl EncounterScene {
         self.teleports_requested = false;
         self.teleports_initialization = None;
         self.pending_notifications.clear();
+        self.effect_notifications.clear();
         if let Some(special) = &mut self.special {
             special.serial = None;
         }
@@ -196,6 +219,35 @@ impl EncounterScene {
             player_position: [0; 3],
             player_matrix: lsd_core::FixedMatrix::IDENTITY,
         });
+    }
+    pub fn enable_entity_effects(&mut self, definition: lsd_core::EntityEffectDefinition) {
+        self.entity_effect_definition = Some(definition);
+    }
+    pub fn tick_actor_effect(&mut self, serial: u64, signal: lsd_core::FrameSignal) {
+        if let Some(actor) = self.actors.iter_mut().find(|v| v.serial == serial)
+            && let Some(effect) = &mut actor.behavior.effect
+        {
+            for event in effect.tick(signal) {
+                match event {
+                    lsd_core::EffectEvent::Detach => self
+                        .frame_changes
+                        .push(EncounterSubscription::DetachEffect(serial)),
+                    lsd_core::EffectEvent::Notify(code) => {
+                        self.effect_notifications.push((serial, code))
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+    pub fn take_effect_notifications(&mut self) -> Vec<(u64, i32)> {
+        std::mem::take(&mut self.effect_notifications)
+    }
+    pub fn entity_effect_packets(&self, screen: [i32; 2]) -> Vec<lsd_core::GpuBoxPacket> {
+        self.actors
+            .iter()
+            .filter_map(|actor| actor.behavior.effect.as_ref()?.packet(screen))
+            .collect()
     }
     /// Supply the player transform observed at the original stream callback.
     pub fn set_encounter_player(&mut self, position: [i32; 3], matrix: lsd_core::FixedMatrix) {
@@ -358,6 +410,15 @@ impl EncounterScene {
             let identity = ready.then_some((stage.stage_id(), map));
             if self.seen[slot] != identity {
                 for actor in self.actors.iter().filter(|actor| actor.slot == slot) {
+                    if actor
+                        .behavior
+                        .effect
+                        .as_ref()
+                        .is_some_and(|v| v.clock_attached)
+                    {
+                        self.frame_changes
+                            .push(EncounterSubscription::DetachEffect(actor.serial));
+                    }
                     self.frame_changes
                         .push(EncounterSubscription::Detach(actor.serial));
                 }
@@ -520,6 +581,8 @@ impl EncounterScene {
                     .scaled(actor.actor.pose.scale),
                 position: actor.actor.pose.position,
             }),
+            effect_definition: self.entity_effect_definition.as_ref(),
+            frame_changes: &mut self.frame_changes,
         };
         actor.behavior.update_interaction(
             &mut actor.actor,
@@ -533,9 +596,21 @@ impl EncounterScene {
         }
         actor.behavior_active = actor.behavior.active != 0;
         if signal == lsd_core::FrameSignal::Finished {
+            if actor
+                .behavior
+                .effect
+                .as_ref()
+                .is_some_and(|v| v.clock_attached)
+            {
+                host.frame_changes
+                    .push(EncounterSubscription::DetachEffect(serial));
+            }
             actor.behavior.disable_link(&mut actor.actor, sound);
+            host.events
+                .actor_destroyed(serial, host.entity)
+                .map_err(lsd_core::BehaviorFault::Journal)?;
             self.frame_members.remove(serial);
-            self.frame_changes
+            host.frame_changes
                 .push(EncounterSubscription::Detach(serial));
             self.actors.remove(index);
             return Ok(());
@@ -555,6 +630,7 @@ impl EncounterScene {
                 sound,
                 &mut host,
             )?;
+            actor.behavior_active = actor.behavior.active != 0;
         } else {
             // The interaction timer is independent of a pending named action.
             actor.actor.animation.ticks = actor.actor.animation.ticks.wrapping_add(1);
@@ -601,8 +677,47 @@ struct InteractionHost<'a, H> {
     math: Option<&'a lsd_core::PsxMathTables>,
     collision: Option<&'a lsd_core::CollisionModel>,
     body_world: Option<lsd_core::BodyWorldFrame>,
+    effect_definition: Option<&'a lsd_core::EntityEffectDefinition>,
+    frame_changes: &'a mut Vec<EncounterSubscription>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn start_entity_effect(
+        &mut self,
+        effect: &mut Option<lsd_core::EntityEffect>,
+        color_step: i32,
+        variant: i32,
+        mode: i32,
+    ) -> Result<bool, lsd_core::BehaviorFault> {
+        if effect.is_none() {
+            let definition = self
+                .effect_definition
+                .ok_or(lsd_core::BehaviorFault::MissingEffectServices)?;
+            *effect = Some(lsd_core::EntityEffect::new(definition.clone()));
+        }
+        if effect
+            .as_mut()
+            .unwrap()
+            .bind_and_start(color_step, variant, mode)
+            .map_err(lsd_core::BehaviorFault::Effect)?
+        {
+            self.frame_changes
+                .push(EncounterSubscription::AttachEffect(self.serial));
+        }
+        Ok(true)
+    }
+    fn reset_flashback_count(&mut self, rng: &mut PsxRng) -> Result<(), lsd_core::BehaviorFault> {
+        self.events
+            .dispatch(
+                EncounterNotification {
+                    serial: self.serial,
+                    entity: self.entity,
+                    kind: EncounterNotificationKind::ResetFlashbackCount,
+                },
+                self.fields,
+                rng,
+            )
+            .map_err(lsd_core::BehaviorFault::Journal)
+    }
     fn movement_matrix(
         &mut self,
         angles: [i16; 3],

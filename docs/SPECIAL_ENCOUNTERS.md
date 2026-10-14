@@ -55,14 +55,15 @@ hardware flags and timing require separate comparisons.
 
 ## Remaining work
 
-The Gray Man's named action callback remains pending. Pursuit movement,
-synchronous contact consequences, its actor-attached color effect, the
-flashback-count reset and complete effect/actor lifetime still need to be
-connected and compared. The activation test does not invoke that callback.
+The activation test does not invoke the named action callback. Its original
+forward movement, triggered effect and flashback-count reset are now implemented
+and compared separately in [Gray Man behavior](GRAY_MAN.md). Natural contact
+response, complete parent lifetimes and the original renderer still require
+further comparison.
 Activation therefore does not accept a complete Gray Man encounter, its rendered
 appearance, original GPU/SPU behavior or a whole game feature group.
 
-The implemented callback count remains 12 of 107, with 95 pending.
+The implemented callback count is now 13 of 107, with 94 pending.
 All 40 provisional whole-feature groups still need acceptance. The existing
 day-profile captures remain regression evidence for their supplied scenarios;
 they do not accept the newly activated Gray Man's rendering.

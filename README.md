@@ -72,7 +72,7 @@ the remaining named NPC scripts, interaction, physics and scheduling work.
 The shared entity lifecycle, perception query math and interaction policy now
 also run in Rust. Futon, Television and Drumstick scripts are connected. Nine
 additional callbacks now retain their original movement, scaling, visibility,
-frame-gated sound or empty action; 95 callbacks remain pending. See
+frame-gated sound or empty action; 94 callbacks remain pending. See
 [entity behavior](docs/ENTITY_BEHAVIOR.md) for scoped original CPU comparisons,
 actor sound queues and the remaining body dispatch.
 Actor notifications now apply original mood/score, recall, direct dynamic-link
@@ -120,7 +120,9 @@ The day profile now imports the original Gray Man model and creates one dormant
 special instance per scene. Original day gates activate that instance with
 player-relative placement, integer facing and stop/restart clock ordering.
 See [special encounters](docs/SPECIAL_ENCOUNTERS.md) for original CPU comparisons.
-Its movement/contact effect and flashback reset remain pending.
+Its original forward action, triggered color flash and flashback-count reset
+now run through the shared clock. See [Gray Man behavior](docs/GRAY_MAN.md) for
+the original CPU/packet checks and the remaining natural encounter comparisons.
 
 ## Start here
 

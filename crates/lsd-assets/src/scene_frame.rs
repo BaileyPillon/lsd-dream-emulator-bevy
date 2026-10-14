@@ -7,6 +7,7 @@ use lsd_core::{
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SceneClockMember {
     Actor(u64),
+    ActorEffect(u64),
     Effect,
     Map,
     Stream,
@@ -57,6 +58,14 @@ impl StageLinkSession {
                     EncounterSubscription::Detach(serial) => {
                         self.frame_members.remove(SceneClockMember::Actor(serial));
                     }
+                    EncounterSubscription::AttachEffect(serial) => {
+                        self.frame_members
+                            .subscribe(SceneClockMember::ActorEffect(serial));
+                    }
+                    EncounterSubscription::DetachEffect(serial) => {
+                        self.frame_members
+                            .remove(SceneClockMember::ActorEffect(serial));
+                    }
                 }
             }
         }
@@ -94,6 +103,23 @@ impl StageLinkSession {
                 match member {
                     SceneClockMember::Actor(serial) => {
                         self.tick_encounter_actor(serial, signal, linked, player, math, effect)?;
+                    }
+                    SceneClockMember::ActorEffect(serial) => {
+                        if let Some(encounters) = &mut self.encounters {
+                            encounters.tick_actor_effect(serial, signal);
+                            for (owner, code) in encounters.take_effect_notifications() {
+                                if let Some(actor) =
+                                    encounters.actors.iter().find(|actor| actor.serial == owner)
+                                {
+                                    self.events.push(
+                                        crate::StageSessionEvent::ActorEffectCompleted {
+                                            entity: actor.entity,
+                                            code,
+                                        },
+                                    );
+                                }
+                            }
+                        }
                     }
                     SceneClockMember::Effect => {
                         for command in

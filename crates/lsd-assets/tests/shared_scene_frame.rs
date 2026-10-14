@@ -11,6 +11,7 @@ use lsd_core::{
 fn role(member: SceneClockMember) -> &'static str {
     match member {
         SceneClockMember::Actor(_) => "actor",
+        SceneClockMember::ActorEffect(_) => "actor-effect",
         SceneClockMember::Effect => "effect",
         SceneClockMember::Map => "map",
         SceneClockMember::Stream => "stream",

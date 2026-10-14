@@ -962,6 +962,29 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "gray_man_action_and_effect_20261014": {
+      "scope": "Full original Gray Man action and real clock in constructed model/player/scene graphs, provided target/view/cache and trigger flags. SDK rectangle packets are original CPU execution; native GPU/SPU and whole natural encounters remain unaccepted.",
+      "checks": {
+        "path": "docs/gray-man-checks.json",
+        "sha256": "ea97b0474dcac25fb289ec612f5ba742b5ee95390a685789d366aa8eea8e484e"
+      },
+      "native_scenarios": 10,
+      "native_state_observations": 350,
+      "original_gray_callback_calls": 22,
+      "original_clock_advances": 312,
+      "original_sdk_rectangle_sort_calls": 316,
+      "original_action_and_reset_connected": true,
+      "retained_actor_effect_and_shared_clock_connected": true,
+      "loaded_original_asset_integration_passed": true,
+      "supplied_gray_flash_rendered_and_completed": true,
+      "original_named_callbacks_implemented_before": 12,
+      "original_named_callbacks_implemented_after": 13,
+      "remaining_pending_callbacks": 94,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }
