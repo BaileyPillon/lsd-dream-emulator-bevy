@@ -165,6 +165,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut supplied_actor_query = false;
     let mut supplied_gray_contact = false;
     let mut supplied_scene_scale = false;
+    let mut supplied_scene_shrink = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -198,6 +199,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     | "--npc-motion-capture"
                     | "--gray-man-capture"
                     | "--scene-scale-capture"
+                    | "--scene-shrink-capture"
             ) =>
         {
             original_day = true;
@@ -207,7 +209,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
             supplied_actor_query = value == "--npc-behavior-capture" || supplied_actor_motion;
             supplied_gray_contact = value == "--gray-man-capture";
-            supplied_scene_scale = value == "--scene-scale-capture";
+            supplied_scene_shrink = value == "--scene-shrink-capture";
+            supplied_scene_scale = value == "--scene-scale-capture" || supplied_scene_shrink;
             walk = true;
             walk_stream = true;
             walk_links = true;
@@ -519,9 +522,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             .as_mut()
                             .ok_or("Scene scale capture needs a session")?;
                         session.scene_scale = Some(controller);
-                        session.scene_scale.as_mut().unwrap().request(1, 1);
+                        let (amount, mode) = if supplied_scene_shrink {
+                            (-1, 0)
+                        } else {
+                            (1, 1)
+                        };
+                        session.scene_scale.as_mut().unwrap().request(amount, mode);
                         println!(
-                            "profile=supplied_scene_scale_request amount=1 mode=1 natural_npc_encounter=false original_gpu_timing_pending=true"
+                            "profile=supplied_scene_scale_request amount={amount} mode={mode} natural_npc_encounter=false original_gpu_timing_pending=true"
                         );
                     }
                     streamed_step(

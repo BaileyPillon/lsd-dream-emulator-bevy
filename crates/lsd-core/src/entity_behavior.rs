@@ -182,6 +182,7 @@ pub enum NpcScript {
     OldWoman,
     Starship,
     Airship,
+    TriangleHead,
     Pending(u32),
 }
 impl NpcScript {
@@ -246,6 +247,7 @@ impl NpcScript {
             Some(0x8005_ea94) => Self::OldWoman,
             Some(0x8006_1a90) => Self::Starship,
             Some(0x8006_4928) => Self::Airship,
+            Some(0x8006_1c2c) => Self::TriangleHead,
             Some(at) => Self::Pending(at),
         }
     }
@@ -287,6 +289,10 @@ pub trait EntityInteractionHost {
 }
 /// Script services use the original rotation math and synchronous notification order.
 pub trait EntityScriptHost {
+    /// The original set_callbacks(1, 1) request used by Triangle Head.
+    fn restore_player_callbacks(&mut self) -> Result<(), BehaviorFault> {
+        Err(BehaviorFault::MissingPlayerServices)
+    }
     fn request_scene_scale(&mut self, _amount: i32, _mode: i32) -> Result<(), BehaviorFault> {
         Err(BehaviorFault::MissingMotionServices)
     }
@@ -1009,6 +1015,41 @@ impl EntityBehavior {
                     NpcScript::Corpse => {
                         if ticks == 0 {
                             move_local_with_host(actor, ActorAxis::Y, -200, host)?;
+                        }
+                    }
+                    NpcScript::TriangleHead => {
+                        if actor.animation.frame_index.is_multiple_of(30) {
+                            context.words[7] = 3;
+                            context.words[4] = 0;
+                            context.words[8] = -2;
+                        }
+                        if ticks >= 101 {
+                            host.face_player(actor)?;
+                        }
+                        move_local_with_host(actor, ActorAxis::Z, -5, host)?;
+                        let distance = entity_distance(actor.pose.position, input.target);
+                        if ticks == 300 && distance < 4096 {
+                            host.clear_player_callbacks(false)?;
+                        } else if ticks == 500 {
+                            host.restore_player_callbacks()?;
+                        }
+                        if *state == 0 && distance < 1024 {
+                            if rng.next_u15() & 1 != 0 {
+                                context.words[12] = 6;
+                                context.words[4] = 0;
+                                context.words[13] = -1;
+                                if rng.next_u15() & 1 != 0 {
+                                    host.request_scene_scale(-1, 0)?;
+                                }
+                                *mutable_ticks = 0;
+                                *state = 10;
+                            } else {
+                                *state = 11;
+                            }
+                        }
+                        if *state == 10 && *mutable_ticks == 70 {
+                            let code = if rng.next_u15() & 1 != 0 { 12 } else { 11 };
+                            host.notify_actor(actor, rng, code)?;
                         }
                     }
                     NpcScript::OldWoman => {

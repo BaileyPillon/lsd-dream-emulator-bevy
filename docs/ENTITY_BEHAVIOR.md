@@ -3,7 +3,7 @@
 The Gray Man action is now connected with its owned color effect, shared-clock
 lifetime and flashback-count reset. See [Gray Man behavior](GRAY_MAN.md) for the
 full callback and retained-effect comparisons. The implemented callback count
-is 58 of 107; 49 remain pending. Whole natural encounters still need acceptance.
+is 59 of 107; 48 remain pending. Whole natural encounters still need acceptance.
 Bear, Rabbit and Peacock also have full action comparisons, and negative
 interaction distances now update original facing in the scene adapter. See
 [animal actions and facing](PURSUIT.md). Dog, Gargoyle and Demon King now
@@ -24,7 +24,8 @@ and Boat Bird use the [live dream-color service](COLOR_NPCS.md). Seven further
 [movement actions](MOTION_NPCS.md) now have complete entity-update comparisons.
 [Day and animation actions](DAY_FRAME_NPCS.md) add seven further callbacks.
 [Scene scale and requesting actions](SCENE_SCALE.md) add Old Woman, Starship and Airship.
-The other 49 retain an explicit pending state.
+[Triangle Head](TRIANGLE_HEAD.md) also restores player controls and requests scene shrink.
+The other 48 retain an explicit pending state.
 
 This is partial original-game recovery. Trigger, link, video and end notifications
 now reach the original journal policy immediately; see
@@ -87,7 +88,7 @@ interaction timer and query policy run; that state is explicitly incomplete.
 | Original distinct callback catalog | 107 |
 | Entity property records / nonzero callback records | 130 / 111 |
 | Initial named callbacks implemented and compared in supplied graphs | 3 |
-| Current total after scene scale action recovery | 58 |
+| Current total after Triangle Head recovery | 59 |
 | Whole NPC encounters accepted | 0 |
 
 Native checks execute identified original functions with the real allocator,

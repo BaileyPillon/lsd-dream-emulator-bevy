@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T23:13:05.054093+00:00",
+  "scope": "Original Triangle Head action and full entity-update recordings with supplied initial states, original or owned model/properties/math, production encounter and player callback/scale services. Original set_callbacks(1,1), old mode-two cleanup and subsequent player clock comparisons; loaded original-model stop/resume and completed negative scene scale. Perception notifications are recorded at the entity boundary, with separate day/recall comparison scopes. Natural whole encounters, full callback modes, reciprocal collision, original GPU/GTE flags/SPU and global cadence remain unaccepted.",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "callback_inventory": {
+    "distinct_original_callbacks": 107,
+    "implemented_before": 58,
+    "implemented_after": 59,
+    "pending_after": 48,
+    "whole_npc_encounters_accepted": 0
+  },
+  "comparisons": {
+    "owned_action_scenarios": 52,
+    "owned_action_states": 1947,
+    "canonical_action_scenarios": 52,
+    "canonical_action_states": 1947,
+    "owned_complete_update_scenarios": 52,
+    "owned_complete_update_states": 1947,
+    "canonical_complete_update_scenarios": 52,
+    "canonical_complete_update_states": 1947,
+    "production_adapter_owned_resulting_states": 1895,
+    "production_adapter_canonical_resulting_states": 1895,
+    "callback_restore_starting_configurations": 24,
+    "subsequent_original_player_clock_states": 72,
+    "independent_repeat_outputs_byte_identical": true
+  },
+  "owned_action_outcomes": {
+    "scale_requests": 3,
+    "restore_requests": 17,
+    "clear_requests": 10,
+    "action_notification_codes": [
+      11,
+      12
+    ]
+  },
+  "original_function_sha256": {
+    "entity_triangle_head": "2a5f9b837cc42ebbbea12339666634254c4e326d6d3b495ff07da953f244f4b1",
+    "dream_sys_set_callbacks": "6e4fe3abfb627f0f6c7d560deec36ccec6d26fcf01b75beeb18285741f5e0df9",
+    "dream_sys_set_move_callback": "e0911b100ce2b5e6a7ea7d27d2516f24c0bd02b0c26cd3acecebdb3925323b78",
+    "dream_sys_set_view_callback": "8c1ddc757452838059838a6a588c8b41d57dcd14ce20c3f85e024e4112fd3a1f",
+    "dream_sys_set_view_mode": "72d3ee63800701f2a93f94297d166183be0fcc9775ce13a37c19f532d7294345",
+    "dream_sys_clear_callbacks": "fedcd6413050a1e563cb90214529e50b9a045b6f47e0f1dc93dd3a84f424422b",
+    "dream_sys_run_callbacks": "8400f29ee2b708e3985d9394455869ce53a50753ac078870e2e67b4a6a382bcc",
+    "dream_sys_update_movement": "51f9632297cb1ad303da3f0a1d509007d2aa108c82f1dea31ed3ac3ad6f789ff",
+    "dream_sys_update_turn_delta": "b4ee524fc80f6054e4b10b7c276264556056da25a65a4d3d8c7c501da8636229",
+    "dream_sys_update_view": "682607bb07932ad3bd36dac8a98d5ee123234708843456b9e833c0b7d7a8c4ed",
+    "dream_sys_timer_tick": "37836055f8900486b4aa8cffad57c0b91e26015d5d44ad4dd0eb5bbb5c50826f",
+    "entity_get_distance": "f9aea2cd8da082454563fad7b8f4e87382786ba3dfdfe396510482cec65fd58c",
+    "sound_entity_update": "89e574046fd5029cf38cf88b1f1081276cf326e7ad5971f921452d9e6acbbb69",
+    "func_8004CFB8": "24fa5319f1a9ee361b5635776a3dced227c0c27312758fe09be0e9d2b6f77342",
+    "entity_update": "1b5fc42774d538b0f80f0a7c58c8d99506667ddc68807f2fb8e2b644d9469e46",
+    "func_80065FD8": "979ff84c1aefc75b44635c3c1dac10f1def699c03a19148ba63639c65071dd4c"
+  },
+  "canonical_model_binding": {
+    "entity_triangle_head": {
+      "path": "CDI/STG05/M018.LBD",
+      "offset": 40972,
+      "bytes": 9276,
+      "entity": 62,
+      "stage": 5,
+      "model_index": 0,
+      "source_sha256": "d6721b456c6bb8e5a62f0e8c9e7a4f1f63ddf65578cf7dcb65b6a1225d84cdba",
+      "mom_sha256": "cafd548119c0ccd04690c370d8da26c11e376c08545e56a808131d6aeef85162"
+    }
+  },
+  "fixtures": [
+    {
+      "path": "crates/lsd-assets/tests/fixtures/triangle-head-npc-runtime.json",
+      "sha256": "b2e797df1e9099ff9f6e04f7012efbf840fd046db633f5581f1f72a30b279092"
+    },
+    {
+      "path": "crates/lsd-assets/tests/fixtures/triangle-head-npc-encounters.json",
+      "sha256": "896b61547583500dd3cff6e2a8bbb26b98ab4ee47a730c4d66e1c9e310bca3d5"
+    },
+    {
+      "path": "crates/lsd-assets/tests/fixtures/restored-player-callbacks.json",
+      "sha256": "039f9f7cb2764e8121a4d2cbb831161694c710c22243f79a72d9b618aeb19ed0"
+    }
+  ],
+  "local_validation": {
+    "workspace_passed": 159,
+    "workspace_failed": 0,
+    "workspace_ignored": 48,
+    "new_original_comparison_tests_passed": 6,
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "desktop_build_passed": true,
+    "previous_original_comparisons_passed": true,
+    "loaded_original_model_stop_resume_same_clock": true,
+    "loaded_negative_scale_completed": true,
+    "idle_capture_unchanged": true,
+    "flat_and_retained_captures_identical": true
+  },
+  "capture_hashes": [
+    {
+      "profile": "unit",
+      "ticks": 1,
+      "sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+      "diagnostic": "scene_scale_remaining=63 scene_scale_live=[4096, 4032, 4096] scene_scale_rendered=[4096, 4096, 4096]"
+    },
+    {
+      "profile": "half",
+      "ticks": 33,
+      "sha256": "285feca73da8b15037e26a4edaf02e299bc7c534173ab86c308268193b249e23",
+      "diagnostic": "scene_scale_remaining=31 scene_scale_live=[4096, 1984, 4096] scene_scale_rendered=[4096, 2048, 4096]"
+    },
+    {
+      "profile": "flat",
+      "ticks": 65,
+      "sha256": "481fea26249a35a4357687aa33784ff258acb2235dc9a4f5d5f18e814345d16a",
+      "diagnostic": "scene_scale_remaining=-1 scene_scale_live=[4096, 0, 4096] scene_scale_rendered=[4096, 0, 4096]"
+    },
+    {
+      "profile": "retained",
+      "ticks": 66,
+      "sha256": "481fea26249a35a4357687aa33784ff258acb2235dc9a4f5d5f18e814345d16a",
+      "diagnostic": "scene_scale_remaining=-1 scene_scale_live=[4096, 0, 4096] scene_scale_rendered=[4096, 0, 4096]"
+    }
+  ],
+  "backend_limits": "Unicorn original function execution with a semantic COP2 bridge, owned player controls and supplied external sound backend. Standing clock control states do not prove geometry motion or sound playback; loaded motion and rendering have separate controlled scopes.",
+  "original_function_output_stubs": 0,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behavior_has_ai_model_calls": false,
+  "c_paused_and_preserved": true
+}

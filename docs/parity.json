@@ -1215,6 +1215,33 @@
       "original_npc_behaviors_accepted": 0,
       "original_natural_encounter_gpu_spu_parity_accepted": false,
       "ai_model_calls": 0
+    },
+    "triangle_head_and_callback_restore_20261014": {
+      "scope": "Original Triangle Head action and full entity-update recordings with supplied initial states, original or owned model/properties/math, production encounter and player callback/scale services. Original set_callbacks(1,1), old mode-two cleanup and subsequent player clock comparisons; loaded original-model stop/resume and completed negative scene scale. Perception notifications are recorded at the entity boundary, with separate day/recall comparison scopes. Natural whole encounters, full callback modes, reciprocal collision, original GPU/GTE flags/SPU and global cadence remain unaccepted.",
+      "checks": {
+        "path": "docs/triangle-head-checks.json",
+        "sha256": "62666d0e2025749f32a966f71484865529c5315fb00ebf1c709846822b897d73"
+      },
+      "owned_action_scenarios": 52,
+      "owned_action_states": 1947,
+      "canonical_action_scenarios": 52,
+      "canonical_action_states": 1947,
+      "owned_complete_update_scenarios": 52,
+      "owned_complete_update_states": 1947,
+      "canonical_complete_update_scenarios": 52,
+      "canonical_complete_update_states": 1947,
+      "production_adapter_owned_resulting_states": 1895,
+      "production_adapter_canonical_resulting_states": 1895,
+      "callback_restore_starting_configurations": 24,
+      "subsequent_original_player_clock_states": 72,
+      "independent_repeat_outputs_byte_identical": true,
+      "original_named_callbacks_implemented_before": 58,
+      "original_named_callbacks_implemented_after": 59,
+      "remaining_pending_callbacks": 48,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_natural_encounter_gpu_spu_parity_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

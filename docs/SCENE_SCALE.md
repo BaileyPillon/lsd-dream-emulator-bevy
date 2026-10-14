@@ -1,8 +1,8 @@
 # Original scene scale and requesting NPC actions
 
 Old Woman, Starship and Airship now run in the shared encounter scene and can
-request the original map-node scale effect. There are 58 implemented callbacks
-among 107 distinct original actions, with 49 pending. Whole natural encounters
+request the original map-node scale effect. There are 59 implemented callbacks
+among 107 distinct original actions, with 48 pending. Whole natural encounters
 and the 40 provisional whole-feature groups remain unaccepted.
 
 ## Scene ownership and clock
@@ -87,7 +87,8 @@ natural NPC encounter. Private comparisons also require `LSD_GAME_FILES`,
 `LSD_NATIVE_SCENE_SCALE_NPCS`, `LSD_NATIVE_SCENE_SCALE_ENCOUNTERS` and
 `LSD_NATIVE_SCENE_SCALE_RUNTIME`. `loaded_scene_scale` requires original content.
 
-Triangle Head still needs its remaining player-callback services and comparisons.
+[Triangle Head](TRIANGLE_HEAD.md) now restores player callbacks and requests scene shrink,
+with original-code and loaded-stage comparisons.
 Natural activation, stream lifetimes, original drawing/precision, reciprocal
 collision, audio playback and whole-session timing remain open. Original NPC
 behavior makes no AI model calls; optional AI tools and mods remain separate.

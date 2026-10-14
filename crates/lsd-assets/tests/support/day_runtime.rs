@@ -10,6 +10,10 @@ pub struct DayRuntime {
     pub scene_scale: Option<lsd_core::SceneScale>,
     pub allow_journal: bool,
     pub journal_audio: Vec<[i32; 3]>,
+    pub move_callback: i32,
+    pub view_callback: i32,
+    pub reset_view_pending: bool,
+    pub view_active: bool,
     pub day: DreamDay,
     pub tables: DayTables,
     pub local: [i32; 3],
@@ -20,6 +24,10 @@ impl DayRuntime {
             scene_scale: None,
             allow_journal: false,
             journal_audio: vec![],
+            move_callback: 1,
+            view_callback: 1,
+            reset_view_pending: false,
+            view_active: false,
             day: DreamDay::default(),
             local: [13, 17, 19],
             tables: DayTables {
@@ -52,9 +60,9 @@ impl DayRuntime {
             state: 0,
             tick: 0,
             location: 0,
-            move_callback: 1,
-            reset_view_pending: false,
-            view_active: false,
+            move_callback: self.move_callback,
+            reset_view_pending: self.reset_view_pending,
+            view_active: self.view_active,
         };
         let mut links = DreamLinks {
             execution: LinkExecution {
@@ -103,6 +111,7 @@ impl DayRuntime {
             math,
         });
         services.scene_scale = self.scene_scale.as_mut();
+        services.view_callback = Some(&mut self.view_callback);
         let mut dispatcher = ActorJournalDispatcher {
             day: &mut self.day,
             tables: &self.tables,
@@ -111,6 +120,9 @@ impl DayRuntime {
             services,
         };
         let output = f(&mut dispatcher);
+        self.move_callback = map.move_callback;
+        self.reset_view_pending = map.reset_view_pending;
+        self.view_active = map.view_active;
         if !self.allow_journal {
             assert!(
                 commands.is_empty() && sounds.is_empty() && pending.is_empty() && events.is_empty()

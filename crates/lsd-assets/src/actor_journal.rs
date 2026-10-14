@@ -256,6 +256,20 @@ impl ActorJournalHost for BoundActorJournal<'_, '_> {
     }
 }
 impl EncounterEventHost for ActorJournalDispatcher<'_> {
+    fn restore_player_callbacks(&mut self) -> Result<(), lsd_core::BehaviorFault> {
+        let view = self
+            .services
+            .view_callback
+            .as_mut()
+            .ok_or(lsd_core::BehaviorFault::MissingPlayerServices)?;
+        if self.services.map.move_callback == 2 {
+            self.services.map.reset_view_pending = false;
+            self.services.map.view_active = false;
+        }
+        self.services.map.move_callback = 1;
+        **view = 1;
+        Ok(())
+    }
     fn request_scene_scale(
         &mut self,
         amount: i32,

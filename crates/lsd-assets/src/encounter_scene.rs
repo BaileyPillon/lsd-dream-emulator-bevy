@@ -61,6 +61,9 @@ pub struct EncounterNotification {
     pub kind: EncounterNotificationKind,
 }
 pub trait EncounterEventHost {
+    fn restore_player_callbacks(&mut self) -> Result<(), lsd_core::BehaviorFault> {
+        Err(lsd_core::BehaviorFault::MissingPlayerServices)
+    }
     fn request_scene_scale(
         &mut self,
         _amount: i32,
@@ -730,6 +733,9 @@ struct InteractionHost<'a, H> {
     script_fault: Option<lsd_core::BehaviorFault>,
 }
 impl<H: EncounterEventHost> EntityScriptHost for InteractionHost<'_, H> {
+    fn restore_player_callbacks(&mut self) -> Result<(), lsd_core::BehaviorFault> {
+        self.events.restore_player_callbacks()
+    }
     fn request_scene_scale(
         &mut self,
         amount: i32,
