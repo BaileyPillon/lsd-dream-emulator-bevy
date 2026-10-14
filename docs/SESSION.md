@@ -9,9 +9,11 @@ state before this decision.
 
 Original end-day routes also retain their different mode/result behavior and
 cinematic sign check in the core policy. Their day/cinematic services are supplied
-boundaries in native comparisons. The inspector keeps those requests pending
-until the real day services are implemented; it does not fabricate a day result.
-Original startup, generation, mood scoring, menus and persistence remain open.
+boundaries in the earlier session comparisons. The `--dream` profile now connects
+them to recovered day/mood/flashback services. Supplied `--walk-links` sessions
+without a day state retain the pending-service behavior. See [day recovery](DAYS.md)
+for the original calendar comparison and imported first-day cycle. Complete
+startup, generation, menus and persistence remain open.
 
 The inspector's loaded-scene consumer now connects effect completion to this
 rebuild policy. It loads the destination maps, places the actor using the decoded

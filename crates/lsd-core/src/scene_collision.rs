@@ -38,6 +38,7 @@ pub enum BodyVisit {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SceneCollisionError {
+    Day(crate::DayFault),
     Grid(SceneGridError),
     Geometry(CollisionFault),
     MissingReadyChunk(usize),
@@ -56,6 +57,11 @@ impl From<CollisionFault> for SceneCollisionError {
 impl From<LinkError> for SceneCollisionError {
     fn from(error: LinkError) -> Self {
         Self::Link(error)
+    }
+}
+impl From<crate::DayFault> for SceneCollisionError {
+    fn from(error: crate::DayFault) -> Self {
+        Self::Day(error)
     }
 }
 impl fmt::Display for SceneCollisionError {

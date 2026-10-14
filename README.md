@@ -44,6 +44,9 @@ for the native comparisons and remaining GPU/session work.
 The inspector now replaces resident maps and textures after a completed link,
 preserves RNG/timer state and runs the original player-motion reset. See
 [session recovery](docs/SESSION.md) for its construction and day-service limits.
+Original day preparation, mood scoring, dream-clock expiry and flashback storage
+now also run in Rust. The `--dream` profile starts day one at its original spawn
+and commits its end-of-day result; see [day recovery](docs/DAYS.md).
 
 ## Start here
 
@@ -89,6 +92,11 @@ The inspector consumes original effect requests and rebuild notifications, then
 loads the destination scene. GPU fades, original construction/clock scheduling,
 day generation and audio remain open.
 
+Append `--dream` to start the original first-day state with a supplied new-game
+bootstrap and seed 1. `--dream-capture /path/to/new.png 4000` runs supplied idle
+host ticks through timeout and the next-day result. Original menus, generation,
+special-day media, GPU fades and audio remain unfinished.
+
 For a supplied permanent-wall contact followed by scene replacement, append
 `--link-rebuild-capture /path/to/new.png 0 24`. The final numbers select the
 stage's wall-trigger index and host tick count. This development scenario
@@ -131,6 +139,9 @@ cargo run -p lsd-assets --bin lsd-asset-check --locked -- /path/to/SLPS_015.56
 | Original map effect-completion scenarios compared | 84 |
 | Original session routing/tick/link-policy scenarios compared | 1,048 |
 | Original scene-motion reset scenarios compared | 160 |
+| Native day, mood, clock and flashback scenarios with generated content | 841 |
+| Startup scenarios with original calendar/mood/spawn content | 1,460 |
+| Calendar days covered by the original startup campaign | 365 |
 | Supplied original permanent-link destinations rebuilt locally | 17 |
 | Static object instances with a semantic-GTE geometry probe | 13,037 |
 | Original NPC behaviors ported and accepted | 0 |

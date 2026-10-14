@@ -570,6 +570,22 @@
       "whole_original_feature_groups_accepted": 0,
       "original_npc_behaviors_accepted": 0,
       "ai_model_calls": 0
+    },
+    "day_recovery_20261014": {
+      "scope": "Original day/mood/chart/score/start-spawn/calendar/flashback/clock services compared with original CPU execution using owned content and 1460 private original-content startup cases. The Bevy day profile connects a supplied new-game bootstrap to the original first-day spawn/time limit, loaded idle dream expiry and chart/day/result commit. Full constructor/generation, actor/NPC contribution callbacks, UI/media/persistence, GPU/camera/audio and original global timing remain unaccepted.",
+      "evidence": {
+        "path": "docs/day-recovery-checks.json",
+        "sha256": "0e4b5aa8ac4157d6a981f83d32aaee49f145e4a24a4562dbad6163e13b8ab416"
+      },
+      "native_owned_day_clock_cases": 841,
+      "original_startup_cases": 1460,
+      "original_calendar_days": 365,
+      "original_special_startup_cases": 164,
+      "imported_first_dream_timeout_and_day_commit_checked": true,
+      "bevy_original_day_profile_connected": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0
     }
   }
 }

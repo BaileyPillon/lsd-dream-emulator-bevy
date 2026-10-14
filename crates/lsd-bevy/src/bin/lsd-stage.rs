@@ -14,8 +14,8 @@ use bevy::{
 use lsd_assets::{
     StageLinkSession, StreamedStage,
     formats::{Lbd, Tix, Tmd, Vram},
-    is_canonical_reference, load_effect_palette, load_layered_stage, load_link_tables,
-    load_math_tables, sha256_hex, stage_map_path,
+    is_canonical_reference, load_day_tables, load_effect_palette, load_layered_stage,
+    load_link_tables, load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_core::{
@@ -87,6 +87,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut walk_steps = None;
     let mut supplied_wall = None;
     let mut live_capture = false;
+    let mut original_day = false;
     let (inspect, capture) = match args.next() {
         None => (false, None),
         Some(value) if value == "--inspect" => (true, None),
@@ -109,6 +110,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             walk_stream = true;
             walk_links = true;
             (false, None)
+        }
+        Some(value) if matches!(value.as_str(), "--dream" | "--dream-capture") => {
+            original_day = true;
+            walk = true;
+            walk_stream = true;
+            walk_links = true;
+            if value == "--dream-capture" {
+                let path =
+                    PathBuf::from(args.next().ok_or("--dream-capture needs a new PNG path")?);
+                walk_steps = Some(
+                    args.next()
+                        .ok_or("--dream-capture needs a tick count")?
+                        .parse::<u32>()?,
+                );
+                (false, Some(path))
+            } else {
+                (false, None)
+            }
         }
         Some(value)
             if matches!(
@@ -254,7 +273,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         } else {
             None
         };
-        let body = Tmd::parse(&std::fs::read(root.join("CDI/ETC/DREAME5.TMD"))?)?;
+        let body_path = if original_day {
+            "CDI/ETC/DREAMER.TMD"
+        } else {
+            "CDI/ETC/DREAME5.TMD"
+        };
+        let body = Tmd::parse(&std::fs::read(root.join(body_path))?)?;
         let bounds = CollisionBounds::from_points(
             &body.objects[0]
                 .vertices
@@ -325,6 +349,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             None
         };
         let mut session = walk_links.then(StageLinkSession::default);
+        if original_day {
+            let linked = linked.as_mut().unwrap();
+            let session = session.as_mut().unwrap();
+            session.begin_original_day(linked, load_day_tables(&executable)?);
+            session.tick(
+                streamed.as_mut().unwrap(),
+                &mut player,
+                linked,
+                effect.as_mut().unwrap(),
+            )?;
+            println!(
+                "profile=original_day_preparation_prototype supplied_bootstrap_day=1 supplied_seed=1 original_menus_generation_gpu_audio_pending=true"
+            );
+        }
         if let Some(index) = supplied_wall {
             let linked = linked.as_mut().unwrap();
             let trigger = *linked.tables.catalog.wall.triggers[usize::from(stage)]
@@ -351,7 +389,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         linked.as_mut(),
                         effect.as_mut(),
                         session.as_mut(),
-                        if supplied_wall.is_some() { 0 } else { 0x1000 },
+                        if supplied_wall.is_some() || original_day {
+                            0
+                        } else {
+                            0x1000
+                        },
                     )?;
                 } else if let Some(layered) = &layered {
                     player.step_in_scene(0x1000, &layered.collision, &tables)?;
@@ -412,6 +454,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "session_state={} rebuilds={} loaded_stage={} pending_day_event={:?}",
                 session.policy.state, session.rebuilds, display_stage, session.pending_day_event
             );
+            if let Some(day) = &session.day {
+                println!(
+                    "original_day={} year={} stored_day={} time_limit={} result={:?} flashback_count={} score={}",
+                    day.day + 1,
+                    day.year,
+                    day.stored_day,
+                    linked.as_ref().unwrap().links.time_limit,
+                    session.finished,
+                    day.flashback_count,
+                    day.total_unlock_score
+                );
+            }
         }
         if let Some(effect) = &effect {
             println!(
@@ -636,6 +690,10 @@ fn streamed_step(
             for event in &session.events {
                 println!("session_command={event:?}");
             }
+            if session.finished.is_some() || session.pending_day_event.is_some() {
+                player.controls.input_locked = true;
+                return Ok(());
+            }
         }
         if let Some(effect) = effect.as_deref_mut() {
             for command in effect.tick(&mut linked.map, &mut player.controls)? {
@@ -655,7 +713,22 @@ fn streamed_step(
             return Ok(());
         }
         let ready = std::array::from_fn(|i| stage.protocol.slots[i].ready);
-        linked.step(player, &stage.collision, tables, ready, buttons)?;
+        if let Some(session) = session.as_deref_mut() {
+            if let (Some(day), Some(content)) = (&mut session.day, &session.day_tables) {
+                linked.step_with_clock(
+                    player,
+                    &stage.collision,
+                    tables,
+                    ready,
+                    buttons,
+                    Some((day, content)),
+                )?;
+            } else {
+                linked.step(player, &stage.collision, tables, ready, buttons)?;
+            }
+        } else {
+            linked.step(player, &stage.collision, tables, ready, buttons)?;
+        }
         for command in &linked.commands {
             println!("link_command={command:?}");
             if let Some(effect) = effect.as_deref_mut() {
@@ -673,7 +746,13 @@ fn streamed_step(
             println!("link_sound_command={command:?}");
         }
         stage.update_for_position(player.position)?;
+        let previous_chunk = linked.keys.current.chunk;
         linked.refresh_key(&stage.collision, player.position)?;
+        if previous_chunk != linked.keys.current.chunk
+            && let Some(session) = session
+        {
+            session.log_current_chunk(linked)?;
+        }
     } else {
         player.step_in_scene(buttons, &stage.collision, tables)?;
         stage.update_for_position(player.position)?;

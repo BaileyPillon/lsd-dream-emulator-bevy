@@ -182,6 +182,18 @@ impl LinkedPlayer {
         ready: [i16; 7],
         buttons: u32,
     ) -> Result<(), SceneCollisionError> {
+        self.step_with_clock(player, scene, math, ready, buttons, None)
+    }
+
+    pub fn step_with_clock(
+        &mut self,
+        player: &mut ChunkPlayer,
+        scene: &SceneCollision,
+        math: &PsxMathTables,
+        ready: [i16; 7],
+        buttons: u32,
+        clock: Option<(&mut crate::DreamDay, &crate::DayTables)>,
+    ) -> Result<(), SceneCollisionError> {
         if self.interval == 0 {
             return Err(LinkError::InvalidMovement.into());
         }
@@ -191,8 +203,36 @@ impl LinkedPlayer {
         self.floor_contact = None;
         self.floor_effect = None;
         self.map.tick = self.map.tick.wrapping_add(1);
-        self.links.execution.dream_timer = self.links.execution.dream_timer.wrapping_add(1);
-        if !player.controls.input_locked {
+        let run_callbacks = if let Some((day, tables)) = clock {
+            self.palette.dream = tables.color(day.chart()?);
+            let index = usize::try_from(day.day)
+                .ok()
+                .filter(|&i| i < 365)
+                .ok_or(crate::DayFault::InvalidDay)?;
+            self.palette.flashback = tables.color(day.history[index]);
+            let mut effects = ClockEffects {
+                map: &mut self.map,
+                commands: &mut self.commands,
+                key: self.keys.current,
+                palette: self.palette,
+                error: None,
+            };
+            let run = day.tick(
+                &mut self.links,
+                &mut player.controls,
+                &mut self.rng,
+                2,
+                &mut effects,
+            )?;
+            if let Some(error) = effects.error {
+                return Err(error.into());
+            }
+            run
+        } else {
+            self.links.execution.dream_timer = self.links.execution.dream_timer.wrapping_add(1);
+            true
+        };
+        if run_callbacks && !player.controls.input_locked {
             player.controls.action_pressed = false;
             self.can_dynamic = self
                 .links
@@ -203,6 +243,9 @@ impl LinkedPlayer {
         player.pad.poll(buttons);
         for code in player.pad.notifications(&PAD_MASKS) {
             player.controls.notify_pad(code);
+        }
+        if !run_callbacks {
+            return Ok(());
         }
         player.controls.update_view();
         if self.map.move_callback != 1 {
@@ -236,6 +279,39 @@ impl LinkedPlayer {
     ) -> Result<(), SceneCollisionError> {
         self.keys.current_spawn(true, &scene.slots, position)?;
         Ok(())
+    }
+}
+
+struct ClockEffects<'a> {
+    map: &'a mut MapLinkPolicy,
+    commands: &'a mut Vec<MapLinkCommand>,
+    key: SpawnLocation,
+    palette: LinkPalette,
+    error: Option<LinkError>,
+}
+impl crate::DreamDayEffects for ClockEffects<'_> {
+    fn notify(
+        &mut self,
+        _day: &mut crate::DreamDay,
+        links: &mut DreamLinks,
+        controls: &mut PlayerControls,
+        code: i32,
+    ) {
+        match self.map.notify(links, controls, code, self.palette) {
+            Ok(commands) => self.commands.extend(commands),
+            Err(error) => self.error = Some(error),
+        }
+    }
+    fn attached_actor(&self) -> bool {
+        true
+    }
+    fn current_spawn(
+        &mut self,
+        _day: &mut crate::DreamDay,
+        _links: &mut DreamLinks,
+        _controls: &mut PlayerControls,
+    ) -> SpawnLocation {
+        self.key
     }
 }
 

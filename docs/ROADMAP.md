@@ -42,3 +42,8 @@ player-motion reset also have original CPU comparisons; the inspector rebuilds
 destination geometry/textures after completion. Original day generation,
 asynchronous scene construction, GPU composition, natural parent lifetimes and
 scheduling remain open; see [session recovery](SESSION.md).
+Day preparation, previous/history mood, chart/score rules, signed year wrapping,
+flashback records and timer expiry now have original CPU comparisons. The new
+`--dream` profile connects an imported first day through timeout and day commit;
+original generation, UI/media and full native-session comparisons remain open.
+See [day recovery](DAYS.md).

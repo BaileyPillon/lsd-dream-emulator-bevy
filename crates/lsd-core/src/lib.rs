@@ -9,6 +9,7 @@ mod chunk_player;
 mod collision;
 mod collision_cloud;
 mod contact_links;
+mod dream_day;
 mod dream_session;
 mod effect;
 mod fixed_math;
@@ -40,6 +41,10 @@ pub use collision::{CollisionFace, CollisionFault, SegmentHit, intersect_model};
 pub use collision_cloud::{CollisionBounds, CollisionCloud};
 pub use contact_links::{
     DreamContactEffects, FloorLinkRequest, FloorLinkResponse, LinkTransformState, WallLinkRequest,
+};
+pub use dream_day::{
+    DayFault, DayStartInputs, DayTables, DreamDay, DreamDayEffects, FlashbackRecord, Mood,
+    MoodContributors,
 };
 pub use dream_session::{DreamSession, DreamSessionHost};
 pub use effect::{EffectEvent, EffectFault, EffectPalette, EffectState};

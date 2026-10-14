@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-14T04:17:34.430422+00:00",
+  "base_commit": "f7c7d3f85e39f16ce80e124ca660f6e1352ae2b2",
+  "canonical_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "scope": "Original day/mood/chart/score/start-spawn/calendar/flashback/clock services compared with original CPU execution using owned content and 1460 private original-content startup cases. The Bevy day profile connects a supplied new-game bootstrap to the original first-day spawn/time limit, loaded idle dream expiry and chart/day/result commit. Full constructor/generation, actor/NPC contribution callbacks, UI/media/persistence, GPU/camera/audio and original global timing remain unaccepted.",
+  "native_owned_cases_by_operation": {
+    "start": 96,
+    "end": 144,
+    "tick": 384,
+    "save": 144,
+    "load": 24,
+    "init": 1,
+    "previous": 32,
+    "chart": 16
+  },
+  "native_owned_cases_total": 841,
+  "original_startup_cases": 1460,
+  "original_calendar_days": 365,
+  "original_year_states": 2,
+  "original_rng_seeds": 2,
+  "original_special_startup_cases": 164,
+  "native_function_entries": {
+    "dream_sys_start_day": 96,
+    "is_day_special": 48,
+    "dream_sys_init_mood_contributors": 48,
+    "dream_sys_clear_mood_graph": 96,
+    "dream_sys_init_spawn_loc": 32,
+    "dream_sys_get_previous_day_mood": 64,
+    "generate_initial_spawn": 32,
+    "get_stage_chunk_from_mood": 32,
+    "time_limit": 32,
+    "dream_sys_load_next_flashback": 96,
+    "random": 20,
+    "rand": 204,
+    "dream_sys_log_mood": 32,
+    "dream_sys_end_day": 144,
+    "dream_sys_calc_unlock_score": 18,
+    "calc_navigation_score": 18,
+    "dream_sys_update_dream_chart": 34,
+    "dream_sys_get_mood_average": 68,
+    "calc_mood_axis": 120,
+    "dream_sys_advance_day": 18,
+    "dream_sys_init_new_game": 37,
+    "init_nav_challenges_array": 37,
+    "memset": 37,
+    "dream_sys_timer_tick": 384,
+    "dream_sys_update_link_timer": 96,
+    "dream_sys_run_callbacks": 96,
+    "dream_sys_flashback_saving": 192,
+    "current_key": 36,
+    "get_rotation": 36,
+    "dream_sys_add_flashback": 36,
+    "calc_dream_color": 16
+  },
+  "native_function_ranges": [
+    {
+      "name": "dream_sys_start_day",
+      "address": "0x8005a368",
+      "bytes": 180,
+      "sha256": "2320a68f5724482b9efd03848eca1e0d7775df119095cf89fb8b8a6343c62451"
+    },
+    {
+      "name": "dream_sys_end_day",
+      "address": "0x8005a41c",
+      "bytes": 204,
+      "sha256": "271ae7e5202da9233e53e1149f9d2085307324945dedea4e7f4748bca9e0aa75"
+    },
+    {
+      "name": "dream_sys_advance_day",
+      "address": "0x8005a304",
+      "bytes": 56,
+      "sha256": "387d80ef607aa34796cdbf3419eb5db1c25d44c5e7dafafb8812290a872938ba"
+    },
+    {
+      "name": "dream_sys_init_new_game",
+      "address": "0x8005a258",
+      "bytes": 120,
+      "sha256": "d42c03d722709c82096c503fd890a5cee3a084d6f40214bdb33d21c84a6db1c2"
+    },
+    {
+      "name": "dream_sys_get_previous_day_mood",
+      "address": "0x8005b1f4",
+      "bytes": 256,
+      "sha256": "2e3338506f2c44cdc56faade0bd2d7023ce447a226f6073979dfae60ed6104ec"
+    },
+    {
+      "name": "dream_sys_init_mood_contributors",
+      "address": "0x8005b2f4",
+      "bytes": 176,
+      "sha256": "40a5204ef71be24c2b5f4e93dc074ca52ab186eea3a4189b1a7a099077429b7e"
+    },
+    {
+      "name": "dream_sys_log_chunk_mood",
+      "address": "0x8005b3a4",
+      "bytes": 76,
+      "sha256": "17fe38e488529619685d144ba51d49a4b4297a7b9265a9bb71e53d952924af40"
+    },
+    {
+      "name": "dream_sys_update_dream_chart",
+      "address": "0x8005b420",
+      "bytes": 192,
+      "sha256": "591c42e8751cf26f45b5000174b01636877328dc334d52ef2a62e7e71cbd0a9a"
+    },
+    {
+      "name": "dream_sys_get_dream_color",
+      "address": "0x8005b4e0",
+      "bytes": 56,
+      "sha256": "0659f6160b44a19f6341cee66ea9d18e54c72b45a9ff90b9a43e17beaf62a20c"
+    },
+    {
+      "name": "calc_dream_color",
+      "address": "0x8005b518",
+      "bytes": 140,
+      "sha256": "5bb1be3cc5febfd1f3946d000d740df866e053555e9b8fb97330c76f20d5f3c9"
+    },
+    {
+      "name": "dream_sys_clear_mood_graph",
+      "address": "0x8005b5a4",
+      "bytes": 20,
+      "sha256": "e4cbec65dd54f7e4d97bade30d9c2d0324cdbc082f29473efa054c9b3962869f"
+    },
+    {
+      "name": "dream_sys_log_mood",
+      "address": "0x8005b5b8",
+      "bytes": 56,
+      "sha256": "98c247bf4d57936384e43807dc398720f382191b00dd07e061a6a22eec168dcb"
+    },
+    {
+      "name": "dream_sys_get_mood_average",
+      "address": "0x8005b5f0",
+      "bytes": 124,
+      "sha256": "902ddc0df776d947022e19d909a27dab5d657d2a2747b0479707a57d1c910162"
+    },
+    {
+      "name": "calc_mood_axis",
+      "address": "0x8005b66c",
+      "bytes": 116,
+      "sha256": "15e18dfbad1b1dedd93c563b107c36fbfe34418af9cab5653f3f28dd3696c5c5"
+    },
+    {
+      "name": "dream_sys_calc_unlock_score",
+      "address": "0x8005b6e0",
+      "bytes": 108,
+      "sha256": "8cebed5df378900512b5e00ea210120a857393df2ab72aeba86a33d03f7f2a28"
+    },
+    {
+      "name": "calc_navigation_score",
+      "address": "0x8005ba7c",
+      "bytes": 152,
+      "sha256": "2775996a0118967cf24500877c88f3826a8860aa317fdd3c1af3ba3fbad37984"
+    },
+    {
+      "name": "init_nav_challenges_array",
+      "address": "0x8005ba50",
+      "bytes": 44,
+      "sha256": "b88104065d9636e4b2884cd0b113fcec14953c8c655f53a0dd1f3211ee80c86a"
+    },
+    {
+      "name": "memset",
+      "address": "0x8004117c",
+      "bytes": 44,
+      "sha256": "e04daae25e11c9daf3e473004392c5a2eb79da72e33948c77d23d9deadc8157b"
+    },
+    {
+      "name": "dream_sys_init_spawn_loc",
+      "address": "0x8005a508",
+      "bytes": 120,
+      "sha256": "685843b129a64ffcd994440432107670265afac11d59d466610f19497d1cdef7"
+    },
+    {
+      "name": "generate_initial_spawn",
+      "address": "0x8005c28c",
+      "bytes": 428,
+      "sha256": "68bf66800376ffd7e0dc5940240d68064ceeb4a5d009d6047c2d001ec07616c0"
+    },
+    {
+      "name": "get_stage_chunk_from_mood",
+      "address": "0x8004950c",
+      "bytes": 172,
+      "sha256": "f432a45556bfa0af5d7732e83dc1a83afae07c0ebb725661b355f46853c7e3f6"
+    },
+    {
+      "name": "get_mood_from_stage_chunk",
+      "address": "0x800495b8",
+      "bytes": 80,
+      "sha256": "5b04cb99d6b67832ec57f6b66793288f6469dec01de23d4927bed1c85241cb38"
+    },
+    {
+      "name": "is_day_special",
+      "address": "0x8005c438",
+      "bytes": 208,
+      "sha256": "9c845c79b527a6522f408421c4a839ffbf1e2bd9c89657815bed8fd152f8dfa7"
+    },
+    {
+      "name": "dream_sys_load_next_flashback",
+      "address": "0x8005a63c",
+      "bytes": 196,
+      "sha256": "d7f310ddfa1d51647b265264c801cb6b3d4df681b46f4830a10ce48f13cda685"
+    },
+    {
+      "name": "dream_sys_add_flashback",
+      "address": "0x8005b74c",
+      "bytes": 208,
+      "sha256": "b2ff59fa8f1a0c4d609c5a327724a982b44bad286fec9d2a0531e7b4f46471ea"
+    },
+    {
+      "name": "dream_sys_flashback_saving",
+      "address": "0x8005b81c",
+      "bytes": 224,
+      "sha256": "57b8d5b37518afe68690eea29b5e8ac7d968ff104cefeca4c2c8422843577d89"
+    },
+    {
+      "name": "dream_sys_timer_tick",
+      "address": "0x80058d94",
+      "bytes": 248,
+      "sha256": "37836055f8900486b4aa8cffad57c0b91e26015d5d44ad4dd0eb5bbb5c50826f"
+    },
+    {
+      "name": "dream_sys_update_link_timer",
+      "address": "0x80059394",
+      "bytes": 68,
+      "sha256": "4f0e9f68eef6a946bf14874ffaf579a72c796442d815a6857b57613f7b3d13d3"
+    },
+    {
+      "name": "dream_sys_run_callbacks",
+      "address": "0x800593d8",
+      "bytes": 84,
+      "sha256": "8400f29ee2b708e3985d9394455869ce53a50753ac078870e2e67b4a6a382bcc"
+    }
+  ],
+  "supplied_boundaries": [
+    "parent notification may cancel/change link state",
+    "view/move callbacks"
+  ],
+  "actor_context_key_getter_executed": true,
+  "local_validation": {
+    "workspace_counts": [
+      93,
+      0,
+      12
+    ],
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "original_calendar_native_cases_passed": 1460,
+    "original_calendar_days_checked": 365,
+    "imported_first_dream_start_timeout_day_commit_passed": true,
+    "permanent_link_regression_scenarios_passed": 17,
+    "desktop_build_passed": true,
+    "captures": [
+      {
+        "host_ticks": 32,
+        "original_day": 1,
+        "result": "None",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "capture_scope": "Final snapshot after supplied idle host ticks; original UI, GPU fade and native whole-session comparisons remain open."
+      },
+      {
+        "host_ticks": 4000,
+        "original_day": 2,
+        "result": "Some(1)",
+        "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+        "capture_scope": "Final snapshot after supplied idle host ticks; original UI, GPU fade and native whole-session comparisons remain open."
+      }
+    ],
+    "legacy_capture_unchanged": true,
+    "validation_log_sha256": {
+      "format": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy": "129e0c530cfde4e73649e5c6808a066d6dfdf43a6cfb57cb6f7685021e67a00c",
+      "workspace": "46cfe7197c38c353f0d5f638eb203ba8763a461296849594669e3d756a826066",
+      "original-calendar": "bc1accb0977b7ec11f9e936c26cd505bd3d18becd1e17c87159d2875d4b58749",
+      "original-first-dream": "183e93d16340a727df8e5fad26f2bb74d0959e281be794f708aadd578c6cc24d",
+      "original-permanent-links": "5ac2edba645e0a8b2fe2577334460d5cedc4583169bb531607826322add1393f",
+      "desktop-build": "e214de6c592092ba429d02ffba57dc4d183c1c114e1ad2e9c61141cb04bc4dd3",
+      "capture-32": "493d76123bce0a3dffb5c9af5da3d92cbfb82c87c1ffc12e4f9fbae2832e6dd6",
+      "capture-4000": "f875d8f9d85c5e85e1c46ace9d4440b66ea2baf496ecb9363ab286b4c334788f",
+      "legacy-capture": "a145b78ccc6424d868b5aeb1e82641738f4dbf5b9ffe2ef31c2387f00e3d7534"
+    },
+    "c_decompilation_paused_and_preserved": true,
+    "whole_day_feature_or_native_full_session_parity_accepted": false
+  },
+  "post_validation_follow_up_checks": {
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "retained_state_next_dream_start_in_private_integration_test_passed": true,
+    "evidence_source": "Successful subsequent local command; final exact-commit CI is recorded privately after publication."
+  },
+  "working_source_sha256": {
+    "crates/lsd-core/src/dream_day.rs": "06e5a64668b64fa864762b997b7d3d0c3b34e2d5956fd15f4c3bf07acc937367",
+    "crates/lsd-core/src/lib.rs": "a86c5232938a12312e783ff76ff56885041c087562b29a70ea48965f8452591f",
+    "crates/lsd-core/src/linked_player.rs": "e1c9639429fd6c651d3cb8c3efc60ae9b4e47bf8a7a95f71a9d072499e616d22",
+    "crates/lsd-core/src/scene_collision.rs": "993de5a68929cc61dc00131b76d75a0079a069f4cb66f4c84d91af7558db8948",
+    "crates/lsd-core/tests/native_day_clock.rs": "c381eb93fe6d1822ccd6330bb86ce4405d8a17762b1892612cec2a78a1e265dc",
+    "crates/lsd-core/tests/support/day_state.rs": "31aa154c2827ffac9b551da467f37db236e21060347af9cc0b99405fb59b9826",
+    "crates/lsd-assets/src/day_tables.rs": "5b94e4ef9b4482d67547db987258c18266dbee93b7ded120e55d701c820ab52c",
+    "crates/lsd-assets/src/lib.rs": "4a13b7b8be8cb0898c24fb39011a0d9da0afac4d4b55c35febe0730005f5e198",
+    "crates/lsd-assets/src/stage_session.rs": "13361c3c4cf974641f2a8e68a257dc368e51d7797e844edafcd1dc2cd49a7cc0",
+    "crates/lsd-assets/tests/native_day_preparation.rs": "8a74336a43f4331d014d21eec139b78f280432d38509f8cda612ab4a1ef3e81b",
+    "crates/lsd-assets/tests/native_dream_runtime.rs": "2e087b120143f234927da15f33118de53ff8721f6f553ef219962827ab8674ba",
+    "crates/lsd-bevy/src/bin/lsd-stage.rs": "4b651c1a70fcf90b5474b31de74bb47c5d0f5b4973989f04f39909d4da32e1f6"
+  },
+  "public_fixtures": {
+    "crates/lsd-core/tests/fixtures/day-clock.json": "a5a4b801f81abd44f4e296e34d4b102932b52f7cfaedf967fdb37fbdff1dbbcf"
+  },
+  "private_proof_sha256": {
+    "native-day-clock-proof-fourteen.json": "145a6b9793ba53ccaa05cd0ce8e8330c640cab5a351277ff7070ca3b3e803c65",
+    "original-day-proof-fourteen.json": "8204a0763e36e5d2df201b14a89f91e731b2b0c38ea3c8f13dbc29ca65e6b4df",
+    "day-validation-proof-fourteen.json": "a7c35a0e18c6e43e53b2e15de78b03399f65a7b413465e307baaf30d3e7e0534"
+  },
+  "original_content_or_images_published": false,
+  "original_day_clock_services_implemented": true,
+  "bevy_original_day_profile_connected": true,
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "ai_model_calls": 0,
+  "c_decompilation_paused_and_preserved": true
+}

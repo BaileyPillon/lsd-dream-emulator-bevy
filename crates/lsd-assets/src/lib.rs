@@ -1,5 +1,7 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
+mod day_tables;
 mod effect_palette;
+pub use day_tables::load_day_tables;
 pub mod formats;
 pub use effect_palette::load_effect_palette;
 mod link_tables;
