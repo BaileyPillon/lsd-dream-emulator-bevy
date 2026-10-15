@@ -1306,6 +1306,21 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "audio_note_setup_20261014": {
+      "scope": "Normal SDK sound-effect key-on through imported VAB tones: physical voice selection, integer volume/pan, sample/ADSR/pitch register cache, software voice records, dirty/automation/key/reverb masks. Original routines use owned register storage and supplied bank-ready/base/software states. Auto-volume, flushing, SPU synthesis, device cadence and audible playback remain unaccepted.",
+      "checks": {
+        "path": "docs/audio-note-checks.json",
+        "sha256": "f2f42480c504f7c52d733a295b39023b010a0d2737318ed792f18251e4df77d0"
+      },
+      "owned_note_cases": 144,
+      "original_note_cases": 1404,
+      "original_tones": 351,
+      "original_banks": 9,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

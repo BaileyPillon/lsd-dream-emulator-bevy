@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T00:27:02.703555+00:00",
+  "scope": "Normal SDK sound-effect key-on through imported VAB tones: physical voice selection, integer volume/pan, sample/ADSR/pitch register cache, software voice records, dirty/automation/key/reverb masks. Original routines use owned register storage and supplied bank-ready/base/software states. Auto-volume, flushing, SPU synthesis, device cadence and audible playback remain unaccepted.",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "comparisons": {
+    "owned_banks": 2,
+    "owned_note_cases": 144,
+    "original_banks": 9,
+    "original_tones": 351,
+    "original_note_cases": 1404,
+    "physical_voice_records_per_case": 24,
+    "software_record_bytes": 52,
+    "register_cache_words_per_voice": 8,
+    "automation_masks_per_case": 16
+  },
+  "outcomes": {
+    "owned": {
+      "successful_notes": 88,
+      "failed_notes": 56,
+      "immediate_all_voice_key_off_calls": 44,
+      "mono_and_stereo": [
+        0,
+        1
+      ]
+    },
+    "original": {
+      "successful_notes": 1404,
+      "failed_notes": 0,
+      "immediate_all_voice_key_off_calls": 0,
+      "mono_and_stereo": [
+        0,
+        1
+      ]
+    }
+  },
+  "provided_original_inputs": "Original software startup in zero-initialized owned MMIO storage. Bank headers use FakeHead with supplied SPU base and bank-ready state. Each note receives identified software records, dirty/automation/key/reverb masks, mono mode and ADSR offset. No sample transfer, SPU synthesis or device clock.",
+  "original_function_sha256": {
+    "func_80030E90": "c685846db741c994179100f092c05e90796d5e83bbedc50d34faa59a993950c5",
+    "func_8002EDD4": "a543101e2a2c997638309cd6bee1d19dbd3d4cf946eecdadec952cbd5c47903a",
+    "func_8002CF18": "d38951c50387a60927ac5dfdffae552ccaaab7003254db830feb0d967262f4b7",
+    "func_8002D6A4": "304c2fc433f2c8f950d8bd02801c213184ac3e822ea30d1b06fec65b86cdbab0",
+    "func_8002D1B4": "a6daff44d00f9025763ddf762070b6d45804fbab12d8ebf23896c7718a3e5779",
+    "func_8002E038": "e1832c86dbd39e062078fd626923872f59eacb7a25cf42d2c5758d65e32c9090",
+    "SsVabFakeHead": "96002ec14aaadeb24dfa540a8a521baf3affb076c093d1606070dbbd53bd0f18",
+    "SpuVmVSetUp": "503920b76e1d66b2ed401f452ef7f22183ba74a427a82e04301c85456ef8ad20"
+  },
+  "original_function_output_stubs": 0,
+  "independent_repeat_recordings_byte_identical": true,
+  "retained_nonzero_previous_registers_checked": true,
+  "owned_adsr_release_halfword_wrap_checked": true,
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/note-setup.json",
+    "sha256": "f6ebfc8f043abfa0ed2387f875a0940519dd13a52e5382e1556e93a58c74cabf"
+  },
+  "local_validation": {
+    "workspace_passed": 171,
+    "workspace_failed": 0,
+    "workspace_ignored": 54,
+    "new_note_setup_tests_including_original_content_passed": 3,
+    "previous_audio_tests_passed": 10,
+    "format_passed": true,
+    "clippy_all_features_passed": true
+  },
+  "limits": [
+    "Normal sound-effect key-on only. Special SDK sample255 is explicit unsupported input and is absent from imported banks.",
+    "Software success does not confirm audible playback. Default scene backend still queues requests and returns -1.",
+    "Invalid binding, division and pitch lookup inputs are explicit bounded errors, not original invalid-memory/trap acceptance.",
+    "Bank-ready state and SPU base are supplied. Original sample DMA, live device behavior and sequence playback are not accepted."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "original_npc_behavior_has_ai_model_calls": false,
+  "c_paused_and_preserved": true
+}

@@ -1,7 +1,9 @@
 //! Original-behavior primitives. This crate never accesses a renderer or AI service.
 
 mod actor_journal;
+mod audio_note;
 mod audio_voice;
+pub use audio_note::{AudioNoteDriver, NoteSetupFault, NoteStart, VoiceNoteDefinition};
 pub use audio_voice::{
     AudioVoicePool, AudioVoiceSlot, SpuPitchFault, SpuPitchTable, VoiceAllocation,
 };

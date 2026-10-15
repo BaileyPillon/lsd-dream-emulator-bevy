@@ -73,11 +73,15 @@ comparison inputs.
 
 ## Remaining audio work
 
-Full note setup still needs register-cache updates, volume/pan, envelopes,
-auto-volume and stop-all behavior. Sequence dispatch/controllers and timing,
+[Normal sound-effect note setup](AUDIO_NOTES.md) now binds imported tones and
+prepares original volume/pan, sample/envelope registers and key/reverb masks.
+It remains separate from the live queued backend and SPU synthesis.
+
+The driver still needs auto-volume, stop-all behavior, envelope advancement
+and register flushing. Sequence dispatch/controllers and timing,
 ADPCM decoding, SPU interpolation, reverb, mixing and output scheduling also
-remain required. A probe of original complete software startup followed by
-key-on now returns voice zero, providing the reference path for that work.
+remain required. Original complete software startup followed by key-on returns
+voice zero in the reference harness; live device/output integration remains open.
 
 Owned register storage does not emulate SPU reads, device timing, DMA or sound
 output. No complete audio feature group or whole-game parity is accepted.

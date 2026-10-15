@@ -14,10 +14,10 @@ impl Default for AudioVoiceSlot {
 }
 
 impl AudioVoiceSlot {
-    fn word(&self, at: usize) -> u16 {
+    pub(crate) fn word(&self, at: usize) -> u16 {
         u16::from_le_bytes([self.record[at], self.record[at + 1]])
     }
-    fn set_word(&mut self, at: usize, value: u16) {
+    pub(crate) fn set_word(&mut self, at: usize, value: u16) {
         self.record[at..at + 2].copy_from_slice(&value.to_le_bytes());
     }
     pub fn age(&self) -> u16 {

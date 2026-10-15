@@ -55,8 +55,11 @@ Original [sound-bank and music-sequence import](docs/AUDIO_IMPORT.md) now covers
 all nine local VH/VB banks and 70 SEQ files, with original SDK attribute/delta
 comparisons. Physical voice playback and sequence scheduling remain open.
 Original [voice selection, release and pitch conversion](docs/AUDIO_VOICES.md)
-now also run in Rust and match SDK recordings; note setup, synthesis and the
+now also run in Rust and match SDK recordings; auto-volume, synthesis and the
 live audio connection remain unfinished.
+The [normal sound-effect note setup](docs/AUDIO_NOTES.md) now also prepares
+original volume/pan, envelope/sample registers and command masks for every
+imported tone. Auto-volume, device ticks and audible playback remain open.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

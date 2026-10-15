@@ -63,14 +63,19 @@ see [generation recovery](GENERATION.md).
 The [audio importer](AUDIO_IMPORT.md) now reads all nine local VH/VB banks and
 70 SEQ files, preserving sparse programs, sample regions and event order.
 Original SDK getters and delta reads match; one zero-tempo sequence faults in
-original initialization and is retained with an explicit timing issue. Voice
-allocation, sequence playback, SPU synthesis/mixing and audible comparisons
+original initialization and is retained with an explicit timing issue. Driver
+integration, sequence playback, SPU synthesis/mixing and audible comparisons
 remain required for presentation parity.
 
 Original [voice allocation/release and pitch conversion](AUDIO_VOICES.md) now
 have SDK comparisons, including all 351 imported tone bindings. The pending
-audio backend still needs full note setup, volume/envelope updates, synthesis
+audio backend still needs auto-volume/envelope updates, register flushing, synthesis
 and scheduling before these components can provide actual scene playback.
+
+[Normal sound-effect key-on](AUDIO_NOTES.md) now runs through imported tones
+and prepares software voice records and the original register cache. Complete
+original key-on comparisons cover all nine banks and 351 tones. The live
+backend, auto-volume, SPU device/output and sequence timing remain unfinished.
 
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with

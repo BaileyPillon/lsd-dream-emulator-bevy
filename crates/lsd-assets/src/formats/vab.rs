@@ -204,4 +204,55 @@ impl<'a> Vab<'a> {
         let program = u8::try_from(note >> 4).ok()?;
         self.program(program)?.tones.get(usize::from(note & 15))
     }
+
+    pub fn prepare_voice_note(
+        &self,
+        bank: i16,
+        program: u8,
+        tone: usize,
+        spu_base: u32,
+    ) -> Result<lsd_core::VoiceNoteDefinition, DecodeError> {
+        if !(0..16).contains(&bank) || tone >= 16 {
+            return Err(DecodeError::new(0, "invalid SDK bank or tone index"));
+        }
+        let (packed, program) = self
+            .programs
+            .iter()
+            .enumerate()
+            .find(|(_, p)| p.id == program)
+            .ok_or_else(|| DecodeError::new(0, "missing VAB program"))?;
+        let attributes = program
+            .tones
+            .get(tone)
+            .ok_or_else(|| DecodeError::new(0, "missing VAB tone"))?;
+        let sample = self
+            .sample(attributes.sample_number() as u16)
+            .ok_or_else(|| DecodeError::new(0, "missing VAB waveform"))?;
+        let body_bytes = self
+            .samples
+            .last()
+            .map(|s| s.body_offset + s.data.len())
+            .unwrap_or(self.body_prefix.len());
+        let end = u32::try_from(body_bytes)
+            .ok()
+            .and_then(|size| spu_base.checked_add(size));
+        if end.is_none_or(|end| end > 0x80000) {
+            return Err(DecodeError::new(0, "VAB bank exceeds SPU RAM"));
+        }
+        let address = spu_base + sample.body_offset as u32;
+        if address >= 0x80000 {
+            return Err(DecodeError::new(0, "VAB sample starts outside SPU RAM"));
+        }
+        Ok(lsd_core::VoiceNoteDefinition {
+            bank,
+            program: i16::from(program.id),
+            packed_program: packed as u8,
+            tone: tone as i16,
+            bank_volume: self.header.volume,
+            program_volume: program.raw[1],
+            program_pan: program.raw[4],
+            attributes: attributes.raw,
+            sample_address: (address >> 3) as u16,
+        })
+    }
 }
