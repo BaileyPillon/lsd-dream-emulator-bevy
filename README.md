@@ -74,6 +74,10 @@ The [clocked SPU voice engine](docs/SPU_ENGINE.md) now combines sample memory,
 decoder prefetch, key/loop handling, envelopes, noise and 24-voice mixing, and
 accepts the SDK driver's commands. Reverb, main output, music, callback timing
 and the live Bevy audio connection remain unfinished.
+[Reverb and final PCM](docs/SPU_OUTPUT.md) now complete the supplied-clock SPU
+sample path. The `lsd-sound` diagnostic renders an imported sound through the
+sound-object/SDK/device path to WAV. Live scene playback, music, allocation and
+original callback/bus timing remain open.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

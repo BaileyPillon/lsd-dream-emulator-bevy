@@ -61,7 +61,7 @@ The original executable delegates synthesis to SPU hardware. Comparing a
 separate emulator decoder therefore does not prove original runtime or hardware
 parity. The [clocked voice engine](SPU_ENGINE.md) now connects decoder prefetch,
 loop/end handling, noise, envelopes and gain to explicit sample clocks. Actual
-SDK callback/transfer timing, reverb, main output and device integration remain
-required. The running
+SDK callback/transfer timing and live output integration remain required. The
+[PCM output stage](SPU_OUTPUT.md) now processes reverb and main output. The running
 Bevy scene still queues audio requests. No complete audio group, audible scene
 comparison or whole-game parity is accepted by these checks.

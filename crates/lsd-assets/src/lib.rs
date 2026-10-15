@@ -2,7 +2,7 @@
 mod actor_journal;
 mod audio_tables;
 mod sound_bank;
-pub use audio_tables::load_spu_pitch_table;
+pub use audio_tables::{SpuReverbPreset, load_spu_pitch_table, load_spu_reverb_presets};
 pub use sound_bank::{
     AudioImmediateCommand, SoftwareSound, SoundBankBinding, SoundBankFault, dispatch_audio_commands,
 };

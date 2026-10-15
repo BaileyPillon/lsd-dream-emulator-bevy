@@ -84,8 +84,9 @@ separate implementation remains open. The [clocked voice engine](SPU_ENGINE.md)
 now executes ADPCM/envelope/interpolation, noise and mix inputs. The SDK update
 can use `tick_engine`, and `dispatch_audio_commands` connects `SoftwareSound`'s
 immediate commands. Actual bank allocation/transfer timing, interrupt/callback
-cadence, sequence dispatch, reverb, main output and output-device integration
-still require implementation and original runtime/waveform evidence.
+cadence, sequence dispatch and live output-device integration still require
+implementation and original runtime evidence. The [PCM output stage](SPU_OUTPUT.md)
+now processes reverb and main output with controlled waveform comparisons.
 
 No complete audio group or whole-game parity is accepted. Original behavior
 has no AI model dependency; optional analysis/modding tools remain separate.

@@ -58,8 +58,8 @@ See [spu-engine-checks.json](spu-engine-checks.json) for evidence identities.
 
 ## Remaining work
 
-The output stage still needs reverb and main-gain processing, final mixing and
-output-device integration. The default Bevy scene still queues audio requests.
+The [output stage](SPU_OUTPUT.md) now supplies reverb, main gain and final PCM.
+Output-device integration remains open, and the Bevy scene still queues audio requests.
 Real bank allocation, bus/FIFO/DMA duration, CPU IRQ delivery, original callback
 timing and full music sequencing remain open. Reserved ADPCM encodings remain
 explicit bounded errors rather than guessed behavior. The high-register pitch

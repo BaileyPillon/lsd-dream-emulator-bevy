@@ -63,6 +63,8 @@ for those edge cases remains open; software agreement is not hardware proof.
 The [clocked voice engine](SPU_ENGINE.md) now connects these components with
 prefetch, key-on/off delay and ordering, looping, capture, noise and mix inputs.
 The caller still supplies sample clocks; actual transfer/callback timing,
-complete mixing/reverb, sequence dispatch and output remain open. The default Bevy scene still
+sequence dispatch and output-device integration remain open. The
+[PCM output stage](SPU_OUTPUT.md) now processes mixing/reverb and main gain.
+The default Bevy scene still
 queues audio requests, and no complete audio group or audible scene comparison
 is accepted by these checks.

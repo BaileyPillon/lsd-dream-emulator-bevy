@@ -227,11 +227,11 @@ impl SpuVoiceEngine {
         self.irq(address);
         self.irq(address & !7);
     }
-    fn write_memory(&mut self, address: u32, value: u16) {
+    pub(crate) fn write_memory(&mut self, address: u32, value: u16) {
         self.irq(address);
         self.memory.write_word(address, value);
     }
-    fn read_memory(&mut self, address: u32) -> u16 {
+    pub(crate) fn read_memory(&mut self, address: u32) -> u16 {
         self.irq(address);
         self.memory.read_word(address)
     }

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T02:19:52.966567+00:00",
+  "scope": "Integer SPU reverb, main gain and finished PCM with explicit clocks and supplied inputs. Independent pinned software comparisons retain raw PCM before host gain, unchanged reference post-gain PCM, wet output, full state and RAM. Original SDK presets and note-register bindings are provided scenarios, not natural game startup/callback or audible-scene acceptance.",
+  "reference_game": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "native_sdk_preset_recordings": {
+    "presets": 10,
+    "writes_per_preset": 35,
+    "supplied_allocator": "empty32-entry owned list",
+    "supplied_register_storage": "zeroed owned MMIO",
+    "mode_attribute_mask": 1,
+    "original_function_output_stubs": 0,
+    "function_sha256": {
+      "SpuInitMalloc": "bc293ad25ecb2b79e8bd4cce2de50603d8c1726d96711a4ade03f27149b7c3d9",
+      "SpuSetReverbModeParam": "2d0d19045c66bdf619b0dae6ba2dd945efcd4a1b205b0115885ccd11b57d50ce",
+      "_spu_setReverbAttr": "a372f4180eabd3fcdb7f0f6b4c82d4ac9f455700606ef79041879a586977e8ba",
+      "SsSetMVol": "638b8c737f717a13fd4722da2f5e970f57a900241038661b7f06540f37f3d9d9"
+    },
+    "private_recording_sha256": "9aeef9153125b75b87d0d012b6304102123959c8e514477a9d500b09e1365c94",
+    "master_volume_120_writes": [
+      [
+        384,
+        2,
+        15480
+      ],
+      [
+        386,
+        2,
+        15480
+      ]
+    ]
+  },
+  "comparison_tool": {
+    "repository": "https://github.com/libretro/beetle-psx-libretro",
+    "commit": "e57860d82faa953dc0fc10f201fd583739bc2f7d",
+    "source_sha256": "f081394befd298e1d3e70a3982009ac9555853c4dfa92162fb7bbed7d3370a99",
+    "reverb_region_sha256": "79383d459fed6b0ab32725c57912ce65b6af228cd0f0ac2e89fdf2efed65d892",
+    "original_full_update_sha256": "401744ffcbc7a88493618d5e047a261dc8f63f8a9289918ecabbfd8bdccde81d",
+    "instrumented_full_update_sha256": "8277bd56678a73a3c5870712ec6fbfe525e91cc45d5ef2062884f90da8d8b892",
+    "observation_assignments": [
+      "observed_reverb[0]=reverb[0]; observed_reverb[1]=reverb[1];",
+      "observed_pcm[lr]=out;"
+    ],
+    "removing_observations_restores_original_function_exactly": true,
+    "source_calculations_unchanged": true,
+    "supplied_sample_clock_cycles": 768,
+    "output_buffer_drained_each_sample": true,
+    "host_headroom_gain": "(sample *3 +2) >>2; raw pre-gain PCM also compared",
+    "license": "GPL-2.0-or-later; separate private test tool; source not included in MIT port"
+  },
+  "comparisons": {
+    "owned_scenarios": 83,
+    "owned_output_clocks": 46080,
+    "owned_device_clocks": 9552,
+    "original_presets": 10,
+    "original_preset_clocks": 2205000,
+    "original_tone_bindings": 351,
+    "original_device_clocks": 718848,
+    "snapshot_words": 2101
+  },
+  "independent_repeat_recordings_byte_identical": true,
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/spu-output.json",
+    "sha256": "ddf1a3f1005d3a9c257c94977ef59511eed46b4befa06923ca225274a322be6b"
+  },
+  "private_original_observation_sha256": "0a00aa61b1ff785025c9a77ef9a5bea36c80674c3c17df65b6c296b63c5feed3",
+  "saved_local_diagnostic": {
+    "wav_sha256": "89fadc31ad0420126d3d05dc8a1c6a94facbec2e96be50ae037670fefb4085fc",
+    "pcm_sha256": "1b3793947f1d1574e70219309efb0146f635a1b3bd143cf8de693ec15102b6d3",
+    "frames": 88200,
+    "sample_rate": 44100,
+    "nonzero_frames": 87091,
+    "peak": 9720,
+    "original_software_oracle_pcm_byte_identical": true
+  },
+  "local_validation": {
+    "workspace_passed": 198,
+    "workspace_failed": 0,
+    "workspace_ignored": 61,
+    "output_tests_including_original_content_passed": 4,
+    "prior_engine_envelope_sample_tests_including_original_content_passed": 13,
+    "format_passed": true,
+    "clippy_all_features_passed": true,
+    "saved_wav_header_and_payload_read_back": true
+  },
+  "limits": [
+    "Supplied callback/gain/release/bank-placement scenarios do not accept natural game startup, IRQ/VBlank or bus/FIFO/DMA timing.",
+    "Preset importer exposes zero-depth stock values; SDK allocation/work-area clearing/mode transitions remain separate work.",
+    "Default Bevy scene still queues audio. Live host output/resampling, music and real allocation/transfer/callback integration remain open.",
+    "Reserved ADPCM and disputed high-register pitch hardware behavior retain earlier limits.",
+    "Saved WAV is a controlled diagnostic; no audio-device playback or whole original-scene comparison accepted."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}

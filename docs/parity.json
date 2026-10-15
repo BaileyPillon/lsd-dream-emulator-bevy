@@ -1404,6 +1404,27 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "spu_reverb_pcm_and_sound_diagnostic_20261014": {
+      "scope": "Integer SPU reverb, main gain and finished PCM with explicit clocks and supplied inputs. Independent pinned software comparisons retain raw PCM before host gain, unchanged reference post-gain PCM, wet output, full state and RAM. Original SDK presets and note-register bindings are provided scenarios, not natural game startup/callback or audible-scene acceptance.",
+      "checks": {
+        "path": "docs/spu-output-checks.json",
+        "sha256": "d032e5e2162d5399e165207c75101bc1497861cfa30ef8806d655b9b6dbe608a"
+      },
+      "owned_scenarios": 83,
+      "owned_output_clocks": 46080,
+      "owned_device_clocks": 9552,
+      "original_presets": 10,
+      "original_preset_clocks": 2205000,
+      "original_tone_bindings": 351,
+      "original_device_clocks": 718848,
+      "snapshot_words": 2101,
+      "saved_diagnostic_frames": 88200,
+      "saved_diagnostic_matches_independent_pcm": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

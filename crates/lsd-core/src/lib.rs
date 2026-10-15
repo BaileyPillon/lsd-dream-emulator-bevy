@@ -10,7 +10,9 @@ pub use audio_engine::{
 mod audio_gaussian;
 pub use audio_envelope::{SpuEnvelope, SpuEnvelopePhase, SpuVolume};
 mod audio_note;
+mod audio_output;
 pub use audio_gaussian::spu_gaussian;
+pub use audio_output::{SpuDevice, SpuOutput, SpuPcmFrame};
 mod audio_sample;
 pub use audio_sample::{SpuAdpcmBlock, SpuAdpcmDecoder, SpuAdpcmFault, spu_pitch_step};
 mod audio_tick;

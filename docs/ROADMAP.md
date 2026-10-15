@@ -101,6 +101,12 @@ The SDK driver and sound-object commands can feed this engine. Reverb, main
 gain, output, music, actual callback/DMA timing and natural scene acceptance
 remain open.
 
+The [SPU output stage](SPU_OUTPUT.md) now processes reverb and final PCM, with
+original preset imports and independent software comparisons. `lsd-sound`
+exports a controlled sound-object/SDK/device diagnostic to WAV. Live Bevy
+audio, real allocation/transfer and callback/bus timing, music and natural
+scene acceptance still remain required.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model
