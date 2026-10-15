@@ -8,7 +8,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "--seed" => seed = args.next().ok_or("--seed needs a number")?.parse()?,
             "--help" | "-h" => {
                 println!(
-                    "lsd-bevy [--steps 0..1000000] [--seed u32]\nDeterministic compatibility probe; gameplay is not implemented yet."
+                    "lsd-bevy [--steps 0..1000000] [--seed u32]\nHeadless compatibility probe. For the desktop dream prototype, see docs/GETTING_STARTED.md."
                 );
                 return Ok(());
             }

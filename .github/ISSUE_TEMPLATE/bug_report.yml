@@ -1,12 +1,12 @@
 name: Bug report
-description: Report a reproducible build, runtime, import, or original-behavior problem.
+description: Report a reproducible build, crash, runtime, or import problem.
 title: "[Bug]: "
 labels: [bug]
 body:
   - type: markdown
     attributes:
       value: |
-        Search existing issues first. Do not upload original game files, BIOS images, full memory dumps, or credentials.
+        Search existing issues first. Use the Original-game compatibility form for a specific difference from original behavior. Do not upload original game files, BIOS images, full memory dumps, or credentials.
   - type: input
     id: revision
     attributes:
