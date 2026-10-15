@@ -15,6 +15,22 @@ Every workstream requires implementation and original/port comparisons.
 | UI, media, persistence | Scenario inventory | Menus, chart, diary, save/load, errors, movies, special days, and endings |
 | Optional tools and mods | Separate architecture and scorecard | Useful analysis/import/authoring tools and explicitly selectable modifications |
 
+## Tracked work
+
+Milestones group work by outcome, without promised release dates. The linked
+issues carry scope, reference anchors, and acceptance criteria. Open tasks are
+not completion claims.
+
+| Milestone | Implementation and acceptance tasks |
+| --- | --- |
+| [Playable dream preview](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestone/1) | [Reproducible content import](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/1), [live dream music](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/2), [remaining NPC callbacks](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/3), [natural dream and encounter comparisons](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/4) |
+| [Complete game flow](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestone/2) | [Menus, diary, and persistence](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/5), [movies, special days, and endings](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/6) |
+| [Reference parity acceptance](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestone/3) | [Original rendering and presentation](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/7), [complete session and feature acceptance](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/8) |
+
+Optional AI-assisted analysis and modding follow the separate
+[tooling plan](../tools/ai-assist/README.md); they do not alter these original-game
+acceptance gates.
+
 ## Immediate priorities
 
 1. Connect music event dispatch to shared SDK/SPU playback and recover original

@@ -17,6 +17,7 @@ summary and the linked check manifests for input identity and comparison scope.
 - [Reference and starting point](REFERENCE.md)
 - [Development changelog](../CHANGELOG.md)
 - [Maintenance and releases](MAINTENANCE.md)
+- [Compatibility report template](templates/COMPATIBILITY_REPORT.md)
 - [Support and reporting](../SUPPORT.md)
 
 ## Content and animation

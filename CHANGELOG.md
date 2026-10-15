@@ -6,6 +6,9 @@ current capabilities and [the commit history](https://github.com/BaileyPillon/ls
 
 ## Unreleased
 
+- Track implementation and acceptance work in three undated GitHub milestones.
+- Require pull requests and the Windows, Linux, and repository checks on `main`.
+- Add monthly dependency update proposals and a reusable compatibility report.
 - Refine repository presentation, contributor guidance, support routing, and
   maintenance documentation.
 - Add automated checks for local documentation links and public JSON evidence.
