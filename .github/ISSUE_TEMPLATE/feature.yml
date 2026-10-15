@@ -1,10 +1,23 @@
 name: Original behavior or port feature
-description: Track a bounded implementation with reference evidence.
+description: Propose original-behavior recovery, development tooling, or an optional modification.
+title: "[Feature]: "
+labels: [enhancement]
 body:
+  - type: dropdown
+    id: track
+    attributes:
+      label: Workstream
+      options:
+        - Original game behavior and parity
+        - Development or AI-assisted analysis tooling
+        - Optional gameplay modification
+    validations:
+      required: true
   - type: textarea
     id: behavior
     attributes:
       label: Original behavior and expected result
+      description: Describe the concrete trigger and expected behavior, or the development problem the tool would solve.
     validations:
       required: true
   - type: textarea

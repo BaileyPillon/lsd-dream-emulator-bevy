@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Build and setup documentation
+    url: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/docs/GETTING_STARTED.md
+    about: Toolchain, local reference inputs, prototype commands, and troubleshooting.
+  - name: Project status and roadmap
+    url: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/docs/STATUS.md
+    about: Check current implementation and known limitations before requesting a feature.
+  - name: Report a security vulnerability
+    url: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/security/advisories/new
+    about: Send security-sensitive reports privately.

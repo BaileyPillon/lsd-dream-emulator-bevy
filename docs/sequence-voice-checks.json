@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-15",
+  "base_commit": "618b2919a942a1521042e07c338b1f7425e7ed84",
+  "reference_executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+  "function_hashes": {
+    "func_8002FAC4": {
+      "address": "0x8002fac4",
+      "bytes": 1548,
+      "sha256": "80d77655763603483665664de665128e455c5e9c57e10c98da555851e2dc40e0"
+    },
+    "func_800300D0": {
+      "address": "0x800300d0",
+      "bytes": 524,
+      "sha256": "5ce3498f8e5da0a9345e124c96706735e7f126056cf463774aac8732f298c667"
+    },
+    "func_80030980": {
+      "address": "0x80030980",
+      "bytes": 1296,
+      "sha256": "ce28173d709a9649f948ee635b05c3e9cc625b15e80fbac5fd610f70c035631e"
+    },
+    "func_8002F610": {
+      "address": "0x8002f610",
+      "bytes": 240,
+      "sha256": "bd30ba48de8fee8f307cdc130c74fcf03f88239b65c505d22a0d33322e9e646a"
+    },
+    "func_8002F3E8": {
+      "address": "0x8002f3e8",
+      "bytes": 552,
+      "sha256": "326847d9ee7c46a3f75bdab01e6deb59bfaba1ca3ec53498ff5a711daf1e0743"
+    },
+    "func_8002DF7C": {
+      "address": "0x8002df7c",
+      "bytes": 188,
+      "sha256": "9b4f177d042d3f10da97fee39374aa1bc44c6acf7fc2c03c4e204f73cf4f02d7"
+    },
+    "func_8002E038": {
+      "address": "0x8002e038",
+      "bytes": 256,
+      "sha256": "e1832c86dbd39e062078fd626923872f59eacb7a25cf42d2c5758d65e32c9090"
+    },
+    "func_800344FC": {
+      "address": "0x800344fc",
+      "bytes": 280,
+      "sha256": "9cd3b20d31c37b976634d0fb75aaaf97ac9632bf1bc96ed6fd57926c5179a2e1"
+    },
+    "func_80034690": {
+      "address": "0x80034690",
+      "bytes": 800,
+      "sha256": "0447eb08f4021449f8dde09c98c3f37be8326305354ca316ce70c955db5e6497"
+    },
+    "func_80035A7C": {
+      "address": "0x80035a7c",
+      "bytes": 176,
+      "sha256": "28bc5670a9863bdf7393bf9330e517b13ca975b7776909cbe274f8462db2e4fd"
+    },
+    "SsSeqCalledTbyT": {
+      "address": "0x80033738",
+      "bytes": 628,
+      "sha256": "29c26dd1874a5def8ce2cabf7634dbf3bcb251955f23919c409e5bc8feca02fd"
+    },
+    "func_8002F700": {
+      "address": "0x8002f700",
+      "bytes": 964,
+      "sha256": "8ace7e6518e8fd88f4877cedca8e37c05770a80be38984f9286dbc510265b990"
+    },
+    "func_80034138": {
+      "address": "0x80034138",
+      "bytes": 276,
+      "sha256": "7f3c8c2327235b194ad982ee88c1ad58f0199622948a6c05b1435c3d43bedbc5"
+    },
+    "func_8003424C": {
+      "address": "0x8003424c",
+      "bytes": 688,
+      "sha256": "8faf0344bc077bdfa89785455fdb4a5ccc69cec8ed5c3ed7295fec9bf5b36041"
+    },
+    "SpuVmVSetUp": {
+      "address": "0x80032148",
+      "bytes": 212,
+      "sha256": "503920b76e1d66b2ed401f452ef7f22183ba74a427a82e04301c85456ef8ad20"
+    },
+    "_SsVmSetProgVol": {
+      "address": "0x800307f0",
+      "bytes": 116,
+      "sha256": "81986f60ceb8e7d5d04cd28f41dcc0a8f015839b0e1a73bd573235eb53bcd6ec"
+    }
+  },
+  "public_owned_fixtures": {
+    "crates/lsd-assets/tests/fixtures/sequence-notes.json": "a390e1155300e9502078c093066a028dd4399cf4f96a77089f8063d15419f58b",
+    "crates/lsd-assets/tests/fixtures/sequence-controls.json": "8fcb4af773497f7088a3a188da25057a37ba3aae522e313fc983dd38ecf344d3",
+    "crates/lsd-core/tests/fixtures/sequence-pitch.json": "4c46ef72d99ecdc02d8aec4cce8c8b904f6f1c48174ad917f00fdfb768f7f03b",
+    "crates/lsd-assets/tests/fixtures/music-track.json": "9836e73f775a32cc97447cc2d8cc433916bd39cb90a392d9df2307b98d3d6328"
+  },
+  "note_checks": {
+    "owned_cases": 138,
+    "original_bank_cases": 932,
+    "original_banks": 9,
+    "owned_tones_can_overlap": 16
+  },
+  "controller_checks": {
+    "owned_operations": 90,
+    "original_operations": 1836,
+    "original_programs": 102,
+    "original_banks": 9
+  },
+  "pitch_checks": {
+    "owned_note_on_cases": 8192,
+    "owned_fine_cases": 1440,
+    "lookup_first_index": -176,
+    "lookup_last_index": 207
+  },
+  "integrated_checks": {
+    "owned_scenarios": 9,
+    "owned_callbacks": 201,
+    "supplied_owned_rates": [
+      50,
+      60,
+      120
+    ],
+    "original_sequences": 69,
+    "original_callbacks": 37859,
+    "original_decoder_visits": 39741,
+    "original_supplied_rate": 60,
+    "original_supplied_bank": "AMBIENT",
+    "device_envelopes_supplied_zero": true,
+    "full_driver_channel_program_volume_and_ordered_register_writes_compared": true
+  },
+  "native_function_output_stubs": 0,
+  "independent_native_repeats_byte_identical": true,
+  "controlled_music_render": {
+    "frames": 529200,
+    "sample_rate": 44100,
+    "channels": 2,
+    "events_dispatched": 777,
+    "notes_allocated": 208,
+    "nonzero_frames": 528292,
+    "peak": 4392,
+    "pcm_sha256": "06a000463aeb08518082b26a35c21889e6def3f2cd70b59b0eea249277ef1583",
+    "wav_sha256": "6abe73d667c0d13def475d4748c5116f769307bb2e0cc6f031b45205599e6b82",
+    "independent_software_pcm_byte_identical": true,
+    "repeat_byte_identical": true,
+    "schedule": "One assigned AMBIENT bank at4096, STG00/BGA, infinite repeat volume52, supplied60Hz/735samples, no reverb."
+  },
+  "validation": {
+    "local_original_and_owned_component_tests": {
+      "pitch": [
+        1,
+        0,
+        0
+      ],
+      "components": [
+        9,
+        0,
+        0
+      ]
+    },
+    "workspace_tests": [
+      214,
+      0,
+      68
+    ],
+    "audio_feature_tests": [
+      5,
+      0,
+      0
+    ],
+    "fmt_clippy_all_features_and_desktop_check_passed": true
+  },
+  "private_reference_sha256": {
+    "sequence_notes": "5f5b8414422f1c46cce0dd6acb2f9e61f028261a2cf93ba205e8b7dd8ef97fda",
+    "sequence_controls": "c96d0969f0b7f2f424c441f81e407e917ba405efc4ed6cfe6725f7f2a2ad989c",
+    "music_track": "c137ceda03eb16c33eb8b43f81ba5d32c4ca75978ee8989f9814781951bc372b"
+  },
+  "scope": "Original SDK music voice/controller behavior and one-track clock/driver integration, plus controlled original-data music synthesis. Original note outputs are not stubbed. Integrated native checks use a supplied bank and zero ENVX; synthesis schedule is independently replayed through the pinned software DSP. No natural scene, physical hardware or whole-feature acceptance.",
+  "remaining": [
+    "Live dream music connection and original bank selection/loading/allocation",
+    "Pause/replay/stop/fade lifecycle and multiple-score orchestration",
+    "Native callback cadence and neighboring SDK data mutations",
+    "Natural original scene audio comparisons"
+  ],
+  "whole_original_feature_groups_accepted": 0,
+  "original_npc_behaviors_accepted": 0,
+  "original_audio_scene_accepted": false,
+  "live_dream_music_connected": false,
+  "ai_model_calls": 0
+}

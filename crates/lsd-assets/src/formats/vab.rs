@@ -54,6 +54,8 @@ impl VabTone {
 pub struct VabProgram {
     pub id: u8,
     pub raw: [u8; 16],
+    /// Preserve unused tone slots; the SDK volume controller can index them.
+    pub tone_attributes: Box<[[u8; 32]; 16]>,
     pub tones: Vec<VabTone>,
 }
 
@@ -160,6 +162,12 @@ impl<'a> Vab<'a> {
             programs.push(VabProgram {
                 id: id as u8,
                 raw: r.bytes(at, 16)?.try_into().unwrap(),
+                tone_attributes: Box::new(std::array::from_fn(|i| {
+                    r.bytes(2080 + programs.len() * 512 + i * 32, 32)
+                        .unwrap()
+                        .try_into()
+                        .unwrap()
+                })),
                 tones,
             });
         }

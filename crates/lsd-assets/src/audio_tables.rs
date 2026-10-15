@@ -1,6 +1,29 @@
 use crate::{PsxExeHeader, is_canonical_reference};
 use lsd_core::SpuPitchTable;
 
+/// Music uses signed remainders without bounding its lookup to the named pitch
+/// table. Import the preceding halfwords too; original data stays local.
+pub fn load_sequence_pitch_table(
+    executable: &[u8],
+) -> Result<lsd_core::SequencePitchTable, &'static str> {
+    if !is_canonical_reference(executable) {
+        return Err("Sequence pitch data requires canonical SLPS_015.56");
+    }
+    let header = PsxExeHeader::parse(executable).map_err(|_| "Invalid executable extent")?;
+    let start = 0x8006_d978_u32
+        .checked_sub(header.load_address)
+        .ok_or("Sequence pitch data outside executable")? as usize
+        + 0x800;
+    let bytes = executable
+        .get(start..start + 768)
+        .ok_or("Missing sequence pitch data")?;
+    Ok(lsd_core::SequencePitchTable {
+        values: Box::new(std::array::from_fn(|i| {
+            u16::from_le_bytes(bytes[i * 2..i * 2 + 2].try_into().unwrap())
+        })),
+    })
+}
+
 /// The sound object created by dream_session_construct uses get_se_path().
 /// Import the path through its original pointer; do not distribute the table.
 pub fn load_scene_sound_path(executable: &[u8]) -> Result<String, &'static str> {

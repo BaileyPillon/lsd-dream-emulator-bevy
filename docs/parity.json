@@ -1475,6 +1475,28 @@
       "original_audio_scene_accepted": false,
       "audible_music_implemented": false,
       "ai_model_calls": 0
+    },
+    "sdk_music_voices_and_full_loop_driver_integration_20261015": {
+      "scope": "Original SDK music voice/controller behavior and one-track clock/driver integration, plus controlled original-data music synthesis. Original note outputs are not stubbed. Integrated native checks use a supplied bank and zero ENVX; synthesis schedule is independently replayed through the pinned software DSP. No natural scene, physical hardware or whole-feature acceptance.",
+      "checks": {
+        "path": "docs/sequence-voice-checks.json",
+        "sha256": "4e18a8960f060dc52785c3d260e67e4359da8078acc7a0bace674946f46b6a60"
+      },
+      "owned_note_cases": 138,
+      "original_note_cases": 932,
+      "owned_controller_operations": 90,
+      "original_controller_operations": 1836,
+      "owned_pitch_cases": 9632,
+      "original_playable_sequences": 69,
+      "original_callbacks": 37859,
+      "original_decoder_visits": 39741,
+      "controlled_music_pcm_implemented": true,
+      "controlled_music_pcm_matches_independent_software": true,
+      "live_dream_music_connected": false,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_scene_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

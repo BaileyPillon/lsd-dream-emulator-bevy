@@ -34,8 +34,9 @@ impl NoteStart {
     }
 }
 
-/// Original SDK sound-effect note setup. The register cache and command masks
-/// are software state; starting a note here does not synthesize or play audio.
+/// Shared original SDK voice state. Sound-effect and music entry points retain
+/// their different note rules. The register cache and masks are software state;
+/// starting a note here does not advance the synthesizer or device clock.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct AudioNoteDriver {
     pub pool: AudioVoicePool,

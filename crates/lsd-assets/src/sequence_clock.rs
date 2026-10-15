@@ -10,6 +10,12 @@ pub enum SeqEventClockFault {
     UnsupportedStatus(u8),
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SeqEventDispatchFault<E> {
+    Clock(SeqEventClockFault),
+    Handler(E),
+}
+
 /// The visitor observes original decoder entry, before that event is handled.
 /// Channel synthesis/controller effects belong to the SDK handler; this type
 /// advances event positions and repeat timing, and does not itself play music.
@@ -59,8 +65,34 @@ impl SeqEventClock {
     pub fn tick(
         &mut self,
         event_limit: usize,
-        mut visitor: impl FnMut(&SeqEvent),
+        visitor: impl FnMut(&SeqEvent),
     ) -> Result<i32, SeqEventClockFault> {
+        self.tick_inner(event_limit, visitor, |_| {
+            Ok::<(), std::convert::Infallible>(())
+        })
+        .map_err(|error| match error {
+            SeqEventDispatchFault::Clock(error) => error,
+            SeqEventDispatchFault::Handler(error) => match error {},
+        })
+    }
+
+    /// Dispatch at the original handler boundary. Note-on reads the following
+    /// delta first; program, controller and bend handlers read it afterwards.
+    /// A fault preserves the cursor and partial handler state at that boundary.
+    pub fn tick_with_handler<E>(
+        &mut self,
+        event_limit: usize,
+        handler: impl FnMut(&SeqEvent) -> Result<(), E>,
+    ) -> Result<i32, SeqEventDispatchFault<E>> {
+        self.tick_inner(event_limit, |_| {}, handler)
+    }
+
+    fn tick_inner<E>(
+        &mut self,
+        event_limit: usize,
+        mut visitor: impl FnMut(&SeqEvent),
+        mut handler: impl FnMut(&SeqEvent) -> Result<(), E>,
+    ) -> Result<i32, SeqEventDispatchFault<E>> {
         if self.stopped {
             return Ok(0);
         }
@@ -75,25 +107,36 @@ impl SeqEventClock {
         } = self;
         clock
             .advance(event_limit, |clock| {
-                let event = sequence
-                    .events
-                    .get(*next_event)
-                    .ok_or(SeqEventClockFault::MissingNextDelta)?;
+                let event =
+                    sequence
+                        .events
+                        .get(*next_event)
+                        .ok_or(SeqEventDispatchFault::Clock(
+                            SeqEventClockFault::MissingNextDelta,
+                        ))?;
                 visitor(event);
                 match event.kind {
                     SeqEventKind::Channel { status, .. } => {
                         if !matches!(status >> 4, 9 | 11 | 12 | 14) {
-                            return Err(SeqEventClockFault::UnsupportedStatus(status));
+                            return Err(SeqEventDispatchFault::Clock(
+                                SeqEventClockFault::UnsupportedStatus(status),
+                            ));
+                        }
+                        if status >> 4 != 9 {
+                            handler(event).map_err(SeqEventDispatchFault::Handler)?;
                         }
                         *next_event += 1;
-                        let following = sequence
-                            .events
-                            .get(*next_event)
-                            .ok_or(SeqEventClockFault::MissingNextDelta)?;
+                        let following = sequence.events.get(*next_event).ok_or(
+                            SeqEventDispatchFault::Clock(SeqEventClockFault::MissingNextDelta),
+                        )?;
                         clock.remaining = following.sdk_delta() as i32;
                         *cursor = following.after_delta;
+                        if status >> 4 == 9 {
+                            handler(event).map_err(SeqEventDispatchFault::Handler)?;
+                        }
                     }
                     SeqEventKind::End => {
+                        handler(event).map_err(SeqEventDispatchFault::Handler)?;
                         *loop_count = loop_count.wrapping_add(1);
                         if *loop_limit == 0 || (*loop_count as i16) < *loop_limit {
                             *next_event = 0;
@@ -111,7 +154,9 @@ impl SeqEventClock {
                 Ok(())
             })
             .map_err(|error| match error {
-                SequenceAdvanceFault::Clock(error) => SeqEventClockFault::Clock(error),
+                SequenceAdvanceFault::Clock(error) => {
+                    SeqEventDispatchFault::Clock(SeqEventClockFault::Clock(error))
+                }
                 SequenceAdvanceFault::Event(error) => error,
             })
     }

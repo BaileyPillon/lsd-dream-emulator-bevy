@@ -2,12 +2,19 @@
 mod actor_journal;
 mod audio_tables;
 mod scene_audio;
+mod sequence_bank;
 mod sequence_clock;
+pub use sequence_bank::SequenceBankBinding;
+mod sequence_voice;
 pub use scene_audio::{SceneAudio, SceneAudioSnapshot, load_scene_audio};
-pub use sequence_clock::{SeqEventClock, SeqEventClockFault};
+pub use sequence_clock::{SeqEventClock, SeqEventClockFault, SeqEventDispatchFault};
+pub use sequence_voice::{SeqVoiceDispatch, SeqVoiceEffect, SeqVoiceFault};
+mod sequence_music;
+pub use sequence_music::SeqMusicTrack;
 mod sound_bank;
 pub use audio_tables::{
-    SpuReverbPreset, load_scene_sound_path, load_spu_pitch_table, load_spu_reverb_presets,
+    SpuReverbPreset, load_scene_sound_path, load_sequence_pitch_table, load_spu_pitch_table,
+    load_spu_reverb_presets,
 };
 pub use sound_bank::{
     AudioImmediateCommand, SoftwareSound, SoundBankBinding, SoundBankFault, dispatch_audio_commands,

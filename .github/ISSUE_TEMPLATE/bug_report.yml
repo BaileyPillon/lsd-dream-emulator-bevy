@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible build, runtime, import, or original-behavior problem.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues first. Do not upload original game files, BIOS images, full memory dumps, or credentials.
+  - type: input
+    id: revision
+    attributes:
+      label: Revision
+      description: Commit hash or branch, including whether local changes are present.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Rust version, enabled Cargo features, and GPU/audio details when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Exact command, relevant options, starting state, seed, and input hashes when applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and observed behavior
+      description: For parity problems, identify the original scenario or source of the expectation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs and bounded evidence
+      description: Include relevant error text or an owned minimal fixture. Remove local secrets and personal paths.
