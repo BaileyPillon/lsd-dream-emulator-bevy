@@ -15,6 +15,38 @@ Use a [feature proposal](https://github.com/BaileyPillon/lsd-dream-emulator-bevy
 for implementation work or a [bug report](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=bug_report.yml)
 for a reproducible problem. Search existing issues first.
 
+## Development workflow
+
+1. Choose an existing [roadmap task](docs/ROADMAP.md#tracked-work), or open a
+   proposal for a new behavior or substantial design change. Describe the
+   expected result and how it will be checked.
+2. Create a focused branch from current `main`:
+
+   ```sh
+   git switch main
+   git pull --ff-only
+   git switch -c fix/describe-the-change
+   ```
+
+3. Implement the change in the appropriate crate and run the relevant checks
+   below. For behavior recovery, use the
+   [compatibility report template](docs/templates/COMPATIBILITY_REPORT.md).
+4. Open a pull request with reproduction steps, results, and remaining gaps.
+   The required CI checks must pass before merging. Maintainers squash merge
+   focused pull requests; do not rewrite published `main` history.
+
+## Find the code
+
+| Change | Implementation | Validation |
+| --- | --- | --- |
+| Deterministic simulation, NPC scripts, collision, or SPU state | `crates/lsd-core/src/` | `crates/lsd-core/tests/` and module tests |
+| File formats, import, or original-content scene binding | `crates/lsd-assets/src/` | `crates/lsd-assets/tests/` and owned format fixtures |
+| Rendering, input, desktop inspectors, or host audio | `crates/lsd-bevy/src/` | `crates/lsd-bevy/tests/` and an exercised desktop scenario |
+| Reference observations and progress claims | `docs/` | Bounded check manifests and `python tools/check_docs.py` |
+| Optional AI-assisted analysis | `tools/ai-assist/` | Explicit tool inputs, outputs, provenance, and isolation from default gameplay |
+
+The [architecture guide](docs/ARCHITECTURE.md) explains dependencies and ownership.
+
 ## Development checks
 
 ```sh
@@ -30,6 +62,8 @@ the optional audio and desktop features need their platform dependencies.
 CI runs Ubuntu and Windows and checks the desktop target on Windows.
 For documentation or public evidence changes, also run
 `python tools/check_docs.py` with Python 3.10 or newer.
+Documentation-only changes do not need new Rust tests. Run targeted behavior
+tests while iterating; the full required matrix runs on the pull request.
 
 ## Evidence standards
 

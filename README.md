@@ -20,6 +20,15 @@ stable binary release yet.
 [Roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) ·
 [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
 
+## Start here
+
+| Goal | Entry point |
+| --- | --- |
+| Explore the current desktop prototype | [Setup, local game files, and controls](docs/GETTING_STARTED.md#run-the-dream-prototype) |
+| Build or contribute without game files | [Quick start](#quick-start) and [contributor workflow](CONTRIBUTING.md#development-workflow) |
+| Understand what has been recovered | [Current status](docs/STATUS.md) and [subsystem evidence](docs/README.md) |
+| Find the next implementation task | [Tracked milestones](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestones) and [roadmap](docs/ROADMAP.md) |
+
 ## Progress at a glance
 
 | Area | Current implementation and evidence |
@@ -80,14 +89,16 @@ flowchart LR
 See [architecture](docs/ARCHITECTURE.md) for implementation boundaries and
 [the project objective](PROJECT_OBJECTIVE.md) for the full completion requirements.
 
-## Next milestones
+## Development milestones
 
-1. Finish music playback and connect the original bank and sequence lifecycle.
-2. Recover the remaining NPC callbacks and validate complete natural encounters.
-3. Implement menus, diary, save/load, movies, special days, and endings.
-4. Compare full sessions, rendering, audio, timing, and RNG history against the original.
+| Milestone | Exit criteria |
+| --- | --- |
+| [Playable dream preview](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestone/1) | Reproducible import, live music, remaining NPC callbacks, and documented natural dream scenarios |
+| [Complete game flow](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestone/2) | Original menus, diary, save/load, movies, special days, and endings |
+| [Reference parity acceptance](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestone/3) | Original presentation and full-session comparisons across the reviewed feature inventory |
 
-The [roadmap](docs/ROADMAP.md) describes the work and its acceptance gates.
+Milestones describe planned work and carry no release date. The
+[roadmap](docs/ROADMAP.md) links the implementation tasks and acceptance gates.
 
 ## Contributing
 
@@ -109,8 +120,8 @@ original game content and third-party components retain their own rights.
 See [NOTICE.md](NOTICE.md) for attribution and reference provenance.
 
 The companion [matching C decompilation](https://github.com/BaileyPillon/lsd-dream-emulator-decompilation)
-has a separate implementation and evidence history. Its **97.15% recovered-C
-byte coverage** is a reference checkpoint, not a completion measure for this port.
+provides a separately tracked reference implementation. The port's recovery
+and acceptance measurements are documented in [project status](docs/STATUS.md).
 
 Game discs, executables, extracted assets, and PlayStation BIOS files are not
 distributed by this repository.
