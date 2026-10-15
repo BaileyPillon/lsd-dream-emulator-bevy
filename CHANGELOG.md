@@ -6,6 +6,8 @@ current capabilities and [the commit history](https://github.com/BaileyPillon/ls
 
 ## Unreleased
 
+- Add crate API overviews and checked examples, a source map, linked recovery
+  evidence, platform coverage, and warning-free API documentation builds in CI.
 - Add a developer tool catalogue, fork contribution instructions, and a
   structured original-game compatibility issue form; clarify probe help text.
 - Track implementation and acceptance work in three undated GitHub milestones.

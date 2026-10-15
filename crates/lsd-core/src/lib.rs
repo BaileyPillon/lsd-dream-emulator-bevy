@@ -1,4 +1,39 @@
-//! Original-behavior primitives. This crate never accesses a renderer or AI service.
+//! Deterministic simulation and recovered PlayStation behavior for LSD: Dream Emulator.
+//!
+//! This crate owns integer math, RNG, movement, collision, dream sessions, NPC
+//! scripts, animation, and software SPU state. It has no engine, filesystem,
+//! network, or AI dependency. Content loaders supply the original tables;
+//! host adapters implement the services requested by the simulation.
+//!
+//! # Where to start
+//!
+//! | Concern | Entry points |
+//! | --- | --- |
+//! | Reproducible state and arithmetic | [`PsxRng`], [`FixedMatrix`], [`PsxMathTables`] |
+//! | Days, mood, and dream transitions | [`DreamDay`], [`DreamSession`], [`DreamSessionHost`] |
+//! | Actors and live callback order | [`ModelActor`], [`FrameSubscribers`] |
+//! | Scene geometry and streaming | [`SceneCollision`], [`SceneGrid`], [`StreamProtocol`] |
+//! | Original audio state and synthesis | [`AudioVoicePool`], [`SequenceClock`], [`SpuDevice`] |
+//!
+//! # Reproduce an RNG stream
+//!
+//! State is explicit and can be copied to reproduce the same sequence:
+//!
+//! ```
+//! use lsd_core::PsxRng;
+//!
+//! let mut rng = PsxRng::new(1);
+//! assert_eq!(rng.next_u15(), 16_838);
+//! let mut checkpoint = rng;
+//! assert_eq!(rng.next_u15(), checkpoint.next_u15());
+//! assert_eq!(rng.state(), checkpoint.state());
+//! ```
+//!
+//! [`CompatibilityProbe`] is a development harness. Its steps do not model the
+//! original dream clock or the game's complete RNG history. See the repository's
+//! [architecture](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/docs/ARCHITECTURE.md)
+//! and [status](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/docs/STATUS.md)
+//! for integration boundaries and the scope of current comparisons.
 
 mod actor_journal;
 mod audio_engine;
