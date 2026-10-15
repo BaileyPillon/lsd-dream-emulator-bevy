@@ -6,9 +6,10 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Status: Early development](https://img.shields.io/badge/status-early_development-orange.svg)](docs/STATUS.md)
 
-A native Rust and Bevy reconstruction of **LSD: Dream Emulator** for the
-original PlayStation. The project recovers the game's simulation, scripted NPCs,
-asset formats, rendering, and audio through comparisons with the original code.
+A native desktop reconstruction of the original PlayStation game
+**LSD: Dream Emulator**, written in Rust with Bevy. The project recovers its
+simulation, scripted NPCs, asset formats, rendering, and audio through
+comparisons with the original code.
 
 **Development preview.** An explorable dream prototype, asset inspectors, and
 deterministic compatibility tests are available. The complete game, including
