@@ -7,7 +7,9 @@ complete replacement for the original game yet. Start with
 | Need | Where to go |
 | --- | --- |
 | Build, dependency, or launch help | [Getting started and troubleshooting](docs/GETTING_STARTED.md) |
-| A reproducible crash, import failure, or gameplay difference | [Bug report](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=bug_report.yml) |
+| A reproducible crash, build, or import failure | [Bug report](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=bug_report.yml) |
+| A specific difference from original-game behavior | [Compatibility report](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=compatibility.yml) |
+| Which executable, Cargo feature, or test target to use | [Developer reference](docs/DEVELOPMENT.md) |
 | An original-behavior recovery task, analysis tool, or optional mod | [Feature proposal](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=feature.yml) |
 | A suspected security vulnerability | [Private vulnerability reporting](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/security/advisories/new), following [SECURITY.md](SECURITY.md) |
 | A code or documentation contribution | [Contributing](CONTRIBUTING.md) |

@@ -6,6 +6,8 @@ current capabilities and [the commit history](https://github.com/BaileyPillon/ls
 
 ## Unreleased
 
+- Add a developer tool catalogue, fork contribution instructions, and a
+  structured original-game compatibility issue form; clarify probe help text.
 - Track implementation and acceptance work in three undated GitHub milestones.
 - Require pull requests and the Windows, Linux, and repository checks on `main`.
 - Add monthly dependency update proposals and a reusable compatibility report.

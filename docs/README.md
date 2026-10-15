@@ -4,6 +4,17 @@ Start with [project status](STATUS.md), [getting started](GETTING_STARTED.md),
 and [the roadmap](ROADMAP.md). The [project objective](../PROJECT_OBJECTIVE.md)
 defines the full target; [contributing](../CONTRIBUTING.md) explains how to help.
 
+## Find your next step
+
+| Task | Read this |
+| --- | --- |
+| Install and explore the prototype | [Getting started](GETTING_STARTED.md) |
+| Choose a binary, feature, or test target | [Developer reference](DEVELOPMENT.md) |
+| Understand crate boundaries and original behavior | [Architecture](ARCHITECTURE.md) |
+| Check capabilities and remaining work | [Status](STATUS.md) and [tracked roadmap](ROADMAP.md#tracked-work) |
+| Report an original-game difference | [Compatibility issue form](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=compatibility.yml) |
+| Document a behavior comparison | [Compatibility report template](templates/COMPATIBILITY_REPORT.md) |
+
 Recovery notes describe bounded subsystem evidence at individual checkpoints.
 Later work may supersede a checkpoint. Use the status page for the current
 summary and the linked check manifests for input identity and comparison scope.
@@ -12,6 +23,7 @@ summary and the linked check manifests for input identity and comparison scope.
 
 - [Project status](STATUS.md)
 - [Getting started](GETTING_STARTED.md)
+- [Developer reference and tool catalogue](DEVELOPMENT.md)
 - [Roadmap](ROADMAP.md)
 - [Architecture](ARCHITECTURE.md)
 - [Reference and starting point](REFERENCE.md)

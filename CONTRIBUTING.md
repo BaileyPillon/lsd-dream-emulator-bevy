@@ -17,6 +17,19 @@ for a reproducible problem. Search existing issues first.
 
 ## Development workflow
 
+For external contributions, fork the repository on GitHub and clone your fork.
+Keep the project repository as `upstream`:
+
+```sh
+git remote add upstream https://github.com/BaileyPillon/lsd-dream-emulator-bevy.git
+git fetch upstream
+git switch -c fix/describe-the-change upstream/main
+```
+
+Push the branch to your fork and open a pull request targeting this project's
+`main`. Maintainers working in the project repository can use the workflow
+below directly.
+
 1. Choose an existing [roadmap task](docs/ROADMAP.md#tracked-work), or open a
    proposal for a new behavior or substantial design change. Describe the
    expected result and how it will be checked.
@@ -46,6 +59,8 @@ for a reproducible problem. Search existing issues first.
 | Optional AI-assisted analysis | `tools/ai-assist/` | Explicit tool inputs, outputs, provenance, and isolation from default gameplay |
 
 The [architecture guide](docs/ARCHITECTURE.md) explains dependencies and ownership.
+The [developer reference](docs/DEVELOPMENT.md) maps every executable, Cargo
+feature, and common test command to its purpose.
 
 ## Development checks
 
@@ -66,6 +81,10 @@ Documentation-only changes do not need new Rust tests. Run targeted behavior
 tests while iterating; the full required matrix runs on the pull request.
 
 ## Evidence standards
+
+Use the [compatibility issue form](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=compatibility.yml)
+for a specific original/port difference. Reports may include incomplete
+evidence when they clearly identify what remains untested.
 
 For behavior changes, record reference identity, input hashes, initial state,
 inputs, outputs, timing assumptions, and comparison scope. Use explicit integer

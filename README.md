@@ -28,6 +28,7 @@ stable binary release yet.
 | Build or contribute without game files | [Quick start](#quick-start) and [contributor workflow](CONTRIBUTING.md#development-workflow) |
 | Understand what has been recovered | [Current status](docs/STATUS.md) and [subsystem evidence](docs/README.md) |
 | Find the next implementation task | [Tracked milestones](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestones) and [roadmap](docs/ROADMAP.md) |
+| Choose a development tool or report a mismatch | [Developer reference](docs/DEVELOPMENT.md) and [compatibility reports](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=compatibility.yml) |
 
 ## Progress at a glance
 

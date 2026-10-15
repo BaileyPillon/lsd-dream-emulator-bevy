@@ -106,6 +106,8 @@ cargo check -p lsd-bevy --features desktop --locked
 
 The [contributor guide](../CONTRIBUTING.md) explains reference-only tests,
 comparison evidence, and keeping original assets private.
+The [developer reference](DEVELOPMENT.md) lists every executable, its required
+features and inputs, and commands for targeted tests and local API documentation.
 
 ## Troubleshooting
 

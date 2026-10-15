@@ -1,0 +1,60 @@
+name: Original-game compatibility
+description: Report a specific difference between the original game and the port.
+title: "[Compatibility]: "
+labels: [bug, parity]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check project status and existing issues first. Report one observable difference per issue. An incomplete observation is useful when its limits are explicit. Do not attach game files, BIOS images, full traces, save states, or credentials.
+  - type: input
+    id: revision
+    attributes:
+      label: Port revision
+      description: Full commit hash and whether local changes or optional mods are present.
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: Original-game reference
+      description: Edition and executable hash when known; hardware or emulator/core version; source of the expected behavior. State what you have not checked.
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Observation scope
+      options:
+        - Natural gameplay scenario
+        - Controlled integration or supplied scenario
+        - Individual function or component
+        - Source or format evidence only
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Port environment and command
+      description: OS, enabled Cargo features, exact command, and GPU/audio configuration when relevant. Remove personal paths.
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Starting state and reproduction
+      description: Map, day, seed/history, inputs, frame counts, and timing where known. Identify supplied state, mocked dependencies, or missing inputs.
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Original result and port result
+      description: Describe the specific state, image, audio, or event-order difference. Identify tolerance or masking used in a comparison.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Bounded evidence and open questions
+      description: Link a public report, owned minimal fixture, source anchor, or bounded observation. Record hashes for private evidence and note untested behavior.
