@@ -1458,6 +1458,23 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_scene_accepted": false,
       "ai_model_calls": 0
+    },
+    "sdk_sequence_clock_and_full_loop_event_timing_20261014": {
+      "scope": "Original SDK sequence timing math and event-clock positions/repeat state. These components visit events at original decoder boundaries; Rust music channel/voice handlers, complete global callback orchestration and audible music remain unfinished.",
+      "checks": {
+        "path": "docs/sequence-clock-checks.json",
+        "sha256": "51ce15a2d4d4ead719dcd8afe98bb110210140b70399c70e696898d84997caa2"
+      },
+      "owned_scalar_cases": 860,
+      "owned_event_clock_cases": 45,
+      "original_playable_sequences": 69,
+      "original_sequence_callbacks": 37859,
+      "original_decoder_entries": 39741,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_scene_accepted": false,
+      "audible_music_implemented": false,
+      "ai_model_calls": 0
     }
   }
 }

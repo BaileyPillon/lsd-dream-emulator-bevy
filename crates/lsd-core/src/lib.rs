@@ -2,6 +2,8 @@
 
 mod actor_journal;
 mod audio_engine;
+mod audio_sequence_clock;
+pub use audio_sequence_clock::{SequenceAdvanceFault, SequenceClock, SequenceClockFault};
 mod audio_envelope;
 pub use audio_engine::{
     AudioEngineTickFault, SpuEngineFault, SpuNoise, SpuSampleMemory, SpuVoice, SpuVoiceEngine,

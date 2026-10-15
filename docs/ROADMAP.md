@@ -113,6 +113,9 @@ The [link/journal audio connection](LINK_AUDIO.md) now executes sound requests
 inside their original callbacks and shares generation/NPC voice state. Native
 chain comparisons also correct a missing SDK initialization update. Original
 music, periodic callback cadence and natural audio-scene comparisons remain open.
+The [sequence clock](SEQUENCE_CLOCK.md) now retains original integer timing,
+event boundaries and repeat/stop rules, with full-loop comparisons for 69
+playable sequences. The music SDK channel and voice handlers remain required.
 
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with

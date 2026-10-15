@@ -65,6 +65,9 @@ scene audio comparisons, music and hardware scheduling remain unfinished.
 [Link and journal sounds](docs/LINK_AUDIO.md) now join that shared backend at
 their callback positions. Original-code comparisons also correct the driver's
 initialization history before the first note.
+The [sequence clock](docs/SEQUENCE_CLOCK.md) now matches event positions through
+a full loop of all 69 playable local SEQ files. Music channel/voice dispatch
+and audible music playback remain unfinished.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

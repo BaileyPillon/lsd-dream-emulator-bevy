@@ -2,7 +2,9 @@
 mod actor_journal;
 mod audio_tables;
 mod scene_audio;
+mod sequence_clock;
 pub use scene_audio::{SceneAudio, SceneAudioSnapshot, load_scene_audio};
+pub use sequence_clock::{SeqEventClock, SeqEventClockFault};
 mod sound_bank;
 pub use audio_tables::{
     SpuReverbPreset, load_scene_sound_path, load_spu_pitch_table, load_spu_reverb_presets,

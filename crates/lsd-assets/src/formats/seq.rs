@@ -8,6 +8,19 @@ pub struct SeqHeader {
 }
 
 impl SeqHeader {
+    pub fn initial_clock(
+        &self,
+        callback_rate: u32,
+        initial_delta: u32,
+    ) -> Result<lsd_core::SequenceClock, lsd_core::SequenceClockFault> {
+        lsd_core::SequenceClock::initialize(
+            self.resolution as i16,
+            self.tempo_microseconds,
+            callback_rate,
+            initial_delta,
+        )
+        .map(|(clock, _)| clock)
+    }
     /// Original SDK initialization rounds BPM to the nearest integer, ties down.
     /// A zero tempo is retained as data but cannot initialize the original clock.
     pub fn initial_tempo_bpm(&self) -> Option<u32> {

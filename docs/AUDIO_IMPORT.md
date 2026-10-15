@@ -68,13 +68,15 @@ observations remain private.
 implementations and original SDK comparisons, including all imported tone
 bindings. They are components for the pending playback backend.
 
-The imported data is not connected to a physical-voice audio implementation.
-Original voice allocation/priority, key-on pitch, envelopes, auto-volume,
-controller behavior, sequence scheduling, loops, interpolation, reverb,
-mixing and output cadence need recovery and original register/waveform checks.
-Original CD audio and movie sound remain separate content/runtime work.
+Imported sound effects now feed the [shared driver and SPU](LIVE_AUDIO.md),
+including voice allocation, sample decoding, envelopes, mixing and reverb.
+The [sequence clock](SEQUENCE_CLOCK.md) also retains original timing and
+repeat/stop boundaries. Music channel/controller/voice dispatch, original
+bank loading and callback cadence, and natural register/waveform comparisons
+remain required. Original CD audio and movie sound are separate runtime work.
 
-The port's existing queued sound backend returns -1; the native NPC tests use
-supplied external handles. Neither accepts original physical voice behavior.
+Silent fixture runs retain a queued sound backend that returns -1. Interactive
+generation, NPC and link calls use real shared voice handles. Neither backend
+choice alone accepts original physical voice behavior or natural scene parity.
 Audio import does not accept a complete audio feature group or whole-game
 parity. Original gameplay stays independent of optional AI tools and mods.

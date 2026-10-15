@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T03:44:48.650894+00:00",
+  "scope": "Original SDK sequence timing math and event-clock positions/repeat state. These components visit events at original decoder boundaries; Rust music channel/voice handlers, complete global callback orchestration and audible music remain unfinished.",
+  "reference_game": {
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "native_scalar_checks": {
+    "cases": {
+      "initialization": 294,
+      "ticks": 350,
+      "tempo": 216
+    },
+    "function_sha256": {
+      "_SsInitSoundSeq": "4db7d001b72a4ec132e884ed06c272640c535b83f2c0c597bd196cf91c28aedb",
+      "func_80034138": "7f3c8c2327235b194ad982ee88c1ad58f0199622948a6c05b1435c3d43bedbc5",
+      "func_8003424C": "8faf0344bc077bdfa89785455fdb4a5ccc69cec8ed5c3ed7295fec9bf5b36041",
+      "func_80034614": "56116a4b1e8108b5f7b17b39d805373781abb7e6fac5032596ca589941b131fd",
+      "_SsReadDeltaValue": "a7360391aac6bbc78ec6fd7750f00fe8a04a9c7cc9e744deaa76fb7a894f19b6",
+      "func_80035B2C": "7a5df77ce17787a75f5a386b48f9aa2388af887794571b814b8a4917a1cb0df2"
+    },
+    "original_function_output_stubs": 0,
+    "owned_program_events_drive_actual_original_delta_reader": true,
+    "division_fault_instruction_observed_before_exception_vector": true
+  },
+  "original_headers": {
+    "files": 70,
+    "supplied_rates": [
+      50,
+      60,
+      120,
+      240
+    ],
+    "positive_tempo_initializations": 276,
+    "zero_tempo_fault_observations": 4,
+    "private_observation_sha256": "628692e7f08d16b37f01b280cb6fa6f04c009320c54accd3e14ddabc92a4a513",
+    "zero_tempo_record": "CDI/STG09/BGC.SEQ remains unmodified; original reachability still requires evidence."
+  },
+  "owned_event_clock": {
+    "cases": 45,
+    "callbacks": 2643,
+    "fixture_sha256": "c6e225e1a52e2528c554aa8c1cdb103997fc63716b570b6125cb4fa0fc2c9e54",
+    "original_function_output_stubs": 0,
+    "provided": "Owned MIDI-form sequence/owned dense10bank and zeroedMMIO, original SDK initialization, suppliedrate/loopcounter/limit. Directoriginalclock/decoder/SDKhandlers, no SPUdeviceclock or originalglobalcallback timing acceptance."
+  },
+  "original_event_clock": {
+    "sequences": 69,
+    "callbacks": 37859,
+    "decoder_entries": 39741,
+    "fixture_sha256": "24d3ed856542bf9139b385add9ad53c2f922cb202d8663f994c4695072e97623",
+    "provided": "Ready AMBIENT bank at4096, original software SDK init, VBLANK_MINUS60, seqvolume52, looplimit0; directoriginalsequenceclock calls. SPU device time/ENVX evolution and global SsSeqCalledTbyT not supplied by this trace.",
+    "original_function_output_stubs": 0,
+    "original_audio_scene_accepted": false
+  },
+  "independent_fresh_process_recordings_byte_identical": true,
+  "owned_fixtures": [
+    {
+      "path": "crates/lsd-core/tests/fixtures/sequence-clock.json",
+      "sha256": "a2b400a4b3f00545e98d5c4aaf1df625b33496067ddd93f2d5b99bf3a8f672c7"
+    },
+    {
+      "path": "crates/lsd-assets/tests/fixtures/sequence-events.json",
+      "sha256": "c6e225e1a52e2528c554aa8c1cdb103997fc63716b570b6125cb4fa0fc2c9e54"
+    }
+  ],
+  "local_validation": {
+    "workspace": [
+      210,
+      0,
+      65
+    ],
+    "scalar_tests": [
+      4,
+      0,
+      0
+    ],
+    "event_tests_including_original_inputs": [
+      3,
+      0,
+      0
+    ],
+    "audio_feature_suite": [
+      5,
+      0,
+      0
+    ],
+    "format_passed": true,
+    "all_features_clippy_passed": true,
+    "desktop_check_passed": true,
+    "private_log_sha256": {
+      "fmt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fmt-check": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clock": "a81262419fc34a1bcf4a2dcf0c66b42ec096684a58af58d65975288329649f0f",
+      "events": "a0b166bd82c3023b87010baf478ad9fc25b658ce2287a239401ce0d8e8072364",
+      "clippy": "90252c204d7ef61cae84fcb2b54faba0b7136f2347442e0f77f8ba55cc7c75f2",
+      "source": "24bdf5643bbac9efa02e34b937889cb0617a08fbb9334c3cf97d391159f22cd6",
+      "workspace": "70db3b78e5fe5590f67a01cd53892791b150567aff6004db377218ace7a6f6ba",
+      "desktop": "3b565be314e26f618df92b86235504aa39433e23ba0c358a34bafc7f2109a987",
+      "diagnostic": "7eec2759f01809bcebaefd9ddbbb79f11bad256a964e88d22f60fa2ec9ac7f0d"
+    }
+  },
+  "local_cli_diagnostic": {
+    "audio_playback_implemented": false,
+    "callbacks": 718,
+    "clock": {
+      "countdown": -1,
+      "initial_step": 107,
+      "remaining": 194,
+      "step": 107
+    },
+    "cursor": 110,
+    "events_visited": 776,
+    "input_sha256": "d2738687acc8ea53e6d2ec3e5aa6348b9462cde426d08c345d415651a74216b1",
+    "loops": 1,
+    "note_on_events": 370,
+    "original_audio_scene_accepted": false,
+    "stopped": false,
+    "supplied_callback_rate": 60,
+    "zero_velocity_note_events": 365
+  },
+  "limits": [
+    "Event visitors mark decoder entry; SDK channel/controller/program/pitch/voice effects are separate unfinished work.",
+    "Full-loop traces use an assigned ready AMBIENT bank, volume52, zeroed owned MMIO and direct original sequence-clock calls. SPU sample clocks/envelope evolution and complete SsSeqCalledTbyT orchestration are not part of these traces.",
+    "Embedded tempo math is recovered separately, while unsupported system/meta forms remain rejected by the event importer.",
+    "Explicit event limits bound malformed zero-delta streams; no arbitrary tempo is substituted for zero-tempo input.",
+    "Music bank selection/loading, sequence voice lifecycle, pause/replay/stop/fades, natural audio-scene comparisons and hardware callback timing remain required."
+  ],
+  "audible_music_implemented": false,
+  "original_audio_scene_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}
