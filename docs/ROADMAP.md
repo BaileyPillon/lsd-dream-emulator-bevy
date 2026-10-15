@@ -67,6 +67,11 @@ original initialization and is retained with an explicit timing issue. Voice
 allocation, sequence playback, SPU synthesis/mixing and audible comparisons
 remain required for presentation parity.
 
+Original [voice allocation/release and pitch conversion](AUDIO_VOICES.md) now
+have SDK comparisons, including all 351 imported tone bindings. The pending
+audio backend still needs full note setup, volume/envelope updates, synthesis
+and scheduling before these components can provide actual scene playback.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model

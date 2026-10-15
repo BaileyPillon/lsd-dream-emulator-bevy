@@ -64,6 +64,10 @@ observations remain private.
 
 ## Work still required
 
+[Original voice selection, release and pitch](AUDIO_VOICES.md) now have Rust
+implementations and original SDK comparisons, including all imported tone
+bindings. They are components for the pending playback backend.
+
 The imported data is not connected to a physical-voice audio implementation.
 Original voice allocation/priority, key-on pitch, envelopes, auto-volume,
 controller behavior, sequence scheduling, loops, interpolation, reverb,

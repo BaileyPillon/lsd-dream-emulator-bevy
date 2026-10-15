@@ -40,6 +40,14 @@ impl VabTone {
     pub fn sample_number(&self) -> i16 {
         i16::from_le_bytes([self.raw[22], self.raw[23]])
     }
+    pub fn pitch(
+        &self,
+        table: &lsd_core::SpuPitchTable,
+        note: i32,
+        fine: i32,
+    ) -> Result<u16, lsd_core::SpuPitchFault> {
+        table.pitch(note, fine, self.center_note(), self.pitch_correction())
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

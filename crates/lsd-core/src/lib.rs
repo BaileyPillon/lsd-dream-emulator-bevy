@@ -1,6 +1,10 @@
 //! Original-behavior primitives. This crate never accesses a renderer or AI service.
 
 mod actor_journal;
+mod audio_voice;
+pub use audio_voice::{
+    AudioVoicePool, AudioVoiceSlot, SpuPitchFault, SpuPitchTable, VoiceAllocation,
+};
 mod animation;
 mod animation_player;
 pub use actor_journal::{ActorJournalEvent, ActorJournalHost, actor_journal, actor_link_stage};

@@ -1288,6 +1288,24 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "audio_voice_components_20261014": {
+      "scope": "Original software voice selection/release, fresh-start software records and note-to-pitch conversion. Original routines execute with supplied owned MMIO storage and owned driver/tone state or unchanged local original tone bindings. Full note setup, SPU device synthesis, DMA, clock and audible scene playback remain unaccepted.",
+      "checks": {
+        "path": "docs/audio-voice-checks.json",
+        "sha256": "01c83d0ee62bf9df1e41c25465df9ffbc6207c12519a40d31fe09127685e5717"
+      },
+      "startup_cases": 10,
+      "allocation_cases": 640,
+      "release_cases": 48,
+      "owned_pitch_cases": 3159,
+      "original_pitch_cases": 3159,
+      "original_bound_tone_pitch_cases": 5265,
+      "forced_all_voice_key_off_calls": 84,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

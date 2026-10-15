@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T00:12:38.058087+00:00",
+  "scope": "Original software voice selection/release, fresh-start software records and note-to-pitch conversion. Original routines execute with supplied owned MMIO storage and owned driver/tone state or unchanged local original tone bindings. Full note setup, SPU device synthesis, DMA, clock and audible scene playback remain unaccepted.",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "comparisons": {
+    "startup_cases": 10,
+    "allocation_cases": 640,
+    "release_cases": 48,
+    "owned_pitch_cases": 3159,
+    "original_pitch_cases": 3159,
+    "original_bound_tone_pitch_cases": 5265,
+    "forced_all_voice_key_off_calls": 84
+  },
+  "provided_original_inputs": "Zero-initialized owned MMIO storage; original software initializer executes with requested voice count. Selection/release then receive owned full software records and pending key masks. Pitch uses supplied current-tone binding; owned table or unchanged original pitch table. No SPU device timing, DMA or synthesis.",
+  "original_function_sha256": {
+    "func_8002EDD4": "a543101e2a2c997638309cd6bee1d19dbd3d4cf946eecdadec952cbd5c47903a",
+    "func_8002CF18": "d38951c50387a60927ac5dfdffae552ccaaab7003254db830feb0d967262f4b7",
+    "func_80031890": "83ba9a7edbfc17b9658a7cf39a3b60ec5fa389e67a61a0693cf06de45f9af177",
+    "func_8002E038": "e1832c86dbd39e062078fd626923872f59eacb7a25cf42d2c5758d65e32c9090",
+    "SsVabFakeHead": "96002ec14aaadeb24dfa540a8a521baf3affb076c093d1606070dbbd53bd0f18",
+    "SsVabOpenHeadWithMode": "b256adce392ea6a5eec4185a5c13d03efa197a1b404546f9fcec0530bced2779",
+    "SpuVmVSetUp": "503920b76e1d66b2ed401f452ef7f22183ba74a427a82e04301c85456ef8ad20"
+  },
+  "original_function_output_stubs": 0,
+  "independent_repeat_recordings_byte_identical": true,
+  "observed_voice_slots": 24,
+  "software_record_bytes": 52,
+  "imported_original_tones": 351,
+  "imported_original_sound_banks": 9,
+  "original_pitch_table_values": 192,
+  "owned_fixture": {
+    "path": "crates/lsd-core/tests/fixtures/voice-pool.json",
+    "sha256": "e401ad293c72f710f1b0d0a72e37b4f03fe85d9c32e0555f56a1283210f32252"
+  },
+  "local_validation": {
+    "workspace_passed": 169,
+    "workspace_failed": 0,
+    "workspace_ignored": 53,
+    "new_comparison_tests_including_original_pitch_passed": 5,
+    "previous_audio_import_tests_passed": 5,
+    "format_passed": true,
+    "clippy_all_features_passed": true
+  },
+  "limits": [
+    "Pool selection does not set up or start a note. Mode-two immediate all-voice key-off is returned as a command for a future hardware backend.",
+    "Fresh-start software state assumes zero-initialized driver data. It does not emulate hardware initialization or reinitialization of an active driver.",
+    "Pitch table bounds errors are explicit port errors; out-of-range original memory access is not accepted.",
+    "The live queued backend still returns -1. Original voice setup, auto-volume, SPU synthesis and audible output remain required."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "original_npc_behavior_has_ai_model_calls": false,
+  "c_paused_and_preserved": true
+}
