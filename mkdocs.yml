@@ -1,0 +1,151 @@
+site_name: "LSD: Dream Emulator"
+site_description: Documentation for the independent Rust and Bevy reconstruction.
+site_url: https://baileypillon.github.io/lsd-dream-emulator-bevy/
+repo_url: https://github.com/BaileyPillon/lsd-dream-emulator-bevy
+repo_name: BaileyPillon/lsd-dream-emulator-bevy
+edit_uri: blob/main/docs/
+docs_dir: docs
+site_dir: .private/site
+strict: true
+
+theme:
+  name: material
+  language: en
+  font: false
+  logo: assets/project-mark.svg
+  favicon: assets/project-mark.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark theme
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light theme
+  features:
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.action.view
+
+plugins:
+  - search
+hooks:
+  - tools/docs_site.py
+extra_css:
+  - assets/handbook.css
+extra:
+  generator: false
+copyright: Independent community project · New project code is MIT licensed.
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+
+exclude_docs: |
+  !/templates/
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+  links:
+    not_found: warn
+    anchors: warn
+    unrecognized_links: warn
+
+nav:
+  - Overview: README.md
+  - Start here:
+      - Getting started: GETTING_STARTED.md
+      - Project status: STATUS.md
+      - Roadmap: ROADMAP.md
+  - Development:
+      - Developer reference: DEVELOPMENT.md
+      - Architecture: ARCHITECTURE.md
+      - Reference identity: REFERENCE.md
+      - Maintenance and releases: MAINTENANCE.md
+      - Documentation workflow: DOCUMENTATION.md
+      - Compatibility report: templates/COMPATIBILITY_REPORT.md
+      - Contributing: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/CONTRIBUTING.md
+  - Content and animation:
+      - Asset pipeline: ASSET_PIPELINE.md
+      - Animation runtime: ANIMATION_RUNTIME.md
+      - Audio import: AUDIO_IMPORT.md
+  - World and dream sessions:
+      - Movement and collision: MOVEMENT_COLLISION.md
+      - Scene lookup: SCENE_RECOVERY.md
+      - Spatial streaming: STREAMING_RECOVERY.md
+      - Body dispatch: BODY_DISPATCH_RECOVERY.md
+      - Body transforms: BODY_TRANSFORMS.md
+      - Link rules: LINKS.md
+      - Link runtime: LINK_RUNTIME.md
+      - Scene links: SCENE_LINKS.md
+      - Session policy: SESSION.md
+      - Days and flashbacks: DAYS.md
+      - Generation choices: GENERATION.md
+      - Generated objects: GENERATION_OBJECTS.md
+      - Layers and palettes: GENERATION_LAYERS.md
+  - Actors and original NPCs:
+      - Entity behavior: ENTITY_BEHAVIOR.md
+      - Encounters: ENCOUNTERS.md
+      - Actor motion: ACTOR_MOTION.md
+      - Actor journal: ACTOR_JOURNAL.md
+      - Entity body: ENTITY_BODY.md
+      - Actor geometry: ACTOR_GEOMETRY.md
+      - Player queries: ACTOR_PLAYER_QUERIES.md
+      - Cached movement: CACHED_MOVEMENT.md
+      - Actor clock: ACTOR_CLOCK.md
+      - Frame cursor: FRAME_CURSOR.md
+      - Frame order: FRAME_ORDER.md
+      - Shared frame: SHARED_FRAME.md
+      - Actor floor: ACTOR_FLOOR.md
+      - Contact and floor: CONTACT_FLOOR.md
+      - Branching actions: BRANCHING_FLOOR.md
+      - Color-dependent NPCs: COLOR_NPCS.md
+      - Motion actions: MOTION_NPCS.md
+      - Scene scale: SCENE_SCALE.md
+      - Triangle Head: TRIANGLE_HEAD.md
+      - Additional actions: ADDITIONAL_ACTIONS.md
+      - Day and frame actions: DAY_FRAME_NPCS.md
+      - Special encounters: SPECIAL_ENCOUNTERS.md
+      - Gray Man: GRAY_MAN.md
+      - Animal actions: PURSUIT.md
+      - Player-facing NPCs: PLAYER_NPCS.md
+      - Action phases: ACTION_PHASES.md
+  - Rendering:
+      - Effects: EFFECTS.md
+      - Box composition: BOX_RENDERING.md
+  - Sound and music:
+      - Voice selection and pitch: AUDIO_VOICES.md
+      - Note setup: AUDIO_NOTES.md
+      - Sound clock: AUDIO_CLOCK.md
+      - Samples and interpolation: SPU_SAMPLES.md
+      - Envelopes: SPU_ENVELOPES.md
+      - Voice engine: SPU_ENGINE.md
+      - Reverb and output: SPU_OUTPUT.md
+      - Live audio: LIVE_AUDIO.md
+      - Link audio: LINK_AUDIO.md
+      - Sequence clock: SEQUENCE_CLOCK.md
+      - Music voices: SEQUENCE_VOICES.md
+  - Project:
+      - Progress data: parity.json
+      - Changelog: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/CHANGELOG.md
+      - Issues: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues
+      - Support: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/SUPPORT.md
+      - Attribution: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/NOTICE.md

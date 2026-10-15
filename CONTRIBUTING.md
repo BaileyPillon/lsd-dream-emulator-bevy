@@ -82,6 +82,9 @@ For documentation or public evidence changes, also run
 `python tools/check_docs.py` with Python 3.10 or newer.
 Documentation-only changes do not need new Rust tests. Run targeted behavior
 tests while iterating; the full required matrix runs on the pull request.
+For handbook changes, also build the site and check the rendered links with
+the commands in [the documentation workflow](docs/DOCUMENTATION.md). The
+required repository check performs both steps before merge.
 
 ## Evidence standards
 

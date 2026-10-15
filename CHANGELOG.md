@@ -6,6 +6,10 @@ current capabilities and [the commit history](https://github.com/BaileyPillon/ls
 
 ## Unreleased
 
+- Publish a searchable project handbook with mobile navigation, light/dark
+  themes, source links, and checked deployment from protected `main`.
+- Validate generated documentation links and assets in the required repository
+  check; pin documentation dependencies and track their updates.
 - Add crate API overviews and checked examples, a source map, linked recovery
   evidence, platform coverage, and warning-free API documentation builds in CI.
 - Add a developer tool catalogue, fork contribution instructions, and a
