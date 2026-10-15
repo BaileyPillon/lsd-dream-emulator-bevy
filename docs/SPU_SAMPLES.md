@@ -59,8 +59,9 @@ supplied original stored samples. Invalid lengths are also rejected.
 
 The original executable delegates synthesis to SPU hardware. Comparing a
 separate emulator decoder therefore does not prove original runtime or hardware
-parity. SDK callbacks, sample transfers, decoder prefetch, loop/end timing,
-noise, reverb, mixing and output remain required. Envelopes and volume sweep
-also need connection to device clocks. The running
+parity. The [clocked voice engine](SPU_ENGINE.md) now connects decoder prefetch,
+loop/end handling, noise, envelopes and gain to explicit sample clocks. Actual
+SDK callback/transfer timing, reverb, main output and device integration remain
+required. The running
 Bevy scene still queues audio requests. No complete audio group, audible scene
 comparison or whole-game parity is accepted by these checks.

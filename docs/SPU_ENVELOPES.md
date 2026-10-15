@@ -60,9 +60,9 @@ for those edge cases remains open; software agreement is not hardware proof.
 
 ## Remaining device integration
 
-The caller still supplies the sample clocks and accepted register/key actions.
-Prefetch, sample transfer, key-on/off delay and ordering, looping, capture,
-noise, complete mixing/reverb and output remain device work. Sequence dispatch
-and natural callback timing also remain open. The default Bevy scene still
+The [clocked voice engine](SPU_ENGINE.md) now connects these components with
+prefetch, key-on/off delay and ordering, looping, capture, noise and mix inputs.
+The caller still supplies sample clocks; actual transfer/callback timing,
+complete mixing/reverb, sequence dispatch and output remain open. The default Bevy scene still
 queues audio requests, and no complete audio group or audible scene comparison
 is accepted by these checks.

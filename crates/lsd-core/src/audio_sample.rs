@@ -54,26 +54,36 @@ pub struct SpuAdpcmDecoder {
 }
 
 impl SpuAdpcmDecoder {
-    pub fn decode_block(&mut self, bytes: &[u8; 16]) -> Result<SpuAdpcmBlock, SpuAdpcmFault> {
+    /// Incremental decoder fetch: one packed RAM halfword produces four samples.
+    pub fn decode_word(&mut self, header: u8, packed: u16) -> Result<[i16; 4], SpuAdpcmFault> {
         const COEFFICIENTS: [[i32; 2]; 5] = [[0, 0], [60, 0], [115, -52], [98, -55], [122, -60]];
-        let filter = bytes[0] >> 4;
+        let filter = header >> 4;
         let Some(&[recent_factor, older_factor]) = COEFFICIENTS.get(usize::from(filter)) else {
             return Err(SpuAdpcmFault::ReservedFilter(filter));
         };
-        let shift = bytes[0] & 15;
+        let shift = header & 15;
         if shift > 12 {
             return Err(SpuAdpcmFault::ReservedShift(shift));
         }
-        let mut samples = [0; 28];
+        let mut samples = [0; 4];
         for (index, sample) in samples.iter_mut().enumerate() {
-            let nibble = (bytes[2 + index / 2] >> ((index & 1) * 4)) & 15;
+            let nibble = ((packed >> (index * 4)) & 15) as u8;
             let residual = i32::from((nibble << 4) as i8 >> 4) << 12;
-            // Arithmetic shifting is significant for negative predictions.
             let prediction = ((i32::from(self.history[0]) * recent_factor) >> 6)
                 + ((i32::from(self.history[1]) * older_factor) >> 6);
             *sample = ((residual >> shift) + prediction)
                 .clamp(i32::from(i16::MIN), i32::from(i16::MAX)) as i16;
             self.history = [*sample, self.history[0]];
+        }
+        Ok(samples)
+    }
+
+    pub fn decode_block(&mut self, bytes: &[u8; 16]) -> Result<SpuAdpcmBlock, SpuAdpcmFault> {
+        let mut samples = [0; 28];
+        for (decoded, encoded) in samples.chunks_exact_mut(4).zip(bytes[2..].chunks_exact(2)) {
+            decoded.copy_from_slice(
+                &self.decode_word(bytes[0], u16::from_le_bytes([encoded[0], encoded[1]]))?,
+            );
         }
         Ok(SpuAdpcmBlock {
             samples,
@@ -106,8 +116,12 @@ impl SpuAdpcmDecoder {
 /// Pitch-register processing before addition to the 12-bit fractional counter.
 /// `previous_voice` is the preceding voice's signed output after its envelope.
 pub fn spu_pitch_step(pitch: u16, previous_voice: Option<i16>) -> u16 {
+    spu_pitch_step_wide(pitch, previous_voice.map(i32::from))
+}
+
+pub(crate) fn spu_pitch_step_wide(pitch: u16, previous_voice: Option<i32>) -> u16 {
     let step = if let Some(previous) = previous_voice {
-        (i32::from(pitch) + ((i32::from(pitch as i16) * i32::from(previous)) >> 15)) as u32
+        (i32::from(pitch) + ((i32::from(pitch as i16) * previous) >> 15)) as u32
     } else {
         u32::from(pitch)
     };

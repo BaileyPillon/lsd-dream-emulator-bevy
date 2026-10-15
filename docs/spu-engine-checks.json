@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T01:48:35.010225+00:00",
+  "scope": "Clocked voice/capture/noise engine before reverb/main output, using supplied register/data operations and sample clocks. Compared complete voice/register state, accumulator hashes, readbacks and final sample RAM with a pinned software reference. Original SDK note-register recordings bind351 tones with supplied bank placement and controlled releases. No physical bus, CPU IRQ delivery, natural callback/note timing, complete audio device or audible-scene acceptance.",
+  "reference_game": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "comparison_tool": {
+    "repository": "https://github.com/libretro/beetle-psx-libretro",
+    "commit": "e57860d82faa953dc0fc10f201fd583739bc2f7d",
+    "source_sha256": "f081394befd298e1d3e70a3982009ac9555853c4dfa92162fb7bbed7d3370a99",
+    "header_sha256": "feee6c16a8b885f2d85aa30181de9a17c3189767d06594c70c72c084d38862d7",
+    "function_sha256": {
+      "CalcVCDelta": "999251c3c8136ac73f07e1c474a1e9e8d9eb78548b275992a785e75274a545f4",
+      "SPU_Sweep_Power": "fdfe46b88d76d47276089a46ed90a942d3ffffb996b76c4aff2853c127499f1b",
+      "SPU_Sweep_WriteControl": "27c1126d8db64b4ee2cd43469184730ce697efa2c3327810806eb61a2b4ad0e1",
+      "SPU_Sweep_ReadVolume": "d7a4150e62ae876d0c14e50c1ea7394b1b2230c0aae43b6b1f5640e1b8d25253",
+      "SPU_Sweep_WriteVolume": "b16f7846d746d94bba13bddb4bec45d011ffcb472eaff8b162fc52d765516109",
+      "SPU_Sweep_Clock": "dc9580251372564a7f3bb631fe2b5e35eb7141ae3d79026af9a6297e7acd4004",
+      "SPU_CacheEnvelope": "92b2e39a6a5a729cbc207781c3a95c8d9b256bc9eb4ccf645918c68f368ab0c1",
+      "SPU_ResetEnvelope": "3e30594bfe0e56fdb608c692caa5bf90b6555b32beb2f3c4d20fc415d5bf5d37",
+      "SPU_ReleaseEnvelope": "aac97073ff1ce5b733da5e34851d78139744c8970be68febf086ea335cebbb76",
+      "SPU_RunEnvelope": "9f58b19a5990a49f8fee5cdb8af2a062a694316cf548801f9c0a97a04419c67a",
+      "SPU_CheckIRQAddr": "388b2010220e804d61dbf78f9e2c6d56757eebae5e92f0cdd6800abbb7ed1f87",
+      "SPU_WriteSPURAM": "271331006cdf92dbf26a6c5b555892d7dd3665b1f5b5555b3a6b0382219a3e4d",
+      "SPU_ReadSPURAM": "8f8cf1c541206dbac836ec3f584d04cf3743e5308b66b9f7b63edb04f8da3bad",
+      "SPU_RunDecoder": "35abb68f42f66ab19be54b28d493eeefb818343beb8279c2c2a197fc8f153b60",
+      "SPU_RunNoise": "a4b6a48e744dd8959c9dc28bfa76831b39398c0d06b8c4153b2276b279b7a834",
+      "SPU_Power": "155bd2db209ac3d7bb87f75736016daf4be2edfb28acee5681de3d6dce0bc515",
+      "SPU_WriteDMA": "ce9b9886fde0604f044657efaa2ea2c72f33d7aced1437ff53f9539a5077adca",
+      "SPU_ReadDMA": "ded4d8b2305e2bd8b210fe213086d0913d59fbe9d852c5e9307490184ccccb3d",
+      "SPU_Write": "ea3816d03fb145c478e74402d29b2a52f3e56cae174d643745abc2741919c8b4",
+      "SPU_Read": "88048e08c33ac34ad255255144f8e6b5c8cf17a4a05f2ee50f9897377700bbbd"
+    },
+    "voice_clock_region_sha256": "90d93c45060f55c7d8450445df9c57eb8c31b50c67c93a93dd1add0e6f891591",
+    "functions_and_voice_clock_region_unchanged": true,
+    "silent_voice_optimization": false,
+    "license": "GPL-2.0-or-later; independent private test tool only; source not included in MIT port",
+    "provided_external_inputs": "Explicit CD sample input and bus/register operations. CPU interrupt callback delivery excluded."
+  },
+  "comparisons": {
+    "owned_engine_scenarios": 24,
+    "owned_engine_clocks": 9568,
+    "noise_rates": 64,
+    "noise_clocks": 2097152,
+    "original_banks": 9,
+    "original_tone_register_bindings": 351,
+    "original_voice_engine_clocks": 718848,
+    "snapshot_words": 1716
+  },
+  "independent_repeat_recordings_byte_identical": true,
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/spu-engine.json",
+    "sha256": "cc2832874490367d7151de049748eb402faf05cd9556500c26c90e24dca3043a"
+  },
+  "private_original_observation_sha256": "e36e0a82cde0c6aaa2f868784c22991ca513d025cb2d86f61f4af596b11bee48",
+  "private_original_sdk_note_recording_sha256": "61baeac886b7661343ec56917e87a73296255405463ee1aa52896cbd18aeb54d",
+  "integration": [
+    "AudioNoteDriver::tick_engine reads engine envelopes/noise and applies ordered SDK writes.",
+    "dispatch_audio_commands executes SoftwareSound immediate operations and retains failed/later commands."
+  ],
+  "power_state_detail": "Cached sustain target starts at0 until an ADSR register write; explicitly retained and compared.",
+  "local_validation": {
+    "workspace_passed": 196,
+    "workspace_failed": 0,
+    "workspace_ignored": 58,
+    "engine_tests_including_original_content_passed": 4,
+    "envelope_tests_including_original_content_passed": 5,
+    "sample_tests_including_original_content_passed": 4,
+    "format_passed": true,
+    "clippy_all_features_passed": true
+  },
+  "limits": [
+    "Output ends at dry/reverb-input accumulators. Reverb/main-output processing is not implemented by clock_voices.",
+    "Logical register/data/DMA operations do not establish FIFO/bus durations, CPU IRQ handling or natural scheduling.",
+    "Original tone scenarios have2048 supplied sample clocks with release1024 and assigned bank base.",
+    "Real bank allocation, music, callback timing and Bevy/device audio output remain open.",
+    "Reserved ADPCM encodings are bounded errors; high-register pitch hardware/source disagreement remains unresolved."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}

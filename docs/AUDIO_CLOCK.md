@@ -80,11 +80,12 @@ tables are prepared inputs matching the copied logical slots. These checks do
 not execute sample DMA, SPU synthesis, real device clocks or natural startup.
 
 The current update API explicitly rejects active SDK pan automation, whose
-separate implementation remains open. Actual bank transfer/allocation,
-interrupt/callback cadence, sequence dispatch, ADPCM/envelope/interpolation,
-reverb/mixing and output-device integration still need implementation and
-original register/waveform evidence. `SoftwareSound` requires a caller to
-execute its device commands and schedule the verified device path.
+separate implementation remains open. The [clocked voice engine](SPU_ENGINE.md)
+now executes ADPCM/envelope/interpolation, noise and mix inputs. The SDK update
+can use `tick_engine`, and `dispatch_audio_commands` connects `SoftwareSound`'s
+immediate commands. Actual bank allocation/transfer timing, interrupt/callback
+cadence, sequence dispatch, reverb, main output and output-device integration
+still require implementation and original runtime/waveform evidence.
 
 No complete audio group or whole-game parity is accepted. Original behavior
 has no AI model dependency; optional analysis/modding tools remain separate.

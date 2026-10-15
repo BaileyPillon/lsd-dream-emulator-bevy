@@ -23,6 +23,40 @@ pub enum AudioImmediateCommand {
     DisableNoise(u32),
 }
 
+/// Execute the sound-object's immediate writes against the clocked engine.
+/// A failed command and all later commands remain queued for inspection.
+pub fn dispatch_audio_commands(
+    engine: &mut lsd_core::SpuVoiceEngine,
+    commands: &mut Vec<AudioImmediateCommand>,
+) -> Result<usize, lsd_core::SpuEngineFault> {
+    fn execute(
+        engine: &mut lsd_core::SpuVoiceEngine,
+        command: &AudioImmediateCommand,
+    ) -> Result<(), lsd_core::SpuEngineFault> {
+        match command {
+            AudioImmediateCommand::Write(write) => engine.write_register(write.offset, write.value),
+            AudioImmediateCommand::DisableNoise(mask) => {
+                let mut noise = lsd_core::SpuNoiseMode {
+                    registers: [engine.read_register(0x194)?, engine.read_register(0x196)?],
+                };
+                for write in noise.set(0, *mask).1 {
+                    engine.write_register(write.offset, write.value)?;
+                }
+                Ok(())
+            }
+        }
+    }
+    for (index, command) in commands.iter().enumerate() {
+        if let Err(error) = execute(engine, command) {
+            commands.drain(..index);
+            return Err(error);
+        }
+    }
+    let completed = commands.len();
+    commands.clear();
+    Ok(completed)
+}
+
 impl SoundBankBinding {
     /// Mirrors the sound object's logical program_count table. The complete
     /// sparse VAB remains available separately for SDK sequence playback.

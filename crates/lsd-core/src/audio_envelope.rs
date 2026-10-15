@@ -43,6 +43,10 @@ impl SpuEnvelope {
     }
 
     pub fn clock(&mut self) {
+        self.clock_with_sustain_target(((self.control[0] & 15) + 1) << 11);
+    }
+
+    pub(crate) fn clock_with_sustain_target(&mut self, sustain_target: u16) {
         use SpuEnvelopePhase::*;
         if self.phase == Attack && self.level == 0x7fff {
             self.phase = Decay;
@@ -82,7 +86,6 @@ impl SpuEnvelope {
         if overflow {
             self.level = if decreasing { 0 } else { 0x7fff };
         }
-        let sustain_target = ((first & 15) + 1) << 11;
         if self.phase == Decay && self.level < sustain_target {
             self.phase = Sustain;
         }

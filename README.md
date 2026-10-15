@@ -70,6 +70,10 @@ the complete SPU device and scene audio remains unfinished.
 tone parameters with software-reference state comparisons. Device scheduling,
 mixing, music and output remain open; that page also corrects the earlier
 pitch-comparison wrapper and its high-register behavior.
+The [clocked SPU voice engine](docs/SPU_ENGINE.md) now combines sample memory,
+decoder prefetch, key/loop handling, envelopes, noise and 24-voice mixing, and
+accepts the SDK driver's commands. Reverb, main output, music, callback timing
+and the live Bevy audio connection remain unfinished.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

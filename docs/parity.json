@@ -1385,6 +1385,25 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "spu_voice_engine_20261014": {
+      "scope": "Clocked voice/capture/noise engine before reverb/main output, using supplied register/data operations and sample clocks. Compared complete voice/register state, accumulator hashes, readbacks and final sample RAM with a pinned software reference. Original SDK note-register recordings bind351 tones with supplied bank placement and controlled releases. No physical bus, CPU IRQ delivery, natural callback/note timing, complete audio device or audible-scene acceptance.",
+      "checks": {
+        "path": "docs/spu-engine-checks.json",
+        "sha256": "80281060e5c3c0b902580f156fedca448447eeed88321e91d0c5ea244724465b"
+      },
+      "owned_engine_scenarios": 24,
+      "owned_engine_clocks": 9568,
+      "noise_rates": 64,
+      "noise_clocks": 2097152,
+      "original_banks": 9,
+      "original_tone_register_bindings": 351,
+      "original_voice_engine_clocks": 718848,
+      "snapshot_words": 1716,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

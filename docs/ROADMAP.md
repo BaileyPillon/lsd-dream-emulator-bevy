@@ -95,6 +95,12 @@ Original tone bindings have controlled software-reference lifecycles. The
 earlier pitch comparison is corrected to use the unchanged playback expression.
 Complete SPU scheduling, mixing, output and original-scene audio remain open.
 
+The [clocked voice engine](SPU_ENGINE.md) now processes 24 voices, sample/data
+memory, decoder prefetch, key/loop behavior, captures, noise and mix inputs.
+The SDK driver and sound-object commands can feed this engine. Reverb, main
+gain, output, music, actual callback/DMA timing and natural scene acceptance
+remain open.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model
