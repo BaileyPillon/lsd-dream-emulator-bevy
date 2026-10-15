@@ -19,6 +19,7 @@ defines the full target; [contributing](../CONTRIBUTING.md) explains how to help
 | --- | --- |
 | Install and explore the prototype | [Getting started](GETTING_STARTED.md) |
 | Choose a binary, feature, or test target | [Developer reference](DEVELOPMENT.md) |
+| Browse Rust types, examples, and source | [API reference](API_REFERENCE.md) |
 | Understand crate boundaries and original behavior | [Architecture](ARCHITECTURE.md) |
 | Check capabilities and remaining work | [Status](STATUS.md) and [tracked roadmap](ROADMAP.md#tracked-work) |
 | Report an original-game difference | [Compatibility issue form](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=compatibility.yml) |
@@ -33,6 +34,7 @@ summary and the linked check manifests for input identity and comparison scope.
 - [Project status](STATUS.md)
 - [Getting started](GETTING_STARTED.md)
 - [Developer reference and tool catalogue](DEVELOPMENT.md)
+- [Published Rust API reference](API_REFERENCE.md)
 - [Roadmap](ROADMAP.md)
 - [Architecture](ARCHITECTURE.md)
 - [Reference and starting point](REFERENCE.md)

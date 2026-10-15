@@ -37,6 +37,8 @@ changes; it does not assert independent review or verification.
 - Documentation links and public JSON evidence pass `python tools/check_docs.py`.
 - The handbook builds with `python -m mkdocs build --strict`, and its rendered
   links and assets pass `python tools/check_site.py .private/site`.
+- The Linux job combines the handbook with generated library APIs and checks
+  all entry points, the source revision, and rendered links with `--require-api`.
 - Changes to original behavior include an appropriate regression or comparison,
   with input identity, expected result, and exclusions recorded.
 - Original files, credentials, and private evidence remain outside the commit.
@@ -78,6 +80,8 @@ CI runs on pull requests, pushes to `main`, and manual dispatch. Feature-branch
 pushes use the pull request run to avoid duplicate builds of the same change.
 The [handbook publishing workflow](DOCUMENTATION.md) deploys relevant `main`
 changes through GitHub Pages after a successful site build.
+The published API reference shares the handbook's source revision and updates
+when Rust sources, the manifests, or the pinned toolchain change.
 
 ## Release policy
 

@@ -5,9 +5,14 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'crates/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'rust-toolchain.toml'
       - 'tools/check_docs.py'
       - 'tools/check_site.py'
       - 'tools/docs_site.py'
+      - 'tools/stage_api.py'
       - 'tools/requirements-docs.txt'
       - 'mkdocs.yml'
       - '.github/workflows/docs.yml'
@@ -22,9 +27,9 @@ concurrency:
 
 jobs:
   build:
-    name: Build handbook
+    name: Build handbook and APIs
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -34,16 +39,27 @@ jobs:
           python-version: '3.13'
           cache: pip
           cache-dependency-path: tools/requirements-docs.txt
+      - uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249
+        with:
+          toolchain: 1.97.1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
       - run: python -m pip install -r tools/requirements-docs.txt
       - run: python tools/check_docs.py
+      - name: Build library API documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: |
+          cargo clean --doc
+          cargo doc --workspace --lib --no-deps --locked
       - run: python -m mkdocs build --strict
-      - run: python tools/check_site.py .private/site
+      - run: python tools/stage_api.py target/doc .private/site --revision "${{ github.sha }}"
+      - run: python tools/check_site.py .private/site --require-api
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: .private/site
 
   deploy:
-    name: Publish handbook
+    name: Publish documentation
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest

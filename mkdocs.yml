@@ -77,6 +77,7 @@ nav:
       - Roadmap: ROADMAP.md
   - Development:
       - Developer reference: DEVELOPMENT.md
+      - API reference: API_REFERENCE.md
       - Architecture: ARCHITECTURE.md
       - Reference identity: REFERENCE.md
       - Maintenance and releases: MAINTENANCE.md

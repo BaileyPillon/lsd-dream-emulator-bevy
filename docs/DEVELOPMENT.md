@@ -115,7 +115,7 @@ matrix for changes that need them. Documentation-only changes need the
 documentation check; they do not need new Rust tests.
 
 Each crate's API overview explains its role, entry points, and examples.
-Generate local API documentation when exploring public types:
+Browse the [published API reference](API_REFERENCE.md), or generate local documentation:
 
 ```sh
 cargo doc --workspace --no-deps --locked

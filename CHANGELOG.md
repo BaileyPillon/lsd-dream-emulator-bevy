@@ -6,6 +6,10 @@ current capabilities and [the commit history](https://github.com/BaileyPillon/ls
 
 ## Unreleased
 
+- Publish revision-identified Rust API documentation alongside the handbook,
+  with generated source, search, and checked links between all three libraries.
+- Shorten the repository overview and separate platform build coverage from
+  playable-preview and original-game acceptance status.
 - Publish a searchable project handbook with mobile navigation, light/dark
   themes, source links, and checked deployment from protected `main`.
 - Validate generated documentation links and assets in the required repository
