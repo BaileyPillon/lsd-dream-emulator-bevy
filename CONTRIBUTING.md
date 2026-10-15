@@ -28,6 +28,8 @@ cargo check -p lsd-bevy --features desktop --locked
 The workspace pins its toolchain and Cargo lockfile. Default tests are headless;
 the optional audio and desktop features need their platform dependencies.
 CI runs Ubuntu and Windows and checks the desktop target on Windows.
+For documentation or public evidence changes, also run
+`python tools/check_docs.py` with Python 3.10 or newer.
 
 ## Evidence standards
 
@@ -66,3 +68,5 @@ its checks; it does not establish full original-game parity.
 
 Contributors must follow the [code of conduct](CODE_OF_CONDUCT.md).
 For security-sensitive reports, follow [SECURITY.md](SECURITY.md).
+See [maintenance and releases](docs/MAINTENANCE.md) for ownership, merge checks,
+and the distinction between a development milestone and a playable release.

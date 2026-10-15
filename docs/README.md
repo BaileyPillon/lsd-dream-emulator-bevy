@@ -15,6 +15,9 @@ summary and the linked check manifests for input identity and comparison scope.
 - [Roadmap](ROADMAP.md)
 - [Architecture](ARCHITECTURE.md)
 - [Reference and starting point](REFERENCE.md)
+- [Development changelog](../CHANGELOG.md)
+- [Maintenance and releases](MAINTENANCE.md)
+- [Support and reporting](../SUPPORT.md)
 
 ## Content and animation
 

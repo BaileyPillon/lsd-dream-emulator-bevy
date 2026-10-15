@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title description">
+  <title id="title">LSD: Dream Emulator — Rust and Bevy reconstruction</title>
+  <desc id="description">Original project artwork. A restrained charcoal wordmark beside nested geometric doorways in pale green and amber.</desc>
+  <defs>
+    <clipPath id="world"><path d="M700 0h580v360H700z"/></clipPath>
+    <pattern id="grain" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 0h1v1H0zM4 4h1v1H4z" fill="#e8e9dc" opacity=".035"/>
+    </pattern>
+  </defs>
+  <path fill="#172124" d="M0 0h1280v360H0z"/>
+  <path fill="url(#grain)" d="M0 0h1280v360H0z"/>
+  <g clip-path="url(#world)" stroke-linejoin="round">
+    <path d="M743 0v360M1212 0v360M743 40h469v280H743" fill="none" stroke="#364c49" stroke-width="2"/>
+    <path d="m743 40 71 45h327l71-45M743 320l71-45h327l71 45" fill="none" stroke="#4b6257" stroke-width="2"/>
+    <path d="M814 85h327v190H814z" fill="#1e3030" stroke="#718274" stroke-width="2"/>
+    <path d="m814 85 62 39h203l62-39M814 275l62-35h203l62 35" fill="none" stroke="#4b6257" stroke-width="2"/>
+    <path d="M876 124h203v116H876z" fill="#293c37" stroke="#9ba78a" stroke-width="2"/>
+    <path d="M942 147h65v93h-65z" fill="#b4bd91"/>
+    <path d="m942 147 22 11v82h-22z" fill="#d7c289"/>
+    <path d="M814 275 703 360M876 240l-26 120M942 240l-11 120M1007 240l20 120M1079 240l74 120M1141 275l139 85M742 320h470M772 302h410" fill="none" stroke="#42594f" stroke-width="1.5"/>
+    <path d="M743 40 660 0M1212 40l68-34M743 320l-69 40M1212 320l68 40" fill="none" stroke="#344945" stroke-width="2"/>
+    <path d="M1093 161h17v36h-17z" fill="none" stroke="#809578" stroke-width="2"/>
+    <path d="M1262 0v360" stroke="#c4ae75" stroke-width="2" opacity=".5"/>
+  </g>
+  <path d="M64 61h34" stroke="#d7c289" stroke-width="3"/>
+  <text x="64" y="96" fill="#a8b4a6" font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="3">AN INDEPENDENT RECONSTRUCTION</text>
+  <text x="57" y="191" fill="#f1eee0" font-family="Consolas, 'Liberation Mono', monospace" font-size="104" font-weight="700" letter-spacing="5">LSD</text>
+  <text x="64" y="238" fill="#f1eee0" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="600" letter-spacing="5">DREAM EMULATOR</text>
+  <text x="64" y="307" fill="#b5bdb0" font-family="Consolas, 'Liberation Mono', monospace" font-size="14" letter-spacing="1.2">RUST / BEVY</text>
+  <path d="M217 296v14" stroke="#64736a"/>
+  <text x="237" y="307" fill="#b5bdb0" font-family="Consolas, 'Liberation Mono', monospace" font-size="14" letter-spacing="1.2">PLAYSTATION PRESERVATION</text>
+</svg>

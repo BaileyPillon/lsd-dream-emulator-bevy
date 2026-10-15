@@ -10,8 +10,16 @@
 The default workspace builds and tests without game files or an audio device.
 Audio and desktop features need the platform dependencies in
 [Bevy's setup guide](https://bevy.org/learn/quick-start/getting-started/setup/).
-On Debian/Ubuntu, audio builds require `libasound2-dev`. Windows builds require
-the Rust MSVC toolchain's C/C++ linker and Windows SDK.
+On Debian/Ubuntu, audio builds require `libasound2-dev`. The X11 desktop backend
+also needs the `libxkbcommon-x11-0` runtime library:
+
+```sh
+sudo apt install libasound2-dev libxkbcommon-x11-0
+```
+
+Windows builds require the Rust MSVC toolchain's C/C++ linker and Windows SDK.
+Public CI exercises headless tests on Linux and Windows, plus the Windows
+desktop compile check. macOS desktop operation has not been validated here.
 
 ## Build and verify
 
@@ -51,6 +59,11 @@ cargo run -p lsd-bevy --bin lsd-stage --features desktop --locked -- "/path/to/e
 This development profile starts the original first-day state with a supplied
 new-game bootstrap and seed. It connects imported content and live sound
 effects; complete game flows and parity remain unfinished. See [status](STATUS.md).
+
+With the game window focused, **W/S** moves forward/back and **A/D** turns.
+These are the dream profile's player controls; the inspection camera has a
+separate input path. On WSLg, software rendering can run slowly, and audio
+requires the WSLg PulseAudio service to be available.
 
 For a stage inspection without the dream profile:
 
@@ -101,6 +114,7 @@ comparison evidence, and keeping original assets private.
 | Executable identity is rejected | Confirm the supported edition and hash; do not modify the importer to silently accept another input |
 | A game file cannot be found | Point to the extraction root containing both `SLPS_015.56` and `CDI`; quote paths with spaces |
 | Linux audio dependency is missing | Install the platform audio development dependencies before enabling `audio` or `desktop` |
+| Startup reports a missing `libxkbcommon-x11.so` | Install `libxkbcommon-x11-0` in the Linux environment running the desktop target |
 | Graphics initialization fails | Check GPU/driver/display support; the headless probe and tests can still run |
 | Reference-dependent tests are ignored | They require separately supplied local assets and native traces; this is expected in public CI |
 

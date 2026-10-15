@@ -1,8 +1,8 @@
 # Complete LSD: Dream Emulator in Rust and Bevy
 
 Recreate the original game's content and behavior in the Bevy port. The matching
-C project is a preserved, read-only reference while its decompilation is paused.
-The port has its own implementation, evidence and acceptance tracker.
+C checkpoint is preserved as the port's reference. Development in the two
+repositories has separate implementations, evidence, and acceptance trackers.
 
 Completion requires all of the following:
 

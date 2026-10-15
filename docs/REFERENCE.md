@@ -27,8 +27,8 @@ observations with the new implementation.
 The companion C project's last published commit at the transition was
 `6ea437373d2fca48fe4d55bead34c820d73f9206`. Its local checkout also contains
 six preserved, matching model-enumeration source corrections. C decompilation
-work is paused, its repository is retained, and its 97.15% C-byte measure is
-not imported as Rust port completion.
+work and Rust-port work are maintained separately. The preserved checkpoint's
+97.15% C-byte measure is not imported as Rust port completion.
 
 Engine/toolchain baseline: [Bevy v0.20.0](https://github.com/bevyengine/bevy/releases/tag/v0.20.0)
 and the [tagged manifest](https://github.com/bevyengine/bevy/blob/v0.20.0/Cargo.toml),

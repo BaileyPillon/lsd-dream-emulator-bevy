@@ -51,7 +51,7 @@ Tests that require those local inputs are explicitly ignored in ordinary CI.
 
 ## Separate C project
 
-The matching C decompilation is paused at **194,212 / 199,912 game-function
-bytes recovered in C (97.15%)**, with nine remaining assembly functions at
-that checkpoint. Its pending source corrections are preserved. That percentage
+The preserved C reference checkpoint records **194,212 / 199,912 game-function
+bytes recovered in C (97.15%)**, with nine remaining assembly functions.
+The companion project has its own development history. That percentage
 must never be transferred to the Rust port or treated as gameplay acceptance.
