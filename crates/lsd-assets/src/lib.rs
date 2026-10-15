@@ -1,4 +1,41 @@
-//! Bounded decoding of original disc assets and read-only reference validation.
+//! Local content decoding, reference validation, and scene adapters for LSD: Dream Emulator.
+//!
+//! This crate binds locally supplied game content to [`lsd_core`]. It includes
+//! bounded binary-format readers, original table loaders, streamed scenes,
+//! actor services, and sound-bank/sequence adapters. Original files are local
+//! inputs and are not distributed with the project.
+//!
+//! # Where to start
+//!
+//! | Concern | Entry points |
+//! | --- | --- |
+//! | Supported executable identity | [`CANONICAL_SHA256`], [`is_canonical_reference`], [`PsxExeHeader`] |
+//! | Textures, geometry, maps, and audio formats | [`formats`] |
+//! | Resident maps and scene streaming | [`StreamedStage`] |
+//! | Imported actors and their scene services | [`EncounterScene`], [`ActorJournalServices`] |
+//! | Sound banks and music dispatch | [`SoundBankBinding`], [`SeqEventClock`], [`SeqMusicTrack`] |
+//!
+//! # Validate a local reference
+//!
+//! Check the supported edition before using its executable as a reference.
+//! Header parsing alone validates structure, not canonical identity.
+//! This example needs a locally supplied file:
+//!
+//! ```no_run
+//! use lsd_assets::{PsxExeHeader, is_canonical_reference};
+//!
+//! let bytes = std::fs::read("local/SLPS_015.56")?;
+//! if !is_canonical_reference(&bytes) {
+//!     return Err("unsupported reference executable".into());
+//! }
+//! let header = PsxExeHeader::parse(&bytes)?;
+//! println!("Entry point: {:#010x}", header.entry_point);
+//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! ```
+//!
+//! See the [asset pipeline](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/docs/ASSET_PIPELINE.md)
+//! for corpus checks and the [developer reference](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/docs/DEVELOPMENT.md)
+//! for command-line import and inspection tools.
 mod actor_journal;
 mod audio_tables;
 mod scene_audio;

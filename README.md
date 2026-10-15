@@ -34,11 +34,11 @@ stable binary release yet.
 
 | Area | Current implementation and evidence |
 | --- | --- |
-| Original NPC scripts | **71 / 107** named callbacks implemented; 36 pending |
-| Content decoding | **418** maps, **98** streamed model libraries, **4,260** animation frames |
-| Audio imports | **9** sound banks, **351** tones, **255** samples, **70** sequences |
-| Dream runtime | Original-content prototype with movement, collision, links, generation, day progression, and live sound effects |
-| Music | Original sequence and voice behavior recovered; controlled WAV synthesis works; live dream music is pending |
+| [Original NPC scripts](docs/STATUS.md#what-currently-works) | **71 / 107** named callbacks implemented; 36 pending |
+| [Content decoding](docs/ASSET_PIPELINE.md) | **418** maps, **98** streamed model libraries, **4,260** animation frames |
+| [Audio imports](docs/AUDIO_IMPORT.md) | **9** sound banks, **351** tones, **255** samples, **70** sequences |
+| [Dream runtime](docs/SHARED_FRAME.md) | Original-content prototype with movement, collision, links, generation, day progression, and live sound effects |
+| [Music](docs/SEQUENCE_VOICES.md) | Original sequence and voice behavior recovered; controlled WAV synthesis works; live dream music is pending |
 | Complete NPC encounters accepted | **0** |
 | Whole-game feature groups accepted | **0 / 40** provisional groups |
 
@@ -69,6 +69,16 @@ the `CDI` directory. Desktop builds need the platform dependencies described in
 [Getting started](docs/GETTING_STARTED.md), which also covers controls and common
 startup problems. Supply original game content locally.
 
+| Platform | Automated coverage |
+| --- | --- |
+| Windows | Headless and audio tests, API documentation, desktop compilation |
+| Linux | Headless and audio tests, API documentation |
+| macOS | Not validated by the current CI matrix |
+
+See the [CI workflow](.github/workflows/rust.yml) for the exact checks.
+Desktop compilation and component tests have separate scopes from exercised
+gameplay and original-game acceptance.
+
 ## Design
 
 ```mermaid
@@ -86,6 +96,17 @@ flowchart LR
   with remaining PlayStation differences tracked explicitly.
 - **Optional AI and mods:** a separate development track. The original
   experience has no dependency on AI accounts or generated NPC behavior.
+
+| Crate | Responsibility | Code |
+| --- | --- | --- |
+| `lsd-core` | Deterministic simulation, original scripts, integer geometry, and SPU state | [Library](crates/lsd-core/src/lib.rs) |
+| `lsd-assets` | Local format readers, reference validation, content binding, and scene adapters | [Library](crates/lsd-assets/src/lib.rs) |
+| `lsd-bevy` | Headless host, desktop tools, rendering, input, and audio output | [Library](crates/lsd-bevy/src/lib.rs) |
+
+Each library has an API overview with entry points and examples. Generate
+browsable local docs with `cargo doc --workspace --no-deps --locked`; see the
+[developer reference](docs/DEVELOPMENT.md#check-a-pull-request) for output paths
+and feature-specific documentation.
 
 See [architecture](docs/ARCHITECTURE.md) for implementation boundaries and
 [the project objective](PROJECT_OBJECTIVE.md) for the full completion requirements.

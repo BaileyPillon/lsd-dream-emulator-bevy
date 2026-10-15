@@ -101,6 +101,7 @@ Architecture and ownership are described in [ARCHITECTURE.md](ARCHITECTURE.md).
 ```sh
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo doc --workspace --no-deps --locked
 cargo test --workspace --locked
 cargo test -p lsd-bevy --features audio --locked
 cargo check -p lsd-bevy --features desktop --locked
@@ -113,6 +114,7 @@ original-input comparisons and exercised desktop scenarios supplement that
 matrix for changes that need them. Documentation-only changes need the
 documentation check; they do not need new Rust tests.
 
+Each crate's API overview explains its role, entry points, and examples.
 Generate local API documentation when exploring public types:
 
 ```sh
@@ -123,3 +125,16 @@ Open `target/doc/lsd_core/index.html`, `target/doc/lsd_assets/index.html`, or
 `target/doc/lsd_bevy/index.html` in a browser. A custom `CARGO_TARGET_DIR` moves
 these generated files under that directory. This command documents default
 features; it is not a desktop build or a reference comparison.
+
+To include the optional scene, audio, and screen-box APIs, install the
+[desktop dependencies](GETTING_STARTED.md#requirements), then run:
+
+```sh
+cargo doc -p lsd-bevy --no-deps --features desktop --locked
+```
+
+CI builds the default-feature API documentation on Windows and Linux with
+`RUSTDOCFLAGS` set to `-D warnings`. Broken intra-doc links and other Rustdoc
+warnings fail the build. `cargo test --workspace --locked` also checks the
+documentation examples: runnable examples execute, while `no_run` examples
+compile without accessing local game files.

@@ -30,8 +30,10 @@ changes; it does not assert independent review or verification.
 
 ## Checks before merging
 
-- Formatting, Clippy, headless tests, the optional audio tests, and the supported
-  desktop compile check pass in [CI](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/actions/workflows/rust.yml).
+- Formatting, Clippy, headless and audio tests, and the supported desktop compile
+  check pass in [CI](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/actions/workflows/rust.yml).
+- Default-feature API documentation builds without Rustdoc warnings; executable
+  examples pass with the workspace tests.
 - Documentation links and public JSON evidence pass `python tools/check_docs.py`.
 - Changes to original behavior include an appropriate regression or comparison,
   with input identity, expected result, and exclusions recorded.

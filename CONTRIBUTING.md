@@ -67,6 +67,7 @@ feature, and common test command to its purpose.
 ```sh
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo doc --workspace --no-deps --locked
 cargo test --workspace --locked
 cargo test -p lsd-bevy --features audio --locked
 cargo check -p lsd-bevy --features desktop --locked
@@ -75,6 +76,8 @@ cargo check -p lsd-bevy --features desktop --locked
 The workspace pins its toolchain and Cargo lockfile. Default tests are headless;
 the optional audio and desktop features need their platform dependencies.
 CI runs Ubuntu and Windows and checks the desktop target on Windows.
+It also builds the default-feature API documentation with Rustdoc warnings
+treated as errors and runs executable documentation examples with the tests.
 For documentation or public evidence changes, also run
 `python tools/check_docs.py` with Python 3.10 or newer.
 Documentation-only changes do not need new Rust tests. Run targeted behavior
