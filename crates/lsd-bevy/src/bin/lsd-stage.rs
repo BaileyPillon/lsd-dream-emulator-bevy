@@ -296,6 +296,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             );
         }
     };
+    let audio_requested = match args.next().as_deref() {
+        Some("--audio")
+            if original_day
+                && !supplied_actor_query
+                && !supplied_gray_contact
+                && !supplied_scene_scale =>
+        {
+            true
+        }
+        None => original_day && capture.is_none(),
+        _ => {
+            return Err(
+                "Live audio accepts --dream, --dream-capture or --dream-scenario-capture".into(),
+            );
+        }
+    };
+    if audio_requested && capture.is_some() {
+        // Sound callbacks and SPU output must run during the app, not after a
+        // fast-forwarded capture has already issued all its sound requests.
+        live_capture = true;
+    }
     if stage > 13 || !matches!(texture.as_str(), "A" | "B" | "C" | "D") || args.next().is_some() {
         return Err("Stage must be 0..13 and texture variant A..D".into());
     }
@@ -351,6 +372,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if inspect {
         return Ok(());
     }
+    let scene_audio = audio_requested
+        .then(|| lsd_assets::load_scene_audio(&root, &executable))
+        .transpose()?;
     let mut layered_assets = None;
     let walking = if walk {
         let tables = load_math_tables(&executable)?;
@@ -462,6 +486,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if original_day {
             let linked = linked.as_mut().unwrap();
             let session = session.as_mut().unwrap();
+            if let Some(audio) = &scene_audio {
+                session.generation_audio.connect(audio.clone())?;
+                session.encounter_audio.connect(audio.clone())?;
+            }
             session.enable_generation(
                 load_generation_tables(&executable)?,
                 load_generation_paths(&executable)?,
@@ -961,6 +989,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     if original_day {
         app.add_plugins(BoxMaterialPlugin);
+    }
+    if let Some(audio) = scene_audio {
+        println!(
+            "scene_audio_connected=true source=shared_SE_SDK_SPU supplied_sdk_period_samples=735 supplied_spu_base=4096 music_and_original_callback_timing_pending=true"
+        );
+        app.add_plugins(lsd_bevy::audio::SceneAudioPlugin(audio));
     }
     app.add_systems(Startup, setup)
         .add_systems(
@@ -2014,12 +2048,29 @@ fn capture_frame(
     actor_roots: Query<(), With<ActorRoot>>,
     actor_bones: Query<(), With<ActorBone>>,
     actor_meshes: Query<&InheritedVisibility, With<ActorMeshPart>>,
+    audio_output: (
+        Option<Res<lsd_bevy::audio::SceneAudioOutput>>,
+        Query<&AudioSink>,
+    ),
 ) {
     if !capture.requested
         && capture.remaining_ticks.is_none_or(|ticks| ticks == 0)
         && time.elapsed_secs_f64() > 5.0
         && let Some(target) = &capture.target
     {
+        if let Some(audio) = &audio_output.0 {
+            let state = audio.0.snapshot();
+            println!(
+                "bevy_scene_audio_sinks={} frames={} nonzero_frames={} allocated_notes={} stops={} sdk_ticks={} fault={:?} original_audio_scene_accepted=false",
+                audio_output.1.iter().count(),
+                state.sample_frames,
+                state.nonzero_frames,
+                state.allocated_notes,
+                state.stops,
+                state.sdk_ticks,
+                state.fault
+            );
+        }
         println!(
             "bevy_actor_render_roots={} bevy_actor_render_bones={} bevy_actor_render_meshes={} inherited_visible_actor_meshes={}",
             actor_roots.iter().len(),

@@ -103,9 +103,11 @@ remain open.
 
 The [SPU output stage](SPU_OUTPUT.md) now processes reverb and final PCM, with
 original preset imports and independent software comparisons. `lsd-sound`
-exports a controlled sound-object/SDK/device diagnostic to WAV. Live Bevy
-audio, real allocation/transfer and callback/bus timing, music and natural
-scene acceptance still remain required.
+exports a controlled sound-object/SDK/device diagnostic to WAV. A
+[continuous Bevy source](LIVE_AUDIO.md) now connects generation/NPC calls to
+the shared driver/SPU and returns actual voice handles. Real allocation,
+transfer and callback/bus timing, music and natural scene acceptance remain
+required.
 
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with

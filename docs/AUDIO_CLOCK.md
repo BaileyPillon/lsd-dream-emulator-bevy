@@ -4,8 +4,9 @@ The software audio path now includes the original sound-object pitch selector,
 packed-note lookup, key-on followed by auto-volume, per-voice volume updates,
 stop-all and the SDK driver's envelope-read/history/register-flush loop.
 `SoftwareSound` connects those calls to the existing `GenerationSound` trait.
-It produces software state and device commands; the default scene still uses
-the queued backend and audible playback remains unfinished.
+It produces software state and device commands. The interactive dream profile
+now uses the [shared live backend](LIVE_AUDIO.md); silent checks retain the
+queued backend. Original scene audio acceptance remains unfinished.
 
 ```sh
 cargo test -p lsd-assets --test audio_clock --locked

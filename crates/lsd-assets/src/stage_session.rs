@@ -61,27 +61,47 @@ pub enum GenerationAudioRequest {
         counter: i32,
     },
 }
-/// Requests are retained for the audio backend. A missing backend returns the
-/// original failed-voice handle (-1), rather than pretending playback occurred.
+/// A connected shared backend returns real voice handles synchronously. With
+/// no backend, retain requests and return the original failed-voice handle (-1).
 #[derive(Debug, Clone, Default)]
 pub struct GenerationAudioRequests {
     pub requests: Vec<GenerationAudioRequest>,
+    backend: Option<crate::SceneAudio>,
 }
 impl GenerationAudioRequests {
+    /// Attach before any requests: replaying queued calls cannot recover handles
+    /// that actor state already stored as -1. Both scene channels share one backend.
+    pub fn connect(&mut self, backend: crate::SceneAudio) -> Result<(), &'static str> {
+        if self.backend.is_some() || !self.requests.is_empty() {
+            return Err("Connect scene audio before the first sound request");
+        }
+        self.backend = Some(backend);
+        Ok(())
+    }
     pub fn take_requests(&mut self) -> Vec<GenerationAudioRequest> {
         std::mem::take(&mut self.requests)
     }
 }
 impl GenerationSound for GenerationAudioRequests {
     fn stop_note(&mut self, handle: i32) -> i32 {
+        if let Some(backend) = &mut self.backend {
+            return backend.stop_note(handle);
+        }
         self.requests.push(GenerationAudioRequest::Stop(handle));
         -1
     }
     fn volume_offset(&mut self, offset: i32) {
+        if let Some(backend) = &mut self.backend {
+            backend.volume_offset(offset);
+            return;
+        }
         self.requests
             .push(GenerationAudioRequest::VolumeOffset(offset));
     }
     fn play_note(&mut self, note: i32, period: i32, counter: i32) -> i32 {
+        if let Some(backend) = &mut self.backend {
+            return backend.play_note(note, period, counter);
+        }
         self.requests.push(GenerationAudioRequest::Play {
             note,
             period,

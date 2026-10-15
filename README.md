@@ -51,33 +51,17 @@ Original scene style, texture/music choices, generation-trigger proximity and
 all 14 sound callbacks now run in Rust. The `--dream` profile consumes the
 selected textures and queues sound requests; see [generation recovery](docs/GENERATION.md)
 for the constructor, full RNG history, rendering and audio work still required.
-Original [sound-bank and music-sequence import](docs/AUDIO_IMPORT.md) now covers
-all nine local VH/VB banks and 70 SEQ files, with original SDK attribute/delta
-comparisons. Physical voice playback and sequence scheduling remain open.
-Original [voice selection, release and pitch conversion](docs/AUDIO_VOICES.md)
-now also run in Rust and match SDK recordings; synthesis and the
-live audio connection remain unfinished.
-The [normal sound-effect note setup](docs/AUDIO_NOTES.md) now also prepares
-original volume/pan, envelope/sample registers and command masks for every
-imported tone. [Sound objects, auto-volume and SDK register flushing](docs/AUDIO_CLOCK.md)
-now also run in Rust, with ordered original-code comparisons. The live SPU,
-device/callback timing and audible playback remain open.
-The [SPU sample decoder](docs/SPU_SAMPLES.md) now decodes every stored sample
-in all nine banks, with software-reference comparisons for predictor history,
-Gaussian interpolation and pitch modulation. Connecting these components to
-the complete SPU device and scene audio remains unfinished.
-[Envelope and volume components](docs/SPU_ENVELOPES.md) now advance the original
-tone parameters with software-reference state comparisons. Device scheduling,
-mixing, music and output remain open; that page also corrects the earlier
-pitch-comparison wrapper and its high-register behavior.
-The [clocked SPU voice engine](docs/SPU_ENGINE.md) now combines sample memory,
-decoder prefetch, key/loop handling, envelopes, noise and 24-voice mixing, and
-accepts the SDK driver's commands. Reverb, main output, music, callback timing
-and the live Bevy audio connection remain unfinished.
-[Reverb and final PCM](docs/SPU_OUTPUT.md) now complete the supplied-clock SPU
-sample path. The `lsd-sound` diagnostic renders an imported sound through the
-sound-object/SDK/device path to WAV. Live scene playback, music, allocation and
-original callback/bus timing remain open.
+The [audio importer](docs/AUDIO_IMPORT.md) covers all nine local VH/VB banks and
+70 SEQ files. Original [voice selection](docs/AUDIO_VOICES.md),
+[note setup](docs/AUDIO_NOTES.md) and [sound objects/SDK updates](docs/AUDIO_CLOCK.md)
+feed a shared 24-voice SPU. Its [sample decoder](docs/SPU_SAMPLES.md),
+[envelopes](docs/SPU_ENVELOPES.md), [voice engine](docs/SPU_ENGINE.md), and
+[reverb/final PCM](docs/SPU_OUTPUT.md) retain integer state and have independent
+software comparisons. The `lsd-sound` diagnostic can render an imported sound
+through this path to a local WAV.
+[Continuous Bevy audio](docs/LIVE_AUDIO.md) now connects interactive dream sound
+requests to the shared driver/SPU and returns real voice handles. Original
+scene audio comparisons, music and hardware scheduling remain unfinished.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining
@@ -229,7 +213,8 @@ loads the destination scene. GPU fades, original construction/clock scheduling,
 day generation and audio remain open.
 
 Append `--dream` to start the original first-day state with a supplied new-game
-bootstrap and seed 1. `--dream-capture /path/to/new.png 4000` runs supplied idle
+bootstrap and seed 1, with live SE audio from the shared SPU.
+`--dream-capture /path/to/new.png 4000` runs supplied idle
 host ticks through timeout and the next-day result. Original menus, named NPC
 scripts, special-day media, camera/raster accuracy, GPU fades and audio remain unfinished.
 

@@ -1,6 +1,47 @@
 use crate::{PsxExeHeader, is_canonical_reference};
 use lsd_core::SpuPitchTable;
 
+/// The sound object created by dream_session_construct uses get_se_path().
+/// Import the path through its original pointer; do not distribute the table.
+pub fn load_scene_sound_path(executable: &[u8]) -> Result<String, &'static str> {
+    if !is_canonical_reference(executable) {
+        return Err("Scene sound path requires canonical SLPS_015.56");
+    }
+    let header = PsxExeHeader::parse(executable).map_err(|_| "Invalid executable extent")?;
+    let offset = |address: u32| {
+        address
+            .checked_sub(header.load_address)
+            .map(|v| v as usize + 0x800)
+    };
+    let at = offset(0x8008_a96c).ok_or("Scene sound pointer outside executable")?;
+    let pointer = u32::from_le_bytes(
+        executable
+            .get(at..at + 4)
+            .ok_or("Missing sound pointer")?
+            .try_into()
+            .unwrap(),
+    );
+    let start = offset(pointer).ok_or("Scene sound path outside executable")?;
+    let bytes = executable
+        .get(start..start + 28)
+        .ok_or("Missing scene sound path")?;
+    let end = bytes
+        .iter()
+        .position(|v| *v == 0)
+        .ok_or("Unterminated scene sound path")?;
+    let path = std::str::from_utf8(&bytes[..end])
+        .map_err(|_| "Invalid scene sound path")?
+        .replace('\\', "/");
+    if path.is_empty()
+        || path.starts_with('/')
+        || path.contains(':')
+        || path.split('/').any(|v| v == "..")
+    {
+        return Err("Invalid relative scene sound path");
+    }
+    Ok(path)
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SpuReverbPreset {
     pub start_address: u16,

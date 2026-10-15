@@ -10,12 +10,21 @@ repository.workspace = true
 
 [features]
 default = []
-desktop = ["bevy/default_app", "bevy/3d_bevy_render", "bevy/bevy_winit", "bevy/x11", "bevy/png"]
+audio = ["bevy/bevy_audio", "bevy/bevy_asset"]
+desktop = ["audio", "bevy/default_app", "bevy/3d_bevy_render", "bevy/bevy_winit", "bevy/x11", "bevy/png"]
 
 [dependencies]
 bevy.workspace = true
 lsd-core.workspace = true
 lsd-assets.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[[bin]]
+name = "lsd-audio-live"
+path = "src/bin/lsd-audio-live.rs"
+required-features = ["audio"]
 
 [[bin]]
 name = "lsd-preview"

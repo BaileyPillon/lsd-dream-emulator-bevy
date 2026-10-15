@@ -9,11 +9,14 @@ format. Explain the original evidence and the expected user-visible result.
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
+cargo test -p lsd-bevy --features audio --locked
 cargo check -p lsd-bevy --features desktop --locked
 ```
 
 The desktop target needs platform dependencies; the default workspace tests
 are headless. CI tests Ubuntu and Windows and checks the desktop target on Windows.
+On Debian/Ubuntu, install `libasound2-dev` before checking audio or desktop
+features. Audio-source tests need no output device; live playback does.
 
 ## Evidence and parity
 

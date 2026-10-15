@@ -4,6 +4,8 @@ use lsd_core::CompatibilityProbe;
 
 #[cfg(feature = "desktop")]
 pub mod asset_scene;
+#[cfg(feature = "audio")]
+pub mod audio;
 #[cfg(feature = "desktop")]
 pub mod box_material;
 

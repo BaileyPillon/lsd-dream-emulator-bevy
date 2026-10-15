@@ -1,8 +1,12 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 mod actor_journal;
 mod audio_tables;
+mod scene_audio;
+pub use scene_audio::{SceneAudio, SceneAudioSnapshot, load_scene_audio};
 mod sound_bank;
-pub use audio_tables::{SpuReverbPreset, load_spu_pitch_table, load_spu_reverb_presets};
+pub use audio_tables::{
+    SpuReverbPreset, load_scene_sound_path, load_spu_pitch_table, load_spu_reverb_presets,
+};
 pub use sound_bank::{
     AudioImmediateCommand, SoftwareSound, SoundBankBinding, SoundBankFault, dispatch_audio_commands,
 };

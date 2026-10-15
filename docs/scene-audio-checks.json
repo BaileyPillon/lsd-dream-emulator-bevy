@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T02:47:28.422596+00:00",
+  "scope": "Live Bevy sound effects through a shared original-style sound object/SDK/SPU with supplied bank placement and callback cadence. Host output and continuous PCM checks do not accept natural original scene audio, music or hardware timing.",
+  "reference_game": {
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "content_binding": {
+    "constructor": "dream_session_construct calls scene Construct(get_se_path(),0)",
+    "path_pointer_va": "0x8008a96c",
+    "shared_between_generation_and_npc": true,
+    "music_object_separate": true
+  },
+  "runtime": {
+    "voices": 24,
+    "spu_sample_rate": 44100,
+    "channels": 2,
+    "source_format": "f32 from i16 /32768",
+    "bank_id": 0,
+    "supplied_bank_base": 4096,
+    "supplied_sdk_period_samples": 735,
+    "supplied_master_registers": [
+      15480,
+      15480
+    ],
+    "supplied_reverb_mode": 0,
+    "scene_fixed_update_hz": 15,
+    "timing_accepted_as_original": false
+  },
+  "checks": {
+    "owned_scene_integration_passed": 6,
+    "audio_source_passed": 3,
+    "workspace": [
+      204,
+      0,
+      62
+    ],
+    "audio_feature_suite": [
+      5,
+      0,
+      0
+    ],
+    "original_content_scene_pcm_check_passed": true,
+    "fmt_passed": true,
+    "all_features_clippy_passed": true,
+    "desktop_link_passed": true,
+    "unsupported_scenario_audio_rejected_before_io": true,
+    "private_validation_log_sha256": {
+      "fmt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fmt-check": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scene": "5c8548057abc7191a299492fa52718b5789f81dc9de6ea0d5adec46c13b694be",
+      "source": "c3ca959a167d56793b1d80912a0884c5abbd003cb5885904e92ed76bb8fb5d14",
+      "clippy": "06418e75a6fcbfa3cd0dbe8aacdbf70470055bfb23ac264431189baebcb729d2",
+      "workspace": "96689915c55e509b1d85164b8c6c6ea5471a79e0145f757ec9e665f7474049db",
+      "desktop-build": "83ba427a873411c2fe08d8d1c5c39540b6325bd098bda8008c56340cbd38827a"
+    }
+  },
+  "controlled_original_pcm": {
+    "frames": 88200,
+    "nonzero_frames": 87091,
+    "sdk_ticks": 120,
+    "pcm_sha256": "1b3793947f1d1574e70219309efb0146f635a1b3bd143cf8de693ec15102b6d3",
+    "scenario": "Previous AMBIENT note0 diagnostic: supplied mode1 reverb, release44100, callback every735 samples. Identical to phase52 independently checked PCM."
+  },
+  "host_output_diagnostic": {
+    "diagnostic": "host_audio_diagnostic_success=true sink_count=1 handle=0 frames=88224 nonzero_frames=85380 sdk_ticks=121 faults=None original_audio_scene_accepted=false",
+    "log_sha256": "32582a2f1c9a4e03aef5161dd15e0ca37be5065163f7e9527a5eb3e6cf841436",
+    "loopback_sha256": "df05b9638ab6dfdb1f779e0050960b451adefdbfa54e004cec4510da8d309a9b",
+    "loopback_frames": 123248,
+    "loopback_nonzero_frames": 85198,
+    "host_sink_loopback_verified": true,
+    "physical_speaker_heard": false
+  },
+  "bevy_scene_capture": {
+    "log_sha256": "9490e549eedd7af3484e2af432b4c83ec2dc3d0a42466a607d4c6253e8aca46e",
+    "image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+    "source_image_sha256": "3f787deff2882fe30bf0c57931dba4626ca59a01b531670e74ebd70058e4bfe0",
+    "state": "bevy_scene_audio_sinks=1 frames=504601 nonzero_frames=0 allocated_notes=0 stops=18 sdk_ticks=687 fault=None original_audio_scene_accepted=false",
+    "rendered_audio_scene_app": true,
+    "original_audio_scene_accepted": false
+  },
+  "limits": [
+    "Supplied placement, bank ID, clock cadence and disabled scene reverb do not establish original startup, allocation, CD/DMA, IRQ/VBlank or bus behavior.",
+    "Host buffering/resampling and an output loopback do not prove physical speaker audibility or natural original-scene timing.",
+    "Music sequence scheduling/playback, in-callback link/journal sound dispatch, complete sound lifecycle and original-scene comparisons remain unfinished.",
+    "No whole original feature group or original NPC encounter is accepted by the integration tests."
+  ],
+  "original_audio_scene_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}

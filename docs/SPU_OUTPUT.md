@@ -68,9 +68,9 @@ hardware or natural original-scene acceptance. See
 
 ## Remaining integration
 
-The running Bevy scene still queues audio requests. Live output-device and
-resampling integration, real bank allocation/transfer, original callback and
-IRQ/bus timing, music sequencing and natural scene comparisons remain open.
+The [continuous Bevy source](LIVE_AUDIO.md) now connects interactive scene sound
+calls to this output path. Real bank allocation/transfer, original callback
+and IRQ/bus timing, music sequencing and natural scene comparisons remain open.
 Reserved ADPCM encodings and disputed high-register pitch behavior retain the
 earlier limits. No complete audio group or whole-game parity is accepted yet.
 Original behavior remains separate from optional AI tools/mods.

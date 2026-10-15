@@ -1425,6 +1425,22 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "continuous_bevy_scene_audio_20261014": {
+      "scope": "Live Bevy sound effects through a shared original-style sound object/SDK/SPU with supplied bank placement and callback cadence. Host output and continuous PCM checks do not accept natural original scene audio, music or hardware timing.",
+      "checks": {
+        "path": "docs/scene-audio-checks.json",
+        "sha256": "80e3481b233dd379d4addaee173df6e68a5a070a6ff6da5ebb3f0ad52d40907e"
+      },
+      "owned_scene_integration_checks": 6,
+      "audio_source_checks": 3,
+      "controlled_original_pcm_byte_identical": true,
+      "host_sink_loopback_verified": true,
+      "bevy_scene_audio_connected": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_scene_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }
