@@ -16,8 +16,9 @@ deterministic compatibility tests are available. The complete game, including
 its menus, movies, and save system, is still being reconstructed. There is no
 stable binary release yet.
 
+[**Read the handbook**](https://baileypillon.github.io/lsd-dream-emulator-bevy/) ·
 [Getting started](docs/GETTING_STARTED.md) · [Project status](docs/STATUS.md) ·
-[Roadmap](docs/ROADMAP.md) · [Documentation](docs/README.md) ·
+[Roadmap](docs/ROADMAP.md) ·
 [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
 
 ## Start here
@@ -29,6 +30,10 @@ stable binary release yet.
 | Understand what has been recovered | [Current status](docs/STATUS.md) and [subsystem evidence](docs/README.md) |
 | Find the next implementation task | [Tracked milestones](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/milestones) and [roadmap](docs/ROADMAP.md) |
 | Choose a development tool or report a mismatch | [Developer reference](docs/DEVELOPMENT.md) and [compatibility reports](https://github.com/BaileyPillon/lsd-dream-emulator-bevy/issues/new?template=compatibility.yml) |
+
+The [project handbook](https://baileypillon.github.io/lsd-dream-emulator-bevy/)
+provides searchable setup guides, architecture, and recovery notes. Prefer
+browsing the source? The same pages are indexed in [docs/](docs/README.md).
 
 ## Progress at a glance
 

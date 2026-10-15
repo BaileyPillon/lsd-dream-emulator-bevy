@@ -1,5 +1,14 @@
 version: 2
 updates:
+  - package-ecosystem: pip
+    directory: /tools
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    labels: [dependencies, "area:tooling"]
+    groups:
+      documentation:
+        patterns: ["*"]
   - package-ecosystem: github-actions
     directory: /
     schedule:

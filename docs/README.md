@@ -1,4 +1,13 @@
-# Documentation
+![LSD: Dream Emulator — an independent Rust and Bevy reconstruction](assets/project-banner.svg)
+
+# Project handbook
+
+Build, explore, and contribute to the independent Rust/Bevy reconstruction of
+**LSD: Dream Emulator**. This handbook connects practical setup guides with the
+implementation notes and comparisons behind the project.
+
+**Development preview.** The desktop dream prototype is explorable; the full
+game's menus, movies, persistence, and complete parity remain in progress.
 
 Start with [project status](STATUS.md), [getting started](GETTING_STARTED.md),
 and [the roadmap](ROADMAP.md). The [project objective](../PROJECT_OBJECTIVE.md)
@@ -29,6 +38,7 @@ summary and the linked check manifests for input identity and comparison scope.
 - [Reference and starting point](REFERENCE.md)
 - [Development changelog](../CHANGELOG.md)
 - [Maintenance and releases](MAINTENANCE.md)
+- [Documentation preview and publishing](DOCUMENTATION.md)
 - [Compatibility report template](templates/COMPATIBILITY_REPORT.md)
 - [Support and reporting](../SUPPORT.md)
 

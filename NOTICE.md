@@ -21,3 +21,8 @@ The SPU Gaussian hardware coefficient table in `lsd-core` was transcribed from
 Copyright (c) 2024 Allkern (Lisandro Alarcón), under the MIT license. Its license
 is retained in [licenses/psxe-MIT.txt](licenses/psxe-MIT.txt). The Rust decoder,
 pitch arithmetic and interpolation implementation are new project code.
+
+The documentation site is built with [MkDocs](https://github.com/mkdocs/mkdocs)
+and [Material for MkDocs](https://github.com/squidfunk/mkdocs-material), both
+MIT licensed. Their bundled components retain their respective licenses.
+The project banner and doorway mark are original project artwork.

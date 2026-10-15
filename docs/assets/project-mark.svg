@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="title">
+  <title id="title">Dream doorway</title>
+  <rect width="48" height="48" rx="8" fill="#172124"/>
+  <path d="M9 40V8h30v32M16 40V15h16v25" fill="none" stroke="#b4bd91" stroke-width="2"/>
+  <path d="M21 40V22h7v18z" fill="#d7c289"/>
+</svg>

@@ -1,5 +1,6 @@
 /target/
 /.private/
+__pycache__/
 /assets/imported/
 *.bin
 *.cue

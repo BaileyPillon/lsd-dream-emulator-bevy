@@ -35,6 +35,8 @@ changes; it does not assert independent review or verification.
 - Default-feature API documentation builds without Rustdoc warnings; executable
   examples pass with the workspace tests.
 - Documentation links and public JSON evidence pass `python tools/check_docs.py`.
+- The handbook builds with `python -m mkdocs build --strict`, and its rendered
+  links and assets pass `python tools/check_site.py .private/site`.
 - Changes to original behavior include an appropriate regression or comparison,
   with input identity, expected result, and exclusions recorded.
 - Original files, credentials, and private evidence remain outside the commit.
@@ -60,7 +62,8 @@ own workstream and do not contribute to original-game acceptance counts.
 ## Dependencies and automation
 
 [Dependabot](../.github/dependabot.yml) proposes monthly updates for Cargo
-dependencies and GitHub Actions. Minor and patch Cargo updates are grouped;
+dependencies, documentation packages, and GitHub Actions. Minor and patch
+Cargo updates are grouped;
 major upgrades remain separate. Dependency pull requests require the same
 checks and review as other changes and are not automatically merged.
 
@@ -73,6 +76,8 @@ security-sensitive findings.
 
 CI runs on pull requests, pushes to `main`, and manual dispatch. Feature-branch
 pushes use the pull request run to avoid duplicate builds of the same change.
+The [handbook publishing workflow](DOCUMENTATION.md) deploys relevant `main`
+changes through GitHub Pages after a successful site build.
 
 ## Release policy
 
