@@ -62,6 +62,10 @@ original volume/pan, envelope/sample registers and command masks for every
 imported tone. [Sound objects, auto-volume and SDK register flushing](docs/AUDIO_CLOCK.md)
 now also run in Rust, with ordered original-code comparisons. The live SPU,
 device/callback timing and audible playback remain open.
+The [SPU sample decoder](docs/SPU_SAMPLES.md) now decodes every stored sample
+in all nine banks, with software-reference comparisons for predictor history,
+Gaussian interpolation and pitch modulation. Connecting these components to
+the complete SPU device and scene audio remains unfinished.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

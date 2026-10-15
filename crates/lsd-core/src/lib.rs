@@ -1,7 +1,11 @@
 //! Original-behavior primitives. This crate never accesses a renderer or AI service.
 
 mod actor_journal;
+mod audio_gaussian;
 mod audio_note;
+pub use audio_gaussian::spu_gaussian;
+mod audio_sample;
+pub use audio_sample::{SpuAdpcmBlock, SpuAdpcmDecoder, SpuAdpcmFault, spu_pitch_step};
 mod audio_tick;
 mod audio_volume;
 pub use audio_tick::{AudioRegisterWrite, AudioTickFault, SpuNoiseMode};

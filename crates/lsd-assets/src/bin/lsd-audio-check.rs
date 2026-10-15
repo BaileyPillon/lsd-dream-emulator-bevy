@@ -42,9 +42,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let body_path = path.with_extension(if extension == "vh" { "vb" } else { "VB" });
             let body = std::fs::read(body_path)?;
             let bank = Vab::parse(&data, &body).map_err(|e| format!("{name}: {e}"))?;
+            let mut decoded_pcm = Vec::new();
+            let mut decoded_blocks = 0;
+            for sample in &bank.samples {
+                let blocks = sample
+                    .decode_adpcm()
+                    .map_err(|error| format!("{name} sample {}: {error}", sample.number))?;
+                decoded_blocks += blocks.len();
+                for block in blocks {
+                    for value in block.samples {
+                        decoded_pcm.extend_from_slice(&value.to_le_bytes());
+                    }
+                }
+            }
             banks.push(json!({"path":name,"header_sha256":sha256_hex(&data),"body_sha256":sha256_hex(&body),
                 "programs":bank.header.program_count,"tones":bank.header.tone_count,"samples":bank.header.sample_count,
-                "body_bytes":body.len(),"body_prefix_bytes":bank.body_prefix.len()}));
+                "body_bytes":body.len(),"body_prefix_bytes":bank.body_prefix.len(),
+                "decoded_stored_blocks":decoded_blocks,"decoded_pcm_values":decoded_pcm.len()/2,
+                "decoded_pcm_sha256":sha256_hex(&decoded_pcm)}));
         } else {
             let seq = Seq::parse(&data).map_err(|e| format!("{name}: {e}"))?;
             sequences.push(json!({"path":name,"sha256":sha256_hex(&data),"bytes":data.len(),"events":seq.events.len(),

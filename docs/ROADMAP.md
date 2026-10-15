@@ -83,6 +83,12 @@ noise-register writes also correct the earlier reclaim-command interpretation.
 SPU transfer/synthesis/output, callback cadence and full sequence playback still
 need integration and original runtime evidence.
 
+[SPU sample components](SPU_SAMPLES.md) now decode all 255 stored samples and
+provide Gaussian interpolation and pitch modulation arithmetic. PCM hashes
+match an independent pinned software decoder. Transfer, prefetch, loops,
+envelopes, device clocks, complete mixing and audible scene comparisons remain
+required; the sample checks do not accept the audio group.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model

@@ -65,6 +65,14 @@ pub struct VabSample<'a> {
     pub data: &'a [u8],
 }
 
+impl VabSample<'_> {
+    /// Stored ADPCM blocks with flags retained. Looping, envelopes and device
+    /// timing are handled by the SPU layer rather than by this asset decoder.
+    pub fn decode_adpcm(&self) -> Result<Vec<lsd_core::SpuAdpcmBlock>, lsd_core::SpuAdpcmFault> {
+        lsd_core::SpuAdpcmDecoder::default().decode_blocks(self.data)
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Vab<'a> {
     pub header: VabHeader,

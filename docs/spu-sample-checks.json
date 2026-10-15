@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T01:14:03.880946+00:00",
+  "scope": "Stored-block ADPCM decoding, Gaussian interpolation and pitch/modulation arithmetic compared with a pinned independent software implementation. All 255 original stored samples have matching PCM hashes and predictor histories. No original hardware, SPU clock, complete voice, audible scene or whole audio group acceptance.",
+  "reference_game": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "comparison_tool": {
+    "repository": "https://github.com/libretro/beetle-psx-libretro",
+    "commit": "e57860d82faa953dc0fc10f201fd583739bc2f7d",
+    "source_sha256": "f081394befd298e1d3e70a3982009ac9555853c4dfa92162fb7bbed7d3370a99",
+    "decoder_function_sha256": "35abb68f42f66ab19be54b28d493eeefb818343beb8279c2c2a197fc8f153b60",
+    "fir_table_sha256": "fa661eed576b5a6af8d799a1007dc666eff60965c7794052e5d43208bfeae2d5",
+    "decoder_body_unchanged": true,
+    "license": "GPL-2.0-or-later; independent private comparison tool only; source not included in MIT port",
+    "provided_inputs": "Supplied predictor history and block bytes; IRQ disabled. No device/runtime acceptance."
+  },
+  "gaussian_numeric_table_provenance": {
+    "source": "https://github.com/allkern/psxe/blob/8459c63ed78c703f46e3c51daa65a2fdf96d02e6/psx/dev/spu.c",
+    "source_sha256": "921f88535d6c29ac71ccfe544eec58fb5c062abe1cff374f23cc6b427649f430",
+    "table_entries": 512,
+    "source_code_reused": "Numeric hardware table only; Rust interpolation newly implemented.",
+    "license": "MIT; retained in licenses/psxe-MIT.txt"
+  },
+  "comparisons": {
+    "decoder_cases": 1292,
+    "gaussian_cases": 16384,
+    "pitch_cases": 655360,
+    "banks": 9,
+    "samples": 255,
+    "stored_blocks": 126210,
+    "pcm_values": 3533880
+  },
+  "independent_repeat_recordings_byte_identical": true,
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/spu-samples.json",
+    "sha256": "1834a693ebe43ddc036016c144ad150480504fe3cbdf4a77d4f33ac36927c22f"
+  },
+  "private_original_sample_observation_sha256": "d56e4a85ac205a4cfd660b5b9eaa4c53f441dee6f0578f81cd7e79edbc60fb04",
+  "local_validation": {
+    "workspace_passed": 183,
+    "workspace_failed": 0,
+    "workspace_ignored": 56,
+    "sample_tests_including_original_content_passed": 4,
+    "format_passed": true,
+    "clippy_all_features_passed": true
+  },
+  "limits": [
+    "Reserved filters and shifts are explicit bounded errors; none occurs in original supplied stored samples.",
+    "Stored PCM decoding does not schedule loop/end flags or decoder prefetch.",
+    "Transfer, envelopes, noise, sweep, reverb, mixing, music and output integration remain open.",
+    "Default Bevy scene still queues audio requests. No hardware recording comparison."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}

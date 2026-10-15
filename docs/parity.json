@@ -1342,6 +1342,24 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "spu_sample_components_20261014": {
+      "scope": "Stored-block ADPCM decoding, Gaussian interpolation and pitch/modulation arithmetic compared with a pinned independent software implementation. All 255 original stored samples have matching PCM hashes and predictor histories. No original hardware, SPU clock, complete voice, audible scene or whole audio group acceptance.",
+      "checks": {
+        "path": "docs/spu-sample-checks.json",
+        "sha256": "d04dca633aa0af7ff15f2b659350b2632d1e0214eb8b57271a5e7b778d817476"
+      },
+      "decoder_cases": 1292,
+      "gaussian_cases": 16384,
+      "pitch_cases": 655360,
+      "banks": 9,
+      "samples": 255,
+      "stored_blocks": 126210,
+      "pcm_values": 3533880,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }
