@@ -68,6 +68,8 @@ pub struct VabSample<'a> {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Vab<'a> {
     pub header: VabHeader,
+    /// Includes inactive program attributes, which the original SDK can bind.
+    pub program_attributes: Box<[[u8; 16]; 128]>,
     pub programs: Vec<VabProgram>,
     pub body_prefix: &'a [u8],
     pub samples: Vec<VabSample<'a>>,
@@ -185,6 +187,9 @@ impl<'a> Vab<'a> {
         }
         Ok(Self {
             header: info,
+            program_attributes: Box::new(std::array::from_fn(|i| {
+                r.bytes(32 + i * 16, 16).unwrap().try_into().unwrap()
+            })),
             programs,
             body_prefix,
             samples,

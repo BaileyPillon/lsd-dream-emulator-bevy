@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T00:54:53.728671+00:00",
+  "scope": "Software sound-object calls, literal auto-volume and normal sound-effect SDK clock updates with supplied MMIO/device envelope reads. Byte/state and ordered register-write comparisons cover idle history, shared volume context, stop-all and inactive-program aliases. Noise-mode command interpretation is corrected using original register writes. DMA, real device/callback timing, pan automation, synthesis and audible output remain unaccepted.",
+  "reference": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "comparisons": {
+    "noise_register_cases": 24,
+    "owned_volume_cases": 10,
+    "full_driver_traces": 12,
+    "full_driver_updates": 216,
+    "owned_stop_all_cases": 5,
+    "owned_sound_object_cases": 6,
+    "original_tone_volume_cases": 702,
+    "original_sound_object_cases": 696,
+    "original_inactive_ambient_alias_cases": 10
+  },
+  "correction_to_earlier_command_interpretation": {
+    "callee": "SpuSetNoiseVoice",
+    "address": "0x800375e8",
+    "arguments": [
+      0,
+      16777215
+    ],
+    "meaning": "Disable noise mode for the selected 24-bit voice mask; it does not issue key-off.",
+    "register_addresses": [
+      "0x1f801d94",
+      "0x1f801d96"
+    ],
+    "key_off_registers_unchanged": [
+      "0x1f801d8c",
+      "0x1f801d8e"
+    ],
+    "old_api_field": "immediate_key_off",
+    "new_api_field": "disable_noise",
+    "superseded_snapshot_labels": [
+      "docs/audio-voice-checks.json:comparisons.forced_all_voice_key_off_calls",
+      "docs/audio-note-checks.json:outcomes.*.immediate_all_voice_key_off_calls"
+    ],
+    "old_recording_arguments_and_states_unchanged": true,
+    "renamed_fixture_hashes": [
+      {
+        "path": "crates/lsd-core/tests/fixtures/voice-pool.json",
+        "before_sha256": "e401ad293c72f710f1b0d0a72e37b4f03fe85d9c32e0555f56a1283210f32252",
+        "after_sha256": "32ddf8bca8e6ada9ac7006a2232ff569e73823c811794a5c25bae9030a97101b",
+        "change": "Recorded call field renamed from force_key_off to noise_calls; input/state/callee arguments unchanged."
+      },
+      {
+        "path": "crates/lsd-assets/tests/fixtures/note-setup.json",
+        "before_sha256": "f6ebfc8f043abfa0ed2387f875a0940519dd13a52e5382e1556e93a58c74cabf",
+        "after_sha256": "2f7da5511e051a1aa3bb6841d69518d24bb33409a2c77f32962c3c4acd80a84d",
+        "change": "Recorded call field renamed from force_key_off to noise_calls; input/state/callee arguments unchanged."
+      }
+    ]
+  },
+  "provided_original_inputs": "Original software volume/noise/register writes with owned MMIO storage, supplied device envelope reads and bank-ready/base. Full SDK driver calls cover idle history, shared context and ordered register flush. Sound-object tables are prepared inputs with logical header.program_count slots. No DMA, SPU synthesis, device clock or audible acceptance.",
+  "original_function_sha256": {
+    "SpuSetNoiseVoice": "218b818a64db0bf596e1fef50d2c551e98b55427edccdb077aaf655e7f51d9e8",
+    "_SpuSetAnyVoice": "5a9162e25fc9a66c0412c866dbf3c8993a1cf22205f6117ed65bc4348fd12d95",
+    "SsUtAutoVol": "9c9907ec9ea5ccb4a6dc23d738707decbc298b5085c9a5946f0403e6c13b41ff",
+    "func_8002E308": "da5716b63af78b7609ce27f26589b770d29f7886c4c7266a9fa8f3815fb4d4e3",
+    "func_8002E4D8": "e6763eb7eba711f80de6bd05c5920ca343da10c5aea369ed354ded577c81ec93",
+    "func_8002F700": "8ace7e6518e8fd88f4877cedca8e37c05770a80be38984f9286dbc510265b990",
+    "func_80031F3C": "1d6f4ef28166dddc3de0d9e9aae968697c7109b0458cdbba165cc999cd17d870",
+    "sound_play_note": "136b106741a298b2b3e51525b36146e7c976699f17c83456fec46462a2aafb61",
+    "sound_set_volume_offset": "2afe4a0c5e3f71806147cb15d31743aa5166aada85a787c6e3067f698f569bfb",
+    "func_80030E90": "c685846db741c994179100f092c05e90796d5e83bbedc50d34faa59a993950c5",
+    "SpuVmVSetUp": "503920b76e1d66b2ed401f452ef7f22183ba74a427a82e04301c85456ef8ad20"
+  },
+  "original_function_output_stubs": 0,
+  "independent_repeat_recordings_byte_identical": true,
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/audio-clock.json",
+    "sha256": "5b5fa88661dad04b14f34e7dd7e0d76c1c5e933e0ac0e8708c075d036e3e6aa1"
+  },
+  "local_validation": {
+    "workspace_passed": 176,
+    "workspace_failed": 0,
+    "workspace_ignored": 55,
+    "new_audio_tests_including_original_content_passed": 6,
+    "previous_audio_tests_passed": 13,
+    "format_passed": true,
+    "clippy_all_features_passed": true
+  },
+  "limits": [
+    "Default scene still uses queued failed-voice backend. SoftwareSound needs a caller to execute commands and advance a verified SPU.",
+    "Original SDK clock calls use supplied envelope levels and owned MMIO, not observed hardware clock or audible output.",
+    "Active SDK pan automation is an explicit unsupported state. Full sequence playback remains open.",
+    "Sound-object tables are prepared copied logical slots. Uninitialized/out-of-range tone reads remain bounded errors, not accepted original behavior."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "original_npc_behavior_has_ai_model_calls": false,
+  "c_paused_and_preserved": true
+}

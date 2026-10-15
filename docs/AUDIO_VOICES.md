@@ -22,7 +22,7 @@ driver.
 Selection preserves first-free order, stored signed priorities, level and age
 tie rules, and the different signed/unsigned age reads. A successful selection
 increments all enabled-slot ages with halfword wrapping and resets the chosen
-age. Mode-two reclamation requests immediate key-off of all 24 voices. The
+age. Mode-two reclamation disables noise mode for all 24 voices. The
 allocator exposes that request to its caller. Selection alone does not mark a
 note playing or establish playback success.
 
@@ -53,7 +53,7 @@ does not claim to reproduce the original's out-of-range memory reads.
 | Imported original tone bindings and pitch | 5,265 |
 
 The pool checks compare every byte of all 24 software records, current voice,
-lock and key masks. They also compare all 84 immediate all-voice key-off calls.
+lock and key masks. They also compare all 84 noise-mode disable calls.
 Original startup executes unchanged instructions with zero-initialized owned
 register storage. Selection/release receive identified owned software states;
 the ordered sequence supplies a playing-state change between allocations.
@@ -73,12 +73,17 @@ comparison inputs.
 
 ## Remaining audio work
 
+[The software clock and sound-object adapter](AUDIO_CLOCK.md) now implement
+auto-volume, stop-all and register flushing. The same checkpoint corrects the
+earlier reclaim-command label to noise-mode disable; historical check labels
+should be read with that correction.
+
 [Normal sound-effect note setup](AUDIO_NOTES.md) now binds imported tones and
 prepares original volume/pan, sample/envelope registers and key/reverb masks.
 It remains separate from the live queued backend and SPU synthesis.
 
-The driver still needs auto-volume, stop-all behavior, envelope advancement
-and register flushing. Sequence dispatch/controllers and timing,
+The live backend still needs device envelope advancement, command execution
+and clock integration. Sequence dispatch/controllers and timing,
 ADPCM decoding, SPU interpolation, reverb, mixing and output scheduling also
 remain required. Original complete software startup followed by key-on returns
 voice zero in the reference harness; live device/output integration remains open.

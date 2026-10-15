@@ -101,13 +101,16 @@ fn replay(bank: Vab<'_>, expected: &Value, table: &SpuPitchTable) {
             "{label}"
         );
         let calls = result
-            .immediate_key_off
+            .disable_noise
             .map(|mask| vec![serde_json::json!([0, mask])])
             .unwrap_or_default();
         assert_eq!(
             &calls,
-            case["force_key_off"].as_array().unwrap(),
-            "{label} forced key off"
+            case.get("noise_calls")
+                .unwrap_or(&case["force_key_off"])
+                .as_array()
+                .unwrap(),
+            "{label} noise disable"
         );
         compare(&driver, &case["after"], &label);
     }

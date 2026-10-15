@@ -1,4 +1,4 @@
-use crate::{AudioVoicePool, SpuPitchFault, SpuPitchTable};
+use crate::{AudioVoicePool, AudioVolumeContext, SpuPitchFault, SpuPitchTable};
 
 /// A tone bound to an assigned SDK bank and a region of SPU RAM.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -25,7 +25,7 @@ pub enum NoteSetupFault {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct NoteStart {
     pub voice: Option<u8>,
-    pub immediate_key_off: Option<u32>,
+    pub disable_noise: Option<u32>,
 }
 
 impl NoteStart {
@@ -45,6 +45,9 @@ pub struct AudioNoteDriver {
     pub reverb: u32,
     pub mono: i16,
     pub adsr_release_offset: u16,
+    pub volume_context: AudioVolumeContext,
+    pub history_index: u32,
+    pub reclaim_disabled: u8,
 }
 
 impl AudioNoteDriver {
@@ -57,6 +60,9 @@ impl AudioNoteDriver {
             reverb: 0,
             mono: 0,
             adsr_release_offset: 0,
+            volume_context: AudioVolumeContext::default(),
+            history_index: 0,
+            reclaim_disabled: 0,
         }
     }
 
@@ -71,7 +77,7 @@ impl AudioNoteDriver {
     ) -> Result<NoteStart, NoteSetupFault> {
         let failed = NoteStart {
             voice: None,
-            immediate_key_off: None,
+            disable_noise: None,
         };
         if self.pool.lock == 1 {
             return Ok(failed);
@@ -99,6 +105,15 @@ impl AudioNoteDriver {
                 definition.attributes[5],
             )
             .map_err(NoteSetupFault::Pitch)?;
+        self.volume_context = AudioVolumeContext {
+            bank_volume: definition.bank_volume,
+            program_volume: definition.program_volume,
+            tone_volume: definition.attributes[2],
+            tone_pan: definition.attributes[3],
+            program_pan: definition.program_pan,
+            request_pan: pan,
+            request_volume: volume,
+        };
         self.pool.lock = 1;
         let allocation = self.pool.allocate(definition.attributes[0]);
         if allocation.index >= self.pool.capacity() {
@@ -158,7 +173,7 @@ impl AudioNoteDriver {
         self.pool.lock = 0;
         Ok(NoteStart {
             voice: Some(allocation.index),
-            immediate_key_off: allocation.immediate_key_off,
+            disable_noise: allocation.disable_noise,
         })
     }
 }

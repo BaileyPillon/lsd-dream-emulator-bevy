@@ -2,6 +2,10 @@
 
 mod actor_journal;
 mod audio_note;
+mod audio_tick;
+mod audio_volume;
+pub use audio_tick::{AudioRegisterWrite, AudioTickFault, SpuNoiseMode};
+pub use audio_volume::{AudioVolumeContext, AudioVolumeFault};
 mod audio_voice;
 pub use audio_note::{AudioNoteDriver, NoteSetupFault, NoteStart, VoiceNoteDefinition};
 pub use audio_voice::{

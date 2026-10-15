@@ -1,7 +1,9 @@
 //! Bounded decoding of original disc assets and read-only reference validation.
 mod actor_journal;
 mod audio_tables;
+mod sound_bank;
 pub use audio_tables::load_spu_pitch_table;
+pub use sound_bank::{AudioImmediateCommand, SoftwareSound, SoundBankBinding, SoundBankFault};
 mod day_tables;
 pub use actor_journal::{
     ActorBodyQueryCounts, ActorJournalBindings, ActorJournalBody, ActorJournalDispatcher,

@@ -69,13 +69,19 @@ remain required for presentation parity.
 
 Original [voice allocation/release and pitch conversion](AUDIO_VOICES.md) now
 have SDK comparisons, including all 351 imported tone bindings. The pending
-audio backend still needs auto-volume/envelope updates, register flushing, synthesis
+audio backend still needs device envelope reads, command execution, synthesis
 and scheduling before these components can provide actual scene playback.
 
 [Normal sound-effect key-on](AUDIO_NOTES.md) now runs through imported tones
 and prepares software voice records and the original register cache. Complete
 original key-on comparisons cover all nine banks and 351 tones. The live
-backend, auto-volume, SPU device/output and sequence timing remain unfinished.
+backend, SPU device/output and sequence timing remain unfinished.
+
+[Software sound objects and SDK clock updates](AUDIO_CLOCK.md) now preserve
+auto-volume, stop-all, idle history and ordered register flushing. Original
+noise-register writes also correct the earlier reclaim-command interpretation.
+SPU transfer/synthesis/output, callback cadence and full sequence playback still
+need integration and original runtime evidence.
 
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with

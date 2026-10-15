@@ -1321,6 +1321,27 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "audio_software_clock_and_noise_correction_20261014": {
+      "scope": "Software sound-object calls, literal auto-volume and normal sound-effect SDK clock updates with supplied MMIO/device envelope reads. Byte/state and ordered register-write comparisons cover idle history, shared volume context, stop-all and inactive-program aliases. Noise-mode command interpretation is corrected using original register writes. DMA, real device/callback timing, pan automation, synthesis and audible output remain unaccepted.",
+      "checks": {
+        "path": "docs/audio-clock-checks.json",
+        "sha256": "1c4fd4da8d41fccd7b8111c241a24e3c75c04fd2335e81b8cc42b9c30ddf99dc"
+      },
+      "noise_register_cases": 24,
+      "owned_volume_cases": 10,
+      "full_driver_traces": 12,
+      "full_driver_updates": 216,
+      "owned_stop_all_cases": 5,
+      "owned_sound_object_cases": 6,
+      "original_tone_volume_cases": 702,
+      "original_sound_object_cases": 696,
+      "original_inactive_ambient_alias_cases": 10,
+      "supersedes_noise_command_labels_in_prior_audio_snapshots": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

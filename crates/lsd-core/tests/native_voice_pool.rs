@@ -77,12 +77,12 @@ fn original_software_startup_and_voice_selection_match_all_record_bytes() {
             number(&row["result"]),
             "allocation {i}"
         );
-        let expected = row["force_key_off"].as_array().unwrap();
+        let expected = row["noise_calls"].as_array().unwrap();
         let calls = allocation
-            .immediate_key_off
+            .disable_noise
             .map(|mask| vec![serde_json::json!([0, mask])])
             .unwrap_or_default();
-        assert_eq!(&calls, expected, "allocation {i} immediate key off");
+        assert_eq!(&calls, expected, "allocation {i} noise disable");
         compare(&pool, &row["after"], &format!("allocation {i}"));
     }
 }

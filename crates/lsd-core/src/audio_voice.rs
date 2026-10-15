@@ -38,8 +38,8 @@ impl AudioVoiceSlot {
 pub struct VoiceAllocation {
     /// Raw SDK result. Values below pool capacity identify a physical voice.
     pub index: u8,
-    /// The original mode-two reclaim path requests immediate key-off of all 24.
-    pub immediate_key_off: Option<u32>,
+    /// The original mode-two reclaim path disables noise mode for all 24 voices.
+    pub disable_noise: Option<u32>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -125,7 +125,7 @@ impl AudioVoicePool {
                 candidate
             };
         }
-        let mut immediate_key_off = None;
+        let mut disable_noise = None;
         if selected < self.capacity {
             for slot in &mut self.slots[..usize::from(self.capacity)] {
                 slot.set_word(2, slot.age().wrapping_add(1));
@@ -134,12 +134,12 @@ impl AudioVoicePool {
             slot.set_word(2, 0);
             slot.set_word(24, u16::from(priority));
             if slot.mode() == 2 {
-                immediate_key_off = Some(0x00ff_ffff);
+                disable_noise = Some(0x00ff_ffff);
             }
         }
         VoiceAllocation {
             index: selected,
-            immediate_key_off,
+            disable_noise,
         }
     }
 

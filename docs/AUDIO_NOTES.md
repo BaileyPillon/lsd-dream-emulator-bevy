@@ -18,7 +18,7 @@ the original body region, including any prefix. It checks the complete bank's
 RAM extent, bank/tone indices and sparse bindings before constructing the note.
 
 `AudioNoteDriver::key_on` retains the SDK busy gate and allocation failure,
-including mode-two immediate key-off commands. A selected record receives its
+including mode-two noise-mode disable commands. A selected record receives its
 bank, logical and packed program, tone, sample, note, pitch, level and channel
 fields at their original widths. Other fields are preserved. Existing voice
 ages follow the recovered allocator.
@@ -45,7 +45,7 @@ Comparisons execute the unchanged original `func_80030E90` and its helpers.
 The Rust replay goes through imported VAB data and the prepared-note API, then
 compares every byte of all 24 voice records, every cached register word, dirty
 flags, sixteen automation masks, current voice, lock and key/reverb masks.
-Immediate all-voice key-off calls are compared separately.
+Noise-mode disable calls are compared separately.
 
 Supplied cases cover stereo endpoints and unequal levels, mono mode, fine
 pitch, bank ID seven, sparse programs, full-pool failure, busy state and
@@ -61,10 +61,14 @@ tone observations remain private; public cases use owned banks and pitch data.
 
 ## Remaining work
 
+[Sound-object calls, auto-volume and SDK register flushing](AUDIO_CLOCK.md)
+now run in Rust. That work also corrects the earlier mode-two command label:
+it disables noise mode, rather than issuing key-off.
+
 The driver's success means that original software note setup selected a voice;
 it is not confirmation of an audible sound. The default queued backend still
-returns -1. Original sound-object pitch offsets, auto-volume, driver ticks,
-register flushing, sample transfer and a verified SPU/output path are needed
+returns -1. Live command execution, sample transfer, device/callback cadence
+and a verified SPU/output path are needed
 before connecting this driver to live requests. Sequence playback remains
 separate work.
 
