@@ -69,6 +69,10 @@ pub struct GenerationAudioRequests {
     backend: Option<crate::SceneAudio>,
 }
 impl GenerationAudioRequests {
+    /// A shared handle for other callbacks on the same original sound object.
+    pub fn connected_backend(&self) -> Option<crate::SceneAudio> {
+        self.backend.clone()
+    }
     /// Attach before any requests: replaying queued calls cannot recover handles
     /// that actor state already stored as -1. Both scene channels share one backend.
     pub fn connect(&mut self, backend: crate::SceneAudio) -> Result<(), &'static str> {
@@ -335,6 +339,7 @@ impl StageLinkSession {
             });
         }
         services.view_callback = Some(&mut linked.view_callback);
+        services.link_audio = self.encounter_audio.connected_backend();
         services.floor_scene = Some(scene);
         services.scene_scale = self.scene_scale.as_mut();
         services.player_motion = Some(crate::ActorJournalPlayerMotion {

@@ -85,9 +85,14 @@ separate implementation remains open. The [clocked voice engine](SPU_ENGINE.md)
 now executes ADPCM/envelope/interpolation, noise and mix inputs. The SDK update
 can use `tick_engine`, and `dispatch_audio_commands` connects `SoftwareSound`'s
 immediate commands. Actual bank allocation/transfer timing, interrupt/callback
-cadence, sequence dispatch and live output-device integration still require
+cadence, sequence dispatch and natural original-scene audio still require
 implementation and original runtime evidence. The [PCM output stage](SPU_OUTPUT.md)
 now processes reverb and main output with controlled waveform comparisons.
+
+The [shared live backend](LIVE_AUDIO.md) now handles host output. Fresh
+[link/journal sound comparisons](LINK_AUDIO.md) also recover the SDK's single
+initialization update and connect those callbacks to the same driver. Periodic
+callback timing and natural original audio-scene acceptance remain open.
 
 No complete audio group or whole-game parity is accepted. Original behavior
 has no AI model dependency; optional analysis/modding tools remain separate.

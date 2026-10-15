@@ -13,6 +13,28 @@ pub struct SceneLinkTables {
     pub motion: LinkMotionRules,
     pub auto_move: AutoMoveTables,
 }
+
+/// Borrowed inputs for one player clock notification. Audio is supplied by the
+/// host at the call boundary, rather than stored in deterministic player state.
+pub struct LinkedPlayerTick<'a> {
+    pub player: &'a mut ChunkPlayer,
+    pub scene: &'a SceneCollision,
+    pub math: &'a PsxMathTables,
+    pub ready: [i16; 7],
+    pub clock: Option<(&'a mut crate::DreamDay, &'a crate::DayTables)>,
+    pub signal: crate::FrameSignal,
+}
+
+struct SilentLinkSound;
+impl crate::GenerationSound for SilentLinkSound {
+    fn play_note(&mut self, _: i32, _: i32, _: i32) -> i32 {
+        -1
+    }
+    fn stop_note(&mut self, _: i32) -> i32 {
+        -1
+    }
+    fn volume_offset(&mut self, _: i32) {}
+}
 #[derive(Debug, Clone, Copy)]
 struct SavedPlayerPose {
     position: [i32; 3],
@@ -50,11 +72,22 @@ impl LinkedPlayer {
         scene: &SceneCollision,
         code: i32,
     ) -> Result<(), SceneCollisionError> {
+        self.wall_contact_with_sound(player, scene, code, &mut SilentLinkSound)
+    }
+
+    pub fn wall_contact_with_sound(
+        &mut self,
+        player: &mut ChunkPlayer,
+        scene: &SceneCollision,
+        code: i32,
+        audio: &mut dyn crate::GenerationSound,
+    ) -> Result<(), SceneCollisionError> {
         let mut effects = Effects {
             position: &mut player.position,
             map: &mut self.map,
             commands: &mut self.commands,
             sounds: &mut self.sounds,
+            audio,
             saved: self.saved,
             grid: scene.slots.grid,
             base: self.base,
@@ -235,6 +268,36 @@ impl LinkedPlayer {
         clock: Option<(&mut crate::DreamDay, &crate::DayTables)>,
         signal: crate::FrameSignal,
     ) -> Result<(), SceneCollisionError> {
+        self.tick_clock_with_sound(
+            LinkedPlayerTick {
+                player,
+                scene,
+                math,
+                ready,
+                clock,
+                signal,
+            },
+            None,
+        )
+    }
+
+    /// Link effects call the shared sound object at their original handler
+    /// position, after an accepted notification and before the handler returns.
+    pub fn tick_clock_with_sound(
+        &mut self,
+        inputs: LinkedPlayerTick<'_>,
+        audio: Option<&mut dyn crate::GenerationSound>,
+    ) -> Result<(), SceneCollisionError> {
+        let LinkedPlayerTick {
+            player,
+            scene,
+            math,
+            ready,
+            clock,
+            signal,
+        } = inputs;
+        let mut silent = SilentLinkSound;
+        let audio = audio.unwrap_or(&mut silent);
         if signal != crate::FrameSignal::Tick {
             return Ok(());
         }
@@ -297,6 +360,7 @@ impl LinkedPlayer {
                 scene,
                 math,
                 ready,
+                audio,
                 error: None,
             };
             trigger_link_action(&mut host, &rules, action)?;
@@ -356,6 +420,7 @@ struct Effects<'a> {
     map: &'a mut MapLinkPolicy,
     commands: &'a mut Vec<MapLinkCommand>,
     sounds: &'a mut Vec<[i32; 3]>,
+    audio: &'a mut dyn crate::GenerationSound,
     saved: SavedPlayerPose,
     grid: crate::SceneGrid,
     base: [i32; 3],
@@ -376,6 +441,8 @@ impl DreamLinkEffects for Effects<'_> {
         parameters: [i32; 3],
     ) {
         self.sounds.push(parameters);
+        self.audio
+            .play_note(parameters[0], parameters[1], parameters[2]);
     }
     fn rotate(
         &mut self,
@@ -422,6 +489,7 @@ struct MovementHost<'a> {
     scene: &'a SceneCollision,
     math: &'a PsxMathTables,
     ready: [i16; 7],
+    audio: &'a mut dyn crate::GenerationSound,
     error: Option<SceneCollisionError>,
 }
 impl MovementHost<'_> {
@@ -435,6 +503,7 @@ impl MovementHost<'_> {
             map: &mut state.map,
             commands: &mut state.commands,
             sounds: &mut state.sounds,
+            audio: self.audio,
             saved: state.saved,
             grid: self.scene.slots.grid,
             base: state.base,
@@ -478,7 +547,8 @@ impl MovementHost<'_> {
         }
     }
     fn wall(&mut self, code: i32) -> Result<(), SceneCollisionError> {
-        self.state.wall_contact(self.player, self.scene, code)
+        self.state
+            .wall_contact_with_sound(self.player, self.scene, code, self.audio)
     }
     fn motion(&mut self, request: MotionRequest) -> Result<(), SceneCollisionError> {
         let local = if request.axis == MotionAxis::Forward {
@@ -538,6 +608,7 @@ impl MovementHost<'_> {
             map: &mut state.map,
             commands: &mut state.commands,
             sounds: &mut state.sounds,
+            audio: self.audio,
             saved: state.saved,
             grid: self.scene.slots.grid,
             base: state.base,

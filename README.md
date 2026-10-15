@@ -62,6 +62,9 @@ through this path to a local WAV.
 [Continuous Bevy audio](docs/LIVE_AUDIO.md) now connects interactive dream sound
 requests to the shared driver/SPU and returns real voice handles. Original
 scene audio comparisons, music and hardware scheduling remain unfinished.
+[Link and journal sounds](docs/LINK_AUDIO.md) now join that shared backend at
+their callback positions. Original-code comparisons also correct the driver's
+initialization history before the first note.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining

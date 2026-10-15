@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T03:08:19.864157+00:00",
+  "scope": "Immediate shared sound-object dispatch inside player link and actor journal callbacks, plus the recovered SDK initialization update. Supplied native notification/bank/register scenarios and host-output diagnostics do not establish natural original scene or hardware timing parity.",
+  "reference_game": {
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "native_comparisons": {
+    "owned_bank_cases": 32,
+    "original_se_bank_cases": 32,
+    "routes": [
+      "execute_link",
+      "dream_sys_on_journal_event"
+    ],
+    "axes": [
+      "accepted/cancelled notification",
+      "notification starts a note first",
+      "recall mode",
+      "pitch-offset levels0/2"
+    ],
+    "notification_service": "Owned MIPS callback: accepts/cancels and optionally invokes original sound_play_note. Not a natural original map/NPC notification recording.",
+    "native_initialization_updates_each_case": 1,
+    "function_sha256": {
+      "execute_link": "fb76d9ee481365efdb3acbecd851e00d5b2b5ef52e1223dacbc72c6add3b7361",
+      "dream_sys_on_journal_event": "c97250e1d73eeef59e6e89d38c9e78de781d1d5b27ed238742e2265dc91777ec",
+      "sound_play_note": "136b106741a298b2b3e51525b36146e7c976699f17c83456fec46462a2aafb61",
+      "sound_set_volume_offset": "2afe4a0c5e3f71806147cb15d31743aa5166aada85a787c6e3067f698f569bfb",
+      "func_80030E90": "c685846db741c994179100f092c05e90796d5e83bbedc50d34faa59a993950c5",
+      "SsUtAutoVol": "9c9907ec9ea5ccb4a6dc23d738707decbc298b5085c9a5946f0403e6c13b41ff",
+      "func_8002EDD4": "a543101e2a2c997638309cd6bee1d19dbd3d4cf946eecdadec952cbd5c47903a",
+      "func_8002F700": "8ace7e6518e8fd88f4877cedca8e37c05770a80be38984f9286dbc510265b990"
+    },
+    "original_sound_and_sdk_outputs_stubbed": false,
+    "fresh_process_repeat_byte_identical": true,
+    "compared": "Ordered notification/sound/return observations, link destination/state/timer, all24x52 voice-record bytes, all24x8 cached registers, dirty/automation flags, pending key/reverb masks, shared volume context and reclaim/history state.",
+    "private_original_observation_sha256": "b5c96fd55850488bb7d2bb6ce4e82d1279230a4ee92c661460f3c0672ac47a54"
+  },
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/link-audio.json",
+    "sha256": "2bb7c1657d85dce8af096546ae1b6069c59f1ef3207915d5a7d109d85885d67e"
+  },
+  "production_adapter_checks": {
+    "bound_actor_journal_cases": 4,
+    "player_collision_wall_case": 1,
+    "silent_reports_preserved": true,
+    "audio_calls_occur_during_callback": true
+  },
+  "initialization_correction": {
+    "previous_live_backend": "raw empty SDK driver without the original initialization update",
+    "current_live_backend": "one tick_engine update before scene note requests",
+    "startup_sdk_ticks": 1,
+    "periodic_sdk_cadence_still_supplied": true,
+    "periodic_sdk_samples": 735
+  },
+  "local_validation": {
+    "workspace": [
+      205,
+      0,
+      63
+    ],
+    "audio_feature_suite": [
+      5,
+      0,
+      0
+    ],
+    "link_tests_with_original_content": [
+      2,
+      0,
+      0
+    ],
+    "scene_pcm_tests_with_original_content": [
+      7,
+      0,
+      0
+    ],
+    "format_passed": true,
+    "all_features_clippy_passed": true,
+    "desktop_link_passed": true,
+    "private_log_sha256": {
+      "fmt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fmt-check": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "link": "4c05f6c74f2b67bfb2825a9724a2a5fa7303cb30c2c1663fba21b352be023b08",
+      "scene": "822da1295f2211532e8e72637fd0f47f82672b7529efc28daf3f480a3ec7be1e",
+      "source": "1faf978bbd9dd345721208709f673f75370422083e7ccfb180d92674fbeff99f",
+      "clippy": "818ef33a47775db2109ad5690ac71d62aeb034c870b07de591620af7b69fc779",
+      "workspace": "36261b60df3fb4264ed0e39b8173f34f9ec3a5831367a0b9baaaca5343f405b3",
+      "desktop-build": "14174429b1b6fb1fbf869f5d74a84237ef29acaeb02e5c362eb6d79331dc230c"
+    }
+  },
+  "pcm_regression": {
+    "previous_phase52_diagnostic_pcm_sha256": "1b3793947f1d1574e70219309efb0146f635a1b3bd143cf8de693ec15102b6d3",
+    "new_continuous_runtime_pcm_identical": true
+  },
+  "host_output_regression": {
+    "diagnostic": "host_audio_diagnostic_success=true sink_count=1 handle=0 frames=89188 nonzero_frames=86342 sdk_ticks=122 faults=None original_audio_scene_accepted=false",
+    "log_sha256": "7d41fc42eaccea5fb314caae8626c3f2c763b64be5bd350d48d1051c5c784f9b",
+    "loopback_sha256": "01e2eadc52ca49f254e67c81eebf25e0d747f1f19f5a6c6de902460ab82be34b",
+    "loopback_frames": 121925,
+    "loopback_nonzero_frames": 85198,
+    "host_sink_loopback_verified": true,
+    "physical_speaker_heard": false
+  },
+  "limits": [
+    "Supplied notification behavior is separate from natural original map/NPC encounters.",
+    "These driver-state comparisons do not execute physical CD/SPU transfer, original interrupt/bus timing or accept a complete original audio scene.",
+    "The live prototype still supplies bank placement, callback cadence and disabled reverb; music sequencing, bank lifecycle/mute and natural original-scene comparisons remain unfinished."
+  ],
+  "whole_original_feature_groups_accepted": 0,
+  "original_audio_scene_accepted": false,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}

@@ -34,6 +34,8 @@ retaining spawn/RNG/penalty changes made before the cancelled notification.
 `StageLinkSession` supplies the current day, player key, link/map state and
 shared RNG, then consumes newly emitted effect commands in that host tick.
 Deferring the entire actor queue until after callbacks would change RNG order.
+The [live sound connection](LINK_AUDIO.md) now also dispatches direct-link audio
+inside that journal callback, sharing the generation/NPC voice pool.
 
 ## Evidence
 

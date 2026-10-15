@@ -8,6 +8,18 @@ use lsd_core::{
     SceneLinkTables, SceneSlot, SceneSlots,
 };
 use serde_json::Value;
+#[derive(Default)]
+struct Sound(Vec<[i32; 3]>);
+impl lsd_core::GenerationSound for Sound {
+    fn play_note(&mut self, note: i32, first: i32, target: i32) -> i32 {
+        self.0.push([note, first, target]);
+        0
+    }
+    fn stop_note(&mut self, _: i32) -> i32 {
+        -1
+    }
+    fn volume_offset(&mut self, _: i32) {}
+}
 fn math() -> PsxMathTables {
     let mut tables = PsxMathTables {
         sin_cos: Box::new([0; 4096]),
@@ -175,9 +187,24 @@ fn loaded_scene_motion_runs_wall_policy_before_remaining_contacts_and_restores_p
         .unwrap();
     // Press is dispatched after the first clock; held input reaches the next poll.
     assert!(linked.body_contact.is_none());
+    let mut audio = Sound::default();
+    linked.begin_frame();
+    linked.map.tick = linked.map.tick.wrapping_add(1);
     linked
-        .step(&mut player, &scene, &math, [1; 7], 0x1000)
+        .tick_clock_with_sound(
+            lsd_core::LinkedPlayerTick {
+                player: &mut player,
+                scene: &scene,
+                math: &math,
+                ready: [1; 7],
+                clock: None,
+                signal: lsd_core::FrameSignal::Tick,
+            },
+            Some(&mut audio),
+        )
         .unwrap();
+    LinkedPlayer::poll_pad(&mut player, 0x1000);
+    assert_eq!(audio.0, vec![[0x90, 0x6e, 0x6e]]);
     assert!(linked.body_contact.is_some());
     assert!(linked.floor_contact.is_none());
     assert_eq!(player.position, [1024, 0, 1024]);

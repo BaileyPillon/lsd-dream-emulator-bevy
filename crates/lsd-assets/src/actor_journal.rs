@@ -15,6 +15,7 @@ pub struct ActorJournalServices<'a> {
     pub palette: LinkPalette,
     pub commands: &'a mut Vec<MapLinkCommand>,
     pub sounds: &'a mut Vec<[i32; 3]>,
+    pub link_audio: Option<crate::SceneAudio>,
     pub current_key: SpawnLocation,
     pub attached: bool,
     pub pending: &'a mut Vec<EncounterNotification>,
@@ -54,6 +55,7 @@ impl<'a> ActorJournalServices<'a> {
             palette: bindings.palette,
             commands: bindings.commands,
             sounds: bindings.sounds,
+            link_audio: None,
             current_key: bindings.current_key,
             attached: bindings.attached,
             pending: bindings.pending,
@@ -84,6 +86,7 @@ struct LinkEffects<'a> {
     palette: LinkPalette,
     commands: &'a mut Vec<MapLinkCommand>,
     sounds: &'a mut Vec<[i32; 3]>,
+    audio: Option<&'a mut crate::SceneAudio>,
     error: Option<lsd_core::LinkError>,
 }
 impl DreamLinkEffects for LinkEffects<'_> {
@@ -100,6 +103,14 @@ impl DreamLinkEffects for LinkEffects<'_> {
         parameters: [i32; 3],
     ) {
         self.sounds.push(parameters);
+        if let Some(audio) = &mut self.audio {
+            lsd_core::GenerationSound::play_note(
+                *audio,
+                parameters[0],
+                parameters[1],
+                parameters[2],
+            );
+        }
     }
     fn rotate(
         &mut self,
@@ -191,6 +202,7 @@ impl ActorJournalHost for ActorJournalServices<'_> {
             palette: self.palette,
             commands: self.commands,
             sounds: self.sounds,
+            audio: self.link_audio.as_mut(),
             error: None,
         };
         links.force_dynamic(controls, self.catalog, self.context, rng, &mut effects)?;

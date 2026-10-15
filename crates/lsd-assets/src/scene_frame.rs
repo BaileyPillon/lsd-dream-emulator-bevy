@@ -168,13 +168,19 @@ impl StageLinkSession {
                     SceneClockMember::Player => {
                         let first_command = linked.commands.len();
                         let ready = std::array::from_fn(|i| stage.protocol.slots[i].ready);
-                        linked.tick_clock(
-                            player,
-                            &stage.collision,
-                            math,
-                            ready,
-                            self.day.as_mut().zip(self.day_tables.as_ref()),
-                            signal,
+                        let mut audio = self.generation_audio.connected_backend();
+                        linked.tick_clock_with_sound(
+                            lsd_core::LinkedPlayerTick {
+                                player,
+                                scene: &stage.collision,
+                                math,
+                                ready,
+                                clock: self.day.as_mut().zip(self.day_tables.as_ref()),
+                                signal,
+                            },
+                            audio
+                                .as_mut()
+                                .map(|sound| sound as &mut dyn lsd_core::GenerationSound),
                         )?;
                         for command in linked.commands[first_command..].iter().copied() {
                             for command in effect.consume(command)? {

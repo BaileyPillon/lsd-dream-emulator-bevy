@@ -5,6 +5,7 @@ use std::sync::{Arc, Mutex};
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct SceneAudioSnapshot {
+    pub startup_sdk_ticks: u32,
     pub sample_frames: u64,
     pub sdk_ticks: u64,
     pub requests: u64,
@@ -37,18 +38,26 @@ impl SceneAudio {
     pub fn new(
         bank: SoundBankBinding,
         pitch: SpuPitchTable,
-        device: SpuDevice,
+        mut device: SpuDevice,
         sdk_period: std::num::NonZeroU32,
     ) -> Self {
+        let mut driver = AudioNoteDriver::new(24);
+        let mut snapshot = SceneAudioSnapshot::default();
+        // Original func_8002EDD4 performs one SDK update during initialization.
+        // Keep its history/reclaim state before the first scene note request.
+        match driver.tick_engine(&mut device.engine) {
+            Ok(_) => snapshot.startup_sdk_ticks = 1,
+            Err(error) => snapshot.fault = Some(format!("SDK initialization: {error:?}")),
+        }
         Self(Arc::new(Mutex::new(State {
             bank,
-            driver: AudioNoteDriver::new(24),
+            driver,
             pitch,
             device,
             commands: Vec::new(),
             note_faults: Vec::new(),
             sdk_period,
-            snapshot: SceneAudioSnapshot::default(),
+            snapshot,
         })))
     }
 
@@ -60,6 +69,15 @@ impl SceneAudio {
                 ..Default::default()
             },
         }
+    }
+
+    /// Explicit diagnostic copy. Ordinary host health checks use the smaller
+    /// counters above; taking this snapshot does not advance a device clock.
+    pub fn driver_snapshot(&self) -> Result<AudioNoteDriver, String> {
+        self.0
+            .lock()
+            .map(|state| state.driver.clone())
+            .map_err(|_| "Scene audio mutex poisoned".into())
     }
 
     /// Render consecutive raw 44.1 kHz stereo frames while holding one device

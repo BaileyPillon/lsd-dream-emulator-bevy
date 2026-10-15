@@ -109,6 +109,11 @@ the shared driver/SPU and returns actual voice handles. Real allocation,
 transfer and callback/bus timing, music and natural scene acceptance remain
 required.
 
+The [link/journal audio connection](LINK_AUDIO.md) now executes sound requests
+inside their original callbacks and shares generation/NPC voice state. Native
+chain comparisons also correct a missing SDK initialization update. Original
+music, periodic callback cadence and natural audio-scene comparisons remain open.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model

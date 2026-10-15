@@ -124,7 +124,7 @@ pub use generation_objects::{
 };
 pub use gpu_boxes::{BoxFramebuffer, GpuBoxPacket, blend_rgb555, rgb555, rgb555_rgba};
 pub use link_runtime::{AutoMoveTables, DreamLinkEffects, DreamLinks, rotation_degrees};
-pub use linked_player::{LinkedPlayer, SceneLinkTables};
+pub use linked_player::{LinkedPlayer, LinkedPlayerTick, SceneLinkTables};
 pub use links::{
     LinkActionHost, LinkCatalog, LinkContext, LinkError, LinkExecution, LinkKind, LinkMotionRules,
     LinkSet, LinkTransforms, LinkTrigger, SpawnEntry, SpawnLocation, is_facing_link_angle,

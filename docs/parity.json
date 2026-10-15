@@ -1441,6 +1441,23 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_scene_accepted": false,
       "ai_model_calls": 0
+    },
+    "immediate_link_journal_audio_and_sdk_init_20261014": {
+      "scope": "Immediate shared sound-object dispatch inside player link and actor journal callbacks, plus the recovered SDK initialization update. Supplied native notification/bank/register scenarios and host-output diagnostics do not establish natural original scene or hardware timing parity.",
+      "checks": {
+        "path": "docs/link-audio-checks.json",
+        "sha256": "6662ce196c06e80907c03873e9a3bf1117d18a28b0239eeaa2ddc1907417be0d"
+      },
+      "owned_native_chain_cases": 32,
+      "original_se_native_chain_cases": 32,
+      "bound_actor_journal_cases": 4,
+      "player_wall_case": 1,
+      "sdk_initialization_update_recovered": true,
+      "prior_controlled_pcm_preserved": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_scene_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

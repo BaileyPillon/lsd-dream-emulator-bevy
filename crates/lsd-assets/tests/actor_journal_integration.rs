@@ -1,4 +1,7 @@
 #[allow(dead_code)]
+#[path = "support/link_audio.rs"]
+mod audio_support;
+#[allow(dead_code)]
 #[path = "../../lsd-core/tests/support/links.rs"]
 mod support;
 use lsd_assets::{
@@ -81,7 +84,8 @@ fn actor_journal_adapter_starts_fades_and_preserves_cancelled_source() {
             let mut pending = Vec::new();
             let mut events = Vec::new();
             let mut body_contact = lsd_core::BodyContactState { current: None };
-            let services = ActorJournalServices::new(
+            let audio = audio_support::owned();
+            let mut services = ActorJournalServices::new(
                 &catalog,
                 ActorJournalBindings {
                     context: &mut context,
@@ -99,6 +103,7 @@ fn actor_journal_adapter_starts_fades_and_preserves_cancelled_source() {
                     body_contact: &mut body_contact,
                 },
             );
+            services.link_audio = Some(audio.clone());
             let mut dispatcher = ActorJournalDispatcher {
                 day: &mut day,
                 tables: &tables,
@@ -151,6 +156,26 @@ fn actor_journal_adapter_starts_fades_and_preserves_cancelled_source() {
             assert_eq!(links.execution.state, if busy { 0 } else { 12 });
             assert_eq!(context.dynamic_penalty, 1);
             assert_ne!(links.spawn, key);
+            assert_eq!(audio.snapshot().allocated_notes, u64::from(!busy));
+            assert!(audio.snapshot().fault.is_none());
+            let native: Value =
+                serde_json::from_str(include_str!("fixtures/link-audio.json")).unwrap();
+            let expected = native["cases"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|case| {
+                    case["route"] == "journal"
+                        && case["cancel"] == busy
+                        && case["prenote"] == false
+                        && case["flashback"] == false
+                        && case["offset"] == 0
+                })
+                .unwrap();
+            assert_eq!(
+                audio.driver_snapshot().unwrap(),
+                audio_support::driver(&expected["after"])
+            );
             if busy {
                 assert!(commands.is_empty());
                 assert!(sounds.is_empty());

@@ -8,9 +8,9 @@ corresponding voice. Both channels share pitch offset and volume context.
 The canonical executable supplies the dream session's sound-bank path through
 `get_se_path`'s pointer. The original constructor requests that bank (`SE`);
 the separate BGM object selects a music bank. Music sequencing is still open.
-Original sound data stays in the user's local extraction. Link and journal
-sound commands still use a separate queue; dispatching them at their original
-callback position remains required.
+Original sound data stays in the user's local extraction. [Link and journal
+sounds](LINK_AUDIO.md) now also dispatch during their original callbacks and
+share this backend. Their retained request lists are inspection traces.
 
 One continuous, nonspatial Bevy audio source consumes finished SPU stereo PCM
 at 44,100 Hz. The source converts signed 16-bit values to float by dividing by
@@ -49,7 +49,10 @@ they do not prove that a person heard a physical speaker.
 
 ## Current timing and initialization limits
 
-The prototype still supplies bank ID zero, bank placement at 4,096 bytes,
+The backend performs the original SDK's single initialization update before
+scene notes. Its separate `startup_sdk_ticks` counter is one; sample-driven
+callback counters start at zero. The prototype still supplies bank ID zero,
+bank placement at 4,096 bytes,
 disabled reverb, master-volume registers 15,480, and one SDK callback per
 735 samples (60 Hz), including a callback before the first sample. Sample
 production is driven by host audio consumption. Scene updates retain the
