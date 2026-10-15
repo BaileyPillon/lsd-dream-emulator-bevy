@@ -1,7 +1,9 @@
 //! Original-behavior primitives. This crate never accesses a renderer or AI service.
 
 mod actor_journal;
+mod audio_envelope;
 mod audio_gaussian;
+pub use audio_envelope::{SpuEnvelope, SpuEnvelopePhase, SpuVolume};
 mod audio_note;
 pub use audio_gaussian::spu_gaussian;
 mod audio_sample;

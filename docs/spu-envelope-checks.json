@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-15T01:27:12.958213+00:00",
+  "scope": "Explicit software-clock envelope and volume state comparisons, including all rate/control words and original raw tone bindings. Corrected pitch comparison uses an unchanged playback calculation. No original hardware/device clock, natural note timing, complete SPU or audible scene acceptance.",
+  "reference_game": {
+    "edition": "Japanese SLPS_015.56",
+    "executable_sha256": "282308ade239ce61b5603651dbbab0476a681b5d3618e82c0d3c3a95316d302f",
+    "paused_c_head": "6ea437373d2fca48fe4d55bead34c820d73f9206"
+  },
+  "comparison_tool": {
+    "repository": "https://github.com/libretro/beetle-psx-libretro",
+    "commit": "e57860d82faa953dc0fc10f201fd583739bc2f7d",
+    "source_sha256": "f081394befd298e1d3e70a3982009ac9555853c4dfa92162fb7bbed7d3370a99",
+    "header_sha256": "feee6c16a8b885f2d85aa30181de9a17c3189767d06594c70c72c084d38862d7",
+    "functions_unchanged": true,
+    "function_sha256": {
+      "CalcVCDelta": "999251c3c8136ac73f07e1c474a1e9e8d9eb78548b275992a785e75274a545f4",
+      "SPU_Sweep_WriteControl": "27c1126d8db64b4ee2cd43469184730ce697efa2c3327810806eb61a2b4ad0e1",
+      "SPU_Sweep_WriteVolume": "b16f7846d746d94bba13bddb4bec45d011ffcb472eaff8b162fc52d765516109",
+      "SPU_Sweep_Clock": "dc9580251372564a7f3bb631fe2b5e35eb7141ae3d79026af9a6297e7acd4004",
+      "SPU_CacheEnvelope": "92b2e39a6a5a729cbc207781c3a95c8d9b256bc9eb4ccf645918c68f368ab0c1",
+      "SPU_ResetEnvelope": "3e30594bfe0e56fdb608c692caa5bf90b6555b32beb2f3c4d20fc415d5bf5d37",
+      "SPU_ReleaseEnvelope": "aac97073ff1ce5b733da5e34851d78139744c8970be68febf086ea335cebbb76",
+      "SPU_RunEnvelope": "9f58b19a5990a49f8fee5cdb8af2a062a694316cf548801f9c0a97a04419c67a"
+    },
+    "license": "GPL-2.0-or-later; private independent test tool, not included in the MIT port"
+  },
+  "comparisons": {
+    "envelope_configs": 1088,
+    "envelope_matrix_states": 32640,
+    "envelope_matrix_clocks": 130560,
+    "volume_matrix_states": 983040,
+    "volume_matrix_clocks": 1966080,
+    "owned_envelope_action_traces": 15,
+    "owned_volume_action_traces": 22,
+    "original_banks": 9,
+    "original_tones": 351,
+    "original_unique_adsr_pairs": 75,
+    "original_clocks_per_tone": 66150
+  },
+  "independent_repeat_recordings_byte_identical": true,
+  "owned_fixture": {
+    "path": "crates/lsd-assets/tests/fixtures/spu-envelopes.json",
+    "sha256": "ef2138faaba0dc36685ab99142dd14adf4396e1c1b0b3185237e5cff2bc495d0"
+  },
+  "private_original_tone_observation_sha256": "226b658b3f8e1c06e040014f2254f81bc6cbb20f9df217084643731e3790e8de",
+  "pitch_correction": {
+    "status": "corrected_altered_pitch_comparison_wrapper",
+    "source_sha256": "f081394befd298e1d3e70a3982009ac9555853c4dfa92162fb7bbed7d3370a99",
+    "original_playback_region_sha256": "77149a5b08b5e651ba23ce2f6254db543567981eebccbdc1913b7ca6179f951b",
+    "playback_region_unchanged": true,
+    "wrapper_sha256": "186d00abdd8ea983e0c9d29c9268045e199047b400717a66712ee06d38956409",
+    "library_sha256": "75d06d3b33b4ac522f075ca225ef54c308477a2c08a220b7e843436c6d4f0041",
+    "cases": 655360,
+    "prior_pitch_results_different": 453328,
+    "before_owned_fixture_sha256": "1834a693ebe43ddc036016c144ad150480504fe3cbdf4a77d4f33ac36927c22f",
+    "corrected_owned_fixture_sha256": "31f24e354f8af7122a4b3b21b3ef2c63fed0fddeb91e870c2ad196ce199d5da7",
+    "decoder_and_gaussian_fixtures_unchanged": true,
+    "correction": "Prior hand-adapted wrapper inserted a16-bit mask and used0x4000 saturation. The source playback block does neither and saturates to0x3fff.",
+    "limits": "Software-reference agreement only. FPGA and documentation disagree on high-register modulation behavior; hardware capture remains open.",
+    "supersedes": "docs/spu-sample-checks.json pitch comparison only",
+    "old_fixture_commit": "48aac5e818946ec473c6bdf3ab0d5d06f762b0cd",
+    "current_fixture": "crates/lsd-assets/tests/fixtures/spu-samples.json",
+    "source_review_references": [
+      {
+        "repository": "libretro/beetle-psx-libretro",
+        "commit": "e57860d82faa953dc0fc10f201fd583739bc2f7d",
+        "source": "https://raw.githubusercontent.com/libretro/beetle-psx-libretro/e57860d82faa953dc0fc10f201fd583739bc2f7d/mednafen/psx/spu.h",
+        "path": ".private/references/libretro-beetle-psx-libretro-e57860d82faa/mednafen/psx/spu.h",
+        "bytes": 2420,
+        "sha256": "feee6c16a8b885f2d85aa30181de9a17c3189767d06594c70c72c084d38862d7"
+      },
+      {
+        "repository": "MiSTer-devel/PSX_MiSTer",
+        "commit": "cd17b5a0ad261005c321d9d5ba41b8dbe313a7d3",
+        "source": "https://raw.githubusercontent.com/MiSTer-devel/PSX_MiSTer/cd17b5a0ad261005c321d9d5ba41b8dbe313a7d3/rtl/spu.vhd",
+        "path": ".private/references/mister-devel-psx_mister-cd17b5a0ad26/rtl/spu.vhd",
+        "bytes": 144113,
+        "sha256": "0bb63a9ddecf44cbf2a53844e5bb104a53812455905a6dc9ecf618a34c1ffd39"
+      }
+    ],
+    "prior_original_sample_pcm_and_gaussian_results_unchanged": true
+  },
+  "local_validation": {
+    "workspace_passed": 190,
+    "workspace_failed": 0,
+    "workspace_ignored": 57,
+    "envelope_tests_including_original_content_passed": 5,
+    "sample_tests_including_original_content_passed": 4,
+    "format_passed": true,
+    "clippy_all_features_passed": true
+  },
+  "limits": [
+    "Clock/action inputs are supplied component scenarios, not observed device/game scheduling.",
+    "Original tone data binds75 distinct raw ADSR pairs across351 tones; each unique pair has66150 explicit clocks and supplied release at44100.",
+    "Key delay/order, transfer/prefetch, loops/capture, noise, full mixing/reverb, music and output remain open.",
+    "High-register pitch modulation differs among software/FPGA/documentation sources; no hardware edge-case acceptance.",
+    "The default Bevy scene still queues audio requests."
+  ],
+  "original_audio_playback_accepted": false,
+  "whole_original_feature_groups_accepted": 0,
+  "original_named_callbacks_implemented": 71,
+  "remaining_pending_callbacks": 36,
+  "c_paused_and_preserved": true,
+  "ai_model_calls": 0
+}

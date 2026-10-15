@@ -107,12 +107,11 @@ impl SpuAdpcmDecoder {
 /// `previous_voice` is the preceding voice's signed output after its envelope.
 pub fn spu_pitch_step(pitch: u16, previous_voice: Option<i16>) -> u16 {
     let step = if let Some(previous) = previous_voice {
-        let factor = i32::from(previous) + 0x8000;
-        ((i32::from(pitch as i16) * factor) >> 15) as u16
+        (i32::from(pitch) + ((i32::from(pitch as i16) * i32::from(previous)) >> 15)) as u32
     } else {
-        pitch
+        u32::from(pitch)
     };
-    step.min(0x4000)
+    step.min(0x3fff) as u16
 }
 
 #[cfg(test)]
@@ -176,12 +175,13 @@ mod tests {
 
     #[test]
     fn pitch_modulation_preserves_signed_register_glitch_before_clipping() {
-        assert_eq!(spu_pitch_step(0xffff, None), 0x4000);
+        assert_eq!(spu_pitch_step(0xffff, None), 0x3fff);
         assert_eq!(spu_pitch_step(0x1000, Some(-32768)), 0);
         assert_eq!(spu_pitch_step(0x1000, Some(0)), 0x1000);
         assert_eq!(spu_pitch_step(0x1000, Some(32767)), 0x1fff);
-        assert_eq!(spu_pitch_step(0xffff, Some(0)), 0x4000);
-        assert_eq!(spu_pitch_step(0xffff, Some(32767)), 0x4000);
+        assert_eq!(spu_pitch_step(0xffff, Some(0)), 0x3fff);
+        assert_eq!(spu_pitch_step(0xffff, Some(32767)), 0x3fff);
         assert_eq!(spu_pitch_step(0x8000, Some(32767)), 1);
+        assert_eq!(spu_pitch_step(0x8000, Some(-32768)), 0x3fff);
     }
 }

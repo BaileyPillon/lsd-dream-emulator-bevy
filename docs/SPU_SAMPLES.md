@@ -31,6 +31,11 @@ Its software FIR and pitch arithmetic are also comparison references. That
 GPL test source remains separate from the port implementation. No emulator
 decoder source is included in the MIT Rust code.
 
+The pitch comparison was corrected after this checkpoint; the current fixture
+uses the unchanged playback calculation. See
+[the correction and envelope work](SPU_ENVELOPES.md#correction-to-the-earlier-pitch-comparison)
+for the changed high-register behavior and the superseded pitch evidence.
+
 | Comparison | Cases |
 | --- | ---: |
 | Owned decoder inputs, including predictor boundaries and block continuity | 1,292 |
@@ -55,6 +60,7 @@ supplied original stored samples. Invalid lengths are also rejected.
 The original executable delegates synthesis to SPU hardware. Comparing a
 separate emulator decoder therefore does not prove original runtime or hardware
 parity. SDK callbacks, sample transfers, decoder prefetch, loop/end timing,
-envelopes, noise, sweep, reverb, mixing and output remain required. The running
+noise, reverb, mixing and output remain required. Envelopes and volume sweep
+also need connection to device clocks. The running
 Bevy scene still queues audio requests. No complete audio group, audible scene
 comparison or whole-game parity is accepted by these checks.

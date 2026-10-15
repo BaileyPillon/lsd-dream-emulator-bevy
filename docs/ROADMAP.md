@@ -89,6 +89,12 @@ match an independent pinned software decoder. Transfer, prefetch, loops,
 envelopes, device clocks, complete mixing and audible scene comparisons remain
 required; the sample checks do not accept the audio group.
 
+[Envelope and volume components](SPU_ENVELOPES.md) now implement ADSR phases,
+direct gain and sweep state, including stopped rates and phase inversion.
+Original tone bindings have controlled software-reference lifecycles. The
+earlier pitch comparison is corrected to use the unchanged playback expression.
+Complete SPU scheduling, mixing, output and original-scene audio remain open.
+
 Generated model/sprite construction, child motion, unsigned ticks, the alternate
 color alias and constructor/update RNG are now implemented and compared with
 original CPU execution. The day profile loads the original generation model

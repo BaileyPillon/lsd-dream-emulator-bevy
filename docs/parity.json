@@ -1360,6 +1360,31 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_playback_accepted": false,
       "ai_model_calls": 0
+    },
+    "spu_envelope_volume_and_pitch_correction_20261014": {
+      "scope": "Explicit software-clock envelope and volume state comparisons, including all rate/control words and original raw tone bindings. Corrected pitch comparison uses an unchanged playback calculation. No original hardware/device clock, natural note timing, complete SPU or audible scene acceptance.",
+      "checks": {
+        "path": "docs/spu-envelope-checks.json",
+        "sha256": "45dc9180518d97cecf11724d28fa74b6177a0cf52af7f07083bcb6009f6fa43f"
+      },
+      "envelope_configs": 1088,
+      "envelope_matrix_states": 32640,
+      "envelope_matrix_clocks": 130560,
+      "volume_matrix_states": 983040,
+      "volume_matrix_clocks": 1966080,
+      "owned_envelope_action_traces": 15,
+      "owned_volume_action_traces": 22,
+      "original_banks": 9,
+      "original_tones": 351,
+      "original_unique_adsr_pairs": 75,
+      "original_clocks_per_tone": 66150,
+      "pitch_cases_corrected": 655360,
+      "prior_pitch_outputs_changed": 453328,
+      "supersedes_prior_pitch_wrapper_claim": true,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "original_audio_playback_accepted": false,
+      "ai_model_calls": 0
     }
   }
 }

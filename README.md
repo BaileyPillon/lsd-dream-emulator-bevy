@@ -66,6 +66,10 @@ The [SPU sample decoder](docs/SPU_SAMPLES.md) now decodes every stored sample
 in all nine banks, with software-reference comparisons for predictor history,
 Gaussian interpolation and pitch modulation. Connecting these components to
 the complete SPU device and scene audio remains unfinished.
+[Envelope and volume components](docs/SPU_ENVELOPES.md) now advance the original
+tone parameters with software-reference state comparisons. Device scheduling,
+mixing, music and output remain open; that page also corrects the earlier
+pitch-comparison wrapper and its high-register behavior.
 Generated model/sprite construction and updates now also run in the day profile,
 including their original RNG calls and imported object presentation. See
 [generated objects](docs/GENERATION_OBJECTS.md) for validation and remaining
