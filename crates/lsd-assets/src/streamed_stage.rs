@@ -3,7 +3,7 @@ use lsd_core::{
     CollisionPolicy, SceneCollision, SceneSlot, SceneSlots, StreamEvent, StreamGridTables,
     StreamProtocol, StreamSlotState,
 };
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 /// Host file completion feeds the recovered protocol; original CD timing and actor callbacks are separate.
 pub struct StreamedStage {
@@ -13,7 +13,7 @@ pub struct StreamedStage {
     pub revision: u64,
     pub events: Vec<StreamEvent>,
     stage: u8,
-    files: PathBuf,
+    files: crate::AssetSource,
     executable: Vec<u8>,
     tables: StreamGridTables,
     pending_data: [Option<Lbd>; 7],
@@ -37,7 +37,7 @@ impl StreamedStage {
         let placement = grid.place_spawn([0; 3], spawn);
         let map =
             u16::try_from(placement.index).map_err(|_| "Destination map index is negative")?;
-        let loaded = Self::load(&self.files, &self.executable, stage, map, [0; 3])?;
+        let loaded = Self::load_from_source(&self.files, &self.executable, stage, map, [0; 3])?;
         Ok((loaded, placement.position))
     }
 
@@ -48,10 +48,9 @@ impl StreamedStage {
         if !matches!(variant, 'A' | 'B' | 'C' | 'D') {
             return Err("Texture variant must be A-D".into());
         }
-        let bytes = std::fs::read(
-            self.files
-                .join(format!("CDI/STG{:02}/TEX{variant}.TIX", self.stage)),
-        )?;
+        let bytes = self
+            .files
+            .read(format!("CDI/STG{:02}/TEX{variant}.TIX", self.stage))?;
         let tix = crate::formats::Tix::parse(&bytes)?;
         let mut vram = crate::formats::Vram::default();
         for bank in &tix.banks {
@@ -64,6 +63,23 @@ impl StreamedStage {
 
     pub fn load(
         files: &Path,
+        executable: &[u8],
+        stage: u8,
+        map: u16,
+        base: [i32; 3],
+    ) -> Result<Self, Box<dyn std::error::Error>> {
+        Self::load_from_source(
+            &crate::AssetSource::original(files),
+            executable,
+            stage,
+            map,
+            base,
+        )
+    }
+
+    /// Keep the immutable mod snapshot across streaming and destination rebuilds.
+    pub fn load_from_source(
+        files: &crate::AssetSource,
         executable: &[u8],
         stage: u8,
         map: u16,
@@ -111,7 +127,7 @@ impl StreamedStage {
             revision: 0,
             events: Vec::new(),
             stage,
-            files: files.to_owned(),
+            files: files.clone(),
             executable: executable.to_vec(),
             tables,
             pending_data: std::array::from_fn(|_| None),
@@ -164,9 +180,7 @@ impl StreamedStage {
                     self.collision.slots.slots[slot].ready = false;
                     let result = (|| {
                         let path = stage_map_path(&self.executable, self.stage, map as u16)?;
-                        Ok::<_, Box<dyn std::error::Error>>(Lbd::parse(&std::fs::read(
-                            self.files.join(path),
-                        )?)?)
+                        Ok::<_, Box<dyn std::error::Error>>(Lbd::parse(&self.files.read(path)?)?)
                     })();
                     match result {
                         Ok(map) => self.pending_data[slot] = Some(map),

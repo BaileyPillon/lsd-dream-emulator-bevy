@@ -6,6 +6,12 @@ current capabilities and [the commit history](https://github.com/BaileyPillon/ls
 
 ## Unreleased
 
+- Add opt-in data mods with validated manifests, hashed immutable snapshots,
+  explicit load order, dependencies/conflicts, streamed-destination retention,
+  original-only isolation, a headless checker and an authoring guide.
+- Refresh the separate C reference status to 100% game-function recovery while
+  preserving the frozen Rust baseline and all gameplay acceptance counts.
+
 - Publish revision-identified Rust API documentation alongside the handbook,
   with generated source, search, and checked links between all three libraries.
 - Shorten the repository overview and separate platform build coverage from

@@ -86,6 +86,7 @@ nav:
       - Contributing: https://github.com/BaileyPillon/lsd-dream-emulator-bevy/blob/main/CONTRIBUTING.md
   - Content and animation:
       - Asset pipeline: ASSET_PIPELINE.md
+      - Data mods: MODDING.md
       - Animation runtime: ANIMATION_RUNTIME.md
       - Audio import: AUDIO_IMPORT.md
   - World and dream sessions:

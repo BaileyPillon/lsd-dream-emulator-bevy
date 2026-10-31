@@ -43,7 +43,9 @@ mod sequence_bank;
 mod sequence_clock;
 pub use sequence_bank::SequenceBankBinding;
 mod sequence_voice;
-pub use scene_audio::{SceneAudio, SceneAudioSnapshot, load_scene_audio};
+pub use scene_audio::{
+    SceneAudio, SceneAudioSnapshot, load_scene_audio, load_scene_audio_from_source,
+};
 pub use sequence_clock::{SeqEventClock, SeqEventClockFault, SeqEventDispatchFault};
 pub use sequence_voice::{SeqVoiceDispatch, SeqVoiceEffect, SeqVoiceFault};
 mod sequence_music;
@@ -83,19 +85,25 @@ pub use generation_tables::{
 };
 mod link_tables;
 mod math_tables;
+pub mod mods;
 pub use link_tables::{OriginalLinkTables, load_link_tables};
 pub use math_tables::load_math_tables;
+pub use mods::AssetSource;
 mod scene_config;
 mod scene_frame;
 mod scene_scale_tables;
 pub use scene_scale_tables::load_scene_scale_tables;
 mod special_encounter;
 pub use scene_frame::{SceneClockMember, SceneFrameVisit};
-pub use special_encounter::{SpecialEncounterAssets, load_special_encounter_assets};
+pub use special_encounter::{
+    SpecialEncounterAssets, load_special_encounter_assets,
+    load_special_encounter_assets_from_source,
+};
 mod stage_session;
 mod streamed_stage;
 pub use scene_config::{
-    LayeredStage, load_layered_stage, load_scene_grid, load_stream_grid_tables, stage_map_path,
+    LayeredStage, load_layered_stage, load_layered_stage_from_source, load_scene_grid,
+    load_stream_grid_tables, stage_map_path,
 };
 use sha2::{Digest, Sha256};
 pub use stage_session::{

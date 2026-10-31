@@ -16,7 +16,7 @@ use lsd_assets::{
     formats::{Lbd, Tix, Tmd, Vram},
     is_canonical_reference, load_day_tables, load_effect_palette, load_generation_effect_tables,
     load_generation_object_tables, load_generation_paths, load_generation_tables,
-    load_layered_stage, load_link_tables, load_math_tables, sha256_hex, stage_map_path,
+    load_layered_stage_from_source, load_link_tables, load_math_tables, sha256_hex, stage_map_path,
 };
 use lsd_bevy::asset_scene::AssetSceneBuilder;
 use lsd_bevy::asset_scene::MeshBinding;
@@ -142,7 +142,8 @@ struct GenerationLayerVisuals {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut args = std::env::args().skip(1);
+    let (arguments, mod_packs) = lsd_assets::mods::split_mod_arguments(std::env::args().skip(1))?;
+    let mut args = arguments.into_iter();
     let root = PathBuf::from(args.next().ok_or(
         "Usage: lsd-stage <extracted-files-root> [stage] [map] [texture A-D] [--inspect]",
     )?);
@@ -324,9 +325,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if !is_canonical_reference(&executable) {
         return Err("Extraction has a different reference executable".into());
     }
-    let folder = root.join(format!("CDI/STG{stage:02}"));
-    let map_bytes = std::fs::read(root.join(stage_map_path(&executable, stage, map_number)?))?;
-    let texture_bytes = std::fs::read(folder.join(format!("TEX{texture}.TIX")))?;
+    let content = lsd_assets::AssetSource::with_mods(&root, &mod_packs)?;
+    println!("content_profile={}", content.profile().to_json());
+    let map_bytes = content.read(stage_map_path(&executable, stage, map_number)?)?;
+    let texture_bytes = content.read(format!("CDI/STG{stage:02}/TEX{texture}.TIX"))?;
     let map = Lbd::parse(&map_bytes)?;
     if map.tmd.objects.iter().any(|object| object.scale != 0) {
         return Err("Nonzero TMD design scale requires original runtime scale review".into());
@@ -373,15 +375,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Ok(());
     }
     let scene_audio = audio_requested
-        .then(|| lsd_assets::load_scene_audio(&root, &executable))
+        .then(|| lsd_assets::load_scene_audio_from_source(&content, &executable))
         .transpose()?;
     let mut layered_assets = None;
     let walking = if walk {
         let tables = load_math_tables(&executable)?;
         let collision = map.collision_chunk(CollisionPolicy::for_stage(stage));
         let mut streamed = if walk_stream {
-            Some(StreamedStage::load(
-                &root,
+            Some(StreamedStage::load_from_source(
+                &content,
                 &executable,
                 stage,
                 map_number,
@@ -396,9 +398,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             None
         };
         let layered = if walk_layers {
-            Some(load_layered_stage(
-                &root,
-                &std::fs::read(root.join("SLPS_015.56"))?,
+            Some(load_layered_stage_from_source(
+                &content,
+                &executable,
                 stage,
                 [0, 0, 0],
             )?)
@@ -406,7 +408,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             None
         };
         let body_path = "CDI/ETC/DREAME5.TMD";
-        let body = Tmd::parse(&std::fs::read(root.join(body_path))?)?;
+        let body = Tmd::parse(&content.read(body_path)?)?;
         let bounds = CollisionBounds::from_points(
             &body.objects[0]
                 .vertices
@@ -509,9 +511,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .encounters
                 .as_mut()
                 .unwrap()
-                .enable_special_encounter(lsd_assets::load_special_encounter_assets(
+                .enable_special_encounter(lsd_assets::load_special_encounter_assets_from_source(
                     &executable,
-                    &root,
+                    &content,
                 )?);
             session.begin_original_day(linked, load_day_tables(&executable)?);
             session.day.as_mut().unwrap().day = supplied_day - 1;
@@ -913,7 +915,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         app.init_resource::<ActorVisuals>()
             .add_systems(Update, scene_actors);
         app.insert_resource(GeneratedVisuals {
-            assets: GenerationAssets::load(&root, &executable)?,
+            assets: GenerationAssets::load_from_source(&content, &executable)?,
             epoch: u64::MAX,
             count: usize::MAX,
             entities: Vec::new(),
@@ -959,7 +961,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             } else {
                 Some(Window {
                     title: format!(
-                        "LSD Bevy - STG{stage:02} M{map_number:03} | WASD, Q/E, Shift, R/F"
+                        "LSD Bevy{} - STG{stage:02} M{map_number:03} | WASD, Q/E, Shift, R/F",
+                        if mod_packs.is_empty() {
+                            ""
+                        } else {
+                            " [MODDED]"
+                        }
                     ),
                     resolution: (960, 720).into(),
                     ..default()
