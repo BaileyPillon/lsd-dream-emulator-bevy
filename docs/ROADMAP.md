@@ -13,7 +13,7 @@ Every workstream requires implementation and original/port comparisons.
 | Rendering | Imported content, integer transforms/animation, environment layers, palette and box composition | Original camera, GTE, rasterization, draw order, transparency, fades, and full-frame comparisons |
 | Audio | Shared 24-voice SPU and live sound effects; sequence clock and music voice recovery | Original music/bank lifecycle and shared playback, then original scene PCM and timing comparisons |
 | UI, media, persistence | Scenario inventory | Menus, chart, diary, save/load, errors, movies, special days, and endings |
-| Optional tools and mods | Separate architecture and scorecard | Useful analysis/import/authoring tools and explicitly selectable modifications |
+| Optional tools and mods | Explicit, hashed data packs with load order and dependency/conflict checks ([guide](MODDING.md)) | Expanded authoring APIs, analysis integrations and distribution workflows |
 
 ## Tracked work
 

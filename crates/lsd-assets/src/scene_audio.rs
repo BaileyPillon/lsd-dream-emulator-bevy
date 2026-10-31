@@ -188,9 +188,17 @@ pub fn load_scene_audio(
     root: &std::path::Path,
     executable: &[u8],
 ) -> Result<SceneAudio, Box<dyn std::error::Error>> {
+    load_scene_audio_from_source(&crate::AssetSource::original(root), executable)
+}
+
+/// Shared prototype sound bank, resolved through the active content profile.
+pub fn load_scene_audio_from_source(
+    root: &crate::AssetSource,
+    executable: &[u8],
+) -> Result<SceneAudio, Box<dyn std::error::Error>> {
     let path = crate::load_scene_sound_path(executable)?;
-    let header = std::fs::read(root.join("CDI").join(&path).with_extension("VH"))?;
-    let body = std::fs::read(root.join("CDI").join(path).with_extension("VB"))?;
+    let header = root.read(std::path::Path::new("CDI").join(&path).with_extension("VH"))?;
+    let body = root.read(std::path::Path::new("CDI").join(path).with_extension("VB"))?;
     let bank = crate::formats::Vab::parse(&header, &body)?;
     let binding = SoundBankBinding::from_vab(&bank, 0, 0x1000)?;
     let mut device = SpuDevice::default();

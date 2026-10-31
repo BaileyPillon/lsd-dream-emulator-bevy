@@ -12,8 +12,16 @@ pub struct GenerationAssets {
 }
 impl GenerationAssets {
     pub fn load(files: &Path, executable: &[u8]) -> Result<Self, Box<dyn std::error::Error>> {
+        Self::load_from_source(&crate::AssetSource::original(files), executable)
+    }
+
+    /// Load generation models and textures through the selected content profile.
+    pub fn load_from_source(
+        files: &crate::AssetSource,
+        executable: &[u8],
+    ) -> Result<Self, Box<dyn std::error::Error>> {
         let tables = load_generation_object_tables(executable)?;
-        let mut model = Tmd::parse(&std::fs::read(files.join("CDI/ETC/DREAMER.TMD"))?)?;
+        let mut model = Tmd::parse(&files.read("CDI/ETC/DREAMER.TMD")?)?;
         let [x, y] = tables.palette_coordinates;
         let clut = (i32::from(x) / 16).wrapping_add(i32::from(y).wrapping_shl(6)) as u16;
         for index in tables.model_indices {
@@ -30,7 +38,7 @@ impl GenerationAssets {
             }
             polygon.clut = Some(clut);
         }
-        let texture = std::fs::read(files.join("CDI/ETC/ETC.TIM"))?;
+        let texture = files.read("CDI/ETC/ETC.TIM")?;
         let image = TimImage::parse(&texture)?;
         let sprite_page = (((image.flags & 3) as u16) << 7)
             | ((image.image.y & 0x100) >> 4)

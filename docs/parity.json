@@ -1497,6 +1497,27 @@
       "original_npc_behaviors_accepted": 0,
       "original_audio_scene_accepted": false,
       "ai_model_calls": 0
+    },
+    "optional_data_mod_support_20261031": {
+      "scope": "Optional port data replacement API; separate from recovered original NPC behavior and whole-game parity. Frozen C and initial Rust snapshots unchanged.",
+      "guide": "docs/MODDING.md",
+      "mod_api_version": 1,
+      "data_mod_support_implemented": true,
+      "original_mode_default": true,
+      "streamed_destinations_retain_profile": true,
+      "public_owned_mod_tests": 13,
+      "local_native_stream_texture_tests": 1,
+      "named_npc_callbacks_implemented": 71,
+      "whole_original_feature_groups_accepted": 0,
+      "original_npc_behaviors_accepted": 0,
+      "ai_model_calls": 0,
+      "companion_c_reference": {
+        "commit": "171f74a3b0b5b8c5e2b595c5a75fe155cdb11a38",
+        "c_bytes": 199912,
+        "game_text_bytes": 199912,
+        "binary_match": "verified",
+        "scope": "Separately rechecked current C reference, not a revision to paused_c_checkpoint or Rust completion"
+      }
     }
   }
 }

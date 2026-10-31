@@ -17,6 +17,14 @@ pub fn load_special_encounter_assets(
     executable: &[u8],
     files: &Path,
 ) -> Result<SpecialEncounterAssets, Box<dyn std::error::Error>> {
+    load_special_encounter_assets_from_source(executable, &crate::AssetSource::original(files))
+}
+
+/// Resolve special encounter content through the explicitly selected profile.
+pub fn load_special_encounter_assets_from_source(
+    executable: &[u8],
+    files: &crate::AssetSource,
+) -> Result<SpecialEncounterAssets, Box<dyn std::error::Error>> {
     if !is_canonical_reference(executable) {
         return Err("Special encounter requires canonical SLPS_015.56".into());
     }
@@ -42,7 +50,7 @@ pub fn load_special_encounter_assets(
         })),
     };
     Ok(SpecialEncounterAssets {
-        model: Arc::new(Mom::parse(&std::fs::read(files.join(&path))?)?),
+        model: Arc::new(Mom::parse(&files.read(&path)?)?),
         path,
         offset,
         aim,

@@ -18,7 +18,7 @@ are still in progress. There is no stable binary release yet.
 [**Handbook**](https://baileypillon.github.io/lsd-dream-emulator-bevy/) ·
 [API reference](https://baileypillon.github.io/lsd-dream-emulator-bevy/API_REFERENCE/) ·
 [Status](docs/STATUS.md) · [Roadmap](docs/ROADMAP.md) ·
-[Contributing](CONTRIBUTING.md)
+[Modding](docs/MODDING.md) · [Contributing](CONTRIBUTING.md)
 
 ## Quick start
 
@@ -75,6 +75,17 @@ Complete encounters and whole-game acceptance remain separate milestones;
 there is no defensible overall completion percentage yet.
 [Project status](docs/STATUS.md) explains the evidence and remaining gaps.
 The [changelog](CHANGELOG.md) records development milestones.
+
+## Mod support
+
+The dream prototype supports opt-in data packs for maps, textures, models and
+sound banks. Packs have hashed manifests, explicit load order, dependencies and
+conflicts. Streamed destinations retain the active profile; original mode is
+the default. See the [modding guide](docs/MODDING.md) for installation and authoring.
+
+```sh
+cargo run -p lsd-bevy --bin lsd-stage --features desktop --locked -- "/path/to/extracted/files" 0 0 A --dream --mod "/path/to/pack"
+```
 
 ## Architecture
 

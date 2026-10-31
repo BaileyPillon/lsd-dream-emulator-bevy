@@ -79,6 +79,21 @@ pub fn load_layered_stage(
     stage: u8,
     base: [i32; 3],
 ) -> Result<LayeredStage, Box<dyn std::error::Error>> {
+    load_layered_stage_from_source(
+        &crate::AssetSource::original(files),
+        executable,
+        stage,
+        base,
+    )
+}
+
+/// Layered inspection using explicit original or modded content.
+pub fn load_layered_stage_from_source(
+    files: &crate::AssetSource,
+    executable: &[u8],
+    stage: u8,
+    base: [i32; 3],
+) -> Result<LayeredStage, Box<dyn std::error::Error>> {
     let grid = load_scene_grid(executable, stage)?;
     if grid.mode != 1 || grid.columns != 1 || !(1..=7).contains(&grid.rows) {
         return Err(
@@ -95,11 +110,7 @@ pub fn load_layered_stage(
     let mut maps = Vec::new();
     let mut chunks = std::array::from_fn(|_| None);
     for (index, chunk) in chunks.iter_mut().enumerate().take(grid.rows as usize) {
-        let map = Lbd::parse(&std::fs::read(files.join(stage_map_path(
-            executable,
-            stage,
-            index as u16,
-        )?))?)?;
+        let map = Lbd::parse(&files.read(stage_map_path(executable, stage, index as u16)?)?)?;
         *chunk = Some(map.collision_chunk(CollisionPolicy::for_stage(stage)));
         maps.push(map);
     }

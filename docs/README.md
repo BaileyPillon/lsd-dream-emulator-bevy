@@ -18,6 +18,7 @@ defines the full target; [contributing](../CONTRIBUTING.md) explains how to help
 | Task | Read this |
 | --- | --- |
 | Install and explore the prototype | [Getting started](GETTING_STARTED.md) |
+| Install or author a data mod | [Modding](MODDING.md) |
 | Choose a binary, feature, or test target | [Developer reference](DEVELOPMENT.md) |
 | Browse Rust types, examples, and source | [API reference](API_REFERENCE.md) |
 | Understand crate boundaries and original behavior | [Architecture](ARCHITECTURE.md) |

@@ -1,7 +1,7 @@
 # AI-assisted development tools
 
 This is the reserved workflow area for future AI-assisted asset analysis,
-behavior documentation and mod authoring. No model integration is implemented
+behavior documentation and mod authoring. Data replacement packs are implemented separately in the [modding guide](../../docs/MODDING.md). No model integration is implemented
 or configured in the initial port.
 
 Original NPC behavior belongs in `lsd-core` as deterministic recovered scripts.

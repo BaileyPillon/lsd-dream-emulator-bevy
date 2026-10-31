@@ -1,6 +1,6 @@
 # Project status
 
-Last reviewed: **2026-10-15**. Stage: **early development**.
+Last reviewed: **2026-10-31**. Stage: **early development**.
 
 The Rust/Bevy port has substantial recovered systems and an original-content
 dream prototype. It does not yet reproduce the complete game. The full target
@@ -30,7 +30,7 @@ recovery, implemented components, and verified gameplay, so none is reported.
 | Sound effects | Shared 24-voice driver/SPU, ADPCM, envelopes, mixing, reverb, continuous Bevy output, synchronous link/journal sounds | Original startup/bank allocation, hardware cadence, natural scene audio comparisons |
 | Music | All 70 sequences imported; clock/channel/voice integration checked through full loops of 69 playable sequences; controlled music-to-WAV synthesis | Live dream playback integration, bank choice/lifetimes, pause/replay/fades, audible scene comparisons |
 | Menus and persistence | Original scenarios enumerated in the feature inventory | Title/menu flows, chart UI, diary, save/load, special-day media, movies, and endings |
-| Optional AI and mods | Architectural separation and contribution rules | Actual analysis integrations and optional mod workflows |
+| Optional AI and mods | Explicit data packs, hashed profiles, dependencies/conflicts, streamed scene retention; original mode remains default | Code/plugin APIs, new NPC scripts, AI integrations, hot reload and distribution services |
 
 See [music recovery](SEQUENCE_VOICES.md) for the latest channel/voice work and
 its exact validation scope. Native component checks are stronger evidence than
@@ -51,7 +51,14 @@ Tests that require those local inputs are explicitly ignored in ordinary CI.
 
 ## Separate C project
 
-The preserved C reference checkpoint records **194,212 / 199,912 game-function
-bytes recovered in C (97.15%)**, with nine remaining assembly functions.
-The companion project has its own development history. That percentage
-must never be transferred to the Rust port or treated as gameplay acceptance.
+The frozen transition checkpoint remains **194,212 / 199,912 bytes (97.15%)**
+with nine assembly functions. Independently, the companion C repository at
+[`171f74a`](https://github.com/BaileyPillon/lsd-dream-emulator-decompilation/commit/171f74a3b0b5b8c5e2b595c5a75fe155cdb11a38)
+now reports **199,912 / 199,912 game-function bytes (100%)**, 306 current objects
+and a matching canonical executable. This was rechecked on 2026-10-31. SDK and
+startup assembly are outside that game-function count. The frozen port baseline
+has not changed; C recovery does not measure Rust implementation or gameplay
+acceptance.
+
+See [data mods](MODDING.md) for the new optional content API. The original NPC
+callback count and all whole-feature acceptance counts remain unchanged.
